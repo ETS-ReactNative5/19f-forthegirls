@@ -2,8 +2,8 @@
 
 For the Girls is a mobile application that connects women in technology based on technical and personal interests and location. Women can choose to be a mentor, mentee or looking for friends. Once women match, they can DM each other to see if they want to meet up in person for coffee or a meal. Through reminders, an events page and personality matching, we hope that the relationships and networks built through the app will last. Our goal is to alliviate feelings of isolation and imposter syndrome through building a strong network of women in technology.
 
-![hi-fi](img/homepage_v1)
-![sketch](img/sketch_v1)
+![hi-fi](./src/img/homepage_v1)
+![sketch](./src/img/sketch_v1)
 
 ## Architecture
 
