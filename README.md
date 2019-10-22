@@ -7,7 +7,7 @@ For the Girls is a mobile application that connects women in technology based on
 
 ## Architecture
 
-To build our front end, we are using React Native. In addition to this, we use Expo which provides tools to create a React Native application. We use axios to enable us to make API calls and eslint and babel as other libraries to help us build our application. 
+To build our front end, we are using React Native. We used the Node.js framework for our project. In addition to this, we use Expo which provides tools to create a React Native application. We use axios to enable us to make API calls and eslint and babel as other libraries to help us build our application. 
 
 ## Setup
 
