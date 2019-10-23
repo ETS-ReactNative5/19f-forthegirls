@@ -23,7 +23,7 @@ Then you should run:
 
 ## Deployment
 
-To deploy the project, clone this repository. Then, do the setup above if you haven't already from the commandl ine. Then, run `expo start` to deploy the project.
+To deploy the project, clone this repository. Then, do the setup above if you haven't already from the command line. Then, run `expo start` to deploy the project.
 
 ## Authors
 
