@@ -11,23 +11,19 @@ To build our front end, we are using React Native. We used the Node.js framework
 
 ## Setup
 
-In order to set this up, you must set up the following by running this code in the command line:
+In order to set this up, you must set up the following by running this code in the command line (to make sure you have node and expo):
 
 `brew install node`
 
-`brew install watchman`
-
-Next, you have to set up project specific dependencies by running the following lines:
-
 `npm install expo-cli --global`
 
-`yarn add axios`
+Then you should run:
 
-`yarn add --dev eslint eslint-config-airbnb eslint-plugin-import eslint-plugin-react eslint-plugin-jsx-a11y babel-eslint`
+`yarn install` to install any packages or libraries you may need.
 
 ## Deployment
 
-To deploy the project, clone this repository. Then, do the setup above if you haven't already from the commandl ine. Then, run `expo start` to deploy the project.
+To deploy the project, clone this repository. Then, do the setup above if you haven't already from the command line. Then, run `expo start` to deploy the project.
 
 ## Authors
 
