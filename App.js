@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 export default App;
 
 // export default function App() {
-  
+
 
 //   // apicall = functionCall()
 //   //think of useState as individual keys for component state
@@ -84,7 +84,7 @@ export default App;
 // //     //return data;
 // //     setResult(data);
 // //   })
-// //   return undefined; 
+// //   return undefined;
 // // }
 
 // const styles = StyleSheet.create({
