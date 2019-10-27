@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import TextBox from './components/textBox'
 import Axios from 'axios';
 
 export default function App() {
@@ -17,11 +18,14 @@ export default function App() {
   //   })
   // })
 
+  
+
   return (
     <View style={styles.container}>
       <Text>Hello World!!1 YAY FTG</Text>
       <Text>morgan was here</Text>
       <Text> Annika says hi! </Text>
+      <TextBox />
       {/* <Text>{resultState}</Text> */}
       <Text> Sami says hey</Text>
       <Text>morgan was here</Text>
