@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Axios from 'axios';
 
 class App extends Component {
@@ -7,8 +7,10 @@ class App extends Component {
     super(props);
     this.state = {
       apiResponse: 'no api response yet',
+      inputText: 'no text yet',
     }
   }
+
   componentDidMount() {
     const ROOT_URL = 'http://localhost:9090/';
       Axios.get(`${ROOT_URL}`).then((response) => {
@@ -19,18 +21,38 @@ class App extends Component {
     })
   }
 
+  handleInput = (text) => {
+    this.setState({ inputText: text });
+  }
 
+  // submitInput = () => {
+  //   const ROOT_URL = 'http://localhost:9090/';
+  //   Axios.get(`${ROOT_URL}`).then((response) => {
+  //     this.setState({apiResponse: response.data.result});
+  //     // const data = response.data.result;
+  //   }).catch((error) => {
+  //     console.log(error);
+  //   })
+  // }
+
+  // https://www.tutorialspoint.com/react_native/react_native_text_input.htm
+  // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
       <View style={styles.container}>
-      <Text>{this.apiResponse}</Text>
-        <Text>TEST</Text>
-        <Text>Hello World!!1 YAY FTG</Text>
-        <Text>morgan was here</Text>
-        <Text> Annika says hi! </Text>
-        {/* <Text>{resultState}</Text> */}
-        <Text> Sami says hey</Text>
-        <Text>morgan was here</Text>
+      <Text>This is the response: {this.apiResponse}</Text>
+      <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+               placeholder = "Waiting for input..."
+               placeholderTextColor = "#9a73ef"
+               autoCapitalize = "none"
+               onChangeText = {this.handleInput}/>
+      <Text>The input: {this.state.inputText}</Text>
+      <Button
+          title="Submit input"
+          accessibilityLabel="Submit input"
+          color="#f194ff"
+          // onPress={this.submitInput}
+        />
       </View>
     );
   }
