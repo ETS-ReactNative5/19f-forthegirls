@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Axios from 'axios';
+import MainTabBar from './containers/bottomNav';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class App extends Component {
           color="#f194ff"
           // onPress={this.submitInput}
         />
+        {/* <MainTabBar /> */}
       </View>
     );
   }
