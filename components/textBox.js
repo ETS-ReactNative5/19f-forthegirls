@@ -7,7 +7,7 @@ export default function TextBox() {
   return (
     <TextInput
       style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-      onChangeText={text => onChangeText(text)}
+      onChangeText={this.props.changeText(value)}
       value={value}
     />
   );
