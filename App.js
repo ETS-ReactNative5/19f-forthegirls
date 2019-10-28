@@ -28,6 +28,19 @@ class App extends React.Component {
     this.setState({ inputText: text });
   }
 
+  submitInput = () => {
+    const fields = {
+      username: this.state.inputText,
+    };
+
+    const ROOT_URL = 'https://for-the-girls.herokuapp.com/';
+    Axios.post(`${ROOT_URL}/api/signup`, fields).then((response) => {
+      console.log("sent to backend");
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
   // submitInput = () => {
   //   const ROOT_URL = 'http://localhost:9090/';
   //   Axios.get(`${ROOT_URL}`).then((response) => {
@@ -54,7 +67,7 @@ class App extends React.Component {
           title="Submit input"
           accessibilityLabel="Submit input"
           color="#f194ff"
-          // onPress={this.submitInput}
+          onPress={this.submitInput}
         />
         {/* <MainTabBar /> */}
 
