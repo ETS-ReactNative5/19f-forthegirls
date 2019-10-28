@@ -17,9 +17,9 @@ class Profile extends React.Component {
           <Text class="mySchool">Dartmouth</Text>
         </View>
         <View class="prompts">
-          <Prompt />
-          <Prompt />
-          <Prompt />
+          <Prompt prompt='tech inspo' answer='grace hopper' />
+          <Prompt prompt='fav app' answer='vsco' />
+          <Prompt prompt='dog or cat' answer='dog' />
         </View>
       </View>
     );

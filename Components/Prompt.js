@@ -9,8 +9,8 @@ class Prompt extends React.Component {
   render() {
     return (
       <View>
-        <Text class="prompt">prompt question</Text>
-        <Text class="answer">answer</Text>
+        <Text class="prompt">{this.props.prompt}</Text>
+        <Text class="answer">{this.props.answer}</Text>
       </View>
     );
   }
