@@ -1,27 +1,34 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './Components/StartScreen.js'
 import MainTabBar from './containers/bottomNav';
-
+import * as Font from 'expo-font';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       apiResponse: 'no api response yet',
-      inputText: 'no text yet',
+      inputText: 'no text yet'
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const ROOT_URL = 'https://for-the-girls.herokuapp.com/';
-      Axios.get(`${ROOT_URL}`).then((response) => {
-        this.setState({apiResponse: response.data});
-        console.log(response.data);
+    Axios.get(`${ROOT_URL}`).then((response) => {
+      this.setState({ apiResponse: response.data });
+      console.log(response.data);
     }).catch((error) => {
       console.log(error);
     })
+    await Font.loadAsync({
+      'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+      'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+      'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
+      'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
+    });
   }
 
   handleInput = (text) => {
@@ -56,14 +63,14 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text>This is the response: {this.state.apiResponse}</Text>
-      <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-               placeholder = "Waiting for input..."
-               placeholderTextColor = "#9a73ef"
-               autoCapitalize = "none"
-               onChangeText = {this.handleInput}/>
-      <Text>The input: {this.state.inputText}</Text>
-      <Button
+        <Text>This is the response: {this.state.apiResponse}</Text>
+        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          placeholder="Waiting for input..."
+          placeholderTextColor="#9a73ef"
+          autoCapitalize="none"
+          onChangeText={this.handleInput} />
+        <Text>The input: {this.state.inputText}</Text>
+        <Button
           title="Submit input"
           accessibilityLabel="Submit input"
           color="#f194ff"
