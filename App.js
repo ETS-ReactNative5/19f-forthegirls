@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+
+import React from 'react';
+import { StyleSheet, Text, View, Button} from 'react-native';
 import Axios from 'axios';
+import StartScreen from './Components/StartScreen.js'
 import MainTabBar from './containers/bottomNav';
+
 
 class App extends Component {
   constructor(props) {
@@ -55,6 +58,9 @@ class App extends Component {
           // onPress={this.submitInput}
         />
         {/* <MainTabBar /> */}
+
+
+        <StartScreen />
       </View>
     );
   }
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
 export default App;
 
 // export default function App() {
-  
+
 
 //   // apicall = functionCall()
 //   //think of useState as individual keys for component state
@@ -108,7 +114,7 @@ export default App;
 // //     //return data;
 // //     setResult(data);
 // //   })
-// //   return undefined; 
+// //   return undefined;
 // // }
 
 // const styles = StyleSheet.create({
