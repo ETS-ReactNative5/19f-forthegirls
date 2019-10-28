@@ -1,12 +1,11 @@
-
-import React from 'react';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import Axios from 'axios';
 import StartScreen from './Components/StartScreen.js'
 import MainTabBar from './containers/bottomNav';
 
 
-class App extends Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
