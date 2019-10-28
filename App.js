@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Axios from 'axios';
+import MainTabBar from './containers/bottomNav';
 
 class App extends Component {
   constructor(props) {
@@ -12,10 +13,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const ROOT_URL = 'http://localhost:9090/';
+    const ROOT_URL = 'https://for-the-girls.herokuapp.com/';
       Axios.get(`${ROOT_URL}`).then((response) => {
-        this.setState({apiResponse: response.data.result});
-        // const data = response.data.result;
+        this.setState({apiResponse: response.data});
+        console.log(response.data);
     }).catch((error) => {
       console.log(error);
     })
@@ -40,7 +41,7 @@ class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text>This is the response: {this.apiResponse}</Text>
+      <Text>This is the response: {this.state.apiResponse}</Text>
       <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
                placeholder = "Waiting for input..."
                placeholderTextColor = "#9a73ef"
@@ -53,6 +54,7 @@ class App extends Component {
           color="#f194ff"
           // onPress={this.submitInput}
         />
+        {/* <MainTabBar /> */}
       </View>
     );
   }
