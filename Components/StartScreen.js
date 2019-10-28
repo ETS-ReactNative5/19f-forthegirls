@@ -1,0 +1,38 @@
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import SignIn from './Signin.js'
+import SignUp from './Signup.js'
+
+
+
+class StartScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={signup: false, signin: false}
+  }
+
+
+  render() {
+    if(this.state.signup){
+      return (
+        <SignUp />
+      )
+    }
+    else if(this.state.signin){
+      return(
+        <SignIn />
+      )
+    }
+    else{
+      return (
+          <View>
+              <Text>I am a startScreen </Text>
+              <Button title="signup" onPress={()=> {this.setState({signup:true})}}/>
+              <Button title="signin" onPress={()=> {this.setState({signin:true})}}/>
+          </View>
+        );
+      }
+  }
+}
+
+export default StartScreen;

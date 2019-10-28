@@ -1,0 +1,56 @@
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import BottomNavBar from './BottomNavBar.js'
+import Chats from './Chats.js'
+import Profile from './Profile.js'
+import Events from './Events.js'
+import Matches from './Matches.js'
+
+
+class MainScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state ={goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false}
+  }
+
+  eventsCallBack = () => {
+    this.setState({goToEvents: true, goToChats: false, goToProfile: false, goToMatches: false})
+  }
+
+  profileCallBack = () => {
+    this.setState({goToProfile: true, goToEvents: false, goToChats: false, goToMatches: false})
+  }
+
+  chatsCallBack = () => {
+    this.setState({goToChats: true, goToProfile: false, goToMatches: false, goToEvents: false})
+  }
+
+  matchesCallBack = () => {
+    this.setState({goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false})
+  }
+
+  render() {
+    var view;
+    if(this.state.goToChats){
+      view = <Chats />
+    }
+    else if(this.state.goToProfile){
+      view = <Profile />
+    }
+    else if(this.state.goToEvents){
+      view = <Events />
+    }
+    else{
+      view = <Matches />
+    }
+
+    return (
+      <View>
+        {view}
+        <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack}/>
+      </View>
+    );
+  }
+}
+
+export default MainScreen;

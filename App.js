@@ -1,35 +1,40 @@
 import React from 'react';
-import axios from 'axios';
-
-import { StyleSheet, Text, View } from 'react-native';
-
-const ROOT_URL = 'http://localhost:9090/';
-
-function functionCall() {
-  axios.get(`${ROOT_URL}`).then((response) => {
-    const data = response.data.result;
-    console.log("responSE");
-    return data;
-  }).catch((error) => {
-      // hit an error do something else!
-      console.log(error.response.data);
-    });
-}
-
-datafromcall = functionCall();
-datafromcall = functionCall();
-
+import { StyleSheet, Text, View, Button} from 'react-native';
+import Axios from 'axios';
+import StartScreen from './Components/StartScreen.js'
 
 export default function App() {
+
+  // apicall = functionCall()
+  //think of useState as individual keys for component state
+  //const [resultState, setResult] = useState('');
+
+  //think of useEffect like a componentDidMount
+  // useEffect(() => {
+  //   axios.get(`${ROOT_URL}`).then((response) => {
+  //     const data = response.data.result;
+  //     //return data;
+  //     setResult(data);
+  //   })
+  // })
+
   return (
     <View style={styles.container}>
       <Text>Hello World!!1 YAY FTG</Text>
-      <Text>morgan was here</Text>
-      <Text>{datafromcall}</Text>
-      <Text> Annika says hi! </Text>
+      <StartScreen />
     </View>
   );
 }
+const ROOT_URL = 'http://localhost:9090/api';
+
+// function functionCall() {
+//   axios.get(`${ROOT_URL}`).then((response) => {
+//     const data = response.data.result;
+//     //return data;
+//     setResult(data);
+//   })
+//   return undefined;
+// }
 
 const styles = StyleSheet.create({
   container: {
