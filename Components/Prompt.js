@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import colors, { fonts } from '../assets/styles/basicStyle';
 
 class Prompt extends React.Component {
   constructor(props) {
@@ -9,8 +10,8 @@ class Prompt extends React.Component {
   render() {
     return (
       <View>
-        <Text class="prompt">{this.props.prompt}</Text>
-        <Text class="answer">{this.props.answer}</Text>
+        <Text style={[colors.turquoise, fonts.minorHeading]} class="prompt">{this.props.prompt}</Text>
+        <Text style={fonts.bodyText} class="answer">{this.props.answer}</Text>
       </View>
     );
   }

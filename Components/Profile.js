@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import Prompt from '../Components/Prompt';
+import colors, { fonts } from '../assets/styles/basicStyle';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -10,17 +11,20 @@ class Profile extends React.Component {
   render() {
     return (
       <View>
+        <Button title="edit" />
         <View class="basicInfo">
-          <Text class="myName">Name</Text>
-          <Text class="myAge">21</Text>
-          <Text class="myOccupation">Student</Text>
-          <Text class="mySchool">Dartmouth</Text>
+          <Text style={[colors.black, fonts.majorHeading]} class="myName">Name</Text>
+          <Text style={[colors.deepPurple, fonts.minorHeading]} class="myAge">21</Text>
+          <Text style={[colors.deepPurple, fonts.minorHeading]} class="myOccupation">Student</Text>
+          <Text style={[colors.deepPurple, fonts.minorHeading]} class="mySchool">Dartmouth</Text>
         </View>
         <View class="prompts">
           <Prompt prompt='tech inspo' answer='grace hopper' />
           <Prompt prompt='fav app' answer='vsco' />
           <Prompt prompt='dog or cat' answer='dog' />
         </View>
+        <Button title="no" />
+        <Button title="yes" />
       </View>
     );
   }
