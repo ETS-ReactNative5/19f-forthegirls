@@ -6,11 +6,11 @@ import Survey from './Survey.js'
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state={beginsurvey: false}
+    this.state = { beginsurvey: false }
   }
 
   render() {
-    if  (this.state.beginsurvey){
+    if (this.state.beginsurvey) {
       return (
         <Survey />
       )
@@ -19,7 +19,7 @@ class SignUp extends React.Component {
       <View>
         <Text>Yay you are signing up</Text>
         <Text> Need to fill out survey </Text>
-        <Button title="click to begin survey" onPress={()=> {this.setState({beginsurvey:true})}} />
+        <Button title="click to begin survey" onPress={() => { this.setState({ beginsurvey: true }) }} />
       </View>
     );
   }

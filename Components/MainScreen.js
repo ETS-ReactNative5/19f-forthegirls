@@ -6,43 +6,47 @@ import Profile from './Profile.js'
 import Events from './Events.js'
 import Matches from './Matches.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
-
-
+import profile from '../assets/styles/profileStyle';
 
 class MainScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state ={goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false}
+    this.state = { goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false }
   }
 
   eventsCallBack = () => {
-    this.setState({goToEvents: true, goToChats: false, goToProfile: false, goToMatches: false})
+    this.setState({ goToEvents: true, goToChats: false, goToProfile: false, goToMatches: false })
   }
 
   profileCallBack = () => {
-    this.setState({goToProfile: true, goToEvents: false, goToChats: false, goToMatches: false})
+    this.setState({ goToProfile: true, goToEvents: false, goToChats: false, goToMatches: false })
   }
 
   chatsCallBack = () => {
-    this.setState({goToChats: true, goToProfile: false, goToMatches: false, goToEvents: false})
+    this.setState({ goToChats: true, goToProfile: false, goToMatches: false, goToEvents: false })
   }
 
   matchesCallBack = () => {
-    this.setState({goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false})
+    this.setState({ goToChats: false, goToProfile: false, goToMatches: true, goToEvents: false })
   }
 
   render() {
     var view;
-    if(this.state.goToChats){
+    if (this.state.goToChats) {
       view = <Chats />
     }
-    else if(this.state.goToProfile){
-      view = <Profile />
+    else if (this.state.goToProfile) {
+      return (
+        <View style={profile.profileContainer}>
+          <Profile />
+          <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack} />
+        </View>
+      );
     }
-    else if(this.state.goToEvents){
+    else if (this.state.goToEvents) {
       view = <Events />
     }
-    else{
+    else {
       view = <Matches />
     }
 

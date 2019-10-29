@@ -8,22 +8,22 @@ import SignUp from './Signup.js'
 class StartScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state={signup: false, signin: false}
+    this.state = { signup: false, signin: false }
   }
 
 
   render() {
-    if(this.state.signup){
+    if (this.state.signup) {
       return (
         <SignUp />
       )
     }
-    else if(this.state.signin){
-      return(
+    else if (this.state.signin) {
+      return (
         <SignIn />
       )
     }
-    else{
+    else {
       return (
           <View style={{height: '100%', marginTop: 50}}>
               <Text>I am a startScreen </Text>
