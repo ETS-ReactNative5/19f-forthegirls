@@ -16,7 +16,7 @@ class SignIn extends React.Component {
       )
     }
     return (
-      <View>
+      <View style={{height: '100%', marginTop: 50}}>
         <Text>I am a signIn </Text>
         <Text> Do Sign in stuff </Text>
         <Button title="log in" onPress={()=> {this.setState({goToMatches:true})}}/>

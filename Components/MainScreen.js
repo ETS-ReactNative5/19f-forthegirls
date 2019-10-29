@@ -5,6 +5,8 @@ import Chats from './Chats.js'
 import Profile from './Profile.js'
 import Events from './Events.js'
 import Matches from './Matches.js'
+import mainScreenStyle from '../assets/styles/mainStyle';
+
 
 
 class MainScreen extends React.Component {
@@ -45,9 +47,15 @@ class MainScreen extends React.Component {
     }
 
     return (
-      <View>
+      <View style={[mainScreenStyle.height]}>
         {view}
-        <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack}/>
+        <BottomNavBar
+          goToChats={this.state.goToChats}
+          goToProfile={this.state.goToProfile}
+          goToEvents={this.state.goToEvents}
+          eventsCallBack={this.eventsCallBack}
+          chatsCallBack={this.chatsCallBack}
+          profileCallBack={this.profileCallBack}/>
       </View>
     );
   }
