@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
-import StartScreen from './Components/StartScreen.js'
+import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
 import * as Font from 'expo-font';
+
 
 class App extends React.Component {
   constructor(props) {

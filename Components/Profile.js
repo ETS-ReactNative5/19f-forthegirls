@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import Prompt from '../Components/Prompt';
+import Prompt from './Prompt.js';
 import colors, { fonts } from '../assets/styles/basicStyle';
 
 class Profile extends React.Component {
