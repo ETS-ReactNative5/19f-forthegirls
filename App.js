@@ -4,9 +4,11 @@ import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
 import * as Font from 'expo-font';
-import axiosMiddleware from 'redux-axios-middleware';
+//import axiosMiddleware from 'redux-axios-middleware';
 
-const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+//const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+
+
 
 
 class App extends React.Component {
@@ -99,4 +101,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
