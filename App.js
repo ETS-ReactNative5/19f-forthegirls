@@ -4,6 +4,9 @@ import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
 import * as Font from 'expo-font';
+import axiosMiddleware from 'redux-axios-middleware';
+
+const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
 
 
 class App extends React.Component {
@@ -97,51 +100,3 @@ const styles = StyleSheet.create({
 
 export default App;
 
-// export default function App() {
-
-
-//   // apicall = functionCall()
-//   //think of useState as individual keys for component state
-//   // const [resultState, setResult] = useState('');
-
-//   // //think of useEffect like a componentDidMount
-//   // useEffect(() => {
-//   //   axios.get(`${ROOT_URL}`).then((response) => {
-//   //     const data = response.data.result;
-//   //     //return data;
-//   //     setResult(data);
-//   //   })
-//   // })
-
-
-
-//   return (
-//     <View style={styles.container}>
-//       <Text>Hello World!!1 YAY FTG</Text>
-//       <Text>morgan was here</Text>
-//       <Text> Annika says hi! </Text>
-//       {/* <Text>{resultState}</Text> */}
-//       <Text> Sami says hey</Text>
-//       <Text>morgan was here</Text>
-//     </View>
-//   );
-// }
-// const ROOT_URL = 'http://localhost:9090/api';
-
-// // function functionCall() {
-// //   axios.get(`${ROOT_URL}`).then((response) => {
-// //     const data = response.data.result;
-// //     //return data;
-// //     setResult(data);
-// //   })
-// //   return undefined;
-// // }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
