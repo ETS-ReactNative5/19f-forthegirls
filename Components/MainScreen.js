@@ -37,7 +37,7 @@ class MainScreen extends React.Component {
     else if (this.state.goToProfile) {
       return (
         <View style={profile.profileContainer}>
-          <Profile />
+          <Profile isMyProfile={true} />
           <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack} />
         </View>
       );
