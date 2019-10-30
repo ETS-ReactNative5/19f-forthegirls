@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import PotentialMentor from './PotentialMentor'
 
 class Matches extends React.Component {
   constructor(props) {
@@ -8,7 +9,11 @@ class Matches extends React.Component {
 
   render() {
     return (
-      <Text>I am the matches!! </Text>
+      <ScrollView>
+        <PotentialMentor />
+        <PotentialMentor />
+        <PotentialMentor />
+      </ScrollView>
     );
   }
 }

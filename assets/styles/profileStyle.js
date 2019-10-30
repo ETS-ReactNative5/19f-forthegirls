@@ -48,5 +48,12 @@ const profile = StyleSheet.create({
   }
 });
 
+const buttons = StyleSheet.create({
+  yesNoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  }
+})
+
 export default profile;
-export { profile, promptStyle }
+export { profile, promptStyle, buttons }

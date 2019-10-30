@@ -9,10 +9,16 @@ class Profile extends React.Component {
     super(props);
   }
 
+  isMyProfile() {
+    if (this.props.isMyProfile) {
+      return (<Button title="edit" />)
+    }
+  }
+
   render() {
     return (
       <View >
-        <Button title="edit" />
+        {this.isMyProfile(this.props.isMyProfile)}
         <View style={profile.basicInfo}>
           <View style={profile.nameHeading}>
             <Text style={[colors.black, fonts.majorHeading]}>Name</Text>
@@ -30,8 +36,6 @@ class Profile extends React.Component {
             <Prompt prompt='dog or cat' answer='dog because dogs are so cute this is a long answer we love dogs so much' />
           </View>
         </View>
-        <Button title="no" />
-        <Button title="yes" />
       </View>
     );
   }
