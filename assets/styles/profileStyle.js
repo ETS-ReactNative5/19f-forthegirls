@@ -50,6 +50,8 @@ const profile = StyleSheet.create({
 
 const buttons = StyleSheet.create({
   yesNoContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }
