@@ -18,6 +18,16 @@ const bottomNav = StyleSheet.create({
     bottom: 50,
     width: '100%'
   },
+  topLayout: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: '100%',
+    top: -30,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
   borderTop: {
     paddingTop: 5,
     paddingBottom: 5,
