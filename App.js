@@ -4,15 +4,9 @@ import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
 import * as Font from 'expo-font';
-<<<<<<< HEAD
-//import axiosMiddleware from 'redux-axios-middleware';
-
-//const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
-=======
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
->>>>>>> 010583fc234bdef728c6ddc2ae0ecbcd3ba7351d
 
 const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
