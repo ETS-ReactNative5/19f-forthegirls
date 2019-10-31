@@ -69,6 +69,7 @@ class App extends React.Component {
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
+
       <Provider store={ store }>
         <View>
           <Text>This is the response: {this.state.apiResponse}</Text>

@@ -10,9 +10,9 @@ class Events extends React.Component {
     this.renderEvents = this.renderEvents.bind(this);
   }
 
-  renderEvent (nameProp) {
+  renderEvent (nameProp, uniqueKey) {
     return (
-        <View>
+        <View key={uniqueKey}>
           <ExploreEvent name={nameProp} />
         </View>
     );
@@ -23,7 +23,7 @@ class Events extends React.Component {
 
     var renderedEvents = eventList.map((anEvent) => {
         return (
-          this.renderEvent(anEvent)
+          this.renderEvent(anEvent, anEvent.toString())
         );
       }
     )
