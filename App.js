@@ -70,19 +70,6 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container, { height: '100%', marginTop: 50 }}>
-        <Text>This is the response: {this.state.apiResponse}</Text>
-        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          placeholder="Waiting for input..."
-          placeholderTextColor="#9a73ef"
-          autoCapitalize="none"
-          onChangeText={this.handleInput} />
-        <Text>The input: {this.state.inputText}</Text>
-        <Button
-          title="Submit input"
-          accessibilityLabel="Submit input"
-          color="#f194ff"
-          onPress={this.submitInput}
-        />
         {/* <MainTabBar /> */}
 
 
