@@ -56,11 +56,6 @@ class MainScreen extends React.Component {
     }
 
     return (
-<<<<<<< HEAD
-      <View >
-        {view}
-        <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack} />
-=======
       <View style={[mainScreenStyle.height]}>
         {view}
         <BottomNavBar
@@ -69,8 +64,7 @@ class MainScreen extends React.Component {
           goToEvents={this.state.goToEvents}
           eventsCallBack={this.eventsCallBack}
           chatsCallBack={this.chatsCallBack}
-          profileCallBack={this.profileCallBack}/>
->>>>>>> f41c13bb... adding bottom nav bar
+          profileCallBack={this.profileCallBack} />
       </View>
     );
   }

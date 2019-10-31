@@ -2,9 +2,9 @@ import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import Profile from './Profile';
 import { buttons } from '../assets/styles/profileStyle';
-import profile from '../assets/styles/profileStyle';
 
-class PotentialMentor extends Profile {
+
+class PotentialMentee extends Profile {
   constructor(props) {
     super(props);
   }
@@ -14,7 +14,7 @@ class PotentialMentor extends Profile {
     var no = require('../assets/icons/dontMatch.png');
 
     return (
-      <View style={profile.matchProfile}>
+      <View>
         <Profile isMyProfile={false} />
         <View style={buttons.yesNoContainer}>
           <TouchableOpacity >
@@ -33,4 +33,4 @@ class PotentialMentor extends Profile {
   }
 }
 
-export default PotentialMentor; 
+export default PotentialMentee; 

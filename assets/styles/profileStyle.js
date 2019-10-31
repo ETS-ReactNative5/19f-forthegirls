@@ -7,7 +7,7 @@ const promptStyle = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
     borderRadius: 20,
-    width: 300,
+    width: 350,
     padding: 10,
     paddingTop: 5,
     marginTop: 5,
@@ -27,13 +27,23 @@ const promptStyle = StyleSheet.create({
 const profile = StyleSheet.create({
   profileContainer: {
     flexDirection: 'column',
-    width: '95%',
-    backgroundColor: colors.lightGrey.color
+    justifyContent: 'center',
+    backgroundColor: colors.lightGrey.color,
+    borderRadius: 20
+  },
+  matchProfile: {
+    backgroundColor: colors.lightGrey.color,
+    borderRadius: 20,
+    marginBottom: 10
+  },
+  basicInfoLeft: {
+    flexDirection: 'column'
   },
   nameHeading: {
     flexDirection: 'row'
   },
   age: {
+    marginTop: 20,
     fontSize: 35
   },
   basicInfo: {
@@ -50,6 +60,8 @@ const profile = StyleSheet.create({
 
 const buttons = StyleSheet.create({
   yesNoContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
   }
