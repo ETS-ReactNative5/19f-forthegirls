@@ -5,7 +5,13 @@ import Chats from './Chats.js'
 import Profile from './Profile.js'
 import Events from './Events.js'
 import Matches from './Matches.js'
+<<<<<<< HEAD
 import profile from '../assets/styles/profileStyle';
+=======
+import mainScreenStyle from '../assets/styles/mainStyle';
+
+
+>>>>>>> f41c13bb... adding bottom nav bar
 
 class MainScreen extends React.Component {
   constructor(props) {
@@ -50,9 +56,21 @@ class MainScreen extends React.Component {
     }
 
     return (
+<<<<<<< HEAD
       <View >
         {view}
         <BottomNavBar matchesCallBack={this.matchesCallBack} eventsCallBack={this.eventsCallBack} chatsCallBack={this.chatsCallBack} profileCallBack={this.profileCallBack} />
+=======
+      <View style={[mainScreenStyle.height]}>
+        {view}
+        <BottomNavBar
+          goToChats={this.state.goToChats}
+          goToProfile={this.state.goToProfile}
+          goToEvents={this.state.goToEvents}
+          eventsCallBack={this.eventsCallBack}
+          chatsCallBack={this.chatsCallBack}
+          profileCallBack={this.profileCallBack}/>
+>>>>>>> f41c13bb... adding bottom nav bar
       </View>
     );
   }

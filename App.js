@@ -65,7 +65,7 @@ class App extends React.Component {
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.container, {height: '100%', marginTop: 50}}>
         <Text>This is the response: {this.state.apiResponse}</Text>
         <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
           placeholder="Waiting for input..."

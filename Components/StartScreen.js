@@ -25,6 +25,7 @@ class StartScreen extends React.Component {
     }
     else {
       return (
+<<<<<<< HEAD
         <View>
           <Text>I am a startScreen </Text>
           <Button title="signup" onPress={() => { this.setState({ signup: true }) }} />
@@ -32,6 +33,15 @@ class StartScreen extends React.Component {
         </View>
       );
     }
+=======
+          <View style={{height: '100%', marginTop: 50}}>
+              <Text>I am a startScreen </Text>
+              <Button title="signup" onPress={()=> {this.setState({signup:true})}}/>
+              <Button title="signin" onPress={()=> {this.setState({signin:true})}}/>
+          </View>
+        );
+      }
+>>>>>>> f41c13bb... adding bottom nav bar
   }
 }
 
