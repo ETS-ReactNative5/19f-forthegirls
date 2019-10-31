@@ -13,7 +13,6 @@ class BottomNavBar extends React.Component {
     var eventLink = this.props.goToEvents ? require('../assets/icons/eventSelected.png') : require('../assets/icons/eventUnselected.png');
     var profileLink = this.props.goToProfile ? require('../assets/icons/profileSelected.png') : require('../assets/icons/profileUnSelected.png');
 
-
     return (
       <View style={[bottomNav.bottomLayout, bottomNav.borderTop]}>
         <TouchableOpacity onPress={this.props.chatsCallBack} >

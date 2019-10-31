@@ -8,10 +8,6 @@ const UserReducer = (state = {
         return Object.assign({}, state, {
           username: action.payload.result[0].username,
         });
-      case ActionTypes.CREATE_USER:
-        return Object.assign({}, state, {
-          username: action.payload.username,
-        });
       default:
         return state;
     }  
