@@ -52,7 +52,7 @@ class MainScreen extends React.Component {
     else if (this.state.goToEvents) {
       view = <Events />
     }
-    else if (this.state.goToSettings){
+    else if (this.state.goToSettings) {
       view = <Settings />
     }
     else {
@@ -61,9 +61,9 @@ class MainScreen extends React.Component {
 
     return (
       <View style={[mainScreenStyle.height]}>
-        <TopNav matchesCallBack={this.matchesCallBack} settingsCallBack={this.settingsCallBack}/>
-        <View style={{top: 25, height: '82%'}}>
-        {view}
+        <TopNav matchesCallBack={this.matchesCallBack} settingsCallBack={this.settingsCallBack} />
+        <View style={{ top: 25, height: '82%' }}>
+          {view}
         </View>
         <BottomNavBar
           goToChats={this.state.goToChats}
@@ -71,7 +71,7 @@ class MainScreen extends React.Component {
           goToEvents={this.state.goToEvents}
           eventsCallBack={this.eventsCallBack}
           chatsCallBack={this.chatsCallBack}
-          profileCallBack={this.profileCallBack}/>
+          profileCallBack={this.profileCallBack} />
       </View>
     );
   }
