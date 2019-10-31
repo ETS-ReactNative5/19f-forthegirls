@@ -4,8 +4,13 @@ import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
 import * as Font from 'expo-font';
-//import axiosMiddleware from 'redux-axios-middleware';
-// const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+
+const store = createStore(reducers, {}, compose(
+  applyMiddleware(thunk),
+));
 
 class App extends React.Component {
   constructor(props) {
@@ -64,29 +69,29 @@ class App extends React.Component {
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
-      <View style={styles.container, { height: '100%', marginTop: 50 }}>
-        <Text>This is the response: {this.state.apiResponse}</Text>
-        <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          placeholder="Waiting for input..."
-          placeholderTextColor="#9a73ef"
-          autoCapitalize="none"
-          onChangeText={this.handleInput} />
-        <Text>The input: {this.state.inputText}</Text>
-        <Button
-          title="Submit input"
-          accessibilityLabel="Submit input"
-          color="#f194ff"
-          onPress={this.submitInput}
-        />
-        {/* <MainTabBar /> */}
-
-
-        <StartScreen />
-      </View>
+      <Provider store={ store }>
+        <View>
+          <Text>This is the response: {this.state.apiResponse}</Text>
+          <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+            placeholder="Waiting for input..."
+            placeholderTextColor="#9a73ef"
+            autoCapitalize="none"
+            onChangeText={this.handleInput} />
+          <Text>The input: {this.state.inputText}</Text>
+          <Button
+            title="Submit input"
+            accessibilityLabel="Submit input"
+            color="#f194ff"
+            onPress={this.submitInput}
+          />
+          <StartScreen />
+        </View>
+      </Provider>
     );
   }
 
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
