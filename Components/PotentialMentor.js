@@ -1,57 +1,57 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Profile from './Profile';
 import { buttons } from '../assets/styles/profileStyle';
-<<<<<<< HEAD
 import profile from '../assets/styles/profileStyle';
-=======
+import colors, { fonts } from '../assets/styles/basicStyle';
 
->>>>>>> 010583fc234bdef728c6ddc2ae0ecbcd3ba7351d
-
-class PotentialMentor extends Profile {
+class PotentialMentor extends React.Component {
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-=======
+    this.state = { matched: false, noAction: true }
+  }
 
->>>>>>> 010583fc234bdef728c6ddc2ae0ecbcd3ba7351d
+  noMatchCallback = () => {
+    // api call to remove person from matches
+    this.setState({ matched: false, noAction: false })
+  }
+
+  yesMatchCallback = () => {
+    // api call to add person to matches 
+    this.setState({ matched: true, noAction: false })
+  }
+
+  showMatch = () => {
+    if (this.state.matched) {
+      return (<Text style={[colors.turquoise, fonts.minorHeading]}>time to chat!</Text>);
+    }
   }
 
   render() {
-    var yes = require('../assets/icons/chatSelected.png');
-    var no = require('../assets/icons/dontMatch.png');
+    var yesMatch = require('../assets/icons/chatSelected.png');
+    var noMatch = require('../assets/icons/dontMatch.png');
 
     return (
-<<<<<<< HEAD
-      <View style={profile.matchProfile}>
+      <View style={
+        [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
+        profile.matchProfile]}>
+        {this.showMatch()}
         <Profile isMyProfile={false} />
         <View style={buttons.yesNoContainer}>
-=======
-      <View>
-        <Profile isMyProfile={false} />
-        <View style={buttons.yesNoContainer}>
-
->>>>>>> 010583fc234bdef728c6ddc2ae0ecbcd3ba7351d
-          <TouchableOpacity >
+          <TouchableOpacity onPress={this.noMatchCallback}>
             <Image
-              source={no}
+              source={noMatch}
             />
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={this.yesMatchCallback} >
             <Image
-              source={yes}
+              source={yesMatch}
             />
           </TouchableOpacity>
-<<<<<<< HEAD
-=======
-          {/* 
-          <Button title="no" />
-          <Button title="yes" /> */}
->>>>>>> 010583fc234bdef728c6ddc2ae0ecbcd3ba7351d
         </View>
-      </View>
+      </View >
     );
   }
 }
 
-export default PotentialMentor; 
+export default PotentialMentor;

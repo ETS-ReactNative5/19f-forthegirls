@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import PotentialMentor from './PotentialMentor'
-import profile from '../assets/styles/profileStyle';
+import PotentialMentor from './PotentialMentor';
 
 class Matches extends React.Component {
   constructor(props) {

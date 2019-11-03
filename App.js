@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './components/StartScreen'
