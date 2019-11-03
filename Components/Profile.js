@@ -20,7 +20,8 @@ class Profile extends React.Component {
         techInspo: 'GHC',
         favApp: 'VSCO',
         dogCat: 'Dog because dogs are so cute this is a long answer we love dogs so much',
-      }
+      },
+      isMyProfile: true
     };
 
     this.changeEditStatus = this.changeEditStatus.bind(this);
@@ -42,16 +43,16 @@ class Profile extends React.Component {
   handleInput = (text) => {
     this.setState(prevState => ({
       questionAnswers: {
-          ...prevState.questionAnswers,
-          name: text,
+        ...prevState.questionAnswers,
+        name: text,
       }
     }));
   }
 
   render() {
-    if(this.state.editing===true){
+    if (this.state.editing === true) {
       return (
-        <View >
+        <View style={profile.profileContainer}>
           {this.isMyProfile(this.props.isMyProfile)}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
@@ -81,9 +82,9 @@ class Profile extends React.Component {
         </View>
       );
     }
-    else if(this.state.editing===false){
+    else if (this.state.editing === false) {
       return (
-        <View >
+        <View style={profile.profileContainer}>
           {this.isMyProfile(this.props.isMyProfile)}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
@@ -101,7 +102,7 @@ class Profile extends React.Component {
           <View style={promptStyle.promptContainer}>
             <View >
               <Prompt prompt='tech inspo' answer={this.state.questionAnswers.techInspo} />
-              <Prompt prompt='fav app' answer={this.state.questionAnswers.favApp}/>
+              <Prompt prompt='fav app' answer={this.state.questionAnswers.favApp} />
               <Prompt prompt='dog or cat' answer={this.state.questionAnswers.dogCat} />
             </View>
           </View>

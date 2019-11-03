@@ -35,10 +35,11 @@ class App extends React.Component {
       console.log(error);
     })
     await Font.loadAsync({
-      'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
-      'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
-      'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
-      'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
+      montserratMedium: require('./assets/fonts/Montserrat-Medium.ttf'),
+      // 'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+      // 'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+      // 'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
+      // 'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
     });
   }
 
@@ -75,7 +76,7 @@ class App extends React.Component {
     return (
 
       <Provider store={store}>
-          <Main />
+        <Main />
       </Provider>
     );
   }
