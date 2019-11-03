@@ -55,6 +55,16 @@ const profile = StyleSheet.create({
   jobStuff: {
     flexDirection: 'column',
     alignItems: 'flex-end'
+  },
+  dimmed: {
+    opacity: 0.2
+  },
+  normal: {
+    opacity: 1
+  },
+  match: {
+    borderWidth: 10,
+    borderColor: colors.turquoise.color
   }
 });
 
