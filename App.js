@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Provider } from 'react-redux';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
+import Main from './navigation/Main';
+import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -35,7 +36,6 @@ class App extends React.Component {
     })
     await Font.loadAsync({
       'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
-      'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
       'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
       'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
       'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
@@ -75,22 +75,7 @@ class App extends React.Component {
     return (
 
       <Provider store={store}>
-        <View>
-          <Text>This is the response: {this.state.apiResponse}</Text>
-          <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            placeholder="Waiting for input..."
-            placeholderTextColor="#9a73ef"
-            autoCapitalize="none"
-            onChangeText={this.handleInput} />
-          <Text>The input: {this.state.inputText}</Text>
-          <Button
-            title="Submit input"
-            accessibilityLabel="Submit input"
-            color="#f194ff"
-            onPress={this.submitInput}
-          />
-          <StartScreen />
-        </View>
+          <Main />
       </Provider>
     );
   }
