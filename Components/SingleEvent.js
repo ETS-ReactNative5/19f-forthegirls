@@ -3,10 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
+  ImageBackground,
 } from 'react-native';
+import mainScreenStyle from '../assets/styles/mainStyle';
+import eventPage from '../assets/styles/eventPage';
 
-
-class ExploreEvent extends Component {
+class SingleEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,26 +19,16 @@ class ExploreEvent extends Component {
 
   render() {
     return (
-      <View style={MainStyle.explore}>
+
+      <View style={eventPage.singleEventView}>
+        <ImageBackground source={require('../img/EventBackground.jpg')} style={eventPage.backgroundImage}>
           <Text>
             This is {this.props.name}
           </Text>
+        </ImageBackground>
       </View>
     );
   }
 }
 
-const MainStyle = StyleSheet.create({
-  explore: {
-    backgroundColor: '#FFFBAF',
-    width: 400,
-    paddingTop: 100,
-    paddingBottom: 100,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-});
-
-
-export default ExploreEvent;
+export default SingleEvent;

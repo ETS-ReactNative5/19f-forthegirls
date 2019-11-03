@@ -6,7 +6,15 @@ import MainTabBar from './containers/bottomNav';
 import Main from './navigation/Main';
 import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
-//import axiosMiddleware from 'redux-axios-middleware';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+
+const store = createStore(reducers, {}, compose(
+  applyMiddleware(thunk),
+));
+
+
 // const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
 
 class App extends React.Component {
@@ -28,7 +36,6 @@ class App extends React.Component {
     })
     await Font.loadAsync({
       'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
-      'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
       'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
       'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
       'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
@@ -66,11 +73,17 @@ class App extends React.Component {
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
-        <Main />
+
+      <Provider store={store}>
+        <View>
+          <Main />
+        </View>
+      </Provider>
     );
   }
 
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

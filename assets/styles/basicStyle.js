@@ -43,5 +43,10 @@ const fonts = StyleSheet.create({
   }
 })
 
+const fontEffects = StyleSheet.create({
+  bold: { fontWeight: 'bold' },
+  italic: { fontStyle: 'italic' },
+});
+
 export default colors;
-export { colors, fonts }
+export { colors, fonts, fontEffects }

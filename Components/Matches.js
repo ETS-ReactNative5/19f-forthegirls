@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import PotentialMentor from './PotentialMentor'
+import PotentialMentor from './PotentialMentor';
 
 class Matches extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Matches extends React.Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView >
         <PotentialMentor />
         <PotentialMentor />
         <PotentialMentor />

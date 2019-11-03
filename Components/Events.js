@@ -1,6 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import ExploreEvent from './ExploreEvent.js'
+import SingleEvent from './SingleEvent.js'
+import mainScreenStyle from '../assets/styles/mainStyle';
+import eventPage from '../assets/styles/eventPage';
+
+
 
 class Events extends React.Component {
   constructor(props) {
@@ -10,10 +14,10 @@ class Events extends React.Component {
     this.renderEvents = this.renderEvents.bind(this);
   }
 
-  renderEvent (nameProp) {
+  renderEvent (nameProp, uniqueKey) {
     return (
-        <View>
-          <ExploreEvent name={nameProp} />
+        <View key={uniqueKey}>
+          <SingleEvent name={nameProp} />
         </View>
     );
   }
@@ -23,7 +27,7 @@ class Events extends React.Component {
 
     var renderedEvents = eventList.map((anEvent) => {
         return (
-          this.renderEvent(anEvent)
+          this.renderEvent(anEvent, anEvent.toString())
         );
       }
     )
@@ -32,11 +36,12 @@ class Events extends React.Component {
   }
 
   render() {
-    //return this.renderEvent('Speech');
     return (
-      <ScrollView>
-        {this.renderEvents()}
-      </ScrollView>
+      <View style={eventPage.wholeContainer}>
+        <ScrollView contentContainerStyle={eventPage.scroll} >
+          {this.renderEvents()}
+        </ScrollView>
+      </View>
     );
   }
 }
