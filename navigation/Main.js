@@ -13,7 +13,7 @@ class Main extends Component {
 
 
   render() {
-      return <MainTabBar />;
+    return <MainTabBar />;
   }
 }
 
