@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
+import Main from './navigation/Main';
+import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
 //import axiosMiddleware from 'redux-axios-middleware';
 // const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
@@ -64,12 +66,7 @@ class App extends React.Component {
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
     return (
-      <View style={styles.container, { height: '100%', marginTop: 50 }}>
-        {/* <MainTabBar /> */}
-
-
-        <StartScreen />
-      </View>
+        <Main />
     );
   }
 
