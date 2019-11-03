@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import Events from '../components/Events';
+import EventStack from './EventStack';
 import Profile from '../components/Profile';
 import Chats from '../components/Chats';
 import Matches from '../components/Matches'
@@ -41,7 +41,7 @@ const MainTabBar = createBottomTabNavigator(
       }),
     },
     Events: {
-      screen: Events,
+      screen: EventStack,
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
