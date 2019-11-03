@@ -13,11 +13,7 @@ class Main extends Component {
 
 
   render() {
-    if (this.state.userSignedIn === true) {
       return <MainTabBar />;
-    } else {
-      return <Text> Signup / in here</Text>;
-    }
   }
 }
 

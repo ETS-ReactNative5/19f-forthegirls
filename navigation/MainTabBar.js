@@ -1,4 +1,6 @@
 import React from 'react';
+import { Image } from 'react-native';
+
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Events from '../components/Events';
 import Profile from '../components/Profile';

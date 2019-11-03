@@ -75,9 +75,7 @@ class App extends React.Component {
     return (
 
       <Provider store={store}>
-        <View>
           <Main />
-        </View>
       </Provider>
     );
   }
