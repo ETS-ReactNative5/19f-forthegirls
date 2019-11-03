@@ -22,7 +22,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       apiResponse: 'no api response yet',
-      inputText: 'no text yet'
+      inputText: 'no text yet',
+      fontLoaded: false
     }
   }
 
@@ -35,12 +36,16 @@ class App extends React.Component {
       console.log(error);
     })
     await Font.loadAsync({
-      montserratMedium: require('./assets/fonts/Montserrat-Medium.ttf'),
-      // 'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-      // 'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
-      // 'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
-      // 'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
+      'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
+      'montserrat-semibold': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+      'lato-bold': require('./assets/fonts/Lato-Bold.ttf'),
+      'lato-italic': require('./assets/fonts/Lato-Italic.ttf'),
+      'lato-regular': require('./assets/fonts/Lato-Regular.ttf')
     });
+    this.setState({
+      fontLoaded: true,
+    });
+
   }
 
   handleInput = (text) => {
@@ -73,12 +78,16 @@ class App extends React.Component {
   // https://www.tutorialspoint.com/react_native/react_native_text_input.htm
   // Help with basic text input, assume we'll make more sophisticated later
   render() {
-    return (
+    if (this.state.fontLoaded) {
+      return (
+        <Provider store={store}>
+          <Main />
+        </Provider>
+      );
+    } else {
+      return <Text>loading</Text>
+    }
 
-      <Provider store={store}>
-        <Main />
-      </Provider>
-    );
   }
 
 }
