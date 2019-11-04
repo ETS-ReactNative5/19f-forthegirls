@@ -4,9 +4,11 @@ import SingleEvent from './SingleEvent.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 
-
-
 class Events extends React.Component {
+  static navigationOptions = {
+    header: null,
+  }
+
   constructor(props) {
     super(props);
 
@@ -17,7 +19,7 @@ class Events extends React.Component {
   renderEvent (nameProp, uniqueKey) {
     return (
         <View key={uniqueKey}>
-          <SingleEvent name={nameProp} />
+          <SingleEvent name={nameProp} navigation={this.props.navigation} />
         </View>
     );
   }

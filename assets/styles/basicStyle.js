@@ -20,14 +20,14 @@ const colors = StyleSheet.create({
 
 const fonts = StyleSheet.create({
   bodyText: {
-    fontFamily: 'Arial',
+    fontFamily: 'lato-regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 18,
     lineHeight: 22,
   },
   minorHeading: {
-    fontFamily: 'Arial',
+    fontFamily: 'montserrat-medium',
     fontStyle: 'normal',
     fontWeight: '500',
     fontSize: 18,
@@ -35,7 +35,7 @@ const fonts = StyleSheet.create({
     letterSpacing: -0.05
   },
   majorHeading: {
-    fontFamily: 'Arial',
+    fontFamily: 'montserrat-semibold',
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 35,
