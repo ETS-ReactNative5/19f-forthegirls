@@ -81,7 +81,6 @@ const App = () => (
 //   //   })
 //   // }
 
-<<<<<<< HEAD
 //   // https://www.tutorialspoint.com/react_native/react_native_text_input.htm
 //   // Help with basic text input, assume we'll make more sophisticated later
 //   render() {
@@ -92,22 +91,6 @@ const App = () => (
 //       </Provider>
 //     );
 //   }
-=======
-  // https://www.tutorialspoint.com/react_native/react_native_text_input.htm
-  // Help with basic text input, assume we'll make more sophisticated later
-  render() {
-    if (this.state.fontLoaded) {
-      return (
-        <Provider store={store}>
-          <Main />
-        </Provider>
-      );
-    } else {
-      return <Text>loading</Text>
-    }
-
-  }
->>>>>>> d76baf7815e6e4215fee92337e08b94b53a863ea
 
 // }
 
