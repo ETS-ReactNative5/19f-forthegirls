@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
+import { getUser, editUser } from '../actions';
+
 
 class Profile extends React.Component {
   constructor(props) {
@@ -12,7 +15,7 @@ class Profile extends React.Component {
       editing: false,
       questionAnswers:
       {
-        name: 'Sami',
+        name: 'user12345',
         hometown: 'Westchester, NY',
         age: 21,
         occupation: 'Student',
@@ -25,6 +28,12 @@ class Profile extends React.Component {
     };
 
     this.changeEditStatus = this.changeEditStatus.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getUser(this.state.questionAnswers.name);
+    console.log(this.props.username);
+    console.log(this.props.email);
   }
 
   isMyProfile() {
@@ -89,7 +98,8 @@ class Profile extends React.Component {
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <View style={profile.nameHeading}>
-                <Text style={[colors.black, fonts.majorHeading]}>{this.state.questionAnswers.name}</Text>
+                <Text style={[colors.black, fonts.majorHeading]}>{this.props.username}</Text>
+                <Text style={[colors.black, fonts.majorHeading]}>{this.props.email}</Text>
                 <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, {this.state.questionAnswers.age}</Text>
               </View >
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.questionAnswers.hometown}</Text>
@@ -109,7 +119,22 @@ class Profile extends React.Component {
         </View>
       );
     }
+    else {
+      return (
+        <View style={profile.profileContainer}>
+         <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
+        </View>
+      )
+    }
   }
 }
 
-export default Profile;
+const mapStateToProps = reduxState => (
+  {
+    username: reduxState.user.username,
+    email: reduxState.user.email,
+    matches: reduxState.user.matches,
+  }
+);
+
+export default connect(mapStateToProps, { getUser, editUser })(Profile);
