@@ -4,9 +4,9 @@ import BottomNavBar from './BottomNavBar.js'
 import Chats from './Chats.js'
 import Profile from './Profile.js'
 import Events from './Events.js'
-import TopNav from './TopNav.js'
+// import TopNav from './TopNav.js'
 import Matches from './Matches.js'
-import Settings from './Settings.js'
+// import Settings from './Settings.js'
 import profile from '../assets/styles/profileStyle';
 
 class MainScreen extends React.Component {
@@ -48,9 +48,9 @@ class MainScreen extends React.Component {
     else if (this.state.goToEvents) {
       view = <Events />
     }
-    else if (this.state.goToSettings) {
-      view = <Settings />
-    }
+    // else if (this.state.goToSettings) {
+    //   view = <Settings />
+    // }
     else {
       view = <Matches />
     }
@@ -58,7 +58,6 @@ class MainScreen extends React.Component {
     return (
       //  style={[mainScreenStyle.height]} -- breaks the style!
       <View >
-        <TopNav matchesCallBack={this.matchesCallBack} settingsCallBack={this.settingsCallBack} />
         <View style={{ top: 25, height: '82%' }}>
           {view}
         </View>
