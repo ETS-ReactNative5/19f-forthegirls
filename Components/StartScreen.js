@@ -24,11 +24,11 @@ class StartScreen extends React.Component {
       )
     }
     else {
-      return (
+      return (  
         <View style={{ height: '100%', marginTop: 50 }}>
           <Text>I am a startScreen </Text>
-          <Button title="signup" onPress={() => { this.setState({ signup: true }) }} />
-          <Button title="signin" onPress={() => { this.setState({ signin: true }) }} />
+          <Button title="signup" onPress={() => {   this.props.navigation.navigate('SignUp', {}) }} />
+          <Button title="signin" onPress={() => {  this.props.navigation.navigate('SignIn', {}) }} />
         </View>
       );
     }

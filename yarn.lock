@@ -5743,6 +5743,11 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
+survey-react@^1.1.18:
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/survey-react/-/survey-react-1.1.18.tgz#6792aafc0f1793ae6dcb03d2ed440645b72edffc"
+  integrity sha512-SDxwQN8khtcmZ6bW1fGXDwJQjLHpxPbFxO2NVwIe4d5Ummu5td2i/7m0pE8sN+z1bGYuvxEuRxZp10eAxR9eOQ==
+
 symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
