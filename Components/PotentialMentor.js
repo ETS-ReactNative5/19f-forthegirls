@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Profile from './Profile';
 import { buttons } from '../assets/styles/profileStyle';
 import profile from '../assets/styles/profileStyle';
 import colors, { fonts } from '../assets/styles/basicStyle';
+import { pairMatchToUser } from '../actions';
 
 class PotentialMentor extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ class PotentialMentor extends React.Component {
 
   yesMatchCallback = () => {
     // api call to add person to matches 
+    this.props.pairMatchToUser(this.props.username, 'user2')
     this.setState({ matched: true, noAction: false })
   }
 
@@ -54,4 +57,12 @@ class PotentialMentor extends React.Component {
   }
 }
 
-export default PotentialMentor;
+const mapStateToProps = reduxState => (
+  {
+    username: reduxState.user.username,
+    email: reduxState.user.email,
+    matches: reduxState.user.matches,
+  }
+);
+
+export default connect(mapStateToProps, { pairMatchToUser })(PotentialMentor);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import MainScreen from './MainScreen.js'
+// import MainScreen from './MainScreen.js'
 
 
 class SignIn extends React.Component {
@@ -12,11 +12,11 @@ class SignIn extends React.Component {
   render() {
     if (this.state.goToMatches) {
       return (
-        <MainScreen />
+        null// <MainScreen />
       )
     }
     return (
-      <View style={{height: '100%', marginTop: 50}}>
+      <View style={{ height: '100%', marginTop: 50 }}>
         <Text>I am a signIn </Text>
         <Text> Do Sign in stuff </Text>
         <Button title="log in" onPress={() => { this.setState({ goToMatches: true }) }} />
