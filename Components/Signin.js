@@ -19,14 +19,12 @@ class SignIn extends React.Component {
     this.props.signinUser({email: this.state.email, password: this.state.password});
   }
 
-  emailInput = (e) => {
-    e.preventDefault();
-    this.setState({ email: e.target.value });
+  emailInput = (text) => {
+    this.setState({ email: text });
   }
 
-  passwordInput = (e) => {
-    e.preventDefault();
-    this.setState({ password: e.target.value });
+  passwordInput = (text) => {
+    this.setState({ password: text });
   }
 
   render() {
@@ -37,12 +35,18 @@ class SignIn extends React.Component {
     }
     return (
       <View style={{height: '100%', marginTop: 50}}>
-        <TextInput defaultValue="Enter Your Email" onChangeText={this.emailInput}/>
-        <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput}/>
+        <TextInput defaultValue="Enter Your Email" onChangeText={this.emailInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+        <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing'/>
         <Button title="Log In" onPress={this.checkSignIn} />
       </View>
     );
   }
 }
 
-export default connect({}, { signinUser })(SignIn);
+function mapStateToProps(reduxState) {
+  return {
+    error: reduxState.error,
+  };
+}
+
+export default connect(mapStateToProps, { signinUser })(SignIn);

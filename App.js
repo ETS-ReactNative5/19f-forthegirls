@@ -9,20 +9,50 @@ import * as Font from 'expo-font';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
+import {AsyncStorage} from 'react-native';
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
 ));
 
-const token = localStorage.getItem('token');
-const userEmail = localStorage.getItem('email');
-const username = localStorage.getItem('username');
-
-if (token) {
-  store.dispatch({ type: 'AUTH_USER', payload: { email: userEmail, username } });
+// https://medium.com/building-with-react-native/what-is-asyncstorage-in-react-native-and-how-you-to-use-it-with-app-state-manager-1x09-b8c636ce5f6e
+const getToken = async () => {
+  let token = '';
+  try {
+    token = await AsyncStorage.getItem('token') || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return token;
 }
 
+const getUsername = async () => {
+  let username = '';
+  try {
+    username = await AsyncStorage.getItem('username') || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return username;
+}
+
+const getUserEmail = async () => {
+  let email = '';
+  try {
+    email = await AsyncStorage.getItem('email') || 'none';
+  } catch (error) {
+    // Error retrieving data
+    console.log(error.message);
+  }
+  return email;
+}
+
+if (getToken()) {
+  store.dispatch({ type: 'AUTH_USER', payload: { email: getUserEmail(), username: getUsername() } });
+}
 
 class App extends React.Component {
   constructor(props) {

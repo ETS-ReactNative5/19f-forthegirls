@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {AsyncStorage} from 'react-native';
 
 const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
@@ -70,16 +71,49 @@ export const ActionTypes = {
 
 //---------------------------- AUTH --------------------------------//
 
-export function signinUser({ email, password }, history) {
+export function signinUser({ email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER, payload: { email, username: response.data.username } });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('email', response.data.email);
-      localStorage.setItem('username', response.data.username);
-      history.push('/');
+      console.log(response);
+
+      // const saveToken = async token => {
+      //   try {
+      //     await AsyncStorage.setItem('token', response.data.token);
+      //   } catch (error) {
+      //     // Error retrieving data
+      //     console.log(error.message);
+      //   }
+      // };
+      
+      // saveToken();
+
+      // const saveEmail = async email => {
+      //   try {
+      //     await AsyncStorage.setItem('email', response.data.email);
+      //   } catch (error) {
+      //     // Error retrieving data
+      //     console.log(error.message);
+      //   }
+      // };
+      
+      // saveEmail();
+
+      // const saveUsername = async username => {
+      //   try {
+      //     await AsyncStorage.setItem('username', response.data.username);
+      //   } catch (error) {
+      //     // Error retrieving data
+      //     console.log(error.message);
+      //   }
+      // };
+      
+      // saveUsername();
+
+      //somehow go to next page
+      // this.props.navigation.navigate('Friends')
     }).catch((error) => {
-      // console.log('hi');
+      console.log('hi');
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
   };
@@ -96,10 +130,42 @@ export function signupUser({ email, password, username }, history) {
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
       // console.log('IN RESPONSE');
       dispatch({ type: ActionTypes.AUTH_USER, payload: { email, username } });
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('email', response.data.email);
-      localStorage.setItem('username', response.data.username);
-      history.push('/');
+      const saveToken = async token => {
+        try {
+          await AsyncStorage.setItem('token', response.data.token);
+        } catch (error) {
+          // Error retrieving data
+          console.log(error.message);
+        }
+      };
+      
+      saveToken();
+
+      const saveEmail = async email => {
+        try {
+          await AsyncStorage.setItem('email', response.data.email);
+        } catch (error) {
+          // Error retrieving data
+          console.log(error.message);
+        }
+      };
+      
+      saveEmail();
+
+      const saveUsername = async username => {
+        try {
+          await AsyncStorage.setItem('username', response.data.username);
+        } catch (error) {
+          // Error retrieving data
+          console.log(error.message);
+        }
+      };
+      
+      saveUsername();
+
+      //somehow get to next page
+      this.props.navigation.navigate('Friends')
+
     }).catch((error) => {
       dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
@@ -111,11 +177,44 @@ export function signupUser({ email, password, username }, history) {
 // and deauths
 export function signoutUser(history) {
   return (dispatch) => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
-    localStorage.removeItem('username');
+
+    const deleteToken = async () => {
+      try {
+        await AsyncStorage.removeItem('token');
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+    }
+
+    deleteToken();
+
+    const deleteUsername = async () => {
+      try {
+        await AsyncStorage.removeItem('username');
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+    }
+
+    deleteUsername();
+
+    const deleteEmail = async () => {
+      try {
+        await AsyncStorage.removeItem('email');
+      } catch (error) {
+        // Error retrieving data
+        console.log(error.message);
+      }
+    }
+
+    deleteEmail();
+
     dispatch({ type: ActionTypes.DEAUTH_USER });
-    history.push('/');
+
+    this.props.navigation.navigate('Friends')
+    //somehow get to next page
   };
   // return (dispatch) => {
   //   localStorage.removeItem('token');
