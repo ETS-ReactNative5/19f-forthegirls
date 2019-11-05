@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import Survey from './Survey.js'
 
+//this.props.navigation.navigate(name of page you want to go to)
+
 
 class SignUp extends React.Component {
   constructor(props) {

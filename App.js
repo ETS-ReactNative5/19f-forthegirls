@@ -15,6 +15,15 @@ const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
 ));
 
+const token = localStorage.getItem('token');
+const userEmail = localStorage.getItem('email');
+const username = localStorage.getItem('username');
+
+if (token) {
+  store.dispatch({ type: 'AUTH_USER', payload: { email: userEmail, username } });
+}
+
+
 class App extends React.Component {
   constructor(props) {
     super(props);
