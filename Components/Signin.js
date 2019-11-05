@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-// import MainScreen from './MainScreen.js'
+import MainScreen from './MainScreen.js'
 
 
 class SignIn extends React.Component {
@@ -12,7 +12,7 @@ class SignIn extends React.Component {
   render() {
     if (this.state.goToMatches) {
       return (
-        null// <MainScreen />
+        <MainScreen />
       )
     }
     return (

@@ -72,6 +72,7 @@ export function pairMatchToUser(username1, username2) {
     axios.put(`${ROOT_URL}/users/pair/${username1}`, { username: username2 })
       .then((response) => {
         dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
+        console.log(response.data);
       }).then(() => {
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
       }).catch((error) => {
