@@ -14,7 +14,7 @@ class PotentialMentee extends Profile {
     var no = require('../assets/icons/dontMatch.png');
 
     return (
-      <View style={profile.matchProfile}>
+      <View style={profile.profileContainer}>
         <Profile isMyProfile={false} />
         <View style={buttons.yesNoContainer}>
           <TouchableOpacity >
