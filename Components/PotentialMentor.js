@@ -34,7 +34,7 @@ class PotentialMentor extends React.Component {
     return (
       <View style={
         [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
-        profile.matchProfile]}>
+        profile.profileContainer]}>
         {this.showMatch()}
         <Profile isMyProfile={false} />
         <View style={buttons.yesNoContainer}>

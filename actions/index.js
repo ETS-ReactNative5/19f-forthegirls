@@ -17,9 +17,9 @@ export const ActionTypes = {
   //----------------- USERS ------------------//
 
   //retrieves the specified user object from the database
-  export function getUser(userName) {
+  export function getUser(username) {
     return (dispatch) => {
-        axios.get(`${ROOT_URL}/users/${userName}`)
+        axios.get(`${ROOT_URL}/users/${username}`)
           .then((response) => {
             dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
           }).then(() => {

@@ -29,10 +29,6 @@ const profile = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: colors.lightGrey.color,
-    borderRadius: 20
-  },
-  matchProfile: {
-    backgroundColor: colors.lightGrey.color,
     borderRadius: 20,
     marginBottom: 10
   },

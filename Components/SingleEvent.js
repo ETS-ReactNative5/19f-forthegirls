@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ImageBackground,
+  Button,
 } from 'react-native';
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
@@ -12,9 +13,14 @@ class SingleEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.navToPage = this.navToPage.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
+  }
+
+  navToPage() {
+    this.props.navigation.navigate('Detail', 1387491);
   }
 
   render() {
@@ -25,6 +31,7 @@ class SingleEvent extends Component {
           <Text>
             This is {this.props.name}
           </Text>
+          <Button title="Learn More" onPress={this.navToPage} />
         </ImageBackground>
       </View>
     );
