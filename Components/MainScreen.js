@@ -4,7 +4,6 @@ import BottomNavBar from './BottomNavBar.js'
 import Chats from './Chats.js'
 import Profile from './Profile.js'
 import Events from './Events.js'
-// import TopNav from './TopNav.js'
 import Matches from './Matches.js'
 // import Settings from './Settings.js'
 import profile from '../assets/styles/profileStyle';

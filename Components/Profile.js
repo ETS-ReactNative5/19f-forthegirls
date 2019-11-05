@@ -15,7 +15,7 @@ class Profile extends React.Component {
       editing: false,
       questionAnswers:
       {
-        name: 'user12345',
+        name: 'user1',
         hometown: 'Westchester, NY',
         age: 21,
         occupation: 'Student',
@@ -122,7 +122,7 @@ class Profile extends React.Component {
     else {
       return (
         <View style={profile.profileContainer}>
-         <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
+          <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
         </View>
       )
     }
