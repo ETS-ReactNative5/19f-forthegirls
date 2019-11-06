@@ -1,19 +1,26 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import { getUser } from '../actions';
 
 class Chats extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      questionAnswers:
+      {
+        // get rid of the hardcoding
+        name: 'test',
+      }
+    }
   }
 
   componentDidMount() {
-    //hardcoded
-    this.props.getUser('user1');
+    this.props.getUser(this.state.questionAnswers.name);
   }
 
   showMatches() {
-    for (i = 0; i < this.props.matches.length(); i++) {
+    for (i = 0; i < this.props.matches.length; i++) {
       return (<Text>{this.props.matches[i].username}</Text>)
     }
   }

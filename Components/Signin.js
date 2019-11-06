@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       goToMatches: false,
       email: '',
       password: '',
@@ -16,7 +16,7 @@ class SignIn extends React.Component {
   }
 
   checkSignIn = () => {
-    this.props.signinUser({email: this.state.email, password: this.state.password});
+    this.props.signinUser({ email: this.state.email, password: this.state.password });
   }
 
   emailInput = (text) => {
@@ -34,9 +34,9 @@ class SignIn extends React.Component {
       )
     }
     return (
-      <View style={{height: '100%', marginTop: 50}}>
-        <TextInput defaultValue="Enter Your Email" onChangeText={this.emailInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+      <View style={{ height: '100%', marginTop: 50 }}>
+        <TextInput defaultValue="Enter Your Email" onChangeText={this.emailInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing' />
         <Button title="Log In" onPress={this.checkSignIn} />
       </View>
     );
