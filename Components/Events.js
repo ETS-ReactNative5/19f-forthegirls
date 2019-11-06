@@ -16,22 +16,22 @@ class Events extends React.Component {
     this.renderEvents = this.renderEvents.bind(this);
   }
 
-  renderEvent (nameProp, uniqueKey) {
+  renderEvent(nameProp, uniqueKey) {
     return (
-        <View key={uniqueKey}>
-          <SingleEvent name={nameProp} navigation={this.props.navigation} />
-        </View>
+      <View key={uniqueKey}>
+        <SingleEvent name={nameProp} navigation={this.props.navigation} />
+      </View>
     );
   }
 
-  renderEvents(){
+  renderEvents() {
     var eventList = ['Speech', 'Mixer', 'Hackathon'];
 
     var renderedEvents = eventList.map((anEvent) => {
-        return (
-          this.renderEvent(anEvent, anEvent.toString())
-        );
-      }
+      return (
+        this.renderEvent(anEvent, anEvent.toString())
+      );
+    }
     )
 
     return renderedEvents;

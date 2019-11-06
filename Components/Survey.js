@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import MainScreen from './MainScreen.js'
+//import MainScreen from './MainScreen.js'
 
 
 class Survey extends React.Component {
@@ -12,7 +12,7 @@ class Survey extends React.Component {
   render() {
     if (this.state.goToMatches) {
       return (
-        <MainScreen />
+        null //<MainScreen />
       )
     }
     return (

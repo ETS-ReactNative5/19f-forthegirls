@@ -14,11 +14,28 @@ export const ActionTypes = {
     AUTH_USER: 'AUTH_USER',
     DEAUTH_USER: 'DEAUTH_USER',
     AUTH_ERROR: 'AUTH_ERROR',
+  
+  
+  //MATCHES
+  PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
+  FETCH_USER_MATCHES: 'FETCH_USER_MATCHES'
 
     //ERRORS
     SET_ERROR: 'SET_ERROR',
     CLEAR_ERROR: 'CLEAR_ERROR',
-  };
+  
+  // USERS
+  // CREATE_USER: 'CREATE_USER',
+  FETCH_USER: 'FETCH_USER',
+  // UPDATE_USER: 'UPDATE_USER',
+  DELETE_USER: 'DELETE_USER',
+
+  //ERRORS
+  SET_ERROR: 'SET_ERROR',
+  CLEAR_ERROR: 'CLEAR_ERROR',
+
+
+};
 
   //----------------- USERS ------------------//
 
@@ -232,3 +249,19 @@ export function authError(error) {
     message: error,
   };
 }
+
+//----------------- MATCHES ------------------//
+export function pairMatchToUser(username1, username2) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/users/pair/${username1}`, { username: username2 })
+      .then((response) => {
+        dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
+        console.log(response.data);
+      }).then(() => {
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.ERROR_SET, error });
+      });
+  }
+}
+

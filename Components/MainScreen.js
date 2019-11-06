@@ -46,9 +46,9 @@ class MainScreen extends React.Component {
     else if (this.state.goToEvents) {
       view = <Events />
     }
-    else if (this.state.goToSettings) {
-      view = <Settings />
-    }
+    // else if (this.state.goToSettings) {
+    //   view = <Settings />
+    // }
     else {
       view = <Matches />
     }
@@ -56,7 +56,6 @@ class MainScreen extends React.Component {
     return (
       //  style={[mainScreenStyle.height]} -- breaks the style!
       <View >
-        <TopNav matchesCallBack={this.matchesCallBack} settingsCallBack={this.settingsCallBack} />
         <View style={{ top: 25, height: '82%' }}>
           {view}
         </View>
