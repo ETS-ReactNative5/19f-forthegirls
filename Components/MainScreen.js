@@ -5,7 +5,6 @@ import Chats from './Chats.js'
 import Profile from './Profile.js'
 import Events from './Events.js'
 import Matches from './Matches.js'
-// import Settings from './Settings.js'
 import profile from '../assets/styles/profileStyle';
 
 class MainScreen extends React.Component {
