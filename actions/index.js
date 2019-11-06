@@ -252,7 +252,6 @@ export function pairMatchToUser(username1, username2) {
   }
 }
 
-<<<<<<< HEAD
 /* don't need this yet ? or ever */
 // export function getMatches(username) {
 //   return (dispatch) => {
@@ -268,5 +267,3 @@ export function pairMatchToUser(username1, username2) {
 //   }
 // }
 
-=======
->>>>>>> 0324b37bc1fd94c228738b99bcce049f9367d1e8
