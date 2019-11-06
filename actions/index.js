@@ -15,7 +15,7 @@ export const ActionTypes = {
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
-  FETCH_USER_MATCHES: 'FETCH_USER_MATCHES'
+  FETCH_MATCHES: 'FETCH_MATCHES'
 
 };
 
@@ -80,3 +80,19 @@ export function pairMatchToUser(username1, username2) {
       });
   }
 }
+
+/* don't need this yet ? or ever */
+// export function getMatches(username) {
+//   return (dispatch) => {
+//     axios.get(`${ROOT_URL}/users/matches/${username}`)
+//       .then((response) => {
+//         dispatch({ type: ActionTypes.FETCH_MATCHES, payload: response.data })
+//         console.log(response.data);
+//       }).then(() => {
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         dispatch({ type: ActionTypes.ERROR_SET, error });
+//       });
+//   }
+// }
+

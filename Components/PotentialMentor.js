@@ -28,8 +28,8 @@ class PotentialMentor extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.getUser(this.state.questionAnswers.name);
-    console.log(this.props.username);
+    //hardcoded
+    this.props.getUser('user1');
   }
 
   noMatchCallback = () => {
@@ -103,4 +103,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { pairMatchToUser })(PotentialMentor);
+export default connect(mapStateToProps, { pairMatchToUser, getUser })(PotentialMentor);
