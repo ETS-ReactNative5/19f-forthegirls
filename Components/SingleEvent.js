@@ -20,7 +20,7 @@ class SingleEvent extends Component {
   }
 
   navToPage() {
-    this.props.navigation.navigate('Detail', 1387491);
+    this.props.navigation.navigate('Detail', 5876700);
   }
 
   render() {
