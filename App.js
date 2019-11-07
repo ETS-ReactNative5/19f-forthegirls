@@ -3,37 +3,41 @@ import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './components/StartScreen'
 import MainTabBar from './containers/bottomNav';
+import LogoBar from './components/LogoBar';
 import Main from './navigation/Main';
 import { Provider } from 'react-redux';
 import * as Font from 'expo-font';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
 ));
 
-  //https://facebook.github.io/react-native/docs/asyncstorage
+//https://facebook.github.io/react-native/docs/asyncstorage
 
-  _retrieveData = async () => {
-    try {
-      const value = 
-      { 
-        token: await AsyncStorage.getItem('token'),
-        username: await AsyncStorage.getItem('username'),
-      }
-      if (value.token !== null) {
-        store.dispatch({ type: 'AUTH_USER', payload: { username: value.username } });
-      }
-    } catch (error) {
-      console.log("error getting token");
+_retrieveData = async () => {
+  try {
+    const value =
+    {
+      token: await AsyncStorage.getItem('token'),
+      username: await AsyncStorage.getItem('username'),
     }
-  };
+    if (value.token !== null) {
+      store.dispatch({ type: 'AUTH_USER', payload: { username: value.username } });
+    }
+  } catch (error) {
+    console.log("error getting token");
+  }
+  if (value.token !== null) {
+    store.dispatch({ type: 'AUTH_USER', payload: { email: value.email } });
+  }
+};
 
-  _retrieveData();
+_retrieveData();
 
 class App extends React.Component {
   constructor(props) {
@@ -64,6 +68,7 @@ class App extends React.Component {
     if (this.state.fontLoaded) {
       return (
         <Provider store={store}>
+          <LogoBar />
           <Main />
         </Provider>
       );
