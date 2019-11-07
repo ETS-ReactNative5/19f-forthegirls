@@ -16,43 +16,24 @@ const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
 ));
 
-// https://medium.com/building-with-react-native/what-is-asyncstorage-in-react-native-and-how-you-to-use-it-with-app-state-manager-1x09-b8c636ce5f6e
-const getToken = async () => {
-  let token = '';
-  try {
-    token = await AsyncStorage.getItem('token') || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return token;
-}
+  //https://facebook.github.io/react-native/docs/asyncstorage
 
-const getUsername = async () => {
-  let username = '';
-  try {
-    username = await AsyncStorage.getItem('username') || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return username;
-}
+  _retrieveData = async () => {
+    try {
+      const value = 
+      { 
+        token: await AsyncStorage.getItem('token'),
+        email: await AsyncStorage.getItem('email'),
+      }
+      if (value.token !== null) {
+        store.dispatch({ type: 'AUTH_USER', payload: { email: value.email } });
+      }
+    } catch (error) {
+      console.log("error getting token");
+    }
+  };
 
-const getUserEmail = async () => {
-  let email = '';
-  try {
-    email = await AsyncStorage.getItem('email') || 'none';
-  } catch (error) {
-    // Error retrieving data
-    console.log(error.message);
-  }
-  return email;
-}
-
-if (getToken()) {
-  store.dispatch({ type: 'AUTH_USER', payload: { email: getUserEmail(), username: getUsername() } });
-}
+  _retrieveData();
 
 class App extends React.Component {
   constructor(props) {

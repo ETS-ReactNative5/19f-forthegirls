@@ -4,6 +4,7 @@ import Survey from './Survey.js'
 import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 
+
 //this.props.navigation.navigate(name of page you want to go to)
 
 

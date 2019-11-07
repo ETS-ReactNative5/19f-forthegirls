@@ -12,6 +12,7 @@ import EducationComponent from '../components/surveyComponents/educationComponen
 import PersonalComponent from '../components/surveyComponents/personalComponent';
 import ProfessionalComponent from '../components/surveyComponents/professionalComponent';
 import SurveyHeader from '../components/surveyComponents/surveyHeader';
+import MatchHome from '../components/Matches';
 
 
 // console.log(Main);
@@ -50,7 +51,10 @@ const SignInUp = createStackNavigator(
     },
     Header: {
       screen: SurveyHeader,
-    }
+    },
+    HomeScreen: {
+      screen: MatchHome,
+    },
   },
   {
     initialRouteName: 'Start',
