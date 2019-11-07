@@ -78,103 +78,59 @@ export function editUser(fields) {
 
 //---------------------------- AUTH --------------------------------//
 
-export function signinUser({ email, password }) {
+export function signinUser({ email, password, navigate }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { email, username: response.data.username } });
-      console.log(response);
+      //  username: response.data.username
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { email } });
 
-      // const saveToken = async token => {
-      //   try {
-      //     await AsyncStorage.setItem('token', response.data.token);
-      //   } catch (error) {
-      //     // Error retrieving data
-      //     console.log(error.message);
-      //   }
-      // };
+      //NEED TO ADD TOKEN
+      //https://facebook.github.io/react-native/docs/asyncstorage
+      _storeData = async () => {
+        try {
+          await AsyncStorage.setItem('token', response.data.token);
+          await AsyncStorage.setItem('email', email);
+        } catch (error) {
+          console.log("error");
+        }
+      };
 
-      // saveToken();
+      _storeData();
 
-      // const saveEmail = async email => {
-      //   try {
-      //     await AsyncStorage.setItem('email', response.data.email);
-      //   } catch (error) {
-      //     // Error retrieving data
-      //     console.log(error.message);
-      //   }
-      // };
-
-      // saveEmail();
-
-      // const saveUsername = async username => {
-      //   try {
-      //     await AsyncStorage.setItem('username', response.data.username);
-      //   } catch (error) {
-      //     // Error retrieving data
-      //     console.log(error.message);
-      //   }
-      // };
-
-      // saveUsername();
-
-      //somehow go to next page
-      // this.props.navigation.navigate('Friends')
+     navigate.navigate("HomeScreen");
+      
     }).catch((error) => {
-      console.log('hi');
-      dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      console.log(error);
+      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
   };
 }
 
 
 
-export function signupUser({ email, password, username }, history) {
-  // console.log('here');
+export function signUpUser(fields, navigate) {
   return (dispatch) => {
-    const fields = {
-      email, username, password,
-    };
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
-      // console.log('IN RESPONSE');
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { email, username } });
-      const saveToken = async token => {
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { email: fields.email } });
+      
+      //should add token in here
+      _storeData = async () => {
         try {
-          await AsyncStorage.setItem('token', response.data.token);
+          //await AsyncStorage.setItem('token', response.data.token);
+          await AsyncStorage.setItem('email', fields.email);
         } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
+          console.log("token error setting async");
         }
       };
 
-      saveToken();
-
-      const saveEmail = async email => {
-        try {
-          await AsyncStorage.setItem('email', response.data.email);
-        } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
-        }
-      };
-
-      saveEmail();
-
-      const saveUsername = async username => {
-        try {
-          await AsyncStorage.setItem('username', response.data.username);
-        } catch (error) {
-          // Error retrieving data
-          console.log(error.message);
-        }
-      };
-
-      saveUsername();
+      _storeData();
 
       //somehow get to next page
-      this.props.navigation.navigate('Friends')
+     navigate.navigate('HomeScreen')
 
     }).catch((error) => {
-      dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      console.log(error);
+      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
   };
 }
@@ -182,9 +138,9 @@ export function signupUser({ email, password, username }, history) {
 
 // deletes token from localstorage
 // and deauths
-export function signoutUser(history) {
+export function signoutUser(navigate) {
   return (dispatch) => {
-
+    dispatch({ type: ActionTypes.DEAUTH_USER });
     const deleteToken = async () => {
       try {
         await AsyncStorage.removeItem('token');
@@ -194,33 +150,10 @@ export function signoutUser(history) {
       }
     }
 
+    //add navigation back to log in screen
     deleteToken();
 
-    const deleteUsername = async () => {
-      try {
-        await AsyncStorage.removeItem('username');
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
-    }
-
-    deleteUsername();
-
-    const deleteEmail = async () => {
-      try {
-        await AsyncStorage.removeItem('email');
-      } catch (error) {
-        // Error retrieving data
-        console.log(error.message);
-      }
-    }
-
-    deleteEmail();
-
-    dispatch({ type: ActionTypes.DEAUTH_USER });
-
-    this.props.navigation.navigate('Friends')
+    // this.props.navigation.navigate('Friends')
     //somehow get to next page
   };
   // return (dispatch) => {
