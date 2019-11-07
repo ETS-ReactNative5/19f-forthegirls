@@ -18,7 +18,7 @@ class Chats extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser(this.state.questionAnswers.name);
+    this.props.getUser(this.props.username);
   }
 
   showMatches() {
@@ -41,7 +41,7 @@ class Chats extends React.Component {
 
 const mapStateToProps = reduxState => (
   {
-    username: reduxState.user.username,
+    username: reduxState.auth.username,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
   }
