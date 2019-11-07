@@ -13,9 +13,9 @@ class PersonalComponent extends React.Component {
     //need to create a fields object with all their answers
     const fields = 
     {
-      username: 'newPerson5523334',
+      username: 'newPerson5594',
       password: 'password',
-      email: 'email1233455542',
+      email: 'email12368242',
     }
 
     this.props.signUpUser(fields, this.props.navigation);

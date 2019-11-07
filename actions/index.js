@@ -96,7 +96,7 @@ export function signinUser({ email, password, navigate }) {
 
       _storeData();
 
-      navigate.navigate("HomeScreen");
+      navigate.navigate("Main");
 
     }).catch((error) => {
       console.log(error);
@@ -125,7 +125,7 @@ export function signUpUser(fields, navigate) {
       _storeData();
 
       //somehow get to next page
-      navigate.navigate('HomeScreen')
+      navigate.navigate("Main");
 
     }).catch((error) => {
       console.log(error);
