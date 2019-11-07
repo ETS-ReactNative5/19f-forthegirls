@@ -14,8 +14,10 @@ export const ActionTypes = {
     AUTH_USER: 'AUTH_USER',
     DEAUTH_USER: 'DEAUTH_USER',
     AUTH_ERROR: 'AUTH_ERROR',
-  
-  
+
+    //EVENTS
+    ADD_EVENT: 'ADD_EVENT',
+
     //MATCHES
     PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
     FETCH_USER_MATCHES: 'FETCH_USER_MATCHES',
@@ -23,7 +25,6 @@ export const ActionTypes = {
     //ERRORS
     SET_ERROR: 'SET_ERROR',
     CLEAR_ERROR: 'CLEAR_ERROR',
-
 };
 
   //----------------- USERS ------------------//
@@ -38,10 +39,10 @@ export const ActionTypes = {
           }).then(() => {
             dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
           }).catch((error) => {
-            dispatch({ type: ActionTypes.ERROR_SET, error });
+            dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       };
-  } 
+  }
 
   //creates a new user with email, username and password
   //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
@@ -54,7 +55,7 @@ export const ActionTypes = {
           }).then(() => {
             dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
           }).catch((error) => {
-            dispatch({ type: ActionTypes.ERROR_SET, error });
+            dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       };
   }
@@ -70,7 +71,7 @@ export const ActionTypes = {
           }).then(() => {
             dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
           }).catch((error) => {
-            dispatch({ type: ActionTypes.ERROR_SET, error });
+            dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       };
   }
@@ -91,7 +92,7 @@ export function signinUser({ email, password }) {
       //     console.log(error.message);
       //   }
       // };
-      
+
       // saveToken();
 
       // const saveEmail = async email => {
@@ -102,7 +103,7 @@ export function signinUser({ email, password }) {
       //     console.log(error.message);
       //   }
       // };
-      
+
       // saveEmail();
 
       // const saveUsername = async username => {
@@ -113,7 +114,7 @@ export function signinUser({ email, password }) {
       //     console.log(error.message);
       //   }
       // };
-      
+
       // saveUsername();
 
       //somehow go to next page
@@ -144,7 +145,7 @@ export function signupUser({ email, password, username }, history) {
           console.log(error.message);
         }
       };
-      
+
       saveToken();
 
       const saveEmail = async email => {
@@ -155,7 +156,7 @@ export function signupUser({ email, password, username }, history) {
           console.log(error.message);
         }
       };
-      
+
       saveEmail();
 
       const saveUsername = async username => {
@@ -166,7 +167,7 @@ export function signupUser({ email, password, username }, history) {
           console.log(error.message);
         }
       };
-      
+
       saveUsername();
 
       //somehow get to next page
@@ -249,8 +250,27 @@ export function pairMatchToUser(username1, username2) {
       }).then(() => {
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
       }).catch((error) => {
-        dispatch({ type: ActionTypes.ERROR_SET, error });
+        dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
 }
 
+
+//----------------- EVENTS ------------------//
+export function addEvent(fields) {
+  console.log('adding event');
+  return (dispatch) => {
+    //need to give it email, username and password
+      axios.post(`${ROOT_URL}/events/add`, fields)
+        .then((response) => {
+          console.log('success?');
+          dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+        }).then(() => {
+          console.log('success2?');
+          dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        }).catch((error) => {
+          console.log('fail?');
+          dispatch({ type: ActionTypes.SET_ERROR, error });
+        });
+    };
+}

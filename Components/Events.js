@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
 import SingleEvent from './SingleEvent.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
@@ -14,6 +14,11 @@ class Events extends React.Component {
 
     this.renderEvent = this.renderEvent.bind(this);
     this.renderEvents = this.renderEvents.bind(this);
+    this.navToAdd = this.navToAdd.bind(this);
+  }
+
+  navToAdd() {
+    this.props.navigation.navigate('Add', 5876700);
   }
 
   renderEvent(nameProp, uniqueKey) {
@@ -31,8 +36,7 @@ class Events extends React.Component {
       return (
         this.renderEvent(anEvent, anEvent.toString())
       );
-    }
-    )
+    })
 
     return renderedEvents;
   }
@@ -43,6 +47,7 @@ class Events extends React.Component {
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.renderEvents()}
         </ScrollView>
+        <Button title="Add Event" onPress={this.navToAdd} />
       </View>
     );
   }
