@@ -28,8 +28,8 @@ class PotentialMentor extends React.Component {
   }
 
   componentDidMount() {
-    //this.props.getUser(this.state.questionAnswers.name);
-    console.log(this.props.username);
+    //hardcoded -- need to get rid of 
+    this.props.getUser('test');
   }
 
   noMatchCallback = () => {
@@ -38,7 +38,6 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = () => {
-    // TODO: state for potential mentor -- have a get on their profile
     this.props.pairMatchToUser(this.props.username, this.state.questionAnswers.name)
     this.setState({ matched: true, noAction: false })
   }
@@ -103,4 +102,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { pairMatchToUser })(PotentialMentor);
+export default connect(mapStateToProps, { pairMatchToUser, getUser })(PotentialMentor);

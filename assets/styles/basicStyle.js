@@ -7,6 +7,9 @@ const colors = StyleSheet.create({
   deepPurple: {
     color: '#37415A'
   },
+  lessOpaquePurple: {
+    color: 'rgba(70, 81, 135, 0.25)'
+  },
   black: {
     color: '#000'
   },

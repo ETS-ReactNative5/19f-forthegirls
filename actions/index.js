@@ -1,80 +1,80 @@
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
 export const ActionTypes = {
-    // USERS
-    // CREATE_USER: 'CREATE_USER',
-    FETCH_USER: 'FETCH_USER',
-    // UPDATE_USER: 'UPDATE_USER',
-    DELETE_USER: 'DELETE_USER',
+  // USERS
+  // CREATE_USER: 'CREATE_USER',
+  FETCH_USER: 'FETCH_USER',
+  // UPDATE_USER: 'UPDATE_USER',
+  DELETE_USER: 'DELETE_USER',
 
-    //AUTH
-    AUTH_USER: 'AUTH_USER',
-    DEAUTH_USER: 'DEAUTH_USER',
-    AUTH_ERROR: 'AUTH_ERROR',
+  //AUTH
+  AUTH_USER: 'AUTH_USER',
+  DEAUTH_USER: 'DEAUTH_USER',
+  AUTH_ERROR: 'AUTH_ERROR',
 
-    //EVENTS
-    ADD_EVENT: 'ADD_EVENT',
+  //EVENTS
+  ADD_EVENT: 'ADD_EVENT',
 
-    //MATCHES
-    PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
-    FETCH_USER_MATCHES: 'FETCH_USER_MATCHES',
+  //MATCHES
+  PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
+  FETCH_USER_MATCHES: 'FETCH_USER_MATCHES',
 
-    //ERRORS
-    SET_ERROR: 'SET_ERROR',
-    CLEAR_ERROR: 'CLEAR_ERROR',
+  //ERRORS
+  SET_ERROR: 'SET_ERROR',
+  CLEAR_ERROR: 'CLEAR_ERROR',
 };
 
-  //----------------- USERS ------------------//
+//----------------- USERS ------------------//
 
-  //retrieves the specified user object from the database
+//retrieves the specified user object from the database
 
-  export function getUser(username) {
-    return (dispatch) => {
-        axios.get(`${ROOT_URL}/users/${username}`)
-          .then((response) => {
-            dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
-          }).then(() => {
-            dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-          }).catch((error) => {
-            dispatch({ type: ActionTypes.SET_ERROR, error });
-          });
-      };
-  }
+export function getUser(username) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/users/${username}`)
+      .then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
 
-  //creates a new user with email, username and password
-  //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
-  export function createUser(fields) {
-    return (dispatch) => {
-      //need to give it email, username and password
-        axios.post(`${ROOT_URL}/signup`, fields)
-          .then((response) => {
-            dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
-          }).then(() => {
-            dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-          }).catch((error) => {
-            dispatch({ type: ActionTypes.SET_ERROR, error });
-          });
-      };
-  }
+//creates a new user with email, username and password
+//axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
+export function createUser(fields) {
+  return (dispatch) => {
+    //need to give it email, username and password
+    axios.post(`${ROOT_URL}/signup`, fields)
+      .then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
 
-  //edits the user object
-  //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
-  export function editUser(fields) {
-    return (dispatch) => {
-      //need to give it email, username and password
-        axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
-          .then((response) => {
-            dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
-          }).then(() => {
-            dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-          }).catch((error) => {
-            dispatch({ type: ActionTypes.SET_ERROR, error });
-          });
-      };
-  }
+//edits the user object
+//axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
+export function editUser(fields) {
+  return (dispatch) => {
+    //need to give it email, username and password
+    axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
+      .then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
 
 //---------------------------- AUTH --------------------------------//
 
@@ -194,16 +194,16 @@ export function addEvent(fields) {
   console.log('adding event');
   return (dispatch) => {
     //need to give it email, username and password
-      axios.post(`${ROOT_URL}/events/add`, fields)
-        .then((response) => {
-          console.log('success?');
-          dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
-        }).then(() => {
-          console.log('success2?');
-          dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-        }).catch((error) => {
-          console.log('fail?');
-          dispatch({ type: ActionTypes.SET_ERROR, error });
-        });
-    };
+    axios.post(`${ROOT_URL}/events/add`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
 }
