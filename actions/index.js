@@ -19,7 +19,6 @@ export const ActionTypes = {
   ADD_EVENT: 'ADD_EVENT',
 
   //MATCHES
-  PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
   FETCH_USER_MATCHES: 'FETCH_USER_MATCHES',
 
   //ERRORS
@@ -97,8 +96,8 @@ export function signinUser({ email, password, navigate }) {
 
       _storeData();
 
-     navigate.navigate("HomeScreen");
-      
+      navigate.navigate("HomeScreen");
+
     }).catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -112,7 +111,7 @@ export function signUpUser(fields, navigate) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER, payload: { email: fields.email } });
-      
+
       //should add token in here
       _storeData = async () => {
         try {
@@ -126,7 +125,7 @@ export function signUpUser(fields, navigate) {
       _storeData();
 
       //somehow get to next page
-     navigate.navigate('HomeScreen')
+      navigate.navigate('HomeScreen')
 
     }).catch((error) => {
       console.log(error);
@@ -178,7 +177,21 @@ export function pairMatchToUser(username1, username2) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/users/pair/${username1}`, { username: username2 })
       .then((response) => {
-        dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data })
+        console.log(response.data);
+      }).then(() => {
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
+export function deletePair(username1, username2) {
+  return (dispatch) => {
+    axios.delete(`${ROOT_URL}/users/pair/${username1}`, { username: username2 })
+      .then((response) => {
+        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data })
         console.log(response.data);
       }).then(() => {
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });

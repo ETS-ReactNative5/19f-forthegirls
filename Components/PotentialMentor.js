@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
-import { pairMatchToUser, getUser } from '../actions';
+import { pairMatchToUser, getUser, deletePair } from '../actions';
 
 class PotentialMentor extends React.Component {
   constructor(props) {
@@ -33,13 +33,15 @@ class PotentialMentor extends React.Component {
   }
 
   noMatchCallback = () => {
-    // api call to remove person from matches
-    this.setState({ matched: false, noAction: false })
+    if (this.props.matches.contains(this.state.questionAnswers.name)) {
+      this.props.deletePair(this.props.username, this.state.questionAnswers.name);
+    }
+    this.setState({ matched: false, noAction: false });
   }
 
   yesMatchCallback = () => {
-    this.props.pairMatchToUser(this.props.username, this.state.questionAnswers.name)
-    this.setState({ matched: true, noAction: false })
+    this.props.pairMatchToUser(this.props.username, this.state.questionAnswers.name);
+    this.setState({ matched: true, noAction: false });
   }
 
   showMatch = () => {
@@ -102,4 +104,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { pairMatchToUser, getUser })(PotentialMentor);
+export default connect(mapStateToProps, { pairMatchToUser, getUser, deletePair })(PotentialMentor);
