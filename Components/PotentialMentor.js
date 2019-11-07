@@ -29,7 +29,7 @@ class PotentialMentor extends React.Component {
 
   componentDidMount() {
     //hardcoded -- need to get rid of 
-    this.props.getUser('test');
+    this.props.getUser(this.props.username);
   }
 
   noMatchCallback = () => {
@@ -96,7 +96,7 @@ class PotentialMentor extends React.Component {
 
 const mapStateToProps = reduxState => (
   {
-    username: reduxState.user.username,
+    username: reduxState.auth.username,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
   }
