@@ -22,6 +22,7 @@ class Chats extends React.Component {
   }
 
   showMatches() {
+    console.log(this.props.matches);
     for (i = 0; i < this.props.matches.length; i++) {
       return (
         <View style={[chatList.listItem, i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite]}>
@@ -44,6 +45,7 @@ const mapStateToProps = reduxState => (
     username: reduxState.user.username,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    // auth: reduxState
   }
 );
 

@@ -9,31 +9,31 @@ import * as Font from 'expo-font';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
 ));
 
-  //https://facebook.github.io/react-native/docs/asyncstorage
+//https://facebook.github.io/react-native/docs/asyncstorage
 
-  _retrieveData = async () => {
-    try {
-      const value = 
-      { 
-        token: await AsyncStorage.getItem('token'),
-        email: await AsyncStorage.getItem('email'),
-      }
-      if (value.token !== null) {
-        store.dispatch({ type: 'AUTH_USER', payload: { email: value.email } });
-      }
-    } catch (error) {
-      console.log("error getting token");
+_retrieveData = async () => {
+  try {
+    const value =
+    {
+      token: await AsyncStorage.getItem('token'),
+      email: await AsyncStorage.getItem('email'),
     }
-  };
+    if (value.token !== null) {
+      store.dispatch({ type: 'AUTH_USER', payload: { email: value.email } });
+    }
+  } catch (error) {
+    console.log("error getting token");
+  }
+};
 
-  _retrieveData();
+_retrieveData();
 
 class App extends React.Component {
   constructor(props) {

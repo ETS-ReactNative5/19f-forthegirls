@@ -33,10 +33,14 @@ class PotentialMentor extends React.Component {
   }
 
   noMatchCallback = () => {
-    if (this.props.matches.contains(this.state.questionAnswers.name)) {
-      this.props.deletePair(this.props.username, this.state.questionAnswers.name);
-    }
+    console.log(this.props.matches);
     this.setState({ matched: false, noAction: false });
+    for (var i = 0; i < this.props.matches.length; i++) {
+      if (this.props.matches[i].username === this.state.questionAnswers.name) {
+        this.props.deletePair(this.props.username, this.state.questionAnswers.name);
+        return;
+      }
+    }
   }
 
   yesMatchCallback = () => {
