@@ -3,13 +3,13 @@ import { ActionTypes } from '../actions';
 //add username?
 const UserReducer = (state = {
     authenticated: false,
-    email: '',
+    username: '',
   }, action) => {
     switch (action.type) {
       case ActionTypes.AUTH_USER:
         return Object.assign({}, state, {
           authenticated: true,
-          email: action.payload.email,
+          username: action.payload.username,
         });
       case ActionTypes.DEAUTH_USER: 
         return Object.assign({}, state, {
