@@ -15,7 +15,7 @@ class Profile extends React.Component {
       editing: false,
       questionAnswers:
       {
-        name: 'user1',
+        name: 'test',
         hometown: 'Westchester, NY',
         age: 21,
         occupation: 'Student',
