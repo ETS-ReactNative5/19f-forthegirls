@@ -51,5 +51,14 @@ const fontEffects = StyleSheet.create({
   italic: { fontStyle: 'italic' },
 });
 
+const logo = StyleSheet.create({
+  barContainer: {
+    top: 30,
+    backgroundColor: colors.deepPurple.color,
+    height: 70,
+    width: '100%'
+  }
+})
+
 export default colors;
-export { colors, fonts, fontEffects }
+export { colors, fonts, fontEffects, logo }
