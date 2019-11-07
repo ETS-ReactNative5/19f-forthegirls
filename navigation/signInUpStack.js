@@ -52,9 +52,6 @@ const SignInUp = createStackNavigator(
     Header: {
       screen: SurveyHeader,
     },
-    HomeScreen: {
-      screen: MatchHome,
-    },
   },
   {
     initialRouteName: 'Start',
