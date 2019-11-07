@@ -25,6 +25,7 @@ _retrieveData = async () => {
     {
       token: await AsyncStorage.getItem('token'),
       username: await AsyncStorage.getItem('username'),
+      id: await AsyncStorage.getItem('id'),
     }
     if (value.token !== null) {
       store.dispatch({ type: 'AUTH_USER', payload: { username: value.username } });
