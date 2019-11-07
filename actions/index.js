@@ -31,9 +31,9 @@ export const ActionTypes = {
 
 //retrieves the specified user object from the database
 
-export function getUser(username) {
+export function getUser(id) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/users/${username}`)
+    axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
@@ -82,7 +82,7 @@ export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
       //  username: response.data.username
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id  } });
 
       //NEED TO ADD TOKEN
       //https://facebook.github.io/react-native/docs/asyncstorage
@@ -90,6 +90,7 @@ export function signinUser({ username, password, navigate }) {
         try {
           await AsyncStorage.setItem('token', response.data.token);
           await AsyncStorage.setItem('username', username);
+          await AsyncStorage.setItem('id', response.data.id);
         } catch (error) {
           console.log("error");
         }
@@ -110,13 +111,14 @@ export function signinUser({ username, password, navigate }) {
 export function signUpUser(fields, navigate) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
       
       //should add token in here
       _storeData = async () => {
         try {
           await AsyncStorage.setItem('token', response.data.token);
           await AsyncStorage.setItem('username', fields.username);
+          await AsyncStorage.setItem('id', response.data.id);
         } catch (error) {
           console.log("token error setting async");
         }
