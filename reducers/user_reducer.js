@@ -7,7 +7,6 @@ const UserReducer = (state = {
   }, action) => {
     switch (action.type) {
       case ActionTypes.FETCH_USER:
-        console.log(action.payload.result);
         return Object.assign({}, state, {
           username: action.payload.result.username,
           email: action.payload.result.email,

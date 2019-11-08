@@ -190,6 +190,7 @@ export function pairMatchToUser(username1, username2) {
 }
 
 export function getMatch(id) {
+  console.log("in get match");
   axios.get(`${ROOT_URL}/users/${id}`)
   .then((response) => {
     return response.data;
