@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
-import { getUser } from '../actions';
+import { getUser, getMatch } from '../actions';
 import chatList from '../assets/styles/chatStyle';
 import { fonts } from '../assets/styles/basicStyle';
+
 
 class Chats extends React.Component {
   constructor(props) {
@@ -22,10 +23,13 @@ class Chats extends React.Component {
   }
 
   showMatches() {
+    console.log(this.props.matches);
+    console.log(this.props.username);
     for (i = 0; i < this.props.matches.length; i++) {
+      const matchInfo = getMatch(this.props.matches[i].id);
       return (
         <View style={[chatList.listItem, i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite]}>
-          <Text style={fonts.bodyText}>{this.props.matches[i].username}</Text>
+          <Text style={fonts.bodyText}>{matchInfo.username}</Text>
         </View>)
     }
   }
@@ -41,7 +45,7 @@ class Chats extends React.Component {
 
 const mapStateToProps = reduxState => (
   {
-    username: reduxState.auth.username,
+    username: reduxState.user.username,
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
