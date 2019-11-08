@@ -189,6 +189,15 @@ export function pairMatchToUser(username1, username2) {
   }
 }
 
+export function getMatch(id) {
+  axios.get(`${ROOT_URL}/users/${id}`)
+  .then((response) => {
+    return response.data;
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
 
 //----------------- EVENTS ------------------//
 export function addEvent(fields) {
