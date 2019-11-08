@@ -23,15 +23,22 @@ class Chats extends React.Component {
   }
 
   showMatches() {
+    console.log("MATCHES");
     console.log(this.props.matches);
-    console.log(this.props.username);
-    for (i = 0; i < this.props.matches.length; i++) {
-      const matchInfo = getMatch(this.props.matches[i].id);
-      return (
-        <View style={[chatList.listItem, i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite]}>
-          <Text style={fonts.bodyText}>{matchInfo.username}</Text>
-        </View>)
-    }
+    console.log(this.props.matches.length);
+  
+      // const matchInfo = getMatch(this.props.matches[i].id);
+      // console.log("MATCH INFO");
+      // console.log(matchInfo);
+
+      return this.props.matches.map((n) => {
+        return (
+          // [chatList.listItem, i % 2 === 0 ? 
+        <View style={chatList.listItemPurple}>
+          <Text style={fonts.bodyText} key={n.id}>{n.username}!</Text>
+        </View>
+        );
+      });
   }
 
   render() {
