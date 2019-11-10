@@ -134,13 +134,8 @@ export function signUpUser(fields, navigate) {
       _storeData();
 
       //somehow get to next page
-<<<<<<< HEAD
       navigate.navigate("Main");
 
-=======
-      navigate.navigate("StartScreen");
-
->>>>>>> 82344e70c2be001eaae7882ea6f671bfbf0b1677
     }).catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -237,14 +232,82 @@ export function addEvent(fields) {
 
 
 //----------------- SURVEY ------------------//
-export function addBasicInfo(fields) {
+export function addBasicInfo(id, fields) {
   console.log('adding basic info from survey');
   return (dispatch) => {
-    //need to give it email, username and password
-    axios.post(`${ROOT_URL}/survey/basicInfo`, fields)
+    axios.post(`${ROOT_URL}/survey/basicInfo/${id}`, fields)
       .then((response) => {
         console.log('success?');
-        dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+        dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+
+export function addCS(id, fields) {
+  console.log('adding cs info from survey');
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/survey/cs/${id}`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function addDemo(id, fields) {
+  console.log('adding demo info from survey');
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/survey/demo/${id}`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function addEdu(id, fields) {
+  console.log('adding education info from survey');
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/survey/edu/${id}`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function addPersonal(id, fields) {
+  console.log('adding personality info from survey');
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/survey/personal/${id}`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
       }).then(() => {
         console.log('success2?');
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
