@@ -4,7 +4,7 @@ import colors, { logo, fonts } from '../assets/styles/basicStyle';
 import { signoutUser } from '../actions';
 import { connect } from 'react-redux';
 
-class LogoBar extends Component {
+class LogoBar extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,7 +17,7 @@ class LogoBar extends Component {
     return (
       <View style={logo.barContainer}>
         <Text style={[fonts.majorHeading, colors.white]}>FTG</Text>
-        <Button onPress={this.logOut}>Log Out</Button>
+        <Button onPress={this.logOut} title="Log Out">Log Out</Button>
     </View>
     );
   }

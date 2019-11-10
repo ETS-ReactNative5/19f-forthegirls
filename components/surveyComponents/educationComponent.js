@@ -15,7 +15,7 @@ class EducationComponent extends React.Component {
       currentJob: '',
     }
   }
-  
+
   highSchoolInput = (text) => {
     this.setState({ highSchool: text });
   }
@@ -40,6 +40,16 @@ class EducationComponent extends React.Component {
 
 
   submitPage = () => {
+    var eduInfo = {
+      'highSchool': this.state.highSchool,
+      'college': this.state.college,
+      'gradYear': this.state.gradYear,
+      'currentJob': this.state.currentJob,
+    }
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
+    var csInfo = this.props.navigation.getParam("csInfo",  null);
+
 
     if(this.state.highSchool === '' || this.state.college === '' || this.state.gradYear === '' || this.state.currentJob === '') {
       Alert.alert(
@@ -53,18 +63,20 @@ class EducationComponent extends React.Component {
       );
     }
     else {
-      this.props.navigation.navigate('Header', {pastPage: "eduInfo"});
+      this.props.navigation.navigate('Header', {pastPage: "eduInfo",  basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo});
     }
-    
+
   }
 
   render() {
     const year = (new Date()).getFullYear();
     const years = Array.from(new Array(20),( val, index) => index + year);
     const data = {value: years}
+
     return (
       <View style={{marginTop: 100}}>
         <Text> Let's learn a little more about your education and job experience! </Text>
+      
         <TextField
           title="High School"
           placeholder="High School"

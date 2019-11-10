@@ -11,29 +11,34 @@ class SurveyHeader extends React.Component {
 
   nextPage = () => {
     var currentPage = this.props.navigation.getParam("pastPage", "none");
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
+    var csInfo = this.props.navigation.getParam("csInfo",  null);
+    var eduInfo = this.props.navigation.getParam("eduInfo",  null);
+    var promptInfo = this.props.navigation.getParam("promptInfo",  null);
+
     if (currentPage === "startScreen") {
       this.props.navigation.navigate('BasicInfo', {})
-
     }
     else if(currentPage=== "basicInfo"){
-      this.props.navigation.navigate('DemographicInfo', {})
+      this.props.navigation.navigate('DemographicInfo', {basicInfo: basicInfo})
     }
     else if(currentPage=== "demoInfo"){
-      this.props.navigation.navigate('CsInfo', {})
+      this.props.navigation.navigate('CsInfo', {basicInfo: basicInfo, demoInfo: demoInfo})
     }
     else if(currentPage=== "csInfo"){
-      this.props.navigation.navigate('EducationInfo', {})
+      this.props.navigation.navigate('EducationInfo', {basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo})
     }
     else if(currentPage=== "eduInfo"){
     //  this.props.navigation.navigate('ProfessionalInfo', {})
-    this.props.navigation.navigate('Prompts', {})
+    this.props.navigation.navigate('Prompts', {basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo})
 
     }
     else if(currentPage=== "profInfo"){
-      this.props.navigation.navigate('Prompts', {})
+      this.props.navigation.navigate('Prompts', {basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo, promptInfo: promptInfo})
     }
     else if(currentPage=== "promptInfo"){
-      this.props.navigation.navigate('PersonalInfo', {})
+      this.props.navigation.navigate('PersonalInfo', {basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo, promptInfo: promptInfo})
     }
 
   }
