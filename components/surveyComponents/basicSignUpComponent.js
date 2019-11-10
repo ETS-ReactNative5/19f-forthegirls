@@ -42,12 +42,13 @@ class BasicSignUpComponent extends React.Component {
 
   submitPage = () => {
     if(this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+      //https://facebook.github.io/react-native/docs/alert
       Alert.alert(
         'Please Fill Out All Fields to Continue',
         '',
         [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK'},
         ],
         { cancelable: true }
       );

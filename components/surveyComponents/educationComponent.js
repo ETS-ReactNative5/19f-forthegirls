@@ -12,6 +12,7 @@ class EducationComponent extends React.Component {
       highSchool: '',
       college: '',
       gradYear: '',
+      currentJob: '',
     }
   }
   
@@ -27,6 +28,12 @@ class EducationComponent extends React.Component {
     this.setState({ gradYear: text });
   }
 
+  currentJobInput = (text) => {
+    this.setState({ currentJob: text });
+  }
+
+
+
   checkState = () => {
     console.log(this.state);
   }
@@ -34,13 +41,13 @@ class EducationComponent extends React.Component {
 
   submitPage = () => {
 
-    if(this.state.highSchool === '' || this.state.college === '' || this.state.gradYear === '') {
+    if(this.state.highSchool === '' || this.state.college === '' || this.state.gradYear === '' || this.state.currentJob === '') {
       Alert.alert(
         'Please Fill Out All Fields to Continue',
         '',
         [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK'},
         ],
         { cancelable: true }
       );
@@ -76,6 +83,13 @@ class EducationComponent extends React.Component {
           title="Grad Year"
           placeholder="Graduation Year"
           onInputChange={this.gradYearInput}
+          clearButtonMode='while-editing'
+          keyboardType='default'
+        />
+        <TextField
+          title="Current Job"
+          placeholder="Current or Most Recent Job or Internship"
+          onInputChange={this.currentJobInput}
           clearButtonMode='while-editing'
           keyboardType='default'
         />
