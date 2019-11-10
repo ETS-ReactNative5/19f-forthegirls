@@ -21,6 +21,12 @@ class DemographicComponent extends React.Component {
   }
 
   render() {
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = {
+      'age': this.state.age,
+      'stage': 'High School',
+    }
+
     return (
       <ScrollView style={{marginTop: 100}}>
         <Text> Demographic Questions </Text>
@@ -38,7 +44,8 @@ class DemographicComponent extends React.Component {
         </View>
         <Button
           title="next"
-          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "demoInfo"}) }}
+          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "demoInfo",
+          basicInfo: basicInfo, demoInfo: demoInfo}) }}
           />
       </ScrollView>
     );

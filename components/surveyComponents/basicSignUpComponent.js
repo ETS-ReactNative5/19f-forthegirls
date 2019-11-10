@@ -54,9 +54,16 @@ class BasicSignUpComponent extends React.Component {
       );
     }
     else {
-      this.props.navigation.navigate('Header', {pastPage: "basicInfo"});
+      var basicInfo = {
+        'firstname': this.state.firstName,
+        'lastname': this.state.lastName,
+        'email': this.state.email,
+        'username': this.state.username,
+        'password': this.state.password,
+      }
+      this.props.navigation.navigate('Header', {pastPage: "basicInfo", basicInfo: basicInfo});
     }
-    
+
   }
 
   //need to check unique from here

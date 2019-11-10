@@ -40,7 +40,7 @@ class App extends React.Component {
         id: await AsyncStorage.getItem('id'),
       }
       if (value.token !== null) {
-        this.setState({ signedIn: true });
+      //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
       }
     } catch (error) {
