@@ -25,7 +25,9 @@ class SurveyHeader extends React.Component {
       this.props.navigation.navigate('EducationInfo', {})
     }
     else if(currentPage=== "eduInfo"){
-      this.props.navigation.navigate('ProfessionalInfo', {})
+    //  this.props.navigation.navigate('ProfessionalInfo', {})
+    this.props.navigation.navigate('Prompts', {})
+
     }
     else if(currentPage=== "profInfo"){
       this.props.navigation.navigate('Prompts', {})
@@ -57,13 +59,15 @@ class SurveyHeader extends React.Component {
       headerMessage = "Education  Experience"
     }
     else if(currentPage=== "eduInfo"){
-      textMessage = "Tell us about your work experience and goals";
-      headerMessage =  "Professional Experience"
-    }
-    else if(currentPage=== "profInfo"){
+      // textMessage = "Tell us about your work experience and goals";
+      // headerMessage =  "Professional Experience"
       textMessage = "Fill out three conversation prompts to talk to your matches";
       headerMessage = "Prompts"
     }
+    // else if(currentPage=== "profInfo"){
+    //   textMessage = "Fill out three conversation prompts to talk to your matches";
+    //   headerMessage = "Prompts"
+    // }
     else if(currentPage=== "promptInfo"){
       textMessage = "Tell us about your personality";
       headerMessage = "How Chill Are You?"
