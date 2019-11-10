@@ -25,6 +25,13 @@ export const ActionTypes = {
   //ERRORS
   SET_ERROR: 'SET_ERROR',
   CLEAR_ERROR: 'CLEAR_ERROR',
+
+  //SURVEY 
+  ADD_BASICINFO: 'ADD_BASICINFO',
+  ADD_CS: 'ADD_CS',
+  ADD_DEMO: 'ADD_DEMO',
+  ADD_EDU: 'ADD_EDU',
+  ADD_PERSONAL: 'ADD_PERSONAL'
 };
 
 //----------------- USERS ------------------//
@@ -82,7 +89,7 @@ export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
       //  username: response.data.username
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id  } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
 
       //NEED TO ADD TOKEN
       //https://facebook.github.io/react-native/docs/asyncstorage
@@ -98,8 +105,8 @@ export function signinUser({ username, password, navigate }) {
 
       _storeData();
 
-     navigate.navigate("Main");
-      
+      navigate.navigate("Main");
+
     }).catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -112,7 +119,7 @@ export function signUpUser(fields, navigate) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
-      
+
       //should add token in here
       _storeData = async () => {
         try {
@@ -128,7 +135,7 @@ export function signUpUser(fields, navigate) {
 
       //somehow get to next page
       navigate.navigate("Main");
-      
+
     }).catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -192,11 +199,11 @@ export function pairMatchToUser(username1, username2) {
 export function getMatch(id) {
   console.log("in get match");
   axios.get(`${ROOT_URL}/users/${id}`)
-  .then((response) => {
-    return response.data;
-  }).catch((error) => {
-    console.log(error);
-  });
+    .then((response) => {
+      return response.data;
+    }).catch((error) => {
+      console.log(error);
+    });
 }
 
 
@@ -206,6 +213,26 @@ export function addEvent(fields) {
   return (dispatch) => {
     //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/add`, fields)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+
+//----------------- SURVEY ------------------//
+export function addBasicInfo(fields) {
+  console.log('adding basic info from survey');
+  return (dispatch) => {
+    //need to give it email, username and password
+    axios.post(`${ROOT_URL}/survey/basicInfo`, fields)
       .then((response) => {
         console.log('success?');
         dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
