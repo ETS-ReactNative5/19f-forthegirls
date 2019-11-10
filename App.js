@@ -27,14 +27,12 @@ _retrieveData = async () => {
       username: await AsyncStorage.getItem('username'),
       id: await AsyncStorage.getItem('id'),
     }
+    console.log(value);
     if (value.token !== null) {
-      store.dispatch({ type: 'AUTH_USER', payload: { username: value.username } });
+      store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
     }
   } catch (error) {
     console.log("error getting token");
-  }
-  if (value.token !== null) {
-    store.dispatch({ type: 'AUTH_USER', payload: { email: value.email } });
   }
 };
 
