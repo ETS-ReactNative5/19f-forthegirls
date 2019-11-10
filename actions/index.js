@@ -127,7 +127,7 @@ export function signUpUser(fields, navigate) {
       _storeData();
 
       //somehow get to next page
-      navigate.navigate("Main");
+      navigate.navigate("StartScreen");
       
     }).catch((error) => {
       console.log(error);
@@ -145,6 +145,8 @@ export function signoutUser(navigate) {
     const deleteToken = async () => {
       try {
         await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('username');
+        await AsyncStorage.removeItem('id');
       } catch (error) {
         // Error retrieving data
         console.log(error.message);
@@ -153,6 +155,8 @@ export function signoutUser(navigate) {
 
     //add navigation back to log in screen
     deleteToken();
+
+    navigate.navigate("Main");
 
     // this.props.navigation.navigate('Friends')
     //somehow get to next page
