@@ -5,7 +5,15 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 class ProfessionalComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      
+    }
   }
+
+  //dream company
+  //dream company size
+  //dream job
+  //favorite thing about past work experience
 
   render() {
     return (

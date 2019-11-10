@@ -12,7 +12,12 @@ class Main extends Component {
 
 
   render() {
+    if(this.props.signedIn===true) {
+      return <MainTabBar/>
+    }
+    else {
       return <SignInUpStack/>
+    } 
   }
 }
 

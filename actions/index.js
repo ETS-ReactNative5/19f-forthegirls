@@ -134,8 +134,13 @@ export function signUpUser(fields, navigate) {
       _storeData();
 
       //somehow get to next page
+<<<<<<< HEAD
       navigate.navigate("Main");
 
+=======
+      navigate.navigate("StartScreen");
+
+>>>>>>> 82344e70c2be001eaae7882ea6f671bfbf0b1677
     }).catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
@@ -152,6 +157,8 @@ export function signoutUser(navigate) {
     const deleteToken = async () => {
       try {
         await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('username');
+        await AsyncStorage.removeItem('id');
       } catch (error) {
         // Error retrieving data
         console.log(error.message);
@@ -160,6 +167,8 @@ export function signoutUser(navigate) {
 
     //add navigation back to log in screen
     deleteToken();
+
+    navigate.navigate("Main");
 
     // this.props.navigation.navigate('Friends')
     //somehow get to next page
