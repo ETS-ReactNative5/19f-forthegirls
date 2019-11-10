@@ -10,17 +10,17 @@ class SignIn extends React.Component {
     super(props);
     this.state = {
       goToMatches: false,
-      email: '',
+      username: '',
       password: '',
     }
   }
 
   checkSignIn = () => {
-    this.props.signinUser({email: this.state.email, password: this.state.password, navigate: this.props.navigation});
+    this.props.signinUser({username: this.state.username, password: this.state.password, navigate: this.props.navigation});
   }
 
-  emailInput = (text) => {
-    this.setState({ email: text });
+  usernameInput = (text) => {
+    this.setState({ username: text });
   }
 
   passwordInput = (text) => {
@@ -35,7 +35,7 @@ class SignIn extends React.Component {
     }
     return (
       <View style={{ height: '100%', marginTop: 50 }}>
-        <TextInput defaultValue="Enter Your Email" onChangeText={this.emailInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextInput defaultValue="Enter Your Username" onChangeText={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
         <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing' />
         <Button title="Log In" onPress={this.checkSignIn} />
       </View>

@@ -10,7 +10,7 @@ const UserReducer = (state = {
         return Object.assign({}, state, {
           username: action.payload.result.username,
           email: action.payload.result.email,
-          matches: action.payload.result.matches
+          matches: action.payload.result.matches,
         });
       default:
         return state;

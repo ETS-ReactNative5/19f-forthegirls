@@ -31,7 +31,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser(this.state.questionAnswers.name);
+    this.props.getUser(this.props.id);
     console.log(this.props.username);
     console.log(this.props.email);
   }
@@ -131,7 +131,8 @@ class Profile extends React.Component {
 
 const mapStateToProps = reduxState => (
   {
-    username: reduxState.user.username,
+    username: reduxState.auth.username,
+    id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
   }

@@ -31,9 +31,9 @@ export const ActionTypes = {
 
 //retrieves the specified user object from the database
 
-export function getUser(username) {
+export function getUser(id) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/users/${username}`)
+    axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
@@ -46,19 +46,19 @@ export function getUser(username) {
 
 //creates a new user with email, username and password
 //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
-export function createUser(fields) {
-  return (dispatch) => {
-    //need to give it email, username and password
-    axios.post(`${ROOT_URL}/signup`, fields)
-      .then((response) => {
-        dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
-      }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function createUser(fields) {
+//   return (dispatch) => {
+//     //need to give it email, username and password
+//     axios.post(`${ROOT_URL}/signup`, fields)
+//       .then((response) => {
+//         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
+//       }).then(() => {
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
 
 //edits the user object
 //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
@@ -78,18 +78,19 @@ export function editUser(fields) {
 
 //---------------------------- AUTH --------------------------------//
 
-export function signinUser({ email, password, navigate }) {
+export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
+    axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
       //  username: response.data.username
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { email } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id  } });
 
       //NEED TO ADD TOKEN
       //https://facebook.github.io/react-native/docs/asyncstorage
       _storeData = async () => {
         try {
           await AsyncStorage.setItem('token', response.data.token);
-          await AsyncStorage.setItem('email', email);
+          await AsyncStorage.setItem('username', username);
+          await AsyncStorage.setItem('id', response.data.id);
         } catch (error) {
           console.log("error");
         }
@@ -107,17 +108,17 @@ export function signinUser({ email, password, navigate }) {
 }
 
 
-
 export function signUpUser(fields, navigate) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { email: fields.email } });
+      dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
       
       //should add token in here
       _storeData = async () => {
         try {
-          //await AsyncStorage.setItem('token', response.data.token);
-          await AsyncStorage.setItem('email', fields.email);
+          await AsyncStorage.setItem('token', response.data.token);
+          await AsyncStorage.setItem('username', fields.username);
+          await AsyncStorage.setItem('id', response.data.id);
         } catch (error) {
           console.log("token error setting async");
         }
@@ -186,6 +187,16 @@ export function pairMatchToUser(username1, username2) {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
+}
+
+export function getMatch(id) {
+  console.log("in get match");
+  axios.get(`${ROOT_URL}/users/${id}`)
+  .then((response) => {
+    return response.data;
+  }).catch((error) => {
+    console.log(error);
+  });
 }
 
 

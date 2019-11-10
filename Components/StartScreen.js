@@ -24,8 +24,8 @@ class StartScreen extends React.Component {
       )
     }
     else {
-      return (  
-        <View style={{ height: '100%', marginTop: 50 }}>
+      return (
+        <View style={{ height: '100%'}}>
           <Text>I am a startScreen </Text>
           <Button title="signup" onPress={() => {   this.props.navigation.navigate('SignUp', {}) }} />
           <Button title="signin" onPress={() => {  this.props.navigation.navigate('SignIn', {}) }} />
