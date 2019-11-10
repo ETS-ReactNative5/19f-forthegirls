@@ -64,9 +64,9 @@ class SignUp extends React.Component {
 
         <View style={{width:'100%', flexDirection: 'row-reverse', alignItems: 'right', marginTop: 30}}>
           <TouchableOpacity
-            onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "startScreen"}) }}
+            onPress={() => {  this.props.navigation.navigate('Prompts', {pastPage: "startScreen"}) }}
             style={{marginRight: 20}}>
-            <Image  
+            <Image
               source={require('./../assets/icons/arrownext.png')}
               />
           </TouchableOpacity>
