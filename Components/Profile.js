@@ -70,6 +70,7 @@ class Profile extends React.Component {
                 <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, 21</Text>
               </View >
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Westchester, NY</Text>
+              <Button>Log Out</Button> 
             </View>
             <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
               placeholder="Waiting for input..."
