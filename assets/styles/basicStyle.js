@@ -60,5 +60,21 @@ const logo = StyleSheet.create({
   }
 })
 
+const buttons = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  signUpInButton: {
+    display: 'flex',
+    backgroundColor: colors.deepPurple.color,
+    borderRadius: 20,
+    height: 60,
+    width: 120,
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+})
+
 export default colors;
-export { colors, fonts, fontEffects, logo }
+export { colors, fonts, fontEffects, logo, buttons }
