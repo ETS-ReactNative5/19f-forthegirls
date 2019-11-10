@@ -145,6 +145,8 @@ export function signoutUser(navigate) {
     const deleteToken = async () => {
       try {
         await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('id');
+        await AsyncStorage.removeItem('username');
       } catch (error) {
         // Error retrieving data
         console.log(error.message);

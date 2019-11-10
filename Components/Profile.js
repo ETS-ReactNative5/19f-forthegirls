@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser } from '../actions';
+import { getUser, editUser, signoutUser } from '../actions';
 
 
 class Profile extends React.Component {
@@ -58,6 +58,10 @@ class Profile extends React.Component {
     }));
   }
 
+  logout = () => {
+    this.props.signoutUser(this.props.navigation);
+  }
+
   render() {
     if (this.state.editing === true) {
       return (
@@ -70,7 +74,6 @@ class Profile extends React.Component {
                 <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, 21</Text>
               </View >
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Westchester, NY</Text>
-              <Button>Log Out</Button> 
             </View>
             <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
               placeholder="Waiting for input..."
@@ -96,6 +99,7 @@ class Profile extends React.Component {
       return (
         <View style={profile.profileContainer}>
           {this.isMyProfile(this.props.isMyProfile)}
+          {/* <Button onPress={this.logout} title="Log Out" /> */}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <View style={profile.nameHeading}>
@@ -139,4 +143,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getUser, editUser })(Profile);
+export default connect(mapStateToProps, { getUser, editUser, signoutUser })(Profile);
