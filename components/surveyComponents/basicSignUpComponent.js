@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 import TextField from 'react-native-text-field';
 
 
@@ -42,9 +42,14 @@ class BasicSignUpComponent extends React.Component {
 
   submitPage = () => {
     if(this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-      return (
-        //come back tot his
-        <Text> Please fill out the entire form </Text>
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        { cancelable: true }
       );
     }
     else {
