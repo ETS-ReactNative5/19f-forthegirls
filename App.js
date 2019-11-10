@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { AsyncStorage } from 'react-native';
 
+
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
@@ -19,34 +20,36 @@ const store = createStore(reducers, {}, compose(
 
 //https://facebook.github.io/react-native/docs/asyncstorage
 
-_retrieveData = async () => {
-  try {
-    const value =
-    {
-      token: await AsyncStorage.getItem('token'),
-      username: await AsyncStorage.getItem('username'),
-      id: await AsyncStorage.getItem('id'),
-    }
-    console.log(value);
-    if (value.token !== null) {
-      store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
-    }
-  } catch (error) {
-    console.log("error getting token");
-  }
-};
 
-_retrieveData();
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fontLoaded: false
+      fontLoaded: false,
+      signedIn: false,
+    }
+  }
+
+  _retrieveData = async () => {
+    try {
+      const value =
+      {
+        token: await AsyncStorage.getItem('token'),
+        username: await AsyncStorage.getItem('username'),
+        id: await AsyncStorage.getItem('id'),
+      }
+      if (value.token !== null) {
+        this.setState({ signedIn: true });
+        store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
+      }
+    } catch (error) {
+      console.log("error getting token");
     }
   }
 
   async componentDidMount() {
+    this._retrieveData();
     try {
       await Font.loadAsync({
         'montserrat-medium': require('./assets/fonts/Montserrat-Medium.ttf'),
@@ -68,7 +71,7 @@ class App extends React.Component {
       return (
         <Provider store={store}>
           <LogoBar />
-          <Main />
+          <Main signedIn={this.state.signedIn}/>
         </Provider>
       );
     } else {
