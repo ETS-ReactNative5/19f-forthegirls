@@ -13,6 +13,7 @@ import PersonalComponent from '../components/surveyComponents/personalComponent'
 import ProfessionalComponent from '../components/surveyComponents/professionalComponent';
 import SurveyHeader from '../components/surveyComponents/surveyHeader';
 import MatchHome from '../components/Matches';
+import Prompts from '../components/surveyComponents/promptsComponent';
 
 
 // console.log(Main);
@@ -51,6 +52,9 @@ const SignInUp = createStackNavigator(
     },
     Header: {
       screen: SurveyHeader,
+    },
+    Prompts: {
+      screen: Prompts,
     },
   },
   {
