@@ -10,10 +10,12 @@ class TouchableComponent extends React.Component {
       selected: false,
     };
 
-    this.onChange = this.onChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  onChange(value) {
+  handleChange(value) {
+    console.log('this props ' + this.props.stateField);
+    this.props.onChange(this.props.stateField, !this.props.stateFieldStatus);
     this.setState(() => {
       return {
         selected: !this.state.selected,
@@ -24,7 +26,7 @@ class TouchableComponent extends React.Component {
   render() {
     return (
       <View>
-        <TouchableOpacity onPress={this.onChange}>
+        <TouchableOpacity onPress={this.handleChange}>
           <Text
             style={
                     this.state.selected
