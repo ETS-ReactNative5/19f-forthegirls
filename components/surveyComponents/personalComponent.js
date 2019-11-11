@@ -9,8 +9,10 @@ class PersonalComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 50,
+      introextro: 50,
+      listenfollow: 50
     };
+    this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
   submitSignUp = () => {
@@ -25,12 +27,21 @@ class PersonalComponent extends React.Component {
     this.props.signUpUser(fields, this.props.navigation);
   }
 
+  handleSliderChange(sliderId, value) {
+    this.setState({ [sliderId]: value });
+    console.log(`parent: ${this.state.introextro}`);
+  }
+
   render() {
-    var eduInfo =  this.props.navigation.getParam("eduInfo",  null);
-    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
-    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
-    var csInfo = this.props.navigation.getParam("csInfo",  null);
-    var promptInfo = this.props.navigation.getParam("promptInfo",  null);
+    var eduInfo = this.props.navigation.getParam("eduInfo", null);
+    var basicInfo = this.props.navigation.getParam("basicInfo", null);
+    var demoInfo = this.props.navigation.getParam("demoInfo", null);
+    var csInfo = this.props.navigation.getParam("csInfo", null);
+    var promptInfo = this.props.navigation.getParam("promptInfo", null);
+    var personalInfo = {
+      introextro: this.state.introextro,
+      listenfollow: this.state.listenfollow
+    }
     return (
       <View>
         <View>
@@ -39,8 +50,8 @@ class PersonalComponent extends React.Component {
         </Text>
         </View>
         <View style={{ backgroundColor: colors.turquoise.color }}>
-          <SliderComponent min='introvert' max='extrovert' />
-          <SliderComponent min='listener' max='leader' />
+          <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
+          <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
           <Button
             title="submit survey"
             onPress={this.submitSignUp}
