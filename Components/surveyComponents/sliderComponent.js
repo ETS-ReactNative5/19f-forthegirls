@@ -5,12 +5,15 @@ import colors, { fonts } from '../../assets/styles/basicStyle';
 class SliderComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.onChange = this.onChange.bind(this);
     this.state = {
       value: 50,
     };
   }
 
-  onChange(value) {
+  onChange(e) {
+    const value = e.target.value;
+    this.props.onChange(this.props.id, value)
     this.setState(() => {
       return {
         value: parseFloat(value),

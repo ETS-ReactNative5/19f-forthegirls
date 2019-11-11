@@ -11,6 +11,7 @@ class PersonalComponent extends React.Component {
     this.state = {
       value: 50,
     };
+    this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
   submitSignUp = () => {
@@ -25,6 +26,10 @@ class PersonalComponent extends React.Component {
     this.props.signUpUser(fields, this.props.navigation);
   }
 
+  handleSliderChange(sliderId, value) {
+    this.setState({ [sliderId]: value });
+  }
+
   render() {
     return (
       <View>
@@ -34,8 +39,8 @@ class PersonalComponent extends React.Component {
         </Text>
         </View>
         <View style={{ backgroundColor: colors.turquoise.color }}>
-          <SliderComponent min='introvert' max='extrovert' />
-          <SliderComponent min='listener' max='leader' />
+          <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state[id]} min='introvert' max='extrovert' />
+          <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state[id]} min='listener' max='leader' />
           <Button
             title="submit survey"
             onPress={this.submitSignUp}
