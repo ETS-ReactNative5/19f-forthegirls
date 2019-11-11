@@ -1,4 +1,4 @@
-import { ActionTypes } from '../actions';
+import { ActionTypes } from '../../actions';
 
 const DemographicReducer = (state = {
     age: 0,
