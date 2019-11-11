@@ -35,7 +35,7 @@ class Chats extends React.Component {
         return (
           // [chatList.listItem, i % 2 === 0 ? 
         <View style={chatList.listItemPurple}>
-          <Text style={fonts.bodyText} key={n.id}>{n.username}!</Text>
+          <Text style={fonts.bodyText} key={n._id} id={n._id}>{n.username}!</Text>
         </View>
         );
       });
