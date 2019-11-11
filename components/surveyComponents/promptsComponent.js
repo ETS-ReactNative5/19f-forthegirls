@@ -9,10 +9,19 @@ import colors, { fonts, fontEffects } from '../../assets/styles/basicStyle';
 class PromptsComponent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      promptOneQuestion: '',
+      promptOneAnswer:  '',
+      promptTwoQuestion: '',
+      promptTwoAnswer:  '',
+      promptThreeQuestion: '',
+      promptThreeAnswer:  '',
+    }
   }
 
   onInputChange = (text) => {
     console.log(text)
+    //change state in here
   }
 
   render() {
@@ -32,10 +41,23 @@ class PromptsComponent extends React.Component {
       value: 'what could you give a ted talk on',
     }];
 
+    var eduInfo =  this.props.navigation.getParam("eduInfo",  null);
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
+    var csInfo = this.props.navigation.getParam("csInfo",  null);
+    var promptInfo = {
+      'promptOneQuestion': 'a',
+      'promptOneAnswer':  'b',
+      'promptTwoQuestion': 'c',
+      'promptTwoAnswer':  'd',
+      'promptThreeQuestion': 'e',
+      'promptThreeAnswer':  'f',
+    }
 
     return (
       <View style={{backgroundColor: '#28C3A975', width: '100%', height: '100%'}}>
         <Text style={[fonts.bodyText]} > Choose a Prompt from the drop down to answer </Text>
+
         <Dropdown
                 label='Question 1'
                 data={data}
@@ -65,7 +87,7 @@ class PromptsComponent extends React.Component {
         />
         <Button
           title="next"
-          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "promptInfo"}) }}
+          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "promptInfo", basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo, promptInfo: promptInfo}) }}
           />
       </View>
     );

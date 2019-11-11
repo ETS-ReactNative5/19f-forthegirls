@@ -8,11 +8,23 @@ class CsComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      frontbackQ: "front",
+      companySize: 'medium',
+      culture: ['meritocratic', 'nurturing'],
+      csStrength: ['webdev', 'design']
     }
   }
 
   render() {
+    var csInfo = {
+      frontbackQ: this.state.frontbackQ,
+      companySize: this.state.companySize,
+      culture: this.state.culture,
+      csStrength: this.state.csStrength
+    };
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
+
     return (
       <ScrollView style={{marginTop: 100}}>
         <Text> CS Questions </Text>
@@ -50,7 +62,8 @@ class CsComponent extends React.Component {
         </View>
         <Button
           title="next"
-          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "csInfo"}) }}
+          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "csInfo",
+           basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo})}}
           />
       </ScrollView>
     );

@@ -31,6 +31,11 @@ class PersonalComponent extends React.Component {
   }
 
   render() {
+    var eduInfo =  this.props.navigation.getParam("eduInfo",  null);
+    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var demoInfo = this.props.navigation.getParam("demoInfo",  null);
+    var csInfo = this.props.navigation.getParam("csInfo",  null);
+    var promptInfo = this.props.navigation.getParam("promptInfo",  null);
     return (
       <View>
         <View>

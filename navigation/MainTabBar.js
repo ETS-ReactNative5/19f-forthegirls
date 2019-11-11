@@ -6,9 +6,8 @@ import EventStack from './EventStack';
 import Profile from '../components/Profile';
 import Chats from '../components/Chats';
 import Matches from '../components/Matches'
+import StartScreen from '../components/StartScreen'
 import { createAppContainer } from 'react-navigation';
-
-
 
 const MainTabBar = createBottomTabNavigator(
   {
