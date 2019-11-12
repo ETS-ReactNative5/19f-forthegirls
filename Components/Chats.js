@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { getUser, getMatch } from '../actions';
 import chatList from '../assets/styles/chatStyle';
 import { fonts } from '../assets/styles/basicStyle';
+import { Linking } from 'react-native'
 
 
 class Chats extends React.Component {
@@ -14,7 +15,7 @@ class Chats extends React.Component {
       {
         // get rid of the hardcoding
         name: 'test',
-      }
+      },
     }
   }
 
@@ -22,11 +23,12 @@ class Chats extends React.Component {
     this.props.getUser(this.props.id);
   }
 
+  pressUser = (email) => {
+    Linking.openURL('mailto:'+email+'?subject=We Matched!')
+    .catch((error) => console.log(error));
+  }
+
   showMatches() {
-    console.log("MATCHES");
-    console.log(this.props.matches);
-    console.log(this.props.matches.length);
-  
       // const matchInfo = getMatch(this.props.matches[i].id);
       // console.log("MATCH INFO");
       // console.log(matchInfo);
@@ -34,8 +36,9 @@ class Chats extends React.Component {
       return this.props.matches.map((n) => {
         return (
           // [chatList.listItem, i % 2 === 0 ? 
-        <View style={chatList.listItemPurple}>
-          <Text style={fonts.bodyText} key={n._id} id={n._id}>{n.username}!</Text>
+        <View key={n._id} style={chatList.listItemPurple}>
+          <Text style={fonts.bodyText} key={n.username}>{n.username}!</Text>
+          <Button key={n._id} title="Chat!" onPress={() => this.pressUser(n.email)} /> 
         </View>
         );
       });
