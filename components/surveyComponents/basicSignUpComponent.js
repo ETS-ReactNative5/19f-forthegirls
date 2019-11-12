@@ -5,6 +5,8 @@ import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
+import { signUpUser } from '../../actions/index'
+import { connect } from 'react-redux';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class BasicSignUpComponent extends React.Component {
       email: '',
       username: '',
       password: '',
-      highSchool: '',
+      highname: '',
       college: '',
       gradYear: '',
       currentJob: '',
@@ -25,6 +27,22 @@ class BasicSignUpComponent extends React.Component {
       pg: false,
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
+  }
+
+  sumbitUser = () => {
+    const fields = {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    }
+
+    const otherAnswers = {
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+    }
+
+    this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+
   }
 
   firstNameInput = (text) => {
@@ -275,7 +293,7 @@ class BasicSignUpComponent extends React.Component {
         {this.state.hs === true ? this.renderHS() : (this.state.college || this.state.pg === true ? this.renderCollege() : this.renderNull())}
         <View style={buttons.arrowView}>
           <TouchableOpacity
-            onPress={this.submitPage}
+            onPress={this.sumbitUser}
             inputs={this.state}>
             <Image
               source={require('./../../assets/icons/arrownext.png')}
@@ -287,4 +305,10 @@ class BasicSignUpComponent extends React.Component {
   }
 }
 
-export default BasicSignUpComponent;
+const mapStateToProps = reduxState => (
+  {
+    error: reduxState.error,
+  }
+);
+
+export default connect(mapStateToProps, { signUpUser })(BasicSignUpComponent);

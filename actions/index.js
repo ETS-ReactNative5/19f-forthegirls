@@ -115,34 +115,56 @@ export function signinUser({ username, password, navigate }) {
 }
 
 
-export function signUpUser(fields, navigate) {
+export function signUpUser(fields, navigate, otherAnswers) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/signup`, fields).then((response) => {
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
+    axios.post(`${ROOT_URL}/signup`, fields)
+    .then((response) => {
+      console.log("in sign up");
+      axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
+      .then((res) => {
+        console.log("in other answers");
+        dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
-      //should add token in here
-      _storeData = async () => {
-        try {
-          await AsyncStorage.setItem('token', response.data.token);
-          await AsyncStorage.setItem('username', fields.username);
-          await AsyncStorage.setItem('id', response.data.id);
-        } catch (error) {
-          console.log("token error setting async");
-        }
-      };
-
-      _storeData();
-
-      //somehow get to next page
-      navigate.navigate("Main");
-
-    }).catch((error) => {
+        //should add token in here
+        _storeData = async () => {
+          try {
+            await AsyncStorage.setItem('token', response.data.token);
+            await AsyncStorage.setItem('username', fields.username);
+            await AsyncStorage.setItem('id', response.data.id);
+          } catch (error) {
+            console.log("token error setting async");
+          }
+        };
+  
+        _storeData();
+  
+        //somehow get to next page
+        navigate.navigate("CsInfo");
+      }).catch((error) => {
+        console.log('in middle error');
+        console.log(error);
+      });
+    })
+    .catch((error) => {
       console.log(error);
       // dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
   };
 }
 
+export function addToSurvey(otherAnswers, navigate, navTo) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers).then((res) => {
+        navigate.navigate(navTo);
+  }).catch((error) => {
+    console.log(error);
+    // dispatch(authError(`Sign In Failed: ${error.response.data}`));
+  });
+  }
+}
+
+
+// /users/survey/username put
 
 // deletes token from localstorage
 // and deauths
