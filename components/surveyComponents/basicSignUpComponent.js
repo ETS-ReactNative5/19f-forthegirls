@@ -41,28 +41,28 @@ class BasicSignUpComponent extends React.Component {
   }
 
   submitPage = () => {
-    // if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-    //   //https://facebook.github.io/react-native/docs/alert
-    //   Alert.alert(
-    //     'Please Fill Out All Fields to Continue',
-    //     '',
-    //     [
-    //       { text: 'Cancel', style: 'cancel' },
-    //       { text: 'OK' },
-    //     ],
-    //     { cancelable: true }
-    //   );
-    // }
-    // else {
-    var basicInfo = {
-      'firstname': this.state.firstName,
-      'lastname': this.state.lastName,
-      'email': this.state.email,
-      'username': this.state.username,
-      'password': this.state.password,
+    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
     }
-    this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
-    //  }
+    else {
+      var basicInfo = {
+        'firstname': this.state.firstName,
+        'lastname': this.state.lastName,
+        'email': this.state.email,
+        'username': this.state.username,
+        'password': this.state.password,
+      }
+      this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
+    }
 
   }
 
@@ -72,7 +72,7 @@ class BasicSignUpComponent extends React.Component {
     var textInputStyle = [colors.black, fonts.bodyText]
     var textFieldStyle = surveyStyle.textField
     return (
-      <View style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
+      <View style={surveyStyle.surveyBackground}>
         <Text style={fonts.majorHeading}>Your Basic Info</Text>
         <TextField
           textFieldStyle={textFieldStyle}

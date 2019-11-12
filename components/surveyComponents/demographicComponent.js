@@ -56,7 +56,7 @@ class DemographicComponent extends React.Component {
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
 
     return (
-      <ScrollView style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
+      <ScrollView style={surveyStyle.surveyBackground}>
         <Text style={[fonts.majorHeading, fontEffects.center]}>Demographic Questions</Text>
         <View>
           <Text style={headerText}>Age</Text>

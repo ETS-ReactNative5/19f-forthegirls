@@ -68,7 +68,25 @@ const surveyStyle = StyleSheet.create({
   csComponentHeader: {
     marginLeft: 10,
     justifyContent: 'center'
+  },
+  submitButton: {
+    marginTop: 30,
+    borderWidth: 2,
+    height: 70,
+    width: 250,
+    padding: 10,
+    borderColor: colors.white.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20
+  },
+
+  surveyBackground: {
+    paddingLeft: 5,
+    height: '100%',
+    display: 'flex',
+    backgroundColor: colors.veryLightPurple.color
   }
+
 
 })
 

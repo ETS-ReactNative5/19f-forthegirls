@@ -87,6 +87,7 @@ const buttons = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 30
   }
+
 })
 
 export default colors;

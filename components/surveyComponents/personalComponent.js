@@ -3,7 +3,9 @@ import { Button, View, Text } from 'react-native';
 import SliderComponent from './sliderComponent';
 import { signUpUser } from '../../actions';
 import { connect } from 'react-redux';
-import colors, { fonts } from '../../assets/styles/basicStyle';
+import colors, { fonts, fontEffects } from '../../assets/styles/basicStyle';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import surveyStyle from '../../assets/styles/surveyStyle';
 
 class PersonalComponent extends React.Component {
   constructor(props) {
@@ -43,19 +45,17 @@ class PersonalComponent extends React.Component {
       listenfollow: this.state.listenfollow
     }
     return (
-      <View>
-        <View>
-          <Text style={fonts.majorHeading}>
-            fill out personality scales so we can best match you
+      <View style={surveyStyle.surveyBackground}>
+        <Text style={[fonts.majorHeading, fontEffects.center]}>
+          Fill out personality scales so we can best match you!
         </Text>
-        </View>
-        <View style={{ backgroundColor: colors.turquoise.color }}>
-          <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
-          <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
-          <Button
-            title="submit survey"
-            onPress={this.submitSignUp}
-          />
+        <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
+        <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
+        <View style={surveyStyle.submitButton}>
+          <TouchableOpacity
+            onPress={this.submitSignUp}>
+            <Text style={[fonts.majorHeading, colors.white]}>Submit Survey</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );

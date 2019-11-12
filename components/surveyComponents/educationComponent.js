@@ -76,7 +76,7 @@ class EducationComponent extends React.Component {
     var textInputStyle = [colors.black, fonts.bodyText]
     var textFieldStyle = surveyStyle.textField
     return (
-      <View style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
+      <View style={surveyStyle.surveyBackground}>
         <Text style={[fonts.majorHeading, fontEffects.center]}>Tell us a little more about your education and job experience!</Text>
         <TextField
           textFieldStyle={textFieldStyle}
@@ -123,7 +123,7 @@ class EducationComponent extends React.Component {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </ View>
     );
   }
 }
