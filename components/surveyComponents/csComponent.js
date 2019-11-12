@@ -65,7 +65,7 @@ class CsComponent extends React.Component {
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
 
     return (
-      <ScrollView style={{ backgroundColor: colors.veryLightPurple.color }}>
+      <ScrollView style={surveyStyle.surveyBackground}>
         <Text style={[fonts.majorHeading, colors.black, surveyStyle.csComponentHeader]}>CS Questions</Text>
         <View>
           <Text style={headerText}>Front End or Back End?</Text>

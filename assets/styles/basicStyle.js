@@ -21,6 +21,9 @@ const colors = StyleSheet.create({
   },
   veryLightPurple: {
     color: '#46518725'
+  },
+  red: {
+    color: '#FF5252'
   }
 })
 
@@ -45,13 +48,14 @@ const fonts = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 25,
-    lineHeight: 43
+    lineHeight: 30
   }
 })
 
 const fontEffects = StyleSheet.create({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
+  center: { textAlign: 'center' }
 });
 
 const logo = StyleSheet.create({
@@ -83,6 +87,7 @@ const buttons = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 30
   }
+
 })
 
 export default colors;
