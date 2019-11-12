@@ -11,20 +11,44 @@ class DemographicComponent extends React.Component {
     super(props);
     this.state = {
       age: 0,
+      hs: false,
+      college: false,
+      pg: false,
     }
 
     this.onAgeChange = this.onAgeChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   onAgeChange(number) {
     this.setState({age: number});
   }
 
+  handleFieldChange(fieldId, value) {
+    this.setState({ [fieldId]: value });
+    console.log('field id is ' + fieldId);
+    if(fieldId==='hs' && value===true){
+      console.log('in for lop');
+      this.setState({ pg: false });
+      this.setState({ college: false });
+    }
+    else if(fieldId==='pg' && value){
+      this.setState({ hs: false });
+      this.setState({ college: false });
+    }
+    else if(fieldId==='college' && value){
+      this.setState({ pg: false });
+      this.setState({ hs: false });
+    }
+  }
+
   render() {
     var basicInfo = this.props.navigation.getParam("basicInfo",  null);
     var demoInfo = {
       'age': this.state.age,
-      'stage': 'High School',
+      'hs': this.state.hs,
+      'college': this.state.college,
+      'pg': this.state.pg,
     }
 
     return (
@@ -37,9 +61,9 @@ class DemographicComponent extends React.Component {
           />
           <View>
             <Text> Stage of Life? </Text>
-            <TouchableComponent name='High School' />
-            <TouchableComponent name='College' />
-            <TouchableComponent name='Post Grad' />
+            <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
+            <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
+            <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
           </View>
         </View>
         <Button

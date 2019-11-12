@@ -14,7 +14,6 @@ class TouchableComponent extends React.Component {
   }
 
   handleChange(value) {
-    console.log('this props ' + this.props.stateField);
     this.props.onChange(this.props.stateField, !this.props.stateFieldStatus);
     this.setState(() => {
       return {
@@ -26,14 +25,14 @@ class TouchableComponent extends React.Component {
   render() {
     return (
       <View style={[surveyStyle.itemBasicStyle,
-      this.state.selected
+      this.props.stateFieldStatus
         ? surveyStyle.pressed
         : surveyStyle.notPressed]}>
         <TouchableOpacity onPress={this.handleChange}>
           <Text
             style={[
               surveyStyle.itemTextBasic,
-              this.state.selected
+              this.props.stateFieldStatus
                 ? surveyStyle.pressed
                 : surveyStyle.notPressed,
               fonts.bodyText]}>
