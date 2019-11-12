@@ -4,6 +4,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
+import SliderComponent from './sliderComponent';
 
 class PromptsComponent extends React.Component {
   constructor(props) {
@@ -15,12 +16,20 @@ class PromptsComponent extends React.Component {
       promptTwoAnswer: '',
       promptThreeQuestion: '',
       promptThreeAnswer: '',
-    }
+      introextro: 50,
+      listenfollow: 50
+    };
+    this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
   onInputChange = (text) => {
     console.log(text)
     //change state in here
+  }
+
+  handleSliderChange(sliderId, value) {
+    this.setState({ [sliderId]: value });
+    console.log(`parent: ${this.state.introextro}`);
   }
 
   render() {
@@ -97,6 +106,11 @@ class PromptsComponent extends React.Component {
           placeholder="Prompt 3 Answer"
           onInputChange={(text) => this.onInputChange(text)}
         />
+        <Text style={[fonts.majorHeading, fontEffects.center]}>
+          Fill out personality scales so we can best match you!
+        </Text>
+        <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
+        <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
 
         <View style={buttons.arrowView}>
           <TouchableOpacity
