@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image, ScrollView } from 'react-native';
 import TextField from 'react-native-text-field';
 import TouchableComponent from './touchableComponent';
-
-import mainScreenStyle from '../../assets/styles/mainStyle';
+import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 
 class DemographicComponent extends React.Component {
@@ -21,29 +20,29 @@ class DemographicComponent extends React.Component {
   }
 
   onAgeChange(number) {
-    this.setState({age: number});
+    this.setState({ age: number });
   }
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
     console.log('field id is ' + fieldId);
-    if(fieldId==='hs' && value===true){
+    if (fieldId === 'hs' && value === true) {
       console.log('in for lop');
       this.setState({ pg: false });
       this.setState({ college: false });
     }
-    else if(fieldId==='pg' && value){
+    else if (fieldId === 'pg' && value) {
       this.setState({ hs: false });
       this.setState({ college: false });
     }
-    else if(fieldId==='college' && value){
+    else if (fieldId === 'college' && value) {
       this.setState({ pg: false });
       this.setState({ hs: false });
     }
   }
 
   render() {
-    var basicInfo = this.props.navigation.getParam("basicInfo",  null);
+    var basicInfo = this.props.navigation.getParam("basicInfo", null);
     var demoInfo = {
       'age': this.state.age,
       'hs': this.state.hs,
@@ -51,26 +50,48 @@ class DemographicComponent extends React.Component {
       'pg': this.state.pg,
     }
 
+    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
+    var textInputStyle = [colors.black, fonts.bodyText]
+    var textFieldStyle = surveyStyle.textField
+    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
+
     return (
-      <ScrollView style={{marginTop: 100}}>
-        <Text> Demographic Questions </Text>
+      <ScrollView style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
+        <Text style={[fonts.majorHeading, fontEffects.center]}>Demographic Questions</Text>
         <View>
+          <Text style={headerText}>Age</Text>
           <TextField
-            title="Age"
+            textFieldStyle={textFieldStyle}
+            placeholderStyle={{ placeholderStyle }}
+            textInputStyle={{ textInputStyle }}
             onInputChange={(input) => this.onAgeChange(input)}
           />
           <View>
-            <Text> Stage of Life? </Text>
-            <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
-            <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
+            <Text style={headerText}>Stage of Life?</Text>
+            <View style={{
+              flexDirection: 'row',
+              flexWrap: 'no-wrap',
+              justifyContent: 'flex-start'
+            }}>
+              <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
+              <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
+              <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
+            </View>
           </View>
         </View>
-        <Button
-          title="next"
-          onPress={() => {  this.props.navigation.navigate('Header', {pastPage: "demoInfo",
-          basicInfo: basicInfo, demoInfo: demoInfo}) }}
-          />
+        <View style={buttons.arrowView}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Header', {
+                pastPage: "demoInfo",
+                basicInfo: basicInfo, demoInfo: demoInfo
+              })
+            }}>
+            <Image
+              source={require('./../../assets/icons/arrownext.png')}
+            />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }

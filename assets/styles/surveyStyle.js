@@ -54,11 +54,13 @@ const surveyStyle = StyleSheet.create({
     marginBottom: 10
   },
 
-  basicInfoTextField: {
+  textField: {
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 7,
     marginRight: 10,
+    borderWidth: 2,
+    borderColor: colors.deepPurple.color,
     borderRadius: 20,
     backgroundColor: colors.white.color
   },

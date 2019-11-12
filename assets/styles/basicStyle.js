@@ -48,13 +48,14 @@ const fonts = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 25,
-    lineHeight: 43
+    lineHeight: 30
   }
 })
 
 const fontEffects = StyleSheet.create({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
+  center: { textAlign: 'center' }
 });
 
 const logo = StyleSheet.create({

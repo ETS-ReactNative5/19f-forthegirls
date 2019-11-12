@@ -41,28 +41,28 @@ class BasicSignUpComponent extends React.Component {
   }
 
   submitPage = () => {
-    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-      //https://facebook.github.io/react-native/docs/alert
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
-      );
+    // if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+    //   //https://facebook.github.io/react-native/docs/alert
+    //   Alert.alert(
+    //     'Please Fill Out All Fields to Continue',
+    //     '',
+    //     [
+    //       { text: 'Cancel', style: 'cancel' },
+    //       { text: 'OK' },
+    //     ],
+    //     { cancelable: true }
+    //   );
+    // }
+    // else {
+    var basicInfo = {
+      'firstname': this.state.firstName,
+      'lastname': this.state.lastName,
+      'email': this.state.email,
+      'username': this.state.username,
+      'password': this.state.password,
     }
-    else {
-      var basicInfo = {
-        'firstname': this.state.firstName,
-        'lastname': this.state.lastName,
-        'email': this.state.email,
-        'username': this.state.username,
-        'password': this.state.password,
-      }
-      this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
-    }
+    this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
+    //  }
 
   }
 
@@ -70,7 +70,7 @@ class BasicSignUpComponent extends React.Component {
   render() {
     var placeholderStyle = [fonts.bodyText, colors.lightGrey]
     var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = surveyStyle.basicInfoTextField
+    var textFieldStyle = surveyStyle.textField
     return (
       <View style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
         <Text style={fonts.majorHeading}>Your Basic Info</Text>

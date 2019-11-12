@@ -60,7 +60,7 @@ class SurveyHeader extends React.Component {
     }
     else if (currentPage === "csInfo") {
       textMessage = "Tell us about your education";
-      headerMessage = "Education  Experience"
+      headerMessage = "Education Experience"
     }
     else if (currentPage === "eduInfo") {
       // textMessage = "Tell us about your work experience and goals";
