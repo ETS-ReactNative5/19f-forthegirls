@@ -1,10 +1,10 @@
 import React from 'react';
-import { Image, Text, View, Button, Alert, TouchableOpacity } from 'react-native';
+import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import TextField from 'react-native-text-field';
 import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 import TouchableComponent from './touchableComponent';
-import SurveyHeaderComponent from './surveyHeaderComponent'
+import SurveyHeaderComponent from './surveyHeaderComponent';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -90,36 +90,36 @@ class BasicSignUpComponent extends React.Component {
   }
 
   submitPage = () => {
-    // if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-    //   //https://facebook.github.io/react-native/docs/alert
-    //   Alert.alert(
-    //     'Please Fill Out All Fields to Continue',
-    //     '',
-    //     [
-    //       { text: 'Cancel', style: 'cancel' },
-    //       { text: 'OK' },
-    //     ],
-    //     { cancelable: true }
-    //   );
-    // }
-    //else {
-    var basicInfo = {
-      'firstname': this.state.firstName,
-      'lastname': this.state.lastName,
-      'email': this.state.email,
-      'username': this.state.username,
-      'password': this.state.password,
-      'age': this.state.age,
-      'hs': this.state.hs,
-      'college': this.state.college,
-      'pg': this.state.pg,
-      'highSchool': this.state.highSchool,
-      'college': this.state.college,
-      'gradYear': this.state.gradYear,
-      'currentJob': this.state.currentJob,
+    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
     }
-    this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
-    //    }
+    else {
+      var basicInfo = {
+        'firstname': this.state.firstName,
+        'lastname': this.state.lastName,
+        'email': this.state.email,
+        'username': this.state.username,
+        'password': this.state.password,
+        'age': this.state.age,
+        'hs': this.state.hs,
+        'college': this.state.college,
+        'pg': this.state.pg,
+        'highSchool': this.state.highSchool,
+        'college': this.state.college,
+        'gradYear': this.state.gradYear,
+        'currentJob': this.state.currentJob,
+      }
+      this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
+    }
 
   }
 
@@ -197,7 +197,7 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = surveyStyle.textField
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
-      <View style={surveyStyle.surveyBackground}>
+      <ScrollView style={surveyStyle.surveyBackground}>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
         </View>
@@ -282,7 +282,7 @@ class BasicSignUpComponent extends React.Component {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
