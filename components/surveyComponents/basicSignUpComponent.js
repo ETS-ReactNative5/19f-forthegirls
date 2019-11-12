@@ -3,6 +3,7 @@ import { Image, Text, View, Button, Alert, TouchableOpacity } from 'react-native
 import TextField from 'react-native-text-field';
 import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
+import SurveyHeaderComponent from './surveyHeaderComponent'
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class BasicSignUpComponent extends React.Component {
         'username': this.state.username,
         'password': this.state.password,
       }
-      this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
+      this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
     }
 
   }
@@ -73,6 +74,9 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = surveyStyle.textField
     return (
       <View style={surveyStyle.surveyBackground}>
+        <View  style={{alignItems: 'center', width:'100%', marginTop: 10, marginBottom: 10}}>
+          <SurveyHeaderComponent text="First, lets sign you up for an account" header= "Basic Information" />
+        </View>
         <Text style={fonts.majorHeading}>Your Basic Info</Text>
         <TextField
           textFieldStyle={textFieldStyle}

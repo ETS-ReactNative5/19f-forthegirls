@@ -4,6 +4,8 @@ import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
+import SurveyHeaderComponent from './surveyHeaderComponent'
+
 
 class PromptsComponent extends React.Component {
   constructor(props) {
@@ -61,7 +63,9 @@ class PromptsComponent extends React.Component {
 
     return (
       <View style={surveyStyle.surveyBackground}>
-        <Text style={[fonts.majorHeading, fontEffects.center]}>Choose a Prompt from the drop down to answer</Text>
+        <View  style={{alignItems: 'center', width:'100%', marginTop: 10, marginBottom: 10}}>
+          <SurveyHeaderComponent text="Tell us about your personality" header= "How Chill Are You?" />
+        </View>
         <Dropdown
           itemTextStyle={itemTextStyle}
           selectedItemColor={selectedItemColor}
@@ -101,8 +105,7 @@ class PromptsComponent extends React.Component {
         <View style={buttons.arrowView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Header', {
-                pastPage: "promptInfo",
+              this.props.navigation.navigate('Main', {
                 basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo, promptInfo: promptInfo
               })
             }}>
