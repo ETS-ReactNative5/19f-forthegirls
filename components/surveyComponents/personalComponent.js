@@ -27,6 +27,7 @@ class PersonalComponent extends React.Component {
     }
 
     this.props.signUpUser(fields, this.props.navigation);
+    this.props.navigation.navigate('Main',  {})
   }
 
   handleSliderChange(sliderId, value) {

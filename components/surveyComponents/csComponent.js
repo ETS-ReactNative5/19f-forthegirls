@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView } f
 import TouchableComponent from './touchableComponent';
 import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
+import SurveyHeaderComponent from './surveyHeaderComponent'
+
 
 class CsComponent extends React.Component {
   constructor(props) {
@@ -66,8 +68,10 @@ class CsComponent extends React.Component {
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
-        <Text style={[fonts.majorHeading, colors.black, surveyStyle.csComponentHeader]}>CS Questions</Text>
-        <View>
+          <View  style={{alignItems: 'center', width:'100%', marginTop: 10, marginBottom: 10}}>
+            <SurveyHeaderComponent text="Now, tell us why you are interested in computer science" header= "CompSci Interests" />
+          </View>
+         <View>
           <Text style={headerText}>Front End or Back End?</Text>
           <View style={surveyStyle.items}>
             <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
@@ -111,8 +115,7 @@ class CsComponent extends React.Component {
         <View style={buttons.arrowView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Header', {
-                pastPage: "csInfo",
+              this.props.navigation.navigate('Prompts', {
                 basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo
               })
             }}>
