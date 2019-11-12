@@ -26,13 +26,29 @@ class DemographicComponent extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
+    console.log('field id is ' + fieldId);
+    if(fieldId==='hs' && value===true){
+      console.log('in for lop');
+      this.setState({ pg: false });
+      this.setState({ college: false });
+    }
+    else if(fieldId==='pg' && value){
+      this.setState({ hs: false });
+      this.setState({ college: false });
+    }
+    else if(fieldId==='college' && value){
+      this.setState({ pg: false });
+      this.setState({ hs: false });
+    }
   }
 
   render() {
     var basicInfo = this.props.navigation.getParam("basicInfo",  null);
     var demoInfo = {
       'age': this.state.age,
-      'stage': 'High School',
+      'hs': this.state.hs,
+      'college': this.state.college,
+      'pg': this.state.pg,
     }
 
     return (
