@@ -18,6 +18,9 @@ const colors = StyleSheet.create({
   },
   lightGrey: {
     color: '#F4F4F4'
+  },
+  veryLightPurple: {
+    color: '#46518725'
   }
 })
 
@@ -73,6 +76,12 @@ const buttons = StyleSheet.create({
     width: 120,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  arrowView: {
+    width: '100%',
+    flexDirection: 'row-reverse',
+    alignItems: 'flex-end',
+    marginTop: 30
   }
 })
 
