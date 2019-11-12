@@ -21,6 +21,9 @@ const colors = StyleSheet.create({
   },
   veryLightPurple: {
     color: '#46518725'
+  },
+  red: {
+    color: '#FF5252'
   }
 })
 

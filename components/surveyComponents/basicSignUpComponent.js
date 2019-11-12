@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, TouchableOpacity } from 'react-native';
 import TextField from 'react-native-text-field';
-import colors, { buttons } from '../../assets/styles/basicStyle';
+import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 
 class BasicSignUpComponent extends React.Component {
@@ -68,38 +68,56 @@ class BasicSignUpComponent extends React.Component {
 
   //need to check unique from here
   render() {
+    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
+    var textInputStyle = [colors.black, fonts.bodyText]
+    var textFieldStyle = { margin: '5px 10px', borderRadius: 20, backgroundColor: colors.white.color }
     return (
-      <View style={{ marginTop: 100, width: '95%', display: 'flex', justifyContent: 'center' }}>
+      <View style={{ height: '100%', display: 'flex', alignItems: 'flex-start', backgroundColor: colors.veryLightPurple.color }}>
         <TextField
-          style={{ borderRadius: 40, color: 'red' }}
-          title="First Name"
+          textFieldStyle={textFieldStyle}
+          placeholderStyle={{ placeholderStyle }}
+          textInputStyle={{ textInputStyle }}
+          invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="First Name"
           onInputChange={this.firstNameInput}
           clearButtonMode='while-editing'
           keyboardType='default'
         />
         <TextField
-          title="Last Name"
+          textFieldStyle={textFieldStyle}
+          placeholderStyle={{ placeholderStyle }}
+          textInputStyle={{ textInputStyle }}
+          invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Last Name"
           onInputChange={this.lastNameInput}
           clearButtonMode='while-editing'
         />
         <TextField
-          title="Email"
+          textFieldStyle={textFieldStyle}
+          placeholderStyle={{ placeholderStyle }}
+          textInputStyle={{ textInputStyle }}
+          invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Email"
           onInputChange={this.emailInput}
           clearButtonMode='while-editing'
           keyboardType='email-address'
         />
         <TextField
-          title="Username"
+          textFieldStyle={textFieldStyle}
+          placeholderStyle={{ placeholderStyle }}
+          textInputStyle={{ textInputStyle }}
+          invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Username"
           onInputChange={this.usernameInput}
           clearButtonMode='while-editing'
         />
         <TextField
-          title="Password"
+          textFieldStyle={textFieldStyle}
+          placeholderStyle={{ placeholderStyle }}
+          textInputStyle={{ textInputStyle }}
+          invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Password"
+          isSecure={true}
           onInputChange={this.passwordInput}
           clearButtonMode='while-editing'
           secureTextEntry={true}
