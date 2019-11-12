@@ -1,10 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 import SliderComponent from './sliderComponent';
+import SurveyHeaderComponent from './surveyHeaderComponent'
+
 
 class PromptsComponent extends React.Component {
   constructor(props) {
@@ -69,8 +71,10 @@ class PromptsComponent extends React.Component {
     var selectedItemColor = colors.turquoise.color
 
     return (
-      <View style={surveyStyle.surveyBackground}>
-        <Text style={[fonts.majorHeading, fontEffects.center]}>Choose a Prompt from the drop down to answer</Text>
+      <ScrollView style={surveyStyle.surveyBackground}>
+        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+          <SurveyHeaderComponent text="Tell us about your personality" header="How Chill Are You?" />
+        </View>
         <Dropdown
           itemTextStyle={itemTextStyle}
           selectedItemColor={selectedItemColor}
@@ -106,18 +110,18 @@ class PromptsComponent extends React.Component {
           placeholder="Prompt 3 Answer"
           onInputChange={(text) => this.onInputChange(text)}
         />
-        <Text style={[fonts.majorHeading, fontEffects.center]}>
-          Fill out personality scales so we can best match you!
-        </Text>
+
+        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+          <SurveyHeaderComponent header="Personality Sliders" text="help us match you better!" />
+        </View>
         <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
         <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
 
         <View style={buttons.arrowView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Header', {
-                pastPage: "promptInfo",
-                basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo, promptInfo: promptInfo
+              this.props.navigation.navigate('Main', {
+                basicInfo: basicInfo, csInfo: csInfo, promptInfo: promptInfo
               })
             }}>
             <Image
@@ -125,7 +129,7 @@ class PromptsComponent extends React.Component {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

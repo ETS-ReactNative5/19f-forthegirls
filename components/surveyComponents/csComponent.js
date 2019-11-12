@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView } f
 import TouchableComponent from './touchableComponent';
 import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
+import SurveyHeaderComponent from './surveyHeaderComponent'
+
 
 class CsComponent extends React.Component {
   constructor(props) {
@@ -61,12 +63,13 @@ class CsComponent extends React.Component {
       storage: this.state.storage,
     };
     var basicInfo = this.props.navigation.getParam("basicInfo", null);
-    var demoInfo = this.props.navigation.getParam("demoInfo", null);
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
-        <Text style={[fonts.majorHeading, colors.black, surveyStyle.csComponentHeader]}>CS Questions</Text>
+        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+          <SurveyHeaderComponent text="Now, tell us what your interests are in computer science" header="CompSci Interests" />
+        </View>
         <View>
           <Text style={headerText}>Front End or Back End?</Text>
           <View style={surveyStyle.items}>
@@ -111,9 +114,8 @@ class CsComponent extends React.Component {
         <View style={buttons.arrowView}>
           <TouchableOpacity
             onPress={() => {
-              this.props.navigation.navigate('Header', {
-                pastPage: "csInfo",
-                basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo
+              this.props.navigation.navigate('Prompts', {
+                basicInfo: basicInfo, csInfo: csInfo
               })
             }}>
             <Image
