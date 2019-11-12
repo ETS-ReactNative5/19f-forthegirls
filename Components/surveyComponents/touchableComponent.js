@@ -25,14 +25,18 @@ class TouchableComponent extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={[surveyStyle.itemBasicStyle,
+      this.state.selected
+        ? surveyStyle.pressed
+        : surveyStyle.notPressed]}>
         <TouchableOpacity onPress={this.handleChange}>
           <Text
-            style={
-                    this.state.selected
-                        ? surveyStyle.pressed
-                        : surveyStyle.notPressed
-            }>
+            style={[
+              surveyStyle.itemTextBasic,
+              this.state.selected
+                ? surveyStyle.pressed
+                : surveyStyle.notPressed,
+              fonts.bodyText]}>
             {this.props.name}
           </Text>
         </TouchableOpacity>

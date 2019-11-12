@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { Image, Text, View, Button, Alert, TouchableOpacity } from 'react-native';
 import TextField from 'react-native-text-field';
-
+import colors, { buttons } from '../../assets/styles/basicStyle';
+import surveyStyle from '../../assets/styles/surveyStyle';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class BasicSignUpComponent extends React.Component {
       password: '',
     }
   }
-
 
   firstNameInput = (text) => {
     this.setState({ firstName: text });
@@ -41,14 +41,14 @@ class BasicSignUpComponent extends React.Component {
   }
 
   submitPage = () => {
-    if(this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
       //https://facebook.github.io/react-native/docs/alert
       Alert.alert(
         'Please Fill Out All Fields to Continue',
         '',
         [
-          {text: 'Cancel', style: 'cancel'},
-          {text: 'OK'},
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
         ],
         { cancelable: true }
       );
@@ -61,7 +61,7 @@ class BasicSignUpComponent extends React.Component {
         'username': this.state.username,
         'password': this.state.password,
       }
-      this.props.navigation.navigate('Header', {pastPage: "basicInfo", basicInfo: basicInfo});
+      this.props.navigation.navigate('Header', { pastPage: "basicInfo", basicInfo: basicInfo });
     }
 
   }
@@ -69,49 +69,50 @@ class BasicSignUpComponent extends React.Component {
   //need to check unique from here
   render() {
     return (
-      <View style={{marginTop: 100}}>
-        <Text> First, Let's Make an Account! </Text>
+      <View style={{ marginTop: 100, width: '95%', display: 'flex', justifyContent: 'center' }}>
         <TextField
+          style={{ borderRadius: 40, color: 'red' }}
           title="First Name"
-          placeholder="My Name Is..... "
+          placeholder="First Name"
           onInputChange={this.firstNameInput}
           clearButtonMode='while-editing'
           keyboardType='default'
         />
         <TextField
           title="Last Name"
-          placeholder="My Name Is..... "
+          placeholder="Last Name"
           onInputChange={this.lastNameInput}
           clearButtonMode='while-editing'
         />
         <TextField
           title="Email"
-          placeholder="My Email Is..... "
+          placeholder="Email"
           onInputChange={this.emailInput}
           clearButtonMode='while-editing'
           keyboardType='email-address'
         />
         <TextField
           title="Username"
-          placeholder="My Username Is..... "
+          placeholder="Username"
           onInputChange={this.usernameInput}
           clearButtonMode='while-editing'
         />
         <TextField
           title="Password"
-          placeholder="My Password Is..... "
+          placeholder="Password"
           onInputChange={this.passwordInput}
           clearButtonMode='while-editing'
           secureTextEntry={true}
         />
-        <Button
-          //maybe make this an arrow
-          title="Next"
-          //add checks regarding empty/email
-          onPress={this.submitPage}
-          inputs={this.state}
-          />
-
+        <View style={buttons.arrowView}>
+          <TouchableOpacity
+            onPress={this.submitPage}
+            inputs={this.state}>
+            <Image
+              source={require('./../../assets/icons/arrownext.png')}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
