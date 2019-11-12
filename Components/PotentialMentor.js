@@ -29,7 +29,7 @@ class PotentialMentor extends React.Component {
   }
 
   componentDidMount() {
-    //hardcoded -- need to get rid of 
+    //hardcoded -- need to get rid of
     this.props.getUser(this.props.id);
   }
 
