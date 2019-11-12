@@ -5,6 +5,7 @@ import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
 import { pairMatchToUser, getUser } from '../actions';
+import { Linking } from 'react-native'
 
 class PotentialMentor extends React.Component {
   constructor(props) {
@@ -44,7 +45,13 @@ class PotentialMentor extends React.Component {
 
   showMatch = () => {
     if (this.state.matched) {
-      return (<Text style={[colors.turquoise, fonts.minorHeading]}>time to chat!</Text>);
+      const email = this.state.questionAnswers.name;
+      Linking.openURL('mailto:'+email+'?subject=We Matched!')
+      .catch((error) => console.log(error));
+
+      return (
+        <Text style={[colors.turquoise, fonts.minorHeading]}>time to chat!</Text>
+      );
     }
   }
 
