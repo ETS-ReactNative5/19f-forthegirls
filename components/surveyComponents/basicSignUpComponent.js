@@ -70,9 +70,10 @@ class BasicSignUpComponent extends React.Component {
   render() {
     var placeholderStyle = [fonts.bodyText, colors.lightGrey]
     var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = { margin: '5px 10px', borderRadius: 20, backgroundColor: colors.white.color }
+    var textFieldStyle = surveyStyle.basicInfoTextField
     return (
-      <View style={{ height: '100%', display: 'flex', alignItems: 'flex-start', backgroundColor: colors.veryLightPurple.color }}>
+      <View style={{ paddingLeft: 5, height: '100%', display: 'flex', backgroundColor: colors.veryLightPurple.color }}>
+        <Text style={fonts.majorHeading}>Your Basic Info</Text>
         <TextField
           textFieldStyle={textFieldStyle}
           placeholderStyle={{ placeholderStyle }}
@@ -117,7 +118,7 @@ class BasicSignUpComponent extends React.Component {
           textInputStyle={{ textInputStyle }}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Password"
-          isSecure={true}
+          isSecured={true}
           onInputChange={this.passwordInput}
           clearButtonMode='while-editing'
           secureTextEntry={true}

@@ -54,6 +54,15 @@ const surveyStyle = StyleSheet.create({
     marginBottom: 10
   },
 
+  basicInfoTextField: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 7,
+    marginRight: 10,
+    borderRadius: 20,
+    backgroundColor: colors.white.color
+  },
+
   csComponentHeader: {
     marginLeft: 10,
     justifyContent: 'center'
