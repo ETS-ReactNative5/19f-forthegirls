@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
 import MainScreen from './MainScreen.js'
 import { signinUser } from '../actions';
 import { connect } from 'react-redux';
-
+import surveyStyle from '../assets/styles/surveyStyle'
+import TextField from 'react-native-text-field';
+import colors, { fonts } from '../assets/styles/basicStyle';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -34,10 +36,15 @@ class SignIn extends React.Component {
       )
     }
     return (
-      <View style={{ height: '100%', marginTop: 50 }}>
-        <TextInput defaultValue="Enter Your Username" onChangeText={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
-        <TextInput defaultValue="Enter Your Password" onChangeText={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing' />
-        <Button title="Log In" onPress={this.checkSignIn} />
+      <View style={surveyStyle.surveyBackground}>
+        <TextField textFieldStyle={surveyStyle.textField} defaultValue="Username" onInputChange={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextField textFieldStyle={surveyStyle.textField} defaultValue="Password" onInputChange={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <View style={surveyStyle.submitButton}>
+          <TouchableOpacity
+            onPress={this.checkSignIn}>
+            <Text style={[fonts.majorHeading, colors.white]}>Log In</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
