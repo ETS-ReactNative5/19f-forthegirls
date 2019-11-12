@@ -11,13 +11,21 @@ class DemographicComponent extends React.Component {
     super(props);
     this.state = {
       age: 0,
+      hs: false,
+      college: false,
+      pg: false,
     }
 
     this.onAgeChange = this.onAgeChange.bind(this);
+    this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   onAgeChange(number) {
     this.setState({age: number});
+  }
+
+  handleFieldChange(fieldId, value) {
+    this.setState({ [fieldId]: value });
   }
 
   render() {
@@ -37,9 +45,9 @@ class DemographicComponent extends React.Component {
           />
           <View>
             <Text> Stage of Life? </Text>
-            <TouchableComponent name='High School' />
-            <TouchableComponent name='College' />
-            <TouchableComponent name='Post Grad' />
+            <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
+            <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
+            <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
           </View>
         </View>
         <Button

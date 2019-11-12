@@ -35,10 +35,6 @@ class CsComponent extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
-    console.log(this.state.frontEnd);
-    console.log('f' + fieldId);
-    console.log(' v' + value);
-
   }
 
   render() {
