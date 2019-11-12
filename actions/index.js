@@ -17,6 +17,7 @@ export const ActionTypes = {
 
   //EVENTS
   ADD_EVENT: 'ADD_EVENT',
+  RSVP_EVENT: 'RSVP_EVENT',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -26,7 +27,7 @@ export const ActionTypes = {
   SET_ERROR: 'SET_ERROR',
   CLEAR_ERROR: 'CLEAR_ERROR',
 
-  //SURVEY 
+  //SURVEY
   ADD_BASICINFO: 'ADD_BASICINFO',
   ADD_CS: 'ADD_CS',
   ADD_DEMO: 'ADD_DEMO',
@@ -218,6 +219,24 @@ export function addEvent(fields) {
       .then((response) => {
         console.log('success?');
         dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+      }).then(() => {
+        console.log('success2?');
+        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+      }).catch((error) => {
+        console.log('fail?');
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function rsvpEvent(userID, eventID) {
+  console.log('rsvp event');
+  return (dispatch) => {
+    //need to give it email, username and password
+    axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, userID)
+      .then((response) => {
+        console.log('success?');
+        dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
       }).then(() => {
         console.log('success2?');
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
