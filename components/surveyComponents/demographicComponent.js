@@ -59,25 +59,7 @@ class DemographicComponent extends React.Component {
       <ScrollView style={surveyStyle.surveyBackground}>
         <Text style={[fonts.majorHeading, fontEffects.center]}>Demographic Questions</Text>
         <View>
-          <Text style={headerText}>Age</Text>
-          <TextField
-            textFieldStyle={textFieldStyle}
-            placeholderStyle={{ placeholderStyle }}
-            textInputStyle={{ textInputStyle }}
-            onInputChange={(input) => this.onAgeChange(input)}
-          />
-          <View>
-            <Text style={headerText}>Stage of Life?</Text>
-            <View style={{
-              flexDirection: 'row',
-              flexWrap: 'no-wrap',
-              justifyContent: 'flex-start'
-            }}>
-              <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
-              <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
-              <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
-            </View>
-          </View>
+
         </View>
         <View style={buttons.arrowView}>
           <TouchableOpacity

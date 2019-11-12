@@ -63,15 +63,14 @@ class CsComponent extends React.Component {
       storage: this.state.storage,
     };
     var basicInfo = this.props.navigation.getParam("basicInfo", null);
-    var demoInfo = this.props.navigation.getParam("demoInfo", null);
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
-          <View  style={{alignItems: 'center', width:'100%', marginTop: 10, marginBottom: 10}}>
-            <SurveyHeaderComponent text="Now, tell us why you are interested in computer science" header= "CompSci Interests" />
-          </View>
-         <View>
+        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+          <SurveyHeaderComponent text="Now, tell us what your interests are in computer science" header="CompSci Interests" />
+        </View>
+        <View>
           <Text style={headerText}>Front End or Back End?</Text>
           <View style={surveyStyle.items}>
             <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
@@ -116,7 +115,7 @@ class CsComponent extends React.Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate('Prompts', {
-                basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo
+                basicInfo: basicInfo, csInfo: csInfo
               })
             }}>
             <Image

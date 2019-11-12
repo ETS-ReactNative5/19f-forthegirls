@@ -50,20 +50,20 @@ class EducationComponent extends React.Component {
     var csInfo = this.props.navigation.getParam("csInfo", null);
 
 
-    if (this.state.highSchool === '' || this.state.college === '' || this.state.gradYear === '' || this.state.currentJob === '') {
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
-      );
-    }
-    else {
-      this.props.navigation.navigate('Header', { pastPage: "eduInfo", basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo });
-    }
+    // if (this.state.highSchool === '' || this.state.college === '' || this.state.gradYear === '' || this.state.currentJob === '') {
+    //   Alert.alert(
+    //     'Please Fill Out All Fields to Continue',
+    //     '',
+    //     [
+    //       { text: 'Cancel', style: 'cancel' },
+    //       { text: 'OK' },
+    //     ],
+    //     { cancelable: true }
+    //   );
+    // }
+    // else {
+    this.props.navigation.navigate('Header', { pastPage: "eduInfo", basicInfo: basicInfo, demoInfo: demoInfo, csInfo: csInfo, eduInfo: eduInfo });
+    //}
 
   }
 
@@ -78,42 +78,7 @@ class EducationComponent extends React.Component {
     return (
       <View style={surveyStyle.surveyBackground}>
         <Text style={[fonts.majorHeading, fontEffects.center]}>Tell us a little more about your education and job experience!</Text>
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
-          placeholder="High School"
-          onInputChange={this.highSchoolInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
-          placeholder="College"
-          onInputChange={this.collegeInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
-          placeholder="Graduation Year"
-          onInputChange={this.gradYearInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
-          placeholder="Current or Most Recent Job or Internship"
-          onInputChange={this.currentJobInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
+
         <View style={buttons.arrowView}>
           <TouchableOpacity
             onPress={this.submitPage}

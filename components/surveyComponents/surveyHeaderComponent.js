@@ -10,9 +10,9 @@ class SurveyHeaderComponent extends React.Component {
 
   render() {
     return (
-        <View style={surveyStyle.surveyHeader}>
-          <Text style={[fonts.majorHeading, surveyStyle.surveyHeaderText]}> {this.props.header} </Text>
-          <Text style={[fonts.bodyText, colors.deepPurple,  {textAlign: 'center'}]}> {this.props.text} </Text>
+      <View style={surveyStyle.surveyHeader}>
+        <Text style={[fonts.majorHeading, surveyStyle.surveyHeaderText]}> {this.props.header} </Text>
+        <Text style={[fonts.bodyText, colors.deepPurple, { textAlign: 'center' }]}> {this.props.text} </Text>
       </View>
     );
   }

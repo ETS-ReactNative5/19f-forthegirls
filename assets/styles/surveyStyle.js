@@ -43,8 +43,8 @@ const surveyStyle = StyleSheet.create({
   surveyHeader: {
     backgroundColor: colors.white.color,
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 30,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderRadius: 20,
     width: '90%'
   },
@@ -52,7 +52,7 @@ const surveyStyle = StyleSheet.create({
   surveyHeaderText: {
     color: colors.turquoise.color,
     alignItems: 'center',
-    marginBottom: 10
+    marginBottom: 5
   },
 
   textField: {
