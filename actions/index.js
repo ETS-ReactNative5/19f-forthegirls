@@ -51,22 +51,6 @@ export function getUser(id) {
   };
 }
 
-//creates a new user with email, username and password
-//axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
-// export function createUser(fields) {
-//   return (dispatch) => {
-//     //need to give it email, username and password
-//     axios.post(`${ROOT_URL}/signup`, fields)
-//       .then((response) => {
-//         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
-//       }).then(() => {
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-//       }).catch((error) => {
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }
-
 //edits the user object
 //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
 export function editUser(fields) {
@@ -116,13 +100,11 @@ export function signinUser({ username, password, navigate }) {
 
 
 export function signUpUser(fields, navigate, otherAnswers) {
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/signup`, fields)
-    .then((response) => {
-      console.log("in sign up");
-      axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
+    return (dispatch) => {
+      axios.post(`${ROOT_URL}/signup`, fields)
+      .then((response) => {
+        return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
       .then((res) => {
-        console.log("in other answers");
         dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
         //should add token in here
@@ -135,26 +117,23 @@ export function signUpUser(fields, navigate, otherAnswers) {
             console.log("token error setting async");
           }
         };
-  
+    
         _storeData();
-  
+    
         //somehow get to next page
         navigate.navigate("CsInfo");
-      }).catch((error) => {
-        console.log('in middle error');
+      })
+      .catch((error) => {
         console.log(error);
+        // dispatch(authError(`Sign In Failed: ${error.response.data}`));
       });
-    })
-    .catch((error) => {
-      console.log(error);
-      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
-  };
+  }
 }
 
-export function addToSurvey(otherAnswers, navigate, navTo) {
+export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers).then((res) => {
+    axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
         navigate.navigate(navTo);
   }).catch((error) => {
     console.log(error);

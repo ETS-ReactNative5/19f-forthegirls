@@ -41,7 +41,7 @@ class CsComponent extends React.Component {
   }
 
   submitPage = () => {
-    this.props.addToSurvey(this.state, this.props.navigation, 'Prompts');
+    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Prompts');
   }
 
   render() {
@@ -132,6 +132,7 @@ class CsComponent extends React.Component {
 const mapStateToProps = reduxState => (
   {
     error: reduxState.error,
+    username: reduxState.auth.username,
   }
 );
 

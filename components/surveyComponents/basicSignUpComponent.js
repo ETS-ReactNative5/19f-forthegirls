@@ -308,6 +308,7 @@ class BasicSignUpComponent extends React.Component {
 const mapStateToProps = reduxState => (
   {
     error: reduxState.error,
+    username: reduxState.auth.username,
   }
 );
 
