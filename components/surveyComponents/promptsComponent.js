@@ -6,6 +6,8 @@ import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicSt
 import surveyStyle from '../../assets/styles/surveyStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
+import { addToSurvey } from '../../actions/index'
+import { connect } from 'react-redux';
 
 
 class PromptsComponent extends React.Component {
@@ -32,6 +34,10 @@ class PromptsComponent extends React.Component {
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
     console.log(`parent: ${this.state.introextro}`);
+  }
+
+  submitPage = () => {
+    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Main');
   }
 
   render() {
@@ -119,11 +125,7 @@ class PromptsComponent extends React.Component {
 
         <View style={buttons.arrowView}>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('Main', {
-                basicInfo: basicInfo, csInfo: csInfo, promptInfo: promptInfo
-              })
-            }}>
+            onPress={this.submitPage}>
             <Image
               source={require('./../../assets/icons/arrownext.png')}
             />
@@ -134,4 +136,11 @@ class PromptsComponent extends React.Component {
   }
 }
 
-export default PromptsComponent;
+const mapStateToProps = reduxState => (
+  {
+    error: reduxState.error,
+    username: reduxState.auth.username,
+  }
+);
+
+export default connect(mapStateToProps, { addToSurvey })(PromptsComponent);

@@ -4,7 +4,8 @@ import TouchableComponent from './touchableComponent';
 import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
 import surveyStyle from '../../assets/styles/surveyStyle';
 import SurveyHeaderComponent from './surveyHeaderComponent'
-
+import { addToSurvey } from '../../actions/index'
+import { connect } from 'react-redux';
 
 class CsComponent extends React.Component {
   constructor(props) {
@@ -37,6 +38,10 @@ class CsComponent extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
+  }
+
+  submitPage = () => {
+    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Prompts');
   }
 
   render() {
@@ -113,11 +118,7 @@ class CsComponent extends React.Component {
 
         <View style={buttons.arrowView}>
           <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('Prompts', {
-                basicInfo: basicInfo, csInfo: csInfo
-              })
-            }}>
+            onPress={this.submitPage}>
             <Image
               source={require('./../../assets/icons/arrownext.png')}
             />
@@ -128,4 +129,11 @@ class CsComponent extends React.Component {
   }
 }
 
-export default CsComponent;
+const mapStateToProps = reduxState => (
+  {
+    error: reduxState.error,
+    username: reduxState.auth.username,
+  }
+);
+
+export default connect(mapStateToProps, { addToSurvey })(CsComponent);
