@@ -17,8 +17,8 @@ class BasicSignUpComponent extends React.Component {
       email: '',
       username: '',
       password: '',
-      highname: '',
-      college: '',
+      highSchool: '',
+      collegeName: '',
       gradYear: '',
       currentJob: '',
       age: 0,
@@ -39,6 +39,14 @@ class BasicSignUpComponent extends React.Component {
     const otherAnswers = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
+      highSchool: this.state.highSchool,
+      collegeName: this.state.collegeName,
+      gradYear: this.state.gradYear,
+      currentJob: this.state.currentJob,
+      age: this.state.age,
+      hs: this.state.hs,
+      college: this.state.college,
+      pg: this.state.pg,
     }
 
     this.props.signUpUser(fields, this.props.navigation, otherAnswers);
@@ -92,7 +100,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   collegeInput = (text) => {
-    this.setState({ college: text });
+    this.setState({ collegeName: text });
   }
 
   gradYearInput = (text) => {
