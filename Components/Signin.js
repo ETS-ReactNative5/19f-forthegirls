@@ -18,7 +18,7 @@ class SignIn extends React.Component {
   }
 
   checkSignIn = () => {
-    this.props.signinUser({username: this.state.username, password: this.state.password, navigate: this.props.navigation});
+    this.props.signinUser({ username: this.state.username, password: this.state.password, navigate: this.props.navigation });
   }
 
   usernameInput = (text) => {
@@ -37,8 +37,8 @@ class SignIn extends React.Component {
     }
     return (
       <View style={surveyStyle.surveyBackground}>
-        <TextField textFieldStyle={surveyStyle.textField} defaultValue="Username" onInputChange={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
-        <TextField textFieldStyle={surveyStyle.textField} defaultValue="Password" onInputChange={this.passwordInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextField textFieldStyle={surveyStyle.textField} placeholder="Username" onInputChange={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextField textFieldStyle={surveyStyle.textField} placeholder="Password" onInputChange={this.passwordInput} isSecured={true} autoCapitalize='none' clearButtonMode='while-editing' />
         <View style={surveyStyle.submitButton}>
           <TouchableOpacity
             onPress={this.checkSignIn}>
