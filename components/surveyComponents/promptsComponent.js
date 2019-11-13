@@ -26,6 +26,30 @@ class PromptsComponent extends React.Component {
     this.handleSliderChange = this.handleSliderChange.bind(this);
   }
 
+  p1Question = (value) => {
+    this.setState({ promptOneQuestion: value });
+  }
+
+  p1Answer = (text) => {
+    this.setState({ promptOneAnswer: text });
+  }
+
+  p2Question = (value) => {
+    this.setState({ promptTwoQuestion: value });
+  }
+
+  p2Answer = (text) => {
+    this.setState({ promptTwoAnswer: text });
+  }
+
+  p3Question = (value) => {
+    this.setState({ promptThreeQuestion: value });
+  }
+
+  p3Answer = (text) => {
+    this.setState({ promptThreeAnswer: text });
+  }
+
   onInputChange = (text) => {
     console.log(text)
     //change state in here
@@ -76,6 +100,9 @@ class PromptsComponent extends React.Component {
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
 
+    console.log('STAAAATEE!!!!!');
+    console.log(this.state);
+
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
@@ -86,35 +113,42 @@ class PromptsComponent extends React.Component {
           selectedItemColor={selectedItemColor}
           label='Question 1'
           data={data}
+          onChangeText={this.p1Question}
         />
         <TextField
           textFieldStyle={textFieldStyle}
           placeholderStyle={{ placeholderStyle }}
           textInputStyle={{ textInputStyle }}
           placeholder="Prompt 1 Answer"
-          onInputChange={(text) => this.onInputChange(text)}
+          onInputChange={this.p1Answer}
         />
         <Dropdown
+          itemTextStyle={itemTextStyle}
+          selectedItemColor={selectedItemColor}
           label='Question 2'
           data={data}
+          onChangeText={this.p2Question}
         />
         <TextField
           textFieldStyle={textFieldStyle}
           placeholderStyle={{ placeholderStyle }}
           textInputStyle={{ textInputStyle }}
           placeholder="Prompt 2 Answer"
-          onInputChange={(text) => this.onInputChange(text)}
+          onInputChange={this.p2Answer}
         />
         <Dropdown
+          itemTextStyle={itemTextStyle}
+          selectedItemColor={selectedItemColor}
           label='Question 3'
           data={data}
+          onChangeText={this.p3Question}
         />
         <TextField
           textFieldStyle={textFieldStyle}
           placeholderStyle={{ placeholderStyle }}
           textInputStyle={{ textInputStyle }}
           placeholder="Prompt 3 Answer"
-          onInputChange={(text) => this.onInputChange(text)}
+          onInputChange={this.p3Answer}
         />
 
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
