@@ -106,6 +106,9 @@ export function signUpUser(fields, navigate, otherAnswers) {
       .then((response) => {
         return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
       .then((res) => {
+        console.log("in here");
+        console.log(res);
+        console.log(otherAnswers);
         dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
         //should add token in here
