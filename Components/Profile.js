@@ -103,22 +103,21 @@ class Profile extends React.Component {
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <View style={profile.nameHeading}>
-                <Text style={[colors.black, fonts.majorHeading]}>{this.props.username}</Text>
-                <Text style={[colors.black, fonts.majorHeading]}>{this.props.email}</Text>
-                <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, {this.state.questionAnswers.age}</Text>
+                <Text style={[colors.black, fonts.majorHeading]}>{this.props.firstName}</Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, {this.props.age}</Text>
               </View >
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.questionAnswers.hometown}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.currentJob === '' ? 'high schooler' : this.props.currentJob}</Text>
             </View>
             <View style={profile.jobStuff}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.questionAnswers.occupation}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.questionAnswers.college}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
             </View>
           </View>
           <View style={promptStyle.promptContainer}>
             <View >
-              <Prompt prompt='tech inspo' answer={this.state.questionAnswers.techInspo} />
-              <Prompt prompt='fav app' answer={this.state.questionAnswers.favApp} />
-              <Prompt prompt='dog or cat' answer={this.state.questionAnswers.dogCat} />
+              <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
+              <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
+              <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
             </View>
           </View>
         </View>
@@ -140,6 +139,18 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    firstName: reduxState.user.firstName,
+    age: reduxState.user.age,
+    highSchool: reduxState.user.highSchool,
+    collegeName: reduxState.user.collegeName,
+    gradYear: reduxState.user.gradYear,
+    currentJob: reduxState.user.currentJob,
+    promptOneQuestion: reduxState.user.promptOneQuestion,
+    promptOneAnswer: reduxState.user.promptOneAnswer,
+    promptTwoQuestion: reduxState.user.promptTwoQuestion,
+    promptTwoAnswer: reduxState.user.promptTwoAnswer,
+    promptThreeQuestion: reduxState.user.promptThreeQuestion,
+    promptThreeAnswer: reduxState.user.promptThreeAnswer,
   }
 );
 

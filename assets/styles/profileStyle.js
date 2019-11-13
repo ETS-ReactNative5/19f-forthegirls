@@ -30,17 +30,17 @@ const profile = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.lightGrey.color,
     borderRadius: 20,
-    marginBottom: 10
+    margin: 10
   },
   basicInfoLeft: {
     flexDirection: 'column'
   },
   nameHeading: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   age: {
-    marginTop: 20,
-    fontSize: 35
+    fontSize: 30
   },
   basicInfo: {
     paddingLeft: 20,

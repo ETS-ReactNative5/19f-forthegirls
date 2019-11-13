@@ -43,6 +43,7 @@ export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
+        console.log(response);
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
@@ -101,48 +102,48 @@ export function signinUser({ username, password, navigate }) {
 
 
 export function signUpUser(fields, navigate, otherAnswers) {
-    return (dispatch) => {
-      axios.post(`${ROOT_URL}/signup`, fields)
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/signup`, fields)
       .then((response) => {
         return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
-      .then((res) => {
-        console.log("in here");
-        console.log(res);
-        console.log(otherAnswers);
-        dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
+          .then((res) => {
+            console.log("in here");
+            console.log(res);
+            console.log(otherAnswers);
+            dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
-        //should add token in here
-        _storeData = async () => {
-          try {
-            await AsyncStorage.setItem('token', response.data.token);
-            await AsyncStorage.setItem('username', fields.username);
-            await AsyncStorage.setItem('id', response.data.id);
-          } catch (error) {
-            console.log("token error setting async");
-          }
-        };
-    
-        _storeData();
-    
-        //somehow get to next page
-        navigate.navigate("CsInfo");
-      })
-      .catch((error) => {
-        console.log(error);
-        // dispatch(authError(`Sign In Failed: ${error.response.data}`));
+            //should add token in here
+            _storeData = async () => {
+              try {
+                await AsyncStorage.setItem('token', response.data.token);
+                await AsyncStorage.setItem('username', fields.username);
+                await AsyncStorage.setItem('id', response.data.id);
+              } catch (error) {
+                console.log("token error setting async");
+              }
+            };
+
+            _storeData();
+
+            //somehow get to next page
+            navigate.navigate("CsInfo");
+          })
+          .catch((error) => {
+            console.log(error);
+            // dispatch(authError(`Sign In Failed: ${error.response.data}`));
+          });
       });
-    });
   }
 }
 
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
-        navigate.navigate(navTo);
-  }).catch((error) => {
-    console.log(error);
-    // dispatch(authError(`Sign In Failed: ${error.response.data}`));
-  });
+      navigate.navigate(navTo);
+    }).catch((error) => {
+      console.log(error);
+      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
+    });
   }
 }
 
