@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 import Axios from 'axios';
 import StartScreen from './components/StartScreen'
-import MainTabBar from './containers/bottomNav';
 import LogoBar from './components/LogoBar';
 import Main from './navigation/Main';
 import { Provider } from 'react-redux';

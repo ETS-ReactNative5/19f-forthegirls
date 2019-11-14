@@ -15,7 +15,7 @@ const MainTabBar = createBottomTabNavigator(
       screen: Matches,
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
-          <Image source={require('../assets/icons/home.png')} />
+          <Image source={focused ? require('../assets/icons/home.png') : require('../assets/icons/homeUnselected.png')} />
         ),
       }),
     },
@@ -24,7 +24,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/chatSelected.png')}
+            source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
           />
         ),
       }),
@@ -34,7 +34,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/profileSelected.png')}
+            source={focused ? require('../assets/icons/profileSelected.png') : require('../assets/icons/profileUnSelected.png')}
           />
         ),
       }),
@@ -44,7 +44,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/eventSelected.png')}
+            source={focused ? require('../assets/icons/eventSelected.png') : require('../assets/icons/eventUnselected.png')}
           />
         ),
       }),
