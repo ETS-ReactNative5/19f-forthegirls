@@ -1,11 +1,11 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import TextField from 'react-native-text-field';
-import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
-import surveyStyle from '../../assets/styles/surveyStyle';
+import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
-import { signUpUser } from '../../actions/index'
+import { signUpUser } from '../actions/index'
 import { connect } from 'react-redux';
 
 class BasicSignUpComponent extends React.Component {
@@ -305,7 +305,7 @@ class BasicSignUpComponent extends React.Component {
             onPress={this.sumbitUser}
             inputs={this.state}>
             <Image
-              source={require('./../../assets/icons/arrownext.png')}
+              source={require('./../assets/icons/arrownext.png')}
             />
           </TouchableOpacity>
         </View>
