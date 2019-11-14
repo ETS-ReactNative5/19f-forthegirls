@@ -254,6 +254,7 @@ class BasicSignUpComponent extends React.Component {
           placeholder="Age"
           onInputChange={this.ageInput}
           clearButtonMode='while-editing'
+          keyboardType='phone-pad'
         />
         <TextField
           textFieldStyle={textFieldStyle}
