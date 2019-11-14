@@ -9,7 +9,7 @@ import {
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import { connect } from 'react-redux';
-import { rsvpEvent, getUser } from '../actions';
+import { rsvpEvent, getUser, fetchEvent } from '../actions';
 
 class EventDetails extends Component {
   constructor(props) {
@@ -20,11 +20,13 @@ class EventDetails extends Component {
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
-    this.props.getUser(this.props.id);
+    // this.props.getUser(this.props.id);
+    this.props.fetchEvent(this.props.navigation.getParam("eventID", null));
   }
 
   rsvpEvent(){
-    //this won't work until we make a new Get Event ID backend route which ill do later
+    console.log('this userid ' + this.props.id);
+
     this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
   }
 
@@ -35,16 +37,17 @@ class EventDetails extends Component {
         <Button title="RSVP" onPress={this.rsvpEvent} />
 
         <Text>
-          {this.props.navigation.getParam("eventName", null)}
+          {this.props.event.title}
         </Text>
         <View>
-          <Text> Time </Text>
-          <Text> Date </Text>
-          <Text> Location </Text>
+          <Text> {this.props.event.date} </Text>
+          <Text> {this.props.event.time} </Text>
+          <Text> {this.props.event.location} </Text>
         </View>
         <Text>
           Description
           </Text>
+        <Text> {this.props.event.description} </Text>
         <Text>
           Your connections who are attending
           </Text>
@@ -55,11 +58,9 @@ class EventDetails extends Component {
 
 const mapStateToProps = reduxState => (
   {
-    username: reduxState.auth.username,
     id: reduxState.auth.id,
-    email: reduxState.user.email,
-    matches: reduxState.user.matches,
+    event: reduxState.events.event,
   }
 );
 
-export default connect(mapStateToProps, { rsvpEvent, getUser })(EventDetails);
+export default connect(mapStateToProps, { rsvpEvent, getUser, fetchEvent })(EventDetails);

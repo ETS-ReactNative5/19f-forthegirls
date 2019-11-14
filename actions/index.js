@@ -266,10 +266,11 @@ export function fetchEvent(id) {
 }
 
 export function rsvpEvent(userID, eventID) {
+  console.log('user  ' + userID);
   console.log('rsvp event');
   return (dispatch) => {
     //need to give it email, username and password
-    axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, userID)
+    axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
         console.log('success?');
         dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
