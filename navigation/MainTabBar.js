@@ -3,10 +3,10 @@ import { Image } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
-import Profile from '../components/Profile';
-import Chats from '../components/Chats';
-import Matches from '../components/Matches'
-import StartScreen from '../components/StartScreen'
+import Profile from '../Components/Profile';
+import Chats from '../Components/Chats';
+import Matches from '../Components/Matches'
+import StartScreen from '../Components/StartScreen'
 import { createAppContainer } from 'react-navigation';
 
 const MainTabBar = createBottomTabNavigator(
@@ -15,7 +15,7 @@ const MainTabBar = createBottomTabNavigator(
       screen: Matches,
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
-          <Image source={require('../assets/icons/home.png')} />
+          <Image source={focused ? require('../assets/icons/home.png') : require('../assets/icons/homeUnselected.png')} />
         ),
       }),
     },
@@ -24,7 +24,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/chatSelected.png')}
+            source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
           />
         ),
       }),
@@ -34,7 +34,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/profileSelected.png')}
+            source={focused ? require('../assets/icons/profileSelected.png') : require('../assets/icons/profileUnSelected.png')}
           />
         ),
       }),
@@ -44,7 +44,7 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
-            source={require('../assets/icons/eventSelected.png')}
+            source={focused ? require('../assets/icons/eventSelected.png') : require('../assets/icons/eventUnselected.png')}
           />
         ),
       }),

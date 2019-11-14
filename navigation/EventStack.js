@@ -1,7 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import Events from '../components/Events';
-import EventDetails from '../components/EventDetails';
-import AddEvent from '../components/AddEvent';
+import Events from '../Components/Events';
+import EventDetails from '../Components/EventDetails';
+import AddEvent from '../Components/AddEvent';
 
 const EventStack = createStackNavigator({
   Home: Events,
