@@ -194,7 +194,7 @@ export function authError(error) {
 //----------------- MATCHES ------------------//
 export function pairMatchToUser(username1, username2) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/users/pair/${username1}`, { username: username2 })
+    axios.put(`${ROOT_URL}/matches/pair`, { user1: username1, user2: username2 })
       .then((response) => {
         dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
         console.log(response.data);

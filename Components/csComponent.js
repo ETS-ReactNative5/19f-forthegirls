@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, TouchableOpacity, ScrollView } from 'react-native';
 import TouchableComponent from './touchableComponent';
-import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
-import surveyStyle from '../../assets/styles/surveyStyle';
+import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 import SurveyHeaderComponent from './surveyHeaderComponent'
-import { addToSurvey } from '../../actions/index'
+import { addToSurvey } from '../actions/index'
 import { connect } from 'react-redux';
 
 class CsComponent extends React.Component {
@@ -120,7 +120,7 @@ class CsComponent extends React.Component {
           <TouchableOpacity
             onPress={this.submitPage}>
             <Image
-              source={require('./../../assets/icons/arrownext.png')}
+              source={require('./../assets/icons/arrownext.png')}
             />
           </TouchableOpacity>
         </View>

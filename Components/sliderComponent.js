@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Slider } from 'react-native';
-import colors, { fonts } from '../../assets/styles/basicStyle';
+import colors, { fonts } from '../assets/styles/basicStyle';
 
 class SliderComponent extends React.Component {
   constructor(props) {
