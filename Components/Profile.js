@@ -102,10 +102,7 @@ class Profile extends React.Component {
           {/* <Button onPress={this.logout} title="Log Out" /> */}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
-              <View style={profile.nameHeading}>
-                <Text style={[colors.black, fonts.majorHeading]}>{this.props.firstName}</Text>
-                <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, {this.props.age}</Text>
-              </View >
+              <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.currentJob === '' ? 'high schooler' : this.props.currentJob}</Text>
             </View>
             <View style={profile.jobStuff}>

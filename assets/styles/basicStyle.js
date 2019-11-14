@@ -86,6 +86,17 @@ const buttons = StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'flex-end',
     marginTop: 30
+  },
+  logInButton: {
+    marginTop: 10,
+    borderWidth: 2,
+    height: 60,
+    width: 120,
+    padding: 10,
+    borderColor: colors.white.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20,
+    marginLeft: 125
   }
 
 })
