@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
-import MainScreen from './MainScreen.js'
 import { signinUser } from '../actions';
 import { connect } from 'react-redux';
 import surveyStyle from '../assets/styles/surveyStyle'
@@ -11,7 +10,6 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      goToMatches: false,
       username: '',
       password: '',
     }
@@ -30,11 +28,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    if (this.state.goToMatches) {
-      return (
-        <MainScreen />
-      )
-    }
     return (
       <View style={surveyStyle.surveyBackground}>
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
