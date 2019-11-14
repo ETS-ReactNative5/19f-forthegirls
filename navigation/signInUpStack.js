@@ -5,9 +5,9 @@ import SignIn from '../components/Signin';
 import SignUp from '../components/Signup';
 import MainTabBar from '../navigation/MainTabBar';
 import StartScreen from '../components/StartScreen';
-import BasicSignUpComponent from '../components/surveyComponents/basicSignUpComponent';
-import CsComponent from '../components/surveyComponents/csComponent';
-import Prompts from '../components/surveyComponents/promptsComponent';
+import BasicSignUpComponent from '../components/basicSignUpComponent';
+import CsComponent from '../components/csComponent';
+import Prompts from '../components/promptsComponent';
 
 
 // console.log(Main);

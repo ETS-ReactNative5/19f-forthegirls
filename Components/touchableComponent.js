@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import colors, { fonts } from '../../assets/styles/basicStyle';
-import surveyStyle from '../../assets/styles/surveyStyle';
+import colors, { fonts } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 
 class TouchableComponent extends React.Component {
   constructor(props) {
