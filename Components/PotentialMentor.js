@@ -46,12 +46,8 @@ class PotentialMentor extends React.Component {
   showMatch = () => {
     if (this.state.matched) {
       const email = this.state.questionAnswers.name;
-      Linking.openURL('mailto:'+email+'?subject=We Matched!')
-      .catch((error) => console.log(error));
-
-      return (
-        <Text style={[colors.turquoise, fonts.minorHeading]}>time to chat!</Text>
-      );
+      Linking.openURL('mailto:' + email + '?subject=We Matched!')
+        .catch((error) => console.log(error));
     }
   }
 
@@ -67,8 +63,8 @@ class PotentialMentor extends React.Component {
         <View style={profile.basicInfo}>
           <View style={profile.basicInfoLeft}>
             <View style={profile.nameHeading}>
-              <Text style={[colors.black, fonts.majorHeading]}>{this.state.questionAnswers.name}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, {this.state.questionAnswers.age}</Text>
+              <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.questionAnswers.name}, ${this.state.questionAnswers.age}`}</Text>
+
             </View >
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.questionAnswers.hometown}</Text>
           </View>

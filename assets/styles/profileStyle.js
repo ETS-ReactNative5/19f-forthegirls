@@ -7,7 +7,7 @@ const promptStyle = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.25,
     borderRadius: 20,
-    width: 350,
+    width: 325,
     padding: 10,
     paddingTop: 5,
     marginTop: 5,
@@ -17,7 +17,7 @@ const promptStyle = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   promptAnswer: {
     paddingLeft: 15
@@ -37,12 +37,13 @@ const profile = StyleSheet.create({
   },
   nameHeading: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'flex-start'
   },
   age: {
     fontSize: 30
   },
   basicInfo: {
+    paddingTop: 5,
     paddingLeft: 20,
     paddingRight: 20,
     justifyContent: 'space-between',
