@@ -27,22 +27,21 @@ class Events extends React.Component {
     this.props.navigation.navigate('Add', 5876700);
   }
 
-  renderEvent(nameProp, uniqueKey) {
+  renderEvent(nameProp, eventKey) {
+    console.log('events key ' + eventKey);
     return (
-      <View key={uniqueKey}>
-        <SingleEvent name={nameProp} navigation={this.props.navigation} />
+      <View key={eventKey}>
+        <SingleEvent name={nameProp} eventID={eventKey} navigation={this.props.navigation} />
       </View>
     );
   }
 
   renderEvents() {
     var eventList = ['Speech', 'Mixer', 'Hackathon'];
-    console.log(this.props.events.all);
 
     var renderedEvents = this.props.events.all.map((anEvent) => {
-      console.log('an event ' + anEvent);
       return (
-        this.renderEvent(anEvent.title, anEvent._id)
+        this.renderEvent(anEvent.title, anEvent.id)
       );
     })
 

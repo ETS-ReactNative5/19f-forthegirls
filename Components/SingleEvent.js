@@ -17,10 +17,11 @@ class SingleEvent extends Component {
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
+    console.log('SINGEL event key ' + this.props.eventID);
   }
 
   navToPage() {
-    this.props.navigation.navigate('Detail', {eventID: 1231241, eventName: "Hi Annika"});
+    this.props.navigation.navigate('Detail', {eventID: this.props.eventID});
   }
 
   render() {
