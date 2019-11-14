@@ -1,13 +1,13 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 
-import SignIn from '../components/Signin';
-import SignUp from '../components/Signup';
+import SignIn from '../Components/Signin';
+import SignUp from '../Components/Signup';
 import MainTabBar from '../navigation/MainTabBar';
-import StartScreen from '../components/StartScreen';
-import BasicSignUpComponent from '../components/surveyComponents/basicSignUpComponent';
-import CsComponent from '../components/surveyComponents/csComponent';
-import Prompts from '../components/surveyComponents/promptsComponent';
+import StartScreen from '../Components/StartScreen';
+import BasicSignUpComponent from '../Components/surveyComponents/basicSignUpComponent';
+import CsComponent from '../Components/surveyComponents/csComponent';
+import Prompts from '../Components/surveyComponents/promptsComponent';
 
 
 // console.log(Main);

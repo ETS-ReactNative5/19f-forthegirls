@@ -3,10 +3,10 @@ import { Image } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
-import Profile from '../components/Profile';
-import Chats from '../components/Chats';
-import Matches from '../components/Matches'
-import StartScreen from '../components/StartScreen'
+import Profile from '../Components/Profile';
+import Chats from '../Components/Chats';
+import Matches from '../Components/Matches'
+import StartScreen from '../Components/StartScreen'
 import { createAppContainer } from 'react-navigation';
 
 const MainTabBar = createBottomTabNavigator(
