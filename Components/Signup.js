@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity,  Image } from 'react-native';
-import Survey from './Survey.js'
 import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
@@ -12,19 +11,10 @@ import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { beginsurvey: false }
-  }
-
-  onInputChange = (text) => {
-    console.log(text);
+    this.state = {}
   }
 
   render() {
-    if (this.state.beginsurvey) {
-      return (
-        <Survey />
-      )
-    }
 
     let data = [{
       value: 'Morgan',
@@ -37,20 +27,6 @@ class SignUp extends React.Component {
     }, {
       value: 'Alexis',
     }];
-
-    var  surveystuff = (
-      <View>
-        <TextField
-          title="Name"
-          placeholder="My Name Is..... "
-          onInputChange={(text) => this.onInputChange(text)}
-        />
-        <Dropdown
-                label='Favorite Team Member'
-                data={data}
-              />
-      </View>
-    )
 
     return (
       <View style={{backgroundColor: '#46518725', width: '100%', height: '100%', justifyContent: 'center'}}>

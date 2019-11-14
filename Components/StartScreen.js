@@ -1,29 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import SignIn from './Signin.js'
-import SignUp from './Signup.js'
 import colors, { fonts, buttons } from '../assets/styles/basicStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class StartScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { signup: false, signin: false }
+    this.state = {}
   }
 
-
   render() {
-    if (this.state.signup) {
-      return (
-        <SignUp />
-      )
-    }
-    else if (this.state.signin) {
-      return (
-        <SignIn />
-      )
-    }
-    else {
       var logo = require('../assets/icons/logo.png');
       return (
         <View style={{ height: '100%', backgroundColor: colors.turquoise.color }}>
@@ -38,7 +24,7 @@ class StartScreen extends React.Component {
           </View>
         </View>
       );
-    }
+
   }
 }
 

@@ -7,12 +7,6 @@ import MainTabBar from '../navigation/MainTabBar';
 import StartScreen from '../components/StartScreen';
 import BasicSignUpComponent from '../components/surveyComponents/basicSignUpComponent';
 import CsComponent from '../components/surveyComponents/csComponent';
-import DemographicComponent from '../components/surveyComponents/demographicComponent';
-import EducationComponent from '../components/surveyComponents/educationComponent';
-import PersonalComponent from '../components/surveyComponents/personalComponent';
-import ProfessionalComponent from '../components/surveyComponents/professionalComponent';
-import SurveyHeader from '../components/surveyComponents/surveyHeader';
-import MatchHome from '../components/Matches';
 import Prompts from '../components/surveyComponents/promptsComponent';
 
 
@@ -37,21 +31,6 @@ const SignInUp = createStackNavigator(
     },
     CsInfo: {
       screen: CsComponent,
-    },
-    DemographicInfo: {
-      screen: DemographicComponent,
-    },
-    EducationInfo: {
-      screen: EducationComponent,
-    },
-    PersonalInfo: {
-      screen: PersonalComponent,
-    },
-    ProfessionalInfo: {
-      screen: ProfessionalComponent,
-    },
-    Header: {
-      screen: SurveyHeader,
     },
     Prompts: {
       screen: Prompts,
