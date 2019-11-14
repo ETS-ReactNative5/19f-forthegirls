@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
+import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, getUser, fetchEvent } from '../actions';
 
@@ -32,25 +33,28 @@ class EventDetails extends Component {
 
   render() {
     return (
-      <View style={eventPage.singleEventView}>
-        <Image source={require('../img/EventBackground.jpg')} style={eventPage.backgroundImage} />
-        <Button title="RSVP" onPress={this.rsvpEvent} />
-
-        <Text>
-          {this.props.event.title}
-        </Text>
-        <View>
-          <Text> {this.props.event.date} </Text>
-          <Text> {this.props.event.time} </Text>
-          <Text> {this.props.event.location} </Text>
+      <View style={eventPage.eventDetail}>
+        <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
+        <View style={eventPage.eventDetailTitleBox} >
+          <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading, fontEffects.italic]}>
+            {this.props.event.title}
+          </Text>
         </View>
-        <Text>
-          Description
+        <View style={eventPage.eventDetailLogistics}>
+          <View style={eventPage.eventDetailDayTime}>
+            <Text style={[colors.black, fonts.bodyText, fontEffects.italic]}> {this.props.event.date} </Text>
+            <Text style={[colors.black, fonts.bodyText, fontEffects.italic]}> {this.props.event.time} </Text>
+          </View>
+          <View style={eventPage.eventDetailLocation}>
+            <Text style={[colors.black, fonts.bodyText, fontEffects.italic]}> {this.props.event.location} </Text>
+          </View>
+        </View>
+        <View style={eventPage.eventDetailDescription}>
+          <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText, fontEffects.italic]}>
+            {this.props.event.description}
           </Text>
-        <Text> {this.props.event.description} </Text>
-        <Text>
-          Your connections who are attending
-          </Text>
+        </View>
+        <Button title="RSVP" onPress={this.rsvpEvent} />
       </View>
     );
   }
