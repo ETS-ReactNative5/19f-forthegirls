@@ -18,6 +18,8 @@ export const ActionTypes = {
   //EVENTS
   ADD_EVENT: 'ADD_EVENT',
   RSVP_EVENT: 'RSVP_EVENT',
+  FETCH_EVENT: 'FETCH_EVENT',
+  FETCH_EVENTS: 'FETCH_EVENTS',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -231,6 +233,35 @@ export function addEvent(fields) {
         console.log('fail?');
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
+  };
+}
+
+export function fetchEvents() {
+  console.log('in actiosn');
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events`).then((response) => {
+      console.log("= worked!");
+      console.log('response ' + response.data);
+
+      dispatch({
+        type: ActionTypes.FETCH_EVENTS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log("didnt work");
+    });
+  };
+}
+
+export function fetchEvent(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/${id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_EVENT,
+        payload: response.data,
+      });
+    }).catch((error) => {
+    });
   };
 }
 
