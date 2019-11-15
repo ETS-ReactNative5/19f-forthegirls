@@ -73,8 +73,8 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailImage: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 10,
     borderRadius: 20,
     height: "30%",
     width: "90%",
@@ -93,8 +93,8 @@ const eventPage = StyleSheet.create({
     justifyContent: 'center',
   },
   eventDetailTitle: {
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 10,
   },
   eventDetailLogistics:{
     width: '100%',
@@ -103,22 +103,43 @@ const eventPage = StyleSheet.create({
     justifyContent: 'space-between',
   },
   eventDetailDayTime: {
-    marginLeft: 10,
+    marginLeft: 35,
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
   eventDetailLocation: {
-    marginRight: 10,
+    marginRight: 35,
   },
 
   eventDetailDescription: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
+    marginTop: 30,
   },
 
   eventDetailDescriptionText: {
-    marginLeft: 10,
+    marginLeft: 40,
+  },
+
+  eventDetailRSVPContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+
+  eventDetailRSVP: {
+    marginTop: 230,
+    borderRadius: 20,
+    backgroundColor: "#37415A",
+  },
+
+  eventDetailRSVPText: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft:20,
+    marginRight: 20,
   },
 })
 
