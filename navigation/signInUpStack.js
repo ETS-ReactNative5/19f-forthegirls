@@ -10,6 +10,7 @@ import CsComponent from '../Components/surveyComponents/csComponent';
 import Prompts from '../Components/surveyComponents/promptsComponent';
 
 
+
 // console.log(Main);
 
 const SignInUp = createStackNavigator(

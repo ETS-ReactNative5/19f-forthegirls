@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
-import colors, { buttons, fonts, fontEffects } from '../../assets/styles/basicStyle';
-import surveyStyle from '../../assets/styles/surveyStyle';
+import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
-import { addToSurvey } from '../../actions/index'
+import { addToSurvey } from '../actions/index'
 import { connect } from 'react-redux';
 
 
@@ -153,7 +153,7 @@ class PromptsComponent extends React.Component {
           <TouchableOpacity
             onPress={this.submitPage}>
             <Image
-              source={require('./../../assets/icons/arrownext.png')}
+              source={require('./../assets/icons/arrownext.png')}
             />
           </TouchableOpacity>
         </View>

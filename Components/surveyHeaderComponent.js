@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
-import colors, { fonts, buttons } from '../../assets/styles/basicStyle';
-import surveyStyle from '../../assets/styles/surveyStyle';
+import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 
 class SurveyHeaderComponent extends React.Component {
   constructor(props) {
