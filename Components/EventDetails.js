@@ -17,23 +17,39 @@ class EventDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rsvp: false,
+      rsvp: null,
     };
 
     this.rsvpEvent = this.rsvpEvent.bind(this);
+    this.checkRSVP = this.checkRSVP.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
-    // this.props.getUser(this.props.id);
-    this.props.fetchEvent(this.props.navigation.getParam("eventID", null));
+    this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
+  }
+
+  checkRSVP(){
+    if(this.props.event && this.props.event.rsvps){
+      var seen = false
+      this.props.event.rsvps.map((id) => {
+        if(id===this.props.id){
+          seen = true;
+          console.log('you have RSVPd');
+        }
+      })
+      this.setState({rsvp: seen});
+    }
   }
 
   rsvpEvent(){
-    console.log('this userid ' + this.props.id);
     this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+    this.setState({rsvp: true});
   }
 
   render() {
+    if(this.state.rsvp===null){
+      this.checkRSVP()
+    }
     return (
       <View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
@@ -59,7 +75,9 @@ class EventDetails extends Component {
         <View style={eventPage.eventDetailRSVPContainer} >
           <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.rsvpEvent}>
             <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading, fontEffects.italic]}>
-              RSVP
+              {this.state.rsvp
+                ? 'You have RSVPd!'
+                : 'RSVP'}
             </Text>
           </TouchableOpacity>
         </View>
