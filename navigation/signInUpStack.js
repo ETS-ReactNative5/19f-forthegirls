@@ -5,9 +5,9 @@ import SignIn from '../Components/Signin';
 import SignUp from '../Components/Signup';
 import MainTabBar from '../navigation/MainTabBar';
 import StartScreen from '../Components/StartScreen';
-import BasicSignUpComponent from '../Components/surveyComponents/basicSignUpComponent';
-import CsComponent from '../Components/surveyComponents/csComponent';
-import Prompts from '../Components/surveyComponents/promptsComponent';
+import BasicSignUpComponent from '../Components/basicSignUpComponent';
+import CsComponent from '../Components/csComponent';
+import Prompts from '../Components/promptsComponent';
 
 
 
