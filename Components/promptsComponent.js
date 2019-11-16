@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle';
@@ -94,9 +94,7 @@ class PromptsComponent extends React.Component {
       'promptThreeAnswer': 'f',
     }
 
-    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
-    var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = surveyStyle.textField
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
 
@@ -115,12 +113,10 @@ class PromptsComponent extends React.Component {
           data={data}
           onChangeText={this.p1Question}
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           placeholder="Prompt 1 Answer"
-          onInputChange={this.p1Answer}
+          onChangeText={this.p1Answer}
         />
         <Dropdown
           itemTextStyle={itemTextStyle}
@@ -129,12 +125,10 @@ class PromptsComponent extends React.Component {
           data={data}
           onChangeText={this.p2Question}
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           placeholder="Prompt 2 Answer"
-          onInputChange={this.p2Answer}
+          onChangeText={this.p2Answer}
         />
         <Dropdown
           itemTextStyle={itemTextStyle}
@@ -143,12 +137,10 @@ class PromptsComponent extends React.Component {
           data={data}
           onChangeText={this.p3Question}
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           placeholder="Prompt 3 Answer"
-          onInputChange={this.p3Answer}
+          onChangeText={this.p3Answer}
         />
 
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>

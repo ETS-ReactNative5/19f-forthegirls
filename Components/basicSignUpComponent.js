@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import TextField from 'react-native-text-field';
 import colors, { fonts, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
@@ -150,16 +150,12 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderHS() {
-    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
-    var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = surveyStyle.textField
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (<TextField
-      textFieldStyle={textFieldStyle}
-      placeholderStyle={{ placeholderStyle }}
-      textInputStyle={{ textInputStyle }}
+    return (<TextInput
+      style={textFieldStyle}
       placeholder="High School"
-      onInputChange={this.highSchoolInput}
+      onChangeText={this.highSchoolInput}
       clearButtonMode='while-editing'
       keyboardType='default'
     />)
@@ -167,44 +163,34 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderCollege() {
-    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
-    var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = surveyStyle.textField
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (<View>
-      <TextField
-        textFieldStyle={textFieldStyle}
-        placeholderStyle={{ placeholderStyle }}
-        textInputStyle={{ textInputStyle }}
+      <TextInput
+        style={textFieldStyle}
         placeholder="High School Name"
-        onInputChange={this.highSchoolInput}
+        onChangeText={this.highSchoolInput}
         clearButtonMode='while-editing'
         keyboardType='default'
       />
-      <TextField
-        textFieldStyle={textFieldStyle}
-        placeholderStyle={{ placeholderStyle }}
-        textInputStyle={{ textInputStyle }}
+      <TextInput
+        style={textFieldStyle}
         placeholder="College"
-        onInputChange={this.collegeInput}
+        onChangeText={this.collegeInput}
         clearButtonMode='while-editing'
         keyboardType='default'
       />
-      <TextField
-        textFieldStyle={textFieldStyle}
-        placeholderStyle={{ placeholderStyle }}
-        textInputStyle={{ textInputStyle }}
+      <TextInput
+        style={textFieldStyle}
         placeholder="Graduation Year"
-        onInputChange={this.gradYearInput}
+        onChangeText={this.gradYearInput}
         clearButtonMode='while-editing'
         keyboardType='default'
       />
-      <TextField
-        textFieldStyle={textFieldStyle}
-        placeholderStyle={{ placeholderStyle }}
-        textInputStyle={{ textInputStyle }}
+      <TextInput
+        style={textFieldStyle}
         placeholder="Current/Most Recent Job/Internship"
-        onInputChange={this.currentJobInput}
+        onChangeText={this.currentJobInput}
         clearButtonMode='while-editing'
         keyboardType='default'
       />
@@ -218,71 +204,58 @@ class BasicSignUpComponent extends React.Component {
 
   //need to check unique from here
   render() {
-    var placeholderStyle = [fonts.bodyText, colors.lightGrey]
-    var textInputStyle = [colors.black, fonts.bodyText]
-    var textFieldStyle = surveyStyle.textField
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
         </View>
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="First Name"
-          onInputChange={this.firstNameInput}
+          onChangeText={this.firstNameInput}
           clearButtonMode='while-editing'
           keyboardType='default'
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Last Name"
-          onInputChange={this.lastNameInput}
+          onChangeText={this.lastNameInput}
           clearButtonMode='while-editing'
+          keyboardType='default'
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           onInputChange={(input) => this.onAgeChange(input)}
           placeholder="Age"
-          onInputChange={this.ageInput}
+          onChangeText={this.ageInput}
           clearButtonMode='while-editing'
           keyboardType='phone-pad'
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Email"
-          onInputChange={this.emailInput}
+          onChangeText={this.emailInput}
           clearButtonMode='while-editing'
           keyboardType='email-address'
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Username"
-          onInputChange={this.usernameInput}
+          onChangeText={this.usernameInput}
           clearButtonMode='while-editing'
         />
-        <TextField
-          textFieldStyle={textFieldStyle}
-          placeholderStyle={{ placeholderStyle }}
-          textInputStyle={{ textInputStyle }}
+        <TextInput
+          style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Password"
           isSecured={true}
-          onInputChange={this.passwordInput}
+          onChangeText={this.passwordInput}
           clearButtonMode='while-editing'
           secureTextEntry={true}
         />
