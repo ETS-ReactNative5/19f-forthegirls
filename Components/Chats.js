@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { getUser, getMatch } from '../actions';
+import { getUser, getMatches } from '../actions';
 import chatList from '../assets/styles/chatStyle';
 import { Linking } from 'react-native'
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import axios from 'axios';
 
 class Chats extends React.Component {
   constructor(props) {
@@ -24,38 +25,59 @@ class Chats extends React.Component {
 
   pressUser = (email) => {
     Linking.openURL('mailto:' + email + '?subject=We Matched!')
-      .catch((error) => console.log(error));
+      .catch((error) => console.log("email error" + error));
   }
 
   showMatches() {
     // const matchInfo = getMatch(this.props.matches[i].id);
     // console.log("MATCH INFO");
     // console.log(matchInfo);
+
     var i = -1;
     return this.props.matches.map((n) => {
-      i++;
-      return (
-        <View key={n._id} style={[i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
-          <Text style={[fonts.minorHeading, chatList.username]} key={n.username}>{n.username}</Text>
-          <View style={chatList.chatButton}>
-            <TouchableOpacity
-              key={n._id}
-              onPress={() => this.pressUser(n.email)}>
-              <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      );
+      axios.get(`https://for-the-girls.herokuapp.com/api/users/${n}`)
+      .then((response) => {
+        i++;
+        const userData = response.data.result;
+        console.log(userData.age);
+        return (
+          <Text> HI </Text>
+          // <View key={userData._id} style={[i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
+          //   <Text style={[fonts.minorHeading, chatList.username]} key={userData.username}>{userData.username}</Text>
+          //   <View style={chatList.chatButton}>
+          //     <TouchableOpacity
+          //       key={userData.email}
+          //       onPress={() => this.pressUser(userData.email)}>
+          //       <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
+          //     </TouchableOpacity>
+          //   </View>
+          // </View>
+        );
+      }).catch((error) => {
+        console.log(error);
+      });
+
+
+      
     });
   }
 
   render() {
-    return (
-      <View>
-        <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
-        {this.showMatches()}
-      </View>
-    );
+    if(this.props.matches.length != 0) {
+      return (
+        <View>
+          <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
+          {this.showMatches()}
+        </View>
+      )
+    }
+    else {
+      this.props.getMatches(this.props.username);
+      return (
+        <Text>Loading...</Text>
+      )
+    }
+    
   }
 }
 
@@ -68,4 +90,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getUser })(Chats);
+export default connect(mapStateToProps, { getMatches, getUser })(Chats);
