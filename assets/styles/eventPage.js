@@ -63,6 +63,12 @@ const eventPage = StyleSheet.create({
     color: colors.white.color,
   },
 
+  eventAddButton:{
+    marginBottom: 30,
+    borderRadius: 20,
+    backgroundColor: "#37415A",
+  },
+
   eventDetail:{
     width: '100%',
     height: '100%',

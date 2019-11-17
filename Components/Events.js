@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import SingleEvent from './SingleEvent.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
@@ -54,7 +54,11 @@ class Events extends React.Component {
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.renderEvents()}
         </ScrollView>
-        <Button title="Add Event" onPress={this.navToAdd} />
+        <TouchableOpacity style={eventPage.eventAddButton} onPress={this.navToAdd}>
+          <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading, fontEffects.italic]}>
+            Add Event
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
