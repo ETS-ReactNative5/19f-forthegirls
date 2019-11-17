@@ -28,11 +28,24 @@ class SignIn extends React.Component {
   }
 
   render() {
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     return (
       <View style={surveyStyle.surveyBackground}>
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
-        <TextField textFieldStyle={surveyStyle.textField} placeholder="Username" onInputChange={this.usernameInput} autoCapitalize='none' clearButtonMode='while-editing' />
-        <TextField textFieldStyle={surveyStyle.textField} placeholder="Password" onInputChange={this.passwordInput} isSecured={true} autoCapitalize='none' clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Username"
+          onChangeText={this.usernameInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing'
+          />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Password"
+          onChangeText={this.passwordInput}
+          isSecured={true} autoCapitalize='none'
+          clearButtonMode='while-editing'
+        />
         <View style={{ justifyContent: 'flex-end' }}>
           <View style={buttons.logInButton}>
             <TouchableOpacity
