@@ -4,6 +4,7 @@ const UserReducer = (state = {
   username: '',
   email: '',
   matches: [],
+  // potentialMatches: [],
 
   // basic 
   firstName: '',
@@ -105,9 +106,11 @@ const UserReducer = (state = {
         promptTwoAnswer: action.payload.result.promptTwoAnswer,
         promptThreeQuestion: action.payload.result.promptThreeQuestion,
         promptThreeAnswer: action.payload.result.promptThreeAnswer,
-        // introextro: 0,
-        // listenFollow: 0,
 
+      });
+      case ActionTypes.USER_GET_POT_MATCHES:
+        return Object.assign({}, state, {
+          potentialMatches: action.payload,
       });
     default:
       return state;

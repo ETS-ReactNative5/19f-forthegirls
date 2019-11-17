@@ -9,6 +9,7 @@ export const ActionTypes = {
   FETCH_USER: 'FETCH_USER',
   // UPDATE_USER: 'UPDATE_USER',
   DELETE_USER: 'DELETE_USER',
+  USER_GET_POT_MATCHES: 'USER_GET_POT_MATCHES',
 
   //AUTH
   AUTH_USER: 'AUTH_USER',
@@ -45,7 +46,7 @@ export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
@@ -206,14 +207,18 @@ export function pairMatchToUser(username1, username2) {
   }
 }
 
-export function getMatch(id) {
-  console.log("in get match");
-  axios.get(`${ROOT_URL}/users/${id}`)
-    .then((response) => {
-      return response.data;
-    }).catch((error) => {
-      console.log(error);
-    });
+export function getPotentialMatches(username) {
+  //matches/potential/:username
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/matches/potential/${username}`)
+      .then((response) => {
+        dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
+      }).catch((error) => {
+        console.log("error");
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+
 }
 
 
@@ -286,88 +291,88 @@ export function rsvpEvent(userID, eventID) {
 
 
 //----------------- SURVEY ------------------//
-export function addBasicInfo(id, fields) {
-  console.log('adding basic info from survey');
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/survey/basicInfo/${id}`, fields)
-      .then((response) => {
-        console.log('success?');
-        dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
-      }).then(() => {
-        console.log('success2?');
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        console.log('fail?');
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function addBasicInfo(id, fields) {
+//   console.log('adding basic info from survey');
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/survey/basicInfo/${id}`, fields)
+//       .then((response) => {
+//         console.log('success?');
+//         dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
+//       }).then(() => {
+//         console.log('success2?');
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         console.log('fail?');
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
 
 
-export function addCS(id, fields) {
-  console.log('adding cs info from survey');
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/survey/cs/${id}`, fields)
-      .then((response) => {
-        console.log('success?');
-        dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
-      }).then(() => {
-        console.log('success2?');
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        console.log('fail?');
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function addCS(id, fields) {
+//   console.log('adding cs info from survey');
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/survey/cs/${id}`, fields)
+//       .then((response) => {
+//         console.log('success?');
+//         dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
+//       }).then(() => {
+//         console.log('success2?');
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         console.log('fail?');
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
 
-export function addDemo(id, fields) {
-  console.log('adding demo info from survey');
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/survey/demo/${id}`, fields)
-      .then((response) => {
-        console.log('success?');
-        dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
-      }).then(() => {
-        console.log('success2?');
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        console.log('fail?');
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function addDemo(id, fields) {
+//   console.log('adding demo info from survey');
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/survey/demo/${id}`, fields)
+//       .then((response) => {
+//         console.log('success?');
+//         dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
+//       }).then(() => {
+//         console.log('success2?');
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         console.log('fail?');
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
 
-export function addEdu(id, fields) {
-  console.log('adding education info from survey');
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/survey/edu/${id}`, fields)
-      .then((response) => {
-        console.log('success?');
-        dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
-      }).then(() => {
-        console.log('success2?');
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        console.log('fail?');
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function addEdu(id, fields) {
+//   console.log('adding education info from survey');
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/survey/edu/${id}`, fields)
+//       .then((response) => {
+//         console.log('success?');
+//         dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
+//       }).then(() => {
+//         console.log('success2?');
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         console.log('fail?');
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
 
-export function addPersonal(id, fields) {
-  console.log('adding personality info from survey');
-  return (dispatch) => {
-    axios.post(`${ROOT_URL}/survey/personal/${id}`, fields)
-      .then((response) => {
-        console.log('success?');
-        dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
-      }).then(() => {
-        console.log('success2?');
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
-      }).catch((error) => {
-        console.log('fail?');
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
-  };
-}
+// export function addPersonal(id, fields) {
+//   console.log('adding personality info from survey');
+//   return (dispatch) => {
+//     axios.post(`${ROOT_URL}/survey/personal/${id}`, fields)
+//       .then((response) => {
+//         console.log('success?');
+//         dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
+//       }).then(() => {
+//         console.log('success2?');
+//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//       }).catch((error) => {
+//         console.log('fail?');
+//         dispatch({ type: ActionTypes.SET_ERROR, error });
+//       });
+//   };
+// }
