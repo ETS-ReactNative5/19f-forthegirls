@@ -145,8 +145,10 @@ const eventPage = StyleSheet.create({
   eventDetailRSVPText: {
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 20,
+    marginLeft: 125,
     marginRight: 20,
+    height: 30,
+    width: 120,
   },
 })
 
