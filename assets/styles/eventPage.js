@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import colors, { fonts }  from './basicStyle';
+import colors, { fonts } from './basicStyle';
 
 const eventPage = StyleSheet.create({
   wholeContainer: {
@@ -7,10 +7,11 @@ const eventPage = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    backgroundColor: colors.veryLightPurple.color
   },
 
   scroll: {
-    width:'100%',
+    width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -37,7 +38,7 @@ const eventPage = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  title:{
+  title: {
     borderRadius: 10,
     width: '80%',
     backgroundColor: 'rgba(40, 195, 169, 0.6)',
@@ -45,11 +46,11 @@ const eventPage = StyleSheet.create({
     marginLeft: 10,
   },
 
-  titleMargin:{
+  titleMargin: {
     marginLeft: 10,
   },
 
-  date:{
+  date: {
     borderRadius: 10,
     width: '40%',
     backgroundColor: 'rgba(70, 81, 135, 0.6)',
@@ -59,11 +60,17 @@ const eventPage = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  button:{
+  button: {
     color: colors.white.color,
   },
 
-  eventDetail:{
+  eventAddButton: {
+    marginBottom: 30,
+    borderRadius: 20,
+    backgroundColor: "#37415A",
+  },
+
+  eventDetail: {
     width: '100%',
     height: '100%',
     display: 'flex',
@@ -96,7 +103,7 @@ const eventPage = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-  eventDetailLogistics:{
+  eventDetailLogistics: {
     width: '100%',
     marginTop: 10,
     flexDirection: 'row',
@@ -138,8 +145,9 @@ const eventPage = StyleSheet.create({
   eventDetailRSVPText: {
     marginTop: 10,
     marginBottom: 10,
-    marginLeft:20,
+    marginLeft: 135,
     marginRight: 20,
+    height: 25
   },
 })
 

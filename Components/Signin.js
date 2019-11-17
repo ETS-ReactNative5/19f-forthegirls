@@ -38,12 +38,13 @@ class SignIn extends React.Component {
           onChangeText={this.usernameInput}
           autoCapitalize='none'
           clearButtonMode='while-editing'
-          />
+        />
         <TextInput
           style={textFieldStyle}
           placeholder="Password"
           onChangeText={this.passwordInput}
-          isSecured={true} autoCapitalize='none'
+          secureTextEntry={true}
+          autoCapitalize='none'
           clearButtonMode='while-editing'
         />
         <View style={{ justifyContent: 'flex-end' }}>

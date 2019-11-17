@@ -28,39 +28,42 @@ class EventDetails extends Component {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
   }
 
-  checkRSVP(){
-    if(this.props.event && this.props.event.rsvps){
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.rsvp === null) {
+      this.checkRSVP();
+    }
+  }
+
+  checkRSVP() {
+    if (this.props.event && this.props.event.rsvps) {
       var seen = false
       this.props.event.rsvps.map((id) => {
-        if(id===this.props.id){
+        if (id === this.props.id) {
           seen = true;
           console.log('you have RSVPd');
         }
       })
-      this.setState({rsvp: seen});
+      this.setState({ rsvp: seen });
     }
   }
 
-  rsvpEvent(){
+  rsvpEvent() {
     this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
-    this.setState({rsvp: true});
+    this.setState({ rsvp: true });
   }
 
   render() {
-    if(this.state.rsvp===null){
-      this.checkRSVP()
-    }
     return (
       <View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
         <View style={eventPage.eventDetailTitleBox} >
-          <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading, fontEffects.italic]}>
+          <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
             {this.props.event.title}
           </Text>
         </View>
         <View style={eventPage.eventDetailLogistics}>
           <View style={eventPage.eventDetailDayTime}>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.date} </Text>
+            <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
           </View>
           <View style={eventPage.eventDetailLocation}>
@@ -68,13 +71,13 @@ class EventDetails extends Component {
           </View>
         </View>
         <View style={eventPage.eventDetailDescription}>
-          <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText, fontEffects.italic]}>
+          <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
           </Text>
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
           <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.rsvpEvent}>
-            <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading, fontEffects.italic]}>
+            <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
               {this.state.rsvp
                 ? 'You have RSVPd!'
                 : 'RSVP'}

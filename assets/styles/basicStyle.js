@@ -60,10 +60,14 @@ const fontEffects = StyleSheet.create({
 
 const logo = StyleSheet.create({
   barContainer: {
-    top: 30,
     backgroundColor: colors.deepPurple.color,
     height: 70,
     width: '100%'
+  },
+  logoText: {
+    textAlign: 'center',
+    flexDirection: 'column',
+    marginTop: 30
   }
 })
 

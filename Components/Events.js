@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import SingleEvent from './SingleEvent.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
+import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents } from '../actions';
 
@@ -23,22 +24,29 @@ class Events extends React.Component {
     this.props.fetchEvents();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.props.fetchEvents();
+  }
+
   navToAdd() {
     this.props.navigation.navigate('Add', 5876700);
   }
 
   renderEvent(nameProp, dateProp, locationProp, eventKey) {
-    console.log('events key ' + eventKey);
     return (
-      <View key={eventKey}>
-        <SingleEvent key={eventKey} name={nameProp} date={dateProp} location={locationProp} eventID={eventKey} navigation={this.props.navigation} />
+      <View key={eventKey + 1}>
+        <SingleEvent
+          key={eventKey}
+          name={nameProp}
+          date={dateProp}
+          location={locationProp}
+          eventID={eventKey}
+          navigation={this.props.navigation} />
       </View>
     );
   }
 
   renderEvents() {
-    var eventList = ['Speech', 'Mixer', 'Hackathon'];
-
     var renderedEvents = this.props.events.all.map((anEvent) => {
       return (
         this.renderEvent(anEvent.title, anEvent.date, anEvent.location, anEvent.id)
@@ -54,7 +62,11 @@ class Events extends React.Component {
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.renderEvents()}
         </ScrollView>
-        <Button title="Add Event" onPress={this.navToAdd} />
+        <TouchableOpacity style={eventPage.eventAddButton} onPress={this.navToAdd}>
+          <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
+            Add Event
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }

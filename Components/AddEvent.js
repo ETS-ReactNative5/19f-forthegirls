@@ -3,11 +3,13 @@ import {
   View,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
 } from 'react-native';
+import { StackActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import { addEvent } from '../actions';
-
+import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 
 class AddEvent extends Component {
   constructor(props) {
@@ -48,22 +50,76 @@ class AddEvent extends Component {
     this.setState({ description: text });
   }
 
-  addEvent(){
-    this.props.addEvent({title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description});
+  addEvent() {
+    if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
+    }
+    else {
+      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
+      const popAction = StackActions.pop({
+        n: 1,
+      });
+      this.props.navigation.dispatch(popAction);
+    }
   }
 
   render() {
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     return (
-      <View>
-        <TextInput defaultValue="Enter Your Title" onChangeText={this.titleInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Date" onChangeText={this.dateInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Time" onChangeText={this.timeInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Location" onChangeText={this.locationInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Description" onChangeText={this.descriptionInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <Text>
-          This is the adding page!
-        </Text>
-        <Button title="Submit" onPress={this.addEvent} />
+      <View style={{ backgroundColor: colors.veryLightPurple.color }}>
+        <TextInput
+          style={textFieldStyle}
+          keyboardType='default'
+          placeholder="Event Title"
+          onChangeText={this.titleInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Date (MM/DD/YY)"
+          keyboardType='default'
+          onChangeText={this.dateInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Time (24:00)"
+          keyboardType='default'
+          onChangeText={this.timeInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Location"
+          keyboardType='default'
+          onChangeText={this.locationInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Description"
+          keyboardType='default'
+          onChangeText={this.descriptionInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing'
+          multiline={true} />
+        <View style={{ justifyContent: 'flex-end' }}>
+          <View style={buttons.logInButton}>
+            <TouchableOpacity
+              onPress={this.addEvent}>
+              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }

@@ -4,11 +4,11 @@ import colors, { logo, fonts } from '../assets/styles/basicStyle';
 
 
 const LogoBar = () => {
-    return (
-      <View style={logo.barContainer}>
-        <Text style={[fonts.majorHeading, colors.white]}>FTG</Text>
-      </View>
-    );
+  return (
+    <View style={logo.barContainer}>
+      <Text style={[fonts.majorHeading, colors.white, logo.logoText]}>FTG</Text>
+    </View>
+  );
 }
 
 
