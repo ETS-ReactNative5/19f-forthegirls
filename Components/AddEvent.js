@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
 } from 'react-native';
+import { StackActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import { addEvent } from '../actions';
 
@@ -49,20 +50,35 @@ class AddEvent extends Component {
   }
 
   addEvent(){
-    this.props.addEvent({title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description});
+    if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
+    }
+    else{
+      this.props.addEvent({title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description});
+      const popAction = StackActions.pop({
+        n:1,
+      });
+      this.props.navigation.dispatch(popAction);
+    }
   }
 
   render() {
     return (
       <View>
-        <TextInput defaultValue="Enter Your Title" onChangeText={this.titleInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Date" onChangeText={this.dateInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Time" onChangeText={this.timeInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Location" onChangeText={this.locationInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Description" onChangeText={this.descriptionInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <Text>
-          This is the adding page!
-        </Text>
+        <TextInput placeholder="Enter Your Title" onChangeText={this.titleInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+        <TextInput placeholder="Enter Your Date (MM/DD/YY)" onChangeText={this.dateInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+        <TextInput placeholder="Enter Your Time (24:00)" onChangeText={this.timeInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+        <TextInput placeholder="Enter Your Location" onChangeText={this.locationInput} autoCapitalize='none' clearButtonMode='while-editing'/>
+        <TextInput placeholder="Enter Your Description" onChangeText={this.descriptionInput} autoCapitalize='none' clearButtonMode='while-editing'/>
         <Button title="Submit" onPress={this.addEvent} />
       </View>
     );
