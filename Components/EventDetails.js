@@ -28,6 +28,12 @@ class EventDetails extends Component {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.rsvp === null) {
+      this.checkRSVP();
+    }
+  }
+
   checkRSVP() {
     if (this.props.event && this.props.event.rsvps) {
       var seen = false
@@ -47,9 +53,6 @@ class EventDetails extends Component {
   }
 
   render() {
-    if (this.state.rsvp === null) {
-      this.checkRSVP()
-    }
     return (
       <View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />

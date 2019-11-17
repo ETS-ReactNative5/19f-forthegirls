@@ -147,7 +147,7 @@ const eventPage = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 135,
     marginRight: 20,
-    height: 30
+    height: 25
   },
 })
 
