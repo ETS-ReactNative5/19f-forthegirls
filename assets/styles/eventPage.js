@@ -130,6 +130,7 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVPContainer: {
+    height: '70%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -137,15 +138,17 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVP: {
-    marginTop: 230,
     borderRadius: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: "#37415A",
   },
 
   eventDetailRSVPText: {
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 135,
+    marginLeft: 20,
     marginRight: 20,
     height: 25
   },
