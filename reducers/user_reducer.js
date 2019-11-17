@@ -112,6 +112,10 @@ const UserReducer = (state = {
         return Object.assign({}, state, {
           potentialMatches: action.payload,
       });
+      case ActionTypes.GET_MATCHES:
+        return Object.assign({}, state, {
+          matches: action.payload,
+      });
     default:
       return state;
   }

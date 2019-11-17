@@ -51,7 +51,6 @@ class PotentialMentor extends React.Component {
     var noMatch = require('../assets/icons/dontMatch.png');
     
     if(this.state.userMatch !== undefined) {
-      console.log(this.state.userMatch.id);
       return (
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),

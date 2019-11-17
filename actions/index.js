@@ -10,6 +10,7 @@ export const ActionTypes = {
   // UPDATE_USER: 'UPDATE_USER',
   DELETE_USER: 'DELETE_USER',
   USER_GET_POT_MATCHES: 'USER_GET_POT_MATCHES',
+  GET_MATCHES: 'GET_MATCHES',
 
   //AUTH
   AUTH_USER: 'AUTH_USER',
@@ -193,15 +194,14 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
-export function pairMatchToUser(username1, username2) {
+export function pairMatchToUser(user1, user2) {
   return (dispatch) => {
-    axios.put(`${ROOT_URL}/matches/pair`, { user1: username1, user2: username2 })
+    axios.post(`${ROOT_URL}/matches/pair`, { user1 , user2 })
       .then((response) => {
-        dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
+        // dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
         console.log(response.data);
-      }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
       }).catch((error) => {
+        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -218,8 +218,24 @@ export function getPotentialMatches(username) {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
-
 }
+
+export function getMatches(username) {
+  // console.log("in get matches");
+  // console.log(username);
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/matches/${username}`)
+      .then((response) => {
+        // console.log("in get matches");
+        // console.log(response);
+        dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
+      }).catch((error) => {
+        console.log("error");
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
 
 
 //----------------- EVENTS ------------------//
