@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import SingleEvent from './SingleEvent.js'
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
+import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents } from '../actions';
 
@@ -23,12 +24,15 @@ class Events extends React.Component {
     this.props.fetchEvents();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    this.props.fetchEvents();
+  }
+
   navToAdd() {
     this.props.navigation.navigate('Add', 5876700);
   }
 
   renderEvent(nameProp, dateProp, locationProp, eventKey) {
-    console.log('events key ' + eventKey);
     return (
       <View key={eventKey}>
         <SingleEvent key={eventKey} name={nameProp} date={dateProp} location={locationProp} eventID={eventKey} navigation={this.props.navigation} />
