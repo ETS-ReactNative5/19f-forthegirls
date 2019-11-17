@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { addEvent } from '../actions';
-
+import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 
 class AddEvent extends Component {
   constructor(props) {
@@ -48,21 +49,58 @@ class AddEvent extends Component {
     this.setState({ description: text });
   }
 
-  addEvent(){
-    this.props.addEvent({title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description});
+  addEvent() {
+    console.log(this.props.navigation);
+    this.props.addEvent({
+      title: this.state.title,
+      date: this.state.date,
+      time: this.state.time,
+      location: this.state.location,
+      description: this.state.description
+    });
+    this.props.navigation.pop();
   }
 
   render() {
+    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     return (
       <View>
-        <TextInput defaultValue="Enter Your Title" onChangeText={this.titleInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Date" onChangeText={this.dateInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Time" onChangeText={this.timeInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Location" onChangeText={this.locationInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <TextInput defaultValue="Enter Your Description" onChangeText={this.descriptionInput} autoCapitalize='none' clearButtonMode='while-editing'/>
-        <Text>
-          This is the adding page!
-        </Text>
+        <TextInput
+          style={textFieldStyle}
+          keyboardType='default'
+          placeholder="Event Title"
+          onChangeText={this.titleInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Date"
+          keyboardType='default'
+          onChangeText={this.dateInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Time"
+          keyboardType='default'
+          onChangeText={this.timeInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Location"
+          keyboardType='default'
+          onChangeText={this.locationInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing' />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Event Description"
+          keyboardType='default'
+          onChangeText={this.descriptionInput}
+          autoCapitalize='none'
+          clearButtonMode='while-editing'
+          multiline={true} />
         <Button title="Submit" onPress={this.addEvent} />
       </View>
     );

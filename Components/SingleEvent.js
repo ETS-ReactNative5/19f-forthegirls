@@ -24,20 +24,19 @@ class SingleEvent extends Component {
   }
 
   navToPage() {
-    this.props.navigation.navigate('Detail', {eventID: this.props.eventID});
+    this.props.navigation.navigate('Detail', { eventID: this.props.eventID });
   }
 
   render() {
     return (
-
       <TouchableOpacity onPress={this.navToPage}>
         <View style={eventPage.singleEventView}>
           <ImageBackground source={require('../img/EventBackground.jpg')} style={eventPage.backgroundImage}>
             <View style={eventPage.title}>
-              <Text style={[eventPage.titleMargin, colors.white, fonts.majorHeading, fontEffects.italic]}>
+              <Text style={[eventPage.titleMargin, colors.white, fonts.majorHeading]}>
                 {this.props.name}
               </Text>
-              <Text style={[eventPage.titleMargin, colors.white, fonts.minorHeading, fontEffects.italic]}>
+              <Text style={[eventPage.titleMargin, colors.white, fonts.minorHeading]}>
                 {this.props.location}
               </Text>
             </View>

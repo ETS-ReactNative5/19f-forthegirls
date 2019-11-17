@@ -5,6 +5,7 @@ import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import { connect } from 'react-redux';
 import { fetchEvents } from '../actions';
+import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 
 class Events extends React.Component {
   static navigationOptions = {
@@ -30,15 +31,19 @@ class Events extends React.Component {
   renderEvent(nameProp, dateProp, locationProp, eventKey) {
     console.log('events key ' + eventKey);
     return (
-      <View key={eventKey}>
-        <SingleEvent key={eventKey} name={nameProp} date={dateProp} location={locationProp} eventID={eventKey} navigation={this.props.navigation} />
+      <View key={eventKey + 1}>
+        <SingleEvent
+          key={eventKey}
+          name={nameProp}
+          date={dateProp}
+          location={locationProp}
+          eventID={eventKey}
+          navigation={this.props.navigation} />
       </View>
     );
   }
 
   renderEvents() {
-    var eventList = ['Speech', 'Mixer', 'Hackathon'];
-
     var renderedEvents = this.props.events.all.map((anEvent) => {
       return (
         this.renderEvent(anEvent.title, anEvent.date, anEvent.location, anEvent.id)
@@ -55,7 +60,7 @@ class Events extends React.Component {
           {this.renderEvents()}
         </ScrollView>
         <TouchableOpacity style={eventPage.eventAddButton} onPress={this.navToAdd}>
-          <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading, fontEffects.italic]}>
+          <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
             Add Event
           </Text>
         </TouchableOpacity>

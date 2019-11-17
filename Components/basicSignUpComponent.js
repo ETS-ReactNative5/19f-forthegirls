@@ -254,7 +254,7 @@ class BasicSignUpComponent extends React.Component {
           style={textFieldStyle}
           invalidTextFieldStyle={{ borderColor: colors.red.color }}
           placeholder="Password"
-          isSecured={true}
+          secureTextEntry={true}
           onChangeText={this.passwordInput}
           clearButtonMode='while-editing'
           secureTextEntry={true}
