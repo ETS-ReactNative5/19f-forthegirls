@@ -67,7 +67,7 @@ const eventPage = StyleSheet.create({
   eventAddButton: {
     marginBottom: 30,
     borderRadius: 20,
-    backgroundColor: "#37415A",
+    backgroundColor: colors.deepPurple.color,
   },
 
   eventDetail: {
@@ -139,7 +139,7 @@ const eventPage = StyleSheet.create({
   eventDetailRSVP: {
     marginTop: 230,
     borderRadius: 20,
-    backgroundColor: "#37415A",
+    backgroundColor: colors.deepPurple.color,
   },
 
   eventDetailRSVPText: {
