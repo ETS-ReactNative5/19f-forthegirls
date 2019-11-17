@@ -3,11 +3,12 @@ import {
   View,
   Text,
   TextInput,
-  Button,
+  TouchableOpacity,
 } from 'react-native';
+import { StackActions } from 'react-navigation'
 import { connect } from 'react-redux';
 import { addEvent } from '../actions';
-import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 
 class AddEvent extends Component {
@@ -50,21 +51,31 @@ class AddEvent extends Component {
   }
 
   addEvent() {
-    console.log(this.props.navigation);
-    this.props.addEvent({
-      title: this.state.title,
-      date: this.state.date,
-      time: this.state.time,
-      location: this.state.location,
-      description: this.state.description
-    });
-    this.props.navigation.pop();
+    if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
+    }
+    else {
+      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
+      const popAction = StackActions.pop({
+        n: 1,
+      });
+      this.props.navigation.dispatch(popAction);
+    }
   }
 
   render() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     return (
-      <View>
+      <View style={{ backgroundColor: colors.veryLightPurple.color }}>
         <TextInput
           style={textFieldStyle}
           keyboardType='default'
@@ -74,14 +85,14 @@ class AddEvent extends Component {
           clearButtonMode='while-editing' />
         <TextInput
           style={textFieldStyle}
-          placeholder="Event Date"
+          placeholder="Event Date (MM/DD/YY)"
           keyboardType='default'
           onChangeText={this.dateInput}
           autoCapitalize='none'
           clearButtonMode='while-editing' />
         <TextInput
           style={textFieldStyle}
-          placeholder="Event Time"
+          placeholder="Event Time (24:00)"
           keyboardType='default'
           onChangeText={this.timeInput}
           autoCapitalize='none'
@@ -101,7 +112,14 @@ class AddEvent extends Component {
           autoCapitalize='none'
           clearButtonMode='while-editing'
           multiline={true} />
-        <Button title="Submit" onPress={this.addEvent} />
+        <View style={{ justifyContent: 'flex-end' }}>
+          <View style={buttons.logInButton}>
+            <TouchableOpacity
+              onPress={this.addEvent}>
+              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     );
   }
