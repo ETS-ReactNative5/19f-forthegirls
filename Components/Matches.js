@@ -7,7 +7,6 @@ import { getPotentialMatches } from '../actions';
 class Matches extends React.Component {
   constructor(props) {
     super(props);
-
   }
 
   componentDidMount() {
@@ -15,20 +14,19 @@ class Matches extends React.Component {
   }
 
   returnMatches = () => {
-    
     return this.props.potentialMatches.map((n) => {
       return (
-        <PotentialMentor key={n} userId={n}/>
+        <PotentialMentor key={n} userId={n} />
       )
     });
   }
- 
+
   render() {
-    if(this.props.potentialMatches !== undefined) {
+    if (this.props.potentialMatches !== undefined) {
       return (
         <ScrollView >
           {this.returnMatches()}
-         
+
         </ScrollView>
       )
     }
@@ -37,7 +35,7 @@ class Matches extends React.Component {
         <Text>Loading...</Text>
       )
     }
-    
+
   }
 }
 
