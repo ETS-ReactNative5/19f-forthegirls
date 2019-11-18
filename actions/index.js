@@ -196,7 +196,7 @@ export function authError(error) {
 //----------------- MATCHES ------------------//
 export function pairMatchToUser(user1, user2) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}/matches/pair`, { user1 , user2 })
+    axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
         // dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
         console.log(response.data);
@@ -258,12 +258,8 @@ export function addEvent(fields) {
 }
 
 export function fetchEvents() {
-  console.log('in actiosn');
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events`).then((response) => {
-      console.log("= worked!");
-      console.log('response ' + response.data);
-
       dispatch({
         type: ActionTypes.FETCH_EVENTS,
         payload: response.data,
