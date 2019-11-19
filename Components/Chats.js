@@ -27,15 +27,8 @@ class Chats extends React.Component {
   }
 
   render() {
-    if (this.props.matches !== undefined && this.props.matches.legnth === 0) {
-      return (
-        <View>
-          <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
-          <Text style={[fonts.majorHeading, fontEffects.center]}>No matches yet!</Text>
-        </View>
-      )
-    }
-    else if (this.props.matches !== undefined) {
+    if (this.props.matches !== undefined && this.props.matches.legnth > 0) {
+      console.log(this.props.matches.length);
       return (
         <ScrollView>
           <View>
@@ -43,6 +36,15 @@ class Chats extends React.Component {
             {this.showMatches()}
           </View>
         </ScrollView>
+      )
+    }
+    else if (this.props.matches !== undefined) {
+      console.log(this.props.matches.length);
+      return (
+        <View>
+          <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
+          <Text style={[fonts.majorHeading, fontEffects.center]}>No matches yet!</Text>
+        </View>
       )
     }
     else {
