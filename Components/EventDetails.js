@@ -40,7 +40,6 @@ class EventDetails extends Component {
       this.props.event.rsvps.map((id) => {
         if (id === this.props.id) {
           seen = true;
-          console.log('you have RSVPd');
         }
       })
       this.setState({ rsvp: seen });
