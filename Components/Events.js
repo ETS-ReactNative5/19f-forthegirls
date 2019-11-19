@@ -62,11 +62,13 @@ class Events extends React.Component {
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.renderEvents()}
         </ScrollView>
-        <TouchableOpacity style={eventPage.eventAddButton} onPress={this.navToAdd}>
-          <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
-            Add Event
-          </Text>
-        </TouchableOpacity>
+        <View style={eventPage.addEventContainer}>
+          <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
+            <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
+              Add Event
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
