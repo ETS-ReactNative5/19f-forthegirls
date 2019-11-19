@@ -12,7 +12,6 @@ class Matches extends React.Component {
   }
 
   componentDidMount() {
-    console.log("mounting");
     this.props.getPotentialMatches(this.props.username);
   }
 

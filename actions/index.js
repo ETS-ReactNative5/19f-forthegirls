@@ -111,9 +111,6 @@ export function signUpUser(fields, navigate, otherAnswers) {
       .then((response) => {
         return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
           .then((res) => {
-            console.log("in here");
-            console.log(res);
-            console.log(otherAnswers);
             dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
             //should add token in here
@@ -214,7 +211,7 @@ export function getPotentialMatches(username) {
       .then((response) => {
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
-        console.log("error");
+        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -226,7 +223,7 @@ export function getMatches(username) {
       .then((response) => {
         dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
       }).catch((error) => {
-        console.log("error");
+        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -236,18 +233,15 @@ export function getMatches(username) {
 
 //----------------- EVENTS ------------------//
 export function addEvent(fields) {
-  console.log('adding event');
   return (dispatch) => {
     //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
-        console.log('success?');
         dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
       }).then(() => {
-        console.log('success2?');
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
       }).catch((error) => {
-        console.log('fail?');
+        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   };
@@ -261,7 +255,7 @@ export function fetchEvents() {
         payload: response.data,
       });
     }).catch((error) => {
-      console.log("didnt work");
+      console.log(error);
     });
   };
 }
@@ -279,19 +273,15 @@ export function fetchEvent(id) {
 }
 
 export function rsvpEvent(userID, eventID) {
-  console.log('user  ' + userID);
-  console.log('rsvp event');
   return (dispatch) => {
     //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
-        console.log('success?');
         dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
       }).then(() => {
-        console.log('success2?');
         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
       }).catch((error) => {
-        console.log('fail?');
+        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   };

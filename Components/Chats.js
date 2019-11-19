@@ -18,7 +18,6 @@ class Chats extends React.Component {
 
   showMatches() {
     var i = -1;
-    console.log(this.props.matches);
     return this.props.matches.map((n) => {
       i++;
       return (
@@ -37,8 +36,6 @@ class Chats extends React.Component {
       )
     }
     else if (this.props.matches !== undefined) {
-      console.log("no hits");
-      console.log(this.props.matches);
       return (
         <ScrollView>
           <View>
