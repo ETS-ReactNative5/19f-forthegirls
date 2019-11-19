@@ -3,6 +3,7 @@ import colors, { fonts } from './basicStyle';
 
 const eventPage = StyleSheet.create({
   wholeContainer: {
+    height: '100%',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -146,6 +147,31 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVPText: {
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    height: 25
+  },
+
+  addEventContainer: {
+    display: 'none',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 7,
+    marginTop: 7,
+  },
+
+  addEventOpacity: {
+    borderRadius: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: colors.deepPurple.color,
+  },
+
+  addEventText: {
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 20,
