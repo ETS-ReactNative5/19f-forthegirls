@@ -20,7 +20,6 @@ class SingleEvent extends Component {
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
-    console.log('SINGEL event key ' + this.props.eventID);
   }
 
   navToPage() {
