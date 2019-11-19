@@ -7,16 +7,27 @@ import { getPotentialMatches } from '../actions';
 class Matches extends React.Component {
   constructor(props) {
     super(props);
+
+    this.returnMatches = this.returnMatches.bind(this);
   }
 
   componentDidMount() {
+    console.log("mounting");
+    this.props.getPotentialMatches(this.props.username);
+  }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   this.props.getPotentialMatches(this.props.username);
+  // }
+
+  refresh = () => {
     this.props.getPotentialMatches(this.props.username);
   }
 
   returnMatches = () => {
     return this.props.potentialMatches.map((n) => {
       return (
-        <PotentialMentor key={n} userId={n} />
+        <PotentialMentor key={n} userId={n} refresh={this.refresh}/>
       )
     });
   }
@@ -24,9 +35,8 @@ class Matches extends React.Component {
   render() {
     if (this.props.potentialMatches !== undefined) {
       return (
-        <ScrollView >
+        <ScrollView>
           {this.returnMatches()}
-
         </ScrollView>
       )
     }

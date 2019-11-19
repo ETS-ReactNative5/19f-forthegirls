@@ -34,7 +34,10 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = () => {
-    this.props.pairMatchToUser(this.props.username, this.state.userMatch.username)
+    console.log("in making a match");
+    this.props.pairMatchToUser(this.props.username, this.state.userMatch.username);
+    setTimeout(this.props.refresh, 2000);
+
     this.setState({ matched: true, noAction: false })
   }
 

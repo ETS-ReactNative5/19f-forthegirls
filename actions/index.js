@@ -221,13 +221,9 @@ export function getPotentialMatches(username) {
 }
 
 export function getMatches(username) {
-  // console.log("in get matches");
-  // console.log(username);
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/${username}`)
       .then((response) => {
-        // console.log("in get matches");
-        // console.log(response);
         dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log("error");

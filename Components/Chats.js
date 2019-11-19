@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
@@ -12,12 +12,13 @@ class Chats extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getUser(this.props.id)
+    this.props.getUser(this.props.id);
   }
 
 
   showMatches() {
     var i = -1;
+    console.log(this.props.matches);
     return this.props.matches.map((n) => {
       i++;
       return (
@@ -27,12 +28,24 @@ class Chats extends React.Component {
   }
 
   render() {
-    if (this.props.matches.length != 0) {
+    if (this.props.matches !== undefined && this.props.matches.legnth === 0) {
       return (
         <View>
           <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
-          {this.showMatches()}
+          <Text style={[fonts.majorHeading, fontEffects.center]}>No matches yet!</Text>
         </View>
+      )
+    }
+    else if (this.props.matches !== undefined) {
+      console.log("no hits");
+      console.log(this.props.matches);
+      return (
+        <ScrollView>
+          <View>
+            <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
+            {this.showMatches()}
+          </View>
+        </ScrollView>
       )
     }
     else {
