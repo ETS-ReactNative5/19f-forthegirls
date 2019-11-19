@@ -7,6 +7,7 @@ import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser } from '../actions/index'
 import { connect } from 'react-redux';
+import {Keyboard} from 'react-native';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -207,7 +208,7 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
-      <ScrollView style={surveyStyle.surveyBackground}>
+      <ScrollView style={surveyStyle.surveyBackground}scrollEnabled={false} contentContainerStyle={{flex: 1}}>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
         </View>
