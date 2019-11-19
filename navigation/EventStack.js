@@ -17,7 +17,17 @@ const EventStack = createStackNavigator({
       headerTintColor: colors.white.color,
     }),
   },
-  Add: AddEvent,
+  Add: {
+    screen: AddEvent,
+    navigationOptions: () => ({
+      headerStyle: {
+        backgroundColor: colors.deepPurple.color,
+        marginTop: -50,
+        height: 40,
+      },
+      headerTintColor: colors.white.color,
+    }),
+  },
 });
 
 export default EventStack;
