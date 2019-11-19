@@ -11,18 +11,27 @@ class Match extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      match: {}
+      match: {},
+      mounted: false
     }
   }
 
   componentDidMount() {
+    this.setState({mounted: true});
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
-        this.setState({ match: response.data.result });
+        if(this.state.mounted) {
+          this.setState({ match: response.data.result });
+        }
       }).catch((error) => {
         console.log(error);
       });
   }
+
+  componentWillUnmount() {
+    this.setState({mounted: false});
+  }
+
 
   pressUser = (email) => {
     Linking.openURL('mailto:' + email + '?subject=We Matched!')
