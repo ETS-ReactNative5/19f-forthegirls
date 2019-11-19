@@ -32,14 +32,14 @@ const fonts = StyleSheet.create({
     fontFamily: 'lato-regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 18,
+    fontSize: 16,
     lineHeight: 22,
   },
   minorHeading: {
     fontFamily: 'montserrat-semibold',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 17,
     lineHeight: 22,
     letterSpacing: -0.05
   },
