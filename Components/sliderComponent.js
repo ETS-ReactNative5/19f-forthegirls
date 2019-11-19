@@ -6,19 +6,11 @@ class SliderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
-    this.state = {
-    };
   }
 
   onChange(e) {
-    console.log(e);
     const value = e;
     this.props.onChange(this.props.id, value)
-    // this.setState(() => {
-    //   return {
-    //     value: parseFloat(value),
-    //   };
-    // });
   }
 
   render() {
@@ -27,7 +19,7 @@ class SliderComponent extends React.Component {
         <Slider
           step={1}
           maximumValue={100}
-          onValueChange={this.onChange}
+          onSlidingComplete={this.onChange}
           value={this.props.value}
           maximumTrackTintColor={colors.white.color}
           minimumTrackTintColor={colors.white.color}
