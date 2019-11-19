@@ -22,7 +22,7 @@ class PotentialMentor extends React.Component {
   componentDidMount() {
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
-        this.setState({userMatch: response.data.result});
+        this.setState({ userMatch: response.data.result });
       }).catch((error) => {
         console.log(error);
       });
@@ -51,8 +51,8 @@ class PotentialMentor extends React.Component {
   render() {
     var yesMatch = require('../assets/icons/chatSelected.png');
     var noMatch = require('../assets/icons/dontMatch.png');
-    
-    if(this.state.userMatch !== undefined) {
+
+    if (this.state.userMatch !== undefined) {
       return (
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
@@ -60,15 +60,12 @@ class PotentialMentor extends React.Component {
           {this.showMatch()}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
-              <View style={profile.nameHeading}>
-                <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.username}, ${this.state.userMatch.age}`}</Text>
-
-              </View >
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.hometown}</Text>
+              <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.currentJob === '' ? 'high schooler' : this.state.userMatch.currentJob}</Text>
             </View>
             <View style={profile.jobStuff}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.currentJob}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.gradYear}</Text>
             </View>
           </View>
           <View style={promptStyle.promptContainer}>
