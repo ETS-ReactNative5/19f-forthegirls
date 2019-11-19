@@ -8,6 +8,9 @@ import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser } from '../actions/index'
 import { connect } from 'react-redux';
 import {Keyboard} from 'react-native';
+import {
+  findNodeHandle,
+} from 'react-native';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -166,8 +169,9 @@ class BasicSignUpComponent extends React.Component {
   renderCollege() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (<View>
-      <TextInput
+    return (
+    <View>
+      <TextInput ref = "myInput" onFocus={this._scrollToInput.bind(this)}
         style={textFieldStyle}
         placeholder="High School Name"
         onChangeText={this.highSchoolInput}
@@ -202,13 +206,24 @@ class BasicSignUpComponent extends React.Component {
   renderNull() {
     return <View></View>
   }
+  _scrollToInput() {
+    
+    const scrollResponder = this.refs.myScrollView.getScrollResponder();
+    const inputHandle = findNodeHandle(this.refs.myInput)
+  
+    scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+      inputHandle, // The TextInput node handle
+      0, // The scroll view's bottom "contentInset" (default 0)
+      true // Prevent negative scrolling
+    );
+  }
 
   //need to check unique from here
   render() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
-      <ScrollView style={surveyStyle.surveyBackground}scrollEnabled={false} contentContainerStyle={{flex: 1}}>
+      <ScrollView style={surveyStyle.surveyBackground}scrollEnabled={false} contentContainerStyle={{flex: 1}}ref = "myScrollView">
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
         </View>
@@ -287,6 +302,7 @@ class BasicSignUpComponent extends React.Component {
     );
   }
 }
+
 
 const mapStateToProps = reduxState => (
   {
