@@ -51,13 +51,13 @@ class PromptsComponent extends React.Component {
   }
 
   onInputChange = (text) => {
-    console.log(text)
+    // console.log(text)
     //change state in here
   }
 
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
-    console.log(`parent: ${this.state.introextro}`);
+    // console.log(`parent: ${this.state.introextro}`);
   }
 
   submitPage = () => {
@@ -97,9 +97,6 @@ class PromptsComponent extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
-
-    console.log('STAAAATEE!!!!!');
-    console.log(this.state);
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>

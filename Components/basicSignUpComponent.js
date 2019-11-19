@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 import TextField from 'react-native-text-field';
 import colors, { fonts, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
@@ -30,27 +30,41 @@ class BasicSignUpComponent extends React.Component {
   }
 
   sumbitUser = () => {
-    const fields = {
-      email: this.state.email,
-      username: this.state.username,
-      password: this.state.password,
+
+    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+      //https://facebook.github.io/react-native/docs/alert
+      Alert.alert(
+        'Please Fill Out All Fields to Continue',
+        '',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'OK' },
+        ],
+        { cancelable: true }
+      );
     }
-
-    const otherAnswers = {
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      highSchool: this.state.highSchool,
-      collegeName: this.state.collegeName,
-      gradYear: this.state.gradYear,
-      currentJob: this.state.currentJob,
-      age: this.state.age,
-      hs: this.state.hs,
-      college: this.state.college,
-      pg: this.state.pg,
+    else {
+      const fields = {
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+      }
+  
+      const otherAnswers = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        highSchool: this.state.highSchool,
+        collegeName: this.state.collegeName,
+        gradYear: this.state.gradYear,
+        currentJob: this.state.currentJob,
+        age: this.state.age,
+        hs: this.state.hs,
+        college: this.state.college,
+        pg: this.state.pg,
+      }
+  
+      this.props.signUpUser(fields, this.props.navigation, otherAnswers);
     }
-
-    this.props.signUpUser(fields, this.props.navigation, otherAnswers);
-
   }
 
   firstNameInput = (text) => {
@@ -79,9 +93,7 @@ class BasicSignUpComponent extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
-    console.log('field id is ' + fieldId);
     if (fieldId === 'hs' && value === true) {
-      console.log('in for lop');
       this.setState({ pg: false });
       this.setState({ college: false });
     }
@@ -111,9 +123,9 @@ class BasicSignUpComponent extends React.Component {
     this.setState({ currentJob: text });
   }
 
-  checkState = () => {
-    console.log(this.state);
-  }
+  // checkState = () => {
+  //   console.log(this.state);
+  // }
 
   submitPage = () => {
     if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
@@ -128,44 +140,46 @@ class BasicSignUpComponent extends React.Component {
         { cancelable: true }
       );
     }
-    else {
-      var basicInfo = {
-        'firstname': this.state.firstName,
-        'lastname': this.state.lastName,
-        'email': this.state.email,
-        'username': this.state.username,
-        'password': this.state.password,
-        'age': this.state.age,
-        'hs': this.state.hs,
-        'college': this.state.college,
-        'pg': this.state.pg,
-        'highSchool': this.state.highSchool,
-        'college': this.state.college,
-        'gradYear': this.state.gradYear,
-        'currentJob': this.state.currentJob,
-      }
-      this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
-    }
+    // else {
+    //   var basicInfo = {
+    //     'firstname': this.state.firstName,
+    //     'lastname': this.state.lastName,
+    //     'email': this.state.email,
+    //     'username': this.state.username,
+    //     'password': this.state.password,
+    //     'age': this.state.age,
+    //     'hs': this.state.hs,
+    //     'college': this.state.college,
+    //     'pg': this.state.pg,
+    //     'highSchool': this.state.highSchool,
+    //     'college': this.state.college,
+    //     'gradYear': this.state.gradYear,
+    //     'currentJob': this.state.currentJob,
+    //   }
+    //   this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
+    // }
 
   }
 
   renderHS() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (<TextInput
+    return (
+    <TextInput
       style={textFieldStyle}
       placeholder="High School"
       onChangeText={this.highSchoolInput}
       clearButtonMode='while-editing'
       keyboardType='default'
-    />)
-
+    />
+    )
   }
 
   renderCollege() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (<View>
+    return (
+    <View>
       <TextInput
         style={textFieldStyle}
         placeholder="High School Name"
@@ -207,6 +221,7 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
+      <KeyboardAvoidingView behavior="padding" enabled>
       <ScrollView style={surveyStyle.surveyBackground}>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
@@ -259,7 +274,6 @@ class BasicSignUpComponent extends React.Component {
           clearButtonMode='while-editing'
           secureTextEntry={true}
         />
-
         <View>
           <Text style={headerText}>Stage of Life?</Text>
           <View style={{
@@ -283,6 +297,7 @@ class BasicSignUpComponent extends React.Component {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
