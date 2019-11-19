@@ -195,12 +195,16 @@ export function pairMatchToUser(user1, user2) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
-        // dispatch({ type: ActionTypes.PAIR_MATCH_TO_USER, payload: response.data })
-        console.log(response.data);
+        return  axios.get(`${ROOT_URL}/matches/${user1}`)
+        .then((res) => {
+          dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
+        }).catch((error) => {
+          console.log(error);
+          dispatch({ type: ActionTypes.SET_ERROR, error });
+        });
       }).catch((error) => {
         console.log(error);
-        dispatch({ type: ActionTypes.SET_ERROR, error });
-      });
+      })
   }
 }
 
