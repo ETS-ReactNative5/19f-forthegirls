@@ -16,6 +16,8 @@ const UserReducer = (state = {
       case ActionTypes.DEAUTH_USER: 
         return Object.assign({}, state, {
           authenticated: false,
+          username: '',
+          id: '',
         });
       case ActionTypes.AUTH_ERROR: 
         return Object.assign({}, state, {

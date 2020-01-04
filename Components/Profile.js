@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import Prompt from './Prompt.js';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser } from '../actions';
 
@@ -97,7 +97,6 @@ class Profile extends React.Component {
       return (
         <View style={profile.profileContainer}>
           {this.isMyProfile(this.props.isMyProfile)}
-          {/* <Button onPress={this.logout} title="Log Out" /> */}
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
@@ -115,6 +114,14 @@ class Profile extends React.Component {
               <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
             </View>
           </View>
+          <View style={{ justifyContent: 'flex-end' }}>
+          <View style={buttons.logInButton}>
+            <TouchableOpacity
+              onPress={this.logout}>
+              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log Out</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         </View>
       );
     }
