@@ -50,7 +50,7 @@ export function getUser(id) {
         // console.log(response);
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -66,7 +66,7 @@ export function editUser(fields) {
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -243,7 +243,7 @@ export function addEvent(fields) {
       .then((response) => {
         dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -283,7 +283,7 @@ export function rsvpEvent(userID, eventID) {
       .then((response) => {
         dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -302,7 +302,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -320,7 +320,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -337,7 +337,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -354,7 +354,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -371,7 +371,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });

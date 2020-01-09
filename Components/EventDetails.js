@@ -47,8 +47,10 @@ class EventDetails extends Component {
   }
 
   rsvpEvent() {
-    this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
-    this.setState({ rsvp: true });
+    if(this.state.rsvp===false){
+      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+      this.setState({ rsvp: true });
+    }
   }
 
   render() {
