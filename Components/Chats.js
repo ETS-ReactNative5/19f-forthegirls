@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { getUser, getMatches } from '../actions';
+import { getUser, getMatches, deleteMatch } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
@@ -15,13 +15,16 @@ class Chats extends React.Component {
     this.props.getUser(this.props.id);
   }
 
+  deleteMatch = (matchedUser) => {
+    this.props.deleteMatch(this.props.username, matchedUser);
+  }
 
   showMatches() {
     var i = -1;
     return this.props.matches.map((n) => {
       i++;
       return (
-        <Match key={n} userId={n} i={i} />
+        <Match key={n} userId={n} i={i} deleteMatch={this.deleteMatch}/>
       )
     })
   }
@@ -66,4 +69,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser })(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch})(Chats);
