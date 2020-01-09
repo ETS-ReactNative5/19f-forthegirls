@@ -8,6 +8,7 @@ import StartScreen from '../Components/StartScreen';
 import BasicSignUpComponent from '../Components/basicSignUpComponent';
 import CsComponent from '../Components/csComponent';
 import Prompts from '../Components/promptsComponent';
+import Profile from '../Components/Profile';
 
 
 
@@ -36,6 +37,9 @@ const SignInUp = createStackNavigator(
     Prompts: {
       screen: Prompts,
     },
+    Profile: {
+      screen: Profile,
+    }
   },
   {
     initialRouteName: 'Start',

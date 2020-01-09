@@ -127,7 +127,7 @@ export function signUpUser(fields, navigate, otherAnswers) {
             _storeData();
 
             //somehow get to next page
-            navigate.navigate("CsInfo");
+            navigate.navigate("Main");
           })
           .catch((error) => {
             console.log(error);
