@@ -41,6 +41,7 @@ class App extends React.Component {
       if (value.token !== null) {
       //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
+        this.setState({signedIn: true});
       }
     } catch (error) {
       console.log("error getting token");

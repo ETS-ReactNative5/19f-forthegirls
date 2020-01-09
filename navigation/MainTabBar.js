@@ -51,7 +51,7 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
   {
-    initialRouteName: 'HomeTab',
+    initialRouteName: 'Profile',
     tabBarOptions: {
       showLabel: false,
     },
