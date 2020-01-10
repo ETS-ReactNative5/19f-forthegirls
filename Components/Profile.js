@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
@@ -60,73 +60,101 @@ class Profile extends React.Component {
     this.props.signoutUser(this.props.navigation);
   }
 
+  opacityOnPress = () => {
+    this.props.navigation.navigate('EditProfile', { })
+  }
+
   render() {
-    if (this.state.editing === true) {
-      return (
-        <View style={profile.profileContainer}>
-          {this.isMyProfile(this.props.isMyProfile)}
-          <View style={profile.basicInfo}>
-            <View style={profile.basicInfoLeft}>
-              <View style={profile.nameHeading}>
-                <Text style={[colors.black, fonts.majorHeading]}>Editing</Text>
-                <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, 21</Text>
-              </View >
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Westchester, NY</Text>
-            </View>
-            <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-              placeholder="Waiting for input..."
-              placeholderTextColor="#9a73ef"
-              autoCapitalize="none"
-              onChangeText={this.handleInput} />
-            <View style={profile.jobStuff}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Student</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Dartmouth</Text>
-            </View>
+    // if (this.state.editing === true) {
+    //   return (
+    //     <View style={profile.profileContainer}>
+    //       {this.isMyProfile(this.props.isMyProfile)}
+    //       <View style={profile.basicInfo}>
+    //         <View style={profile.basicInfoLeft}>
+    //           <View style={profile.nameHeading}>
+    //             <Text style={[colors.black, fonts.majorHeading]}>Editing</Text>
+    //             <Text style={[colors.deepPurple, fonts.minorHeading, profile.age]}>, 21</Text>
+    //           </View >
+    //           <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Westchester, NY</Text>
+    //         </View>
+    //         <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+    //           placeholder="Waiting for input..."
+    //           placeholderTextColor="#9a73ef"
+    //           autoCapitalize="none"
+    //           onChangeText={this.handleInput} />
+    //         <View style={profile.jobStuff}>
+    //           <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Student</Text>
+    //           <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>Dartmouth</Text>
+    //         </View>
+    //       </View>
+    //       <View style={promptStyle.promptContainer}>
+    //         <View >
+    //           <Prompt prompt='tech inspo' answer='grace hopper' />
+    //           <Prompt prompt='fav app' answer='vsco' />
+    //           <Prompt prompt='dog or cat' answer='dog because dogs are so cute this is a long answer we love dogs so much' />
+    //         </View>
+    //       </View>
+    //     </View>
+    //   );
+    // }
+    // else if (this.state.editing === false) {
+
+      console.log(this.props.promptOneQuestion)
+
+
+
+      var prompts;
+      if (this.props.promptOneQuestion == null){
+        prompts = (
+              <TouchableOpacity
+                  onPress={this.opacityOnPress}>
+                  <Text>click here to add matching data</Text>
+              </TouchableOpacity>
+            )
+      }
+      else {
+        prompts = (
+          <View>
+            <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
+            <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
+            <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
           </View>
-          <View style={promptStyle.promptContainer}>
-            <View >
-              <Prompt prompt='tech inspo' answer='grace hopper' />
-              <Prompt prompt='fav app' answer='vsco' />
-              <Prompt prompt='dog or cat' answer='dog because dogs are so cute this is a long answer we love dogs so much' />
-            </View>
-          </View>
-        </View>
-      );
-    }
-    else if (this.state.editing === false) {
-      return (
-        <View style={profile.profileContainer}>
-          {this.isMyProfile(this.props.isMyProfile)}
-          {/* <Button onPress={this.logout} title="Log Out" /> */}
-          <View style={profile.basicInfo}>
-            <View style={profile.basicInfoLeft}>
-              <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.currentJob === '' ? 'high schooler' : this.props.currentJob}</Text>
-            </View>
-            <View style={profile.jobStuff}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
-            </View>
-          </View>
-          <View style={promptStyle.promptContainer}>
-            <View >
-              <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
-              <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
-              <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
-            </View>
-          </View>
-        </View>
-      );
-    }
-    else {
-      return (
-        <View style={profile.profileContainer}>
+        )
+      }
+
+     if (this.state.editing === false){
+       return (
+         <View style={profile.profileContainer}>
+           {this.isMyProfile(this.props.isMyProfile)}
+           {/* <Button onPress={this.logout} title="Log Out" /> */}
+           <View style={profile.basicInfo}>
+               <View style={profile.basicInfoLeft}>
+                 <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
+                 <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.currentJob === '' ? 'high schooler' : this.props.currentJob}</Text>
+               </View>
+               <View style={profile.jobStuff}>
+                 <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
+                 <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
+               </View>
+           </View>
+           <View style={promptStyle.promptContainer}>
+             {prompts}
+           </View>
+         </View>
+       )
+     }
+     else {
+       return (
+         <View style={profile.profileContainer}>
           <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
         </View>
-      )
+       )
+     }
+
+
     }
   }
-}
+
 
 const mapStateToProps = reduxState => (
   {
