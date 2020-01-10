@@ -14,18 +14,27 @@ class PotentialMentor extends React.Component {
     this.state = {
       userMatch: {},
       matched: false,
-      noAction: true
+      noAction: true,
+      mounted: false
     }
 
   }
 
   componentDidMount() {
+    console.log("in component did mount");
+    this.setState({mounted: true});
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
-        this.setState({ userMatch: response.data.result });
+        if(this.state.mounted) {
+          this.setState({ userMatch: response.data.result });
+        }
       }).catch((error) => {
         console.log(error);
       });
+  }
+
+  componentWillUnmount() {
+    this.setState({mounted: false});
   }
 
   noMatchCallback = () => {

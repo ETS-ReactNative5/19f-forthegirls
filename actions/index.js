@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
+
 export const ActionTypes = {
   // USERS
   // CREATE_USER: 'CREATE_USER',
@@ -20,6 +21,7 @@ export const ActionTypes = {
   //EVENTS
   ADD_EVENT: 'ADD_EVENT',
   RSVP_EVENT: 'RSVP_EVENT',
+  UNRSVP_EVENT: 'UNRSVP_EVENT',
   FETCH_EVENT: 'FETCH_EVENT',
   FETCH_EVENTS: 'FETCH_EVENTS',
 
@@ -50,7 +52,7 @@ export function getUser(id) {
         // console.log(response);
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -66,7 +68,7 @@ export function editUser(fields) {
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -243,7 +245,7 @@ export function addEvent(fields) {
       .then((response) => {
         dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -278,12 +280,25 @@ export function fetchEvent(id) {
 
 export function rsvpEvent(userID, eventID) {
   return (dispatch) => {
-    //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
         dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
       }).then(() => {
-        dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
+      }).catch((error) => {
+        console.log(error);
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function unrsvpEvent(userID, eventID) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/events/unrsvp/${eventID}`, { userID: userID })
+      .then((response) => {
+        dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -302,7 +317,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -320,7 +335,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -337,7 +352,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -354,7 +369,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -371,7 +386,7 @@ export function rsvpEvent(userID, eventID) {
 //         dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
 //       }).then(() => {
 //         console.log('success2?');
-//         dispatch({ type: ActionTypes.ERROR_CLEAR, payload: null });
+//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
 //       }).catch((error) => {
 //         console.log('fail?');
 //         dispatch({ type: ActionTypes.SET_ERROR, error });

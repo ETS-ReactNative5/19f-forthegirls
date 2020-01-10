@@ -11,7 +11,7 @@ import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
-import { rsvpEvent, getUser, fetchEvent } from '../actions';
+import { rsvpEvent, unrsvpEvent, getUser, fetchEvent } from '../actions';
 
 class EventDetails extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class EventDetails extends Component {
       rsvp: null,
     };
 
-    this.rsvpEvent = this.rsvpEvent.bind(this);
+    this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
   }
   // ---------- componentDidMount here! -----------//
@@ -46,9 +46,15 @@ class EventDetails extends Component {
     }
   }
 
-  rsvpEvent() {
-    this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
-    this.setState({ rsvp: true });
+  handleRSVP() {
+    if(this.state.rsvp===false){
+      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+      this.setState({ rsvp: true });
+    }
+    else{
+      this.props.unrsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+      this.setState({ rsvp: false });
+    }
   }
 
   render() {
@@ -75,7 +81,7 @@ class EventDetails extends Component {
           </Text>
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
-          <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.rsvpEvent}>
+          <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
             <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
               {this.state.rsvp
                 ? 'You have RSVPd!'
@@ -95,4 +101,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { rsvpEvent, getUser, fetchEvent })(EventDetails);
+export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent })(EventDetails);
