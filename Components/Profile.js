@@ -120,6 +120,10 @@ class Profile extends React.Component {
             <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
             <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
             <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
+            <TouchableOpacity
+                onPress={this.opacityOnPress}>
+                <Text>click here to edit profile</Text>
+            </TouchableOpacity>
           </View>
         )
       }

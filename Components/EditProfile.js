@@ -12,6 +12,7 @@ import { addToSurvey } from '../actions/index'
 import { connect } from 'react-redux';
 
 
+
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -61,6 +62,12 @@ class EditProfile extends React.Component {
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
   }
+
+  submitPage = () => {
+    console.log(this.props.username);
+    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+  }
+
 
 
     toggleSkills() {
@@ -281,10 +288,20 @@ class EditProfile extends React.Component {
           </View>
         </View>
 
+        <View style={buttons.arrowView}>
+          <TouchableOpacity
+            onPress={this.submitPage}>
+            <Text> Submit </Text>
+            <Image
+              source={require('./../assets/icons/arrownext.png')}
+            />
+          </TouchableOpacity>
+        </View>
+
 
         <TouchableOpacity
             onPress={this.opacityOnPress}>
-            <Text>go back</Text>
+            <Text>go back (dont save)</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -294,4 +311,11 @@ class EditProfile extends React.Component {
   }
 }
 
-export default EditProfile;
+const mapStateToProps = reduxState => (
+  {
+    error: reduxState.error,
+    username: reduxState.auth.username,
+  }
+);
+
+export default connect(mapStateToProps, { addToSurvey })(EditProfile);
