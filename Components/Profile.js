@@ -7,6 +7,8 @@ import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser } from '../actions';
 
 
+import CsComponent from './csComponent';
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -90,6 +92,7 @@ class Profile extends React.Component {
               <Prompt prompt='dog or cat' answer='dog because dogs are so cute this is a long answer we love dogs so much' />
             </View>
           </View>
+
         </View>
       );
     }
@@ -115,13 +118,14 @@ class Profile extends React.Component {
             </View>
           </View>
           <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
-            <TouchableOpacity
-              onPress={this.logout}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log Out</Text>
-            </TouchableOpacity>
+            <View style={buttons.logInButton}>
+              <TouchableOpacity
+                onPress={this.logout}>
+                <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+          <CsComponent />
         </View>
       );
     }

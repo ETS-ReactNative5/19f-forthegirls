@@ -39,6 +39,9 @@ class CsComponent extends React.Component {
     }
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
+    this.toggleSkills = this.toggleSkills.bind(this);
+    this.togglePreferences = this.togglePreferences.bind(this);
+    this.toggleCompany = this.toggleCompany.bind(this);
   }
 
   handleFieldChange(fieldId, value) {
@@ -49,13 +52,28 @@ class CsComponent extends React.Component {
     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Prompts');
   }
 
-  showSkills() {
+  toggleSkills() {
     this.setState({
-      showSkills: !this.showSkills
-    })
-    if (this.state.showSkills) {
+      showSkills: !this.state.showSkills
+    });
+  }
+
+  togglePreferences() {
+    this.setState({
+      showPreferences: !this.state.showPreferences
+    });
+  }
+
+  toggleCompany() {
+    this.setState({
+      showCompany: !this.state.showCompany
+    });
+  }
+
+  showSkills(val) {
+    if (val) {
       return (
-        <View style={surveyStyle.items}>
+        <View style={surveyStyle.items} >
           <TouchableComponent name='Web Applications' stateField='web' stateFieldStatus={this.state.web} onChange={this.handleFieldChange} />
           <TouchableComponent name='User Interaction' stateField='user' stateFieldStatus={this.state.user} onChange={this.handleFieldChange} />
           <TouchableComponent name='Design' stateField='design' stateFieldStatus={this.state.design} onChange={this.handleFieldChange} />
@@ -65,14 +83,13 @@ class CsComponent extends React.Component {
           <TouchableComponent name='Storage & Infrastructure' stateField='storage' stateFieldStatus={this.state.storage} onChange={this.handleFieldChange} />
         </View>
       )
+    } else {
+      return <Text>FALSEy false</Text>
     }
   }
 
-  showPreferences() {
-    this.setState({
-      showPreferences: !this.showPreferences
-    })
-    if (this.state.showPreferences) {
+  showPreferences(val) {
+    if (val) {
       return (
         <View style={surveyStyle.items}>
           <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
@@ -82,11 +99,8 @@ class CsComponent extends React.Component {
     }
   }
 
-  showCompany() {
-    this.setState({
-      showCompany: !this.showCompany
-    })
-    if (this.state.showCompany) {
+  showCompany(val) {
+    if (val) {
       return (
         <View style={surveyStyle.items}>
           <TouchableComponent name='Small' stateField='small' stateFieldStatus={this.state.small} onChange={this.handleFieldChange} />
@@ -128,7 +142,7 @@ class CsComponent extends React.Component {
       algorithms: this.state.algorithms,
       storage: this.state.storage,
     };
-    var basicInfo = this.props.navigation.getParam("basicInfo", null);
+    // var basicInfo = this.props.navigation.getParam("basicInfo", null);
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
 
     return (
@@ -140,22 +154,41 @@ class CsComponent extends React.Component {
         <View>
           <Text style={headerText}>CS Strengths?</Text>
           <TouchableOpacity
-            onPress={this.showSkills}>
+            onPress={this.toggleSkills}
+          >
+            <Image
+              source={require('./../assets/icons/arrownext.png')}
+            />
           </TouchableOpacity>
+          <View>
+            {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
+          </View>
         </View>
 
         <View>
           <Text style={headerText}>CS Preferences</Text>
           <TouchableOpacity
-            onPress={this.showPrefs}>
+            onPress={this.togglePreferences}>
+            <Image
+              source={require('./../assets/icons/arrownext.png')}
+            />
           </TouchableOpacity>
+          <View>
+            {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+          </View>
         </View>
 
         <View>
           <Text style={headerText}>Company Preferences</Text>
           <TouchableOpacity
-            onPress={this.showCompany}>
+            onPress={this.toggleCompany}>
+            <Image
+              source={require('./../assets/icons/arrownext.png')}
+            />
           </TouchableOpacity>
+          <View>
+            {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+          </View>
         </View>
 
         <View style={buttons.arrowView}>
