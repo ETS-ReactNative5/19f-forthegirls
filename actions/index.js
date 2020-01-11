@@ -233,9 +233,9 @@ export function getMatches(username) {
   }
 }
 
-export function deleteMatch(user1, user2) {
+export function deleteMatch(matchID) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/matches/${user1}`, {user1, user2})
+    axios.get(`${ROOT_URL}/matches/${matchID}`)
       .then((response) => {
         dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
       }).catch((error) => {

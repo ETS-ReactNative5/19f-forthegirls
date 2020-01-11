@@ -38,9 +38,9 @@ class Match extends React.Component {
       .catch((error) => console.log("email error" + error));
   }
 
-  deleteMatch = (username) => {
+  deleteMatch = () => {
     console.log("deleting match");
-    this.props.deleteMatch(username);
+    this.props.deleteMatch(this.props.matchID);
   }
 
   render() {
@@ -57,7 +57,7 @@ class Match extends React.Component {
         <View style={chatList.delete}>
           <TouchableOpacity
             key={this.props.i+1}
-            onPress={() => this.deleteMatch(this.state.match.username)}>
+            onPress={() => this.deleteMatch()}>
             <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
           </TouchableOpacity>
         </View>
