@@ -4,8 +4,7 @@ import { Image } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
 import ProfileStack from './ProfileStack';
-import Profile from '../Components/Profile';
-import Chats from '../Components/Chats';
+import ChatStack from './ChatStack';
 import Matches from '../Components/Matches'
 import StartScreen from '../Components/StartScreen'
 import { createAppContainer } from 'react-navigation';
@@ -21,7 +20,7 @@ const MainTabBar = createBottomTabNavigator(
       }),
     },
     Chat: {
-      screen: Chats,
+      screen: ChatStack,
       navigationOptions: ({ navigation }) => ({
         tabBarIcon: ({ focused }) => (
           <Image
