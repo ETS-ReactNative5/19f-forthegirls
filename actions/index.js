@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
+
 export const ActionTypes = {
   // USERS
   // CREATE_USER: 'CREATE_USER',
@@ -20,6 +21,7 @@ export const ActionTypes = {
   //EVENTS
   ADD_EVENT: 'ADD_EVENT',
   RSVP_EVENT: 'RSVP_EVENT',
+  UNRSVP_EVENT: 'UNRSVP_EVENT',
   FETCH_EVENT: 'FETCH_EVENT',
   FETCH_EVENTS: 'FETCH_EVENTS',
 
@@ -127,7 +129,7 @@ export function signUpUser(fields, navigate, otherAnswers) {
             _storeData();
 
             //somehow get to next page
-            navigate.navigate("CsInfo");
+            navigate.navigate("Main");
           })
           .catch((error) => {
             console.log(error);
@@ -290,8 +292,21 @@ export function fetchEvent(id) {
 
 export function rsvpEvent(userID, eventID) {
   return (dispatch) => {
-    //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
+      .then((response) => {
+        dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
+      }).catch((error) => {
+        console.log(error);
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
+
+export function unrsvpEvent(userID, eventID) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/events/unrsvp/${eventID}`, { userID: userID })
       .then((response) => {
         dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
       }).then(() => {
