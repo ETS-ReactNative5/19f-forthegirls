@@ -1,4 +1,5 @@
 import { createStackNavigator } from 'react-navigation-stack';
+import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import Chats from '../Components/Chats';
 import SingleChat from '../Components/SingleChat';
 

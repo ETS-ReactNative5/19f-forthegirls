@@ -29,6 +29,17 @@ const chatList = StyleSheet.create({
     backgroundColor: colors.white.color,
     borderRadius: 20,
     marginRight: 10
+  },
+  delete: {
+    marginTop: 10,
+    borderWidth: 2,
+    height: 50,
+    width: 50,
+    padding: 5,
+    borderColor: colors.red.color,
+    backgroundColor: colors.white.color,
+    borderRadius: 0,
+    marginRight: 10
   }
 })
 
