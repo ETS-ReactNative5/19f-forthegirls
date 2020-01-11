@@ -5,8 +5,6 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
 import ProfileStack from './ProfileStack';
 import ChatStack from './ChatStack';
-import Profile from '../Components/Profile';
-import Chats from '../Components/Chats';
 import Matches from '../Components/Matches'
 import StartScreen from '../Components/StartScreen'
 import { createAppContainer } from 'react-navigation';
