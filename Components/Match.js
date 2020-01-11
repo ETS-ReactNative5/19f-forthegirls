@@ -33,10 +33,10 @@ class Match extends React.Component {
   }
 
 
-  pressUser = (email) => {
-    Linking.openURL('mailto:' + email + '?subject=We Matched!')
-      .catch((error) => console.log("email error" + error));
-  }
+  // pressUser = (email) => {
+  //   Linking.openURL('mailto:' + email + '?subject=We Matched!')
+  //     .catch((error) => console.log("email error" + error));
+  // }
 
   render() {
     return (
@@ -45,7 +45,8 @@ class Match extends React.Component {
         <View style={chatList.chatButton}>
           <TouchableOpacity
             key={this.props.i}
-            onPress={() => this.pressUser(this.state.match.email)}>
+            //this.pressUser(this.state.match.email)
+            onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id })}>
             <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
           </TouchableOpacity>
         </View>
