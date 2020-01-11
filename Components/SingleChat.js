@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
@@ -26,19 +26,36 @@ class SingleChat extends React.Component {
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween`, userInfo)
     .then((response) => {
         console.log(response.data);
-        // this.setState({ chats: response.data.result });
+        this.setState({ chats: response.data.result });
     }).catch((error) => {
       console.log(error);
     });
 
   }
 
+  showChats() {
+    console.log(this.state.chats);
+    return this.props.chats.map((n) => {
+      if(n.sender === this.props.id) {
+        return (
+            <Text style={[colors.turquoise]} key={n}>{n.text}</Text>
+          );
+      }
+      else {
+          return (
+            <Text style={[colors.purple]} key={n}>{n.text}</Text>
+          );
+      }
+    })
+  }
+
+
   render() {
     //&& this.props.matches.legnth > 0
       return (
         <ScrollView>
           <View>
-            <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>HI</Text>
+            {showChats()}
           </View>
         </ScrollView>
       )
