@@ -64,78 +64,77 @@ class EditProfile extends React.Component {
   }
 
   submitPage = () => {
-    console.log(this.props.username);
     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
   }
 
 
 
-    toggleSkills() {
-      this.setState({
-        showSkills: !this.state.showSkills
-      });
-    }
+  toggleSkills() {
+    this.setState({
+      showSkills: !this.state.showSkills
+    });
+  }
 
-    togglePreferences() {
-      this.setState({
-        showPreferences: !this.state.showPreferences
-      });
-    }
+  togglePreferences() {
+    this.setState({
+      showPreferences: !this.state.showPreferences
+    });
+  }
 
-    toggleCompany() {
-      this.setState({
-        showCompany: !this.state.showCompany
-      });
-    }
+  toggleCompany() {
+    this.setState({
+      showCompany: !this.state.showCompany
+    });
+  }
 
-    showSkills(val) {
-      if (val) {
-        return (
-          <View style={surveyStyle.items} >
-            <TouchableComponent name='Web Applications' stateField='web' stateFieldStatus={this.state.web} onChange={this.handleFieldChange} />
-            <TouchableComponent name='User Interaction' stateField='user' stateFieldStatus={this.state.user} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Design' stateField='design' stateFieldStatus={this.state.design} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Mobile Applications' stateField='mobile' stateFieldStatus={this.state.mobile} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Security' stateField='security' stateFieldStatus={this.state.security} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Algorithms & Math' stateField='algorithms' stateFieldStatus={this.state.algorithms} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Storage & Infrastructure' stateField='storage' stateFieldStatus={this.state.storage} onChange={this.handleFieldChange} />
-          </View>
-        )
-      } else {
-        return <Text>FALSEy false</Text>
-      }
+  showSkills(val) {
+    if (val) {
+      return (
+        <View style={surveyStyle.items} >
+          <TouchableComponent name='Web Applications' stateField='web' stateFieldStatus={this.state.web} onChange={this.handleFieldChange} />
+          <TouchableComponent name='User Interaction' stateField='user' stateFieldStatus={this.state.user} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Design' stateField='design' stateFieldStatus={this.state.design} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Mobile Applications' stateField='mobile' stateFieldStatus={this.state.mobile} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Security' stateField='security' stateFieldStatus={this.state.security} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Algorithms & Math' stateField='algorithms' stateFieldStatus={this.state.algorithms} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Storage & Infrastructure' stateField='storage' stateFieldStatus={this.state.storage} onChange={this.handleFieldChange} />
+        </View>
+      )
+    } else {
+      return <Text>FALSEy false</Text>
     }
+  }
 
-    showPreferences(val) {
-      if (val) {
-        return (
-          <View style={surveyStyle.items}>
-            <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Back End' stateField='backEnd' stateFieldStatus={this.state.backEnd} onChange={this.handleFieldChange} />
-          </View>
-        );
-      }
+  showPreferences(val) {
+    if (val) {
+      return (
+        <View style={surveyStyle.items}>
+          <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Back End' stateField='backEnd' stateFieldStatus={this.state.backEnd} onChange={this.handleFieldChange} />
+        </View>
+      );
     }
+  }
 
-    showCompany(val) {
-      if (val) {
-        return (
-          <View style={surveyStyle.items}>
-            <TouchableComponent name='Small' stateField='small' stateFieldStatus={this.state.small} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Medium' stateField='medium' stateFieldStatus={this.state.medium} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Large' stateField='large' stateFieldStatus={this.state.large} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Meritocratic' stateField='meritocratic' stateFieldStatus={this.state.meritocratic} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Nurturing' stateField='nurturing' stateFieldStatus={this.state.nurturing} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Fratty' stateField='fratty' stateFieldStatus={this.state.fratty} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Fast-Paced' stateField='fast' stateFieldStatus={this.state.fast} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Organized' stateField='organized' stateFieldStatus={this.state.organized} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Stable' stateField='stable' stateFieldStatus={this.state.stable} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Formal' stateField='formal' stateFieldStatus={this.state.formal} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Relaxed' stateField='relaxed' stateFieldStatus={this.state.relaxed} onChange={this.handleFieldChange} />
-          </View>
-        )
-      }
+  showCompany(val) {
+    if (val) {
+      return (
+        <View style={surveyStyle.items}>
+          <TouchableComponent name='Small' stateField='small' stateFieldStatus={this.state.small} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Medium' stateField='medium' stateFieldStatus={this.state.medium} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Large' stateField='large' stateFieldStatus={this.state.large} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Meritocratic' stateField='meritocratic' stateFieldStatus={this.state.meritocratic} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Nurturing' stateField='nurturing' stateFieldStatus={this.state.nurturing} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Fratty' stateField='fratty' stateFieldStatus={this.state.fratty} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Fast-Paced' stateField='fast' stateFieldStatus={this.state.fast} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Organized' stateField='organized' stateFieldStatus={this.state.organized} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Stable' stateField='stable' stateFieldStatus={this.state.stable} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Formal' stateField='formal' stateFieldStatus={this.state.formal} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Relaxed' stateField='relaxed' stateFieldStatus={this.state.relaxed} onChange={this.handleFieldChange} />
+        </View>
+      )
     }
+  }
 
   p1Question = (value) => {
     this.setState({ promptOneQuestion: value });
@@ -167,7 +166,7 @@ class EditProfile extends React.Component {
   }
 
   opacityOnPress = () => {
-    this.props.navigation.navigate('Home', { })
+    this.props.navigation.navigate('Home', {})
   }
 
   render() {
@@ -300,8 +299,8 @@ class EditProfile extends React.Component {
 
 
         <TouchableOpacity
-            onPress={this.opacityOnPress}>
-            <Text>go back (dont save)</Text>
+          onPress={this.opacityOnPress}>
+          <Text>go back (dont save)</Text>
         </TouchableOpacity>
       </ScrollView>
 
