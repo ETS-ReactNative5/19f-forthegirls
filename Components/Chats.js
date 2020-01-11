@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { getUser, getMatches } from '../actions';
+import { getUser, getMatches, deleteMatch } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
@@ -15,13 +15,19 @@ class Chats extends React.Component {
     this.props.getUser(this.props.id);
   }
 
+  deleteMatch = (matchID) => {
+    console.log("in chat delete");
+    console.log(matchID);
+    // this.props.deleteMatch(matchID);
+  }
 
   showMatches() {
     var i = -1;
+    console.log(this.props.matches);
     return this.props.matches.map((n) => {
       i++;
       return (
-        <Match key={n} userId={n} i={i} nav={this.props.navigation}/>
+        <Match key={n} userId={n} i={i} deleteMatch={this.deleteMatch} matchID={n} nav={this.props.navigation}/>
       )
     })
   }
@@ -66,4 +72,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser })(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch})(Chats);

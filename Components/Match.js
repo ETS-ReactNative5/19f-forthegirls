@@ -38,6 +38,11 @@ class Match extends React.Component {
   //     .catch((error) => console.log("email error" + error));
   // }
 
+  deleteMatch = () => {
+    console.log("deleting match");
+    this.props.deleteMatch(this.props.matchID);
+  }
+
   render() {
     return (
       <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
@@ -48,6 +53,13 @@ class Match extends React.Component {
             //this.pressUser(this.state.match.email)
             onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id })}>
             <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={chatList.delete}>
+          <TouchableOpacity
+            key={this.props.i+1}
+            onPress={() => this.deleteMatch()}>
+            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
           </TouchableOpacity>
         </View>
       </View>

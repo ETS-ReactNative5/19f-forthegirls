@@ -235,6 +235,18 @@ export function getMatches(username) {
   }
 }
 
+export function deleteMatch(matchID) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/matches/${matchID}`)
+      .then((response) => {
+        dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
+      }).catch((error) => {
+        console.log(error);
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
 
 
 //----------------- EVENTS ------------------//
