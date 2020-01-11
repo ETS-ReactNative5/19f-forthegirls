@@ -235,13 +235,25 @@ export function getMatches(username) {
   }
 }
 
-export function deleteMatch(matchID) {
+export function deleteMatch(userID, matchID, username) {
+
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/matches/${matchID}`)
+    axios.get(`${ROOT_URL}/matches/${userID}/${matchID}`)
       .then((response) => {
-        dispatch({ type: ActionTypes.GET_MATCHES, payload: response.data });
+        const matchID = response.data;
+        return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
+          .then((res) => {
+            return axios.get(`${ROOT_URL}/matches/${username}`)
+            .then((resp) => {
+              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+            }).catch((error) => {
+              console.log(error);
+              dispatch({ type: ActionTypes.SET_ERROR, error });
+            });
+          }).catch((error) => {
+            dispatch({ type: ActionTypes.SET_ERROR, error });
+          });
       }).catch((error) => {
-        console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }

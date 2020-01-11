@@ -39,7 +39,6 @@ class Match extends React.Component {
   // }
 
   deleteMatch = () => {
-    console.log("deleting match");
     this.props.deleteMatch(this.props.matchID);
   }
 

@@ -16,14 +16,12 @@ class Chats extends React.Component {
   }
 
   deleteMatch = (matchID) => {
-    console.log("in chat delete");
-    console.log(matchID);
-    // this.props.deleteMatch(matchID);
+    this.props.deleteMatch(this.props.id, matchID, this.props.username);
   }
 
   showMatches() {
     var i = -1;
-    console.log(this.props.matches);
+    // console.log(this.props.matches);
     return this.props.matches.map((n) => {
       i++;
       return (
