@@ -8,7 +8,7 @@ import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle
 import surveyStyle from '../assets/styles/surveyStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
-import { addToSurvey } from '../actions/index'
+import { addToSurvey, getUser } from '../actions/index'
 import { connect } from 'react-redux';
 
 
@@ -17,34 +17,33 @@ class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      promptOneQuestion: '',
-      promptOneAnswer: '',
-      promptTwoQuestion: '',
-      promptTwoAnswer: '',
-      promptThreeQuestion: '',
-      promptThreeAnswer: '',
+      promptOneQuestion: this.props.promptOneQuestion,
+      promptOneAnswer: this.props.promptOneAnswer,
+      promptTwoQuestion: this.props.promptTwoQuestion,
+      promptTwoAnswer: this.props.promptTwoAnswer,
+      promptThreeQuestion: this.props.promptThreeQuestion,
       introextro: 50,
       listenfollow: 50,
-      frontEnd: false,
-      backEnd: false,
-      small: false,
-      medium: false,
-      large: false,
-      meritocratic: false,
-      nurturing: false,
-      fratty: false,
-      fast: false,
-      organized: false,
-      stable: false,
-      formal: false,
-      relaxed: false,
-      web: false,
-      user: false,
-      design: false,
-      mobile: false,
-      security: false,
-      algorithms: false,
-      storage: false,
+      frontEnd: this.props.frontEnd,
+      backEnd: this.props.backEnd,
+      small: this.props.small,
+      medium: this.props.medium,
+      large: this.props.large,
+      meritocratic: this.props.meritocratic,
+      nurturing: this.props.nurturing,
+      fratty: this.props.fratty,
+      fast: this.props.fast,
+      organized: this.props.organized,
+      stable: this.props.stable,
+      formal: this.props.formal,
+      relaxed: this.props.relaxed,
+      web: this.props.web,
+      user: this.props.user,
+      design: this.props.design,
+      mobile: this.props.mobile,
+      security: this.props.security,
+      algorithms: this.props.algorithms,
+      storage: this.props.storage,
 
       // showing and hiding
       showSkills: false,
@@ -56,7 +55,12 @@ class EditProfile extends React.Component {
     this.toggleSkills = this.toggleSkills.bind(this);
     this.togglePreferences = this.togglePreferences.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
+  }
 
+  componentDidMount() {
+    this.props.getUser(this.props.id);
+    console.log(this.props.promptOneQuestion);
+    console.log(this.props.promptOneAnswer);
   }
 
   handleFieldChange(fieldId, value) {
@@ -64,10 +68,9 @@ class EditProfile extends React.Component {
   }
 
   submitPage = () => {
+    console.log(this.state);
     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
   }
-
-
 
   toggleSkills() {
     this.setState({
@@ -204,35 +207,41 @@ class EditProfile extends React.Component {
           selectedItemColor={selectedItemColor}
           label='Question 1'
           data={data}
+          value={this.props.promptOneQuestion || 'Question 1'}
           onChangeText={this.p1Question}
         />
         <TextInput
           style={textFieldStyle}
           placeholder="Prompt 1 Answer"
+          defaultValue={this.props.promptOneAnswer || ''}
           onChangeText={this.p1Answer}
         />
         <Dropdown
           itemTextStyle={itemTextStyle}
           selectedItemColor={selectedItemColor}
           label='Question 2'
+          value={this.props.promptTwoQuestion || 'Question 2'}
           data={data}
           onChangeText={this.p2Question}
         />
         <TextInput
           style={textFieldStyle}
           placeholder="Prompt 2 Answer"
+          defaultValue={this.props.promptTwoAnswer || ''}
           onChangeText={this.p2Answer}
         />
         <Dropdown
           itemTextStyle={itemTextStyle}
           selectedItemColor={selectedItemColor}
           label='Question 3'
+          value={this.props.promptThreeQuestion || 'Question 3'}
           data={data}
           onChangeText={this.p3Question}
         />
         <TextInput
           style={textFieldStyle}
           placeholder="Prompt 3 Answer"
+          defaultValue={this.props.promptThreeAnswer || ''}
           onChangeText={this.p3Answer}
         />
 
@@ -313,8 +322,35 @@ class EditProfile extends React.Component {
 const mapStateToProps = reduxState => (
   {
     error: reduxState.error,
+    id: reduxState.auth.id,
     username: reduxState.auth.username,
+    promptOneQuestion: reduxState.user.promptOneQuestion,
+    promptOneAnswer: reduxState.user.promptOneAnswer,
+    promptTwoQuestion: reduxState.user.promptTwoQuestion,
+    promptTwoAnswer: reduxState.user.promptTwoAnswer,
+    promptThreeQuestion: reduxState.user.promptThreeQuestion,
+    promptThreeAnswer: reduxState.user.promptThreeAnswer,
+    frontEnd: reduxState.user.frontEnd,
+    backEnd: reduxState.user.backEnd,
+    small: reduxState.user.small,
+    medium: reduxState.user.medium,
+    large: reduxState.user.large,
+    meritocratic: reduxState.user.meritocratic,
+    nurturing: reduxState.user.nurturing,
+    fratty: reduxState.user.fratty,
+    fast: reduxState.user.fast,
+    organized: reduxState.user.organized,
+    stable: reduxState.user.stable,
+    formal: reduxState.user.formal,
+    relaxed: reduxState.user.relaxed,
+    web: reduxState.user.web,
+    user: reduxState.user.user,
+    design: reduxState.user.design,
+    mobile: reduxState.user.mobile,
+    security: reduxState.user.security,
+    algorithms: reduxState.user.algorithms,
+    storage: reduxState.user.storage
   }
 );
 
-export default connect(mapStateToProps, { addToSurvey })(EditProfile);
+export default connect(mapStateToProps, { addToSurvey, getUser })(EditProfile);
