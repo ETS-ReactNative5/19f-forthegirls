@@ -32,6 +32,14 @@ const profile = StyleSheet.create({
     borderRadius: 20,
     margin: 10
   },
+  editProfileContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    backgroundColor: colors.lightGrey.color,
+    borderRadius: 20,
+    margin: 10,
+    padding: 5
+  },
   basicInfoLeft: {
     flexDirection: 'column'
   },
