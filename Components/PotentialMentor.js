@@ -21,7 +21,6 @@ class PotentialMentor extends React.Component {
   }
 
   componentDidMount() {
-    console.log("in component did mount");
     this.setState({mounted: true});
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
