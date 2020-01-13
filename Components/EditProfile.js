@@ -6,6 +6,7 @@ import TouchableComponent from './touchableComponent';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
+import profile from '../assets/styles/profileStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
 import { addToSurvey, getUser } from '../actions/index'
@@ -17,6 +18,8 @@ class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstName: this.props.firstName,
+      lastName: this.props.lastName,
       promptOneQuestion: this.props.promptOneQuestion,
       promptOneAnswer: this.props.promptOneAnswer,
       promptTwoQuestion: this.props.promptTwoQuestion,
@@ -72,6 +75,14 @@ class EditProfile extends React.Component {
     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
   }
 
+  firstNameChange = (text) => {
+    this.setState({ firstName: text });
+  }
+
+  lastNameChange = (text) => {
+    this.setState({ lastName: text });
+  }
+
   toggleSkills() {
     this.setState({
       showSkills: !this.state.showSkills
@@ -103,8 +114,6 @@ class EditProfile extends React.Component {
           <TouchableComponent name='Storage & Infrastructure' stateField='storage' stateFieldStatus={this.state.storage} onChange={this.handleFieldChange} />
         </View>
       )
-    } else {
-      return <Text>FALSEy false</Text>
     }
   }
 
@@ -138,6 +147,7 @@ class EditProfile extends React.Component {
       )
     }
   }
+
 
   p1Question = (value) => {
     this.setState({ promptOneQuestion: value });
@@ -194,13 +204,29 @@ class EditProfile extends React.Component {
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-
+    var skillsHeaderT = { flexDirection: 'row', justifyContent: 'space-between' }
 
     return (
-
       <ScrollView style={surveyStyle.surveyBackground}>
+        <View>
+          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+            <SurveyHeaderComponent header="Basic Information" />
+          </View>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="first name"
+            defaultValue={this.props.firstName || ''}
+            onChangeText={this.firstNameChange}
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="last name"
+            defaultValue={this.props.lastName || ''}
+            onChangeText={this.lastNameChange}
+          />
+        </View>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent text="Tell us about your personality" header="How Chill Are You?" />
+          <SurveyHeaderComponent header="Answer 3 Prompts!" />
         </View>
         <Dropdown
           itemTextStyle={itemTextStyle}
@@ -246,53 +272,64 @@ class EditProfile extends React.Component {
         />
 
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="Personality Sliders" text="help us match you better!" />
+          <SurveyHeaderComponent header="Tell Us About You!" />
         </View>
         <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
         <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
 
 
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent text="Now, tell us what your interests are in computer science" header="CompSci Interests" />
+          <SurveyHeaderComponent header="CS Skills, Preferences, and Interests" />
         </View>
 
-        <View>
-          <Text style={headerText}>CS Strengths?</Text>
-          <TouchableOpacity
-            onPress={this.toggleSkills}
-          >
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
-            />
-          </TouchableOpacity>
+        <View style={profile.editProfileContainer}>
+          <View style={skillsHeaderT}>
+            <Text style={headerText}>CS Skills</Text>
+            <TouchableOpacity
+              onPress={this.toggleSkills}>
+              <Image
+                source={this.state.showSkills ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <View>
-            {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
+            <View>
+              {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
+            </View>
           </View>
         </View>
 
-        <View>
-          <Text style={headerText}>CS Preferences</Text>
-          <TouchableOpacity
-            onPress={this.togglePreferences}>
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
-            />
-          </TouchableOpacity>
+        <View style={profile.editProfileContainer}>
+          <View style={skillsHeaderT}>
+            <Text style={headerText}>CS Preferences</Text>
+            <TouchableOpacity
+              onPress={this.togglePreferences}>
+              <Image
+                source={this.state.showPreferences ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <View>
-            {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+            <View>
+              {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+            </View>
           </View>
         </View>
 
-        <View>
-          <Text style={headerText}>Company Preferences</Text>
-          <TouchableOpacity
-            onPress={this.toggleCompany}>
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
-            />
-          </TouchableOpacity>
+        <View style={profile.editProfileContainer}>
+          <View style={skillsHeaderT}>
+            <Text style={headerText}>Company Preferences</Text>
+            <TouchableOpacity
+              onPress={this.toggleCompany}>
+              <Image
+                source={this.state.showCompany ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <View>
-            {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+            <View>
+              {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+            </View>
           </View>
         </View>
 
@@ -324,6 +361,8 @@ const mapStateToProps = reduxState => (
     error: reduxState.error,
     id: reduxState.auth.id,
     username: reduxState.auth.username,
+    firstName: reduxState.user.firstName,
+    lastName: reduxState.user.lastName,
     promptOneQuestion: reduxState.user.promptOneQuestion,
     promptOneAnswer: reduxState.user.promptOneAnswer,
     promptTwoQuestion: reduxState.user.promptTwoQuestion,
