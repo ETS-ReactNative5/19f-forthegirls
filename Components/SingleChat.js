@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput} from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
@@ -11,42 +11,69 @@ class SingleChat extends React.Component {
     super(props);
 
     this.state = {
-        chats: {},
+        chats: [],
+        chatText: '',
       }
 
   }
 
   componentDidMount() {
      
-    userInfo = {
-        firstID: this.props.id,
-        secondID: this.props.navigation.getParam('matchID')
-    }
-
-    axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween`, userInfo)
-    .then((response) => {
-        console.log(response.data);
-        this.setState({ chats: response.data.result });
-    }).catch((error) => {
-      console.log(error);
-    });
+    this.getChats();
 
   }
 
+  getChats () {
+
+    const firstID = this.props.id;
+    const secondID = this.props.navigation.getParam('matchID');
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+    .then((response) => {
+        this.setState({ chats: response.data });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   showChats() {
+    console.log("CHATS");
     console.log(this.state.chats);
-    return this.props.chats.map((n) => {
+    return this.state.chats.map((n, index) => {
+      console.log(n);
       if(n.sender === this.props.id) {
         return (
-            <Text style={[colors.turquoise]} key={n}>{n.text}</Text>
+            <Text style={[colors.turquoise]} key={index}>{n.text}</Text>
           );
       }
       else {
           return (
-            <Text style={[colors.purple]} key={n}>{n.text}</Text>
+            <Text style={[colors.purple]} key={index}>{n.text}</Text>
           );
       }
     })
+  }
+
+  addChat = (text) => {
+    this.setState({chatText:text});
+  }
+
+  sendChat = () => {
+
+    fields = {
+      sender: this.props.id,
+      receiver: this.props.navigation.getParam('matchID'),
+      text: this.state.chatText
+    }
+
+
+    axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
+    .then((response) => {
+      this.getChats();
+    }).catch((error) => {
+      console.log(error);
+    });
+
   }
 
 
@@ -55,8 +82,9 @@ class SingleChat extends React.Component {
       return (
         <ScrollView>
           <View>
-            {showChats()}
+            {this.showChats()}
           </View>
+          <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
         </ScrollView>
       )
 
