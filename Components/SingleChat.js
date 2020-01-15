@@ -13,6 +13,7 @@ class SingleChat extends React.Component {
     this.state = {
         chats: [],
         chatText: '',
+        numberText: 10
       }
 
   }
@@ -37,19 +38,18 @@ class SingleChat extends React.Component {
   }
 
   showChats() {
-    console.log("CHATS");
-    console.log(this.state.chats);
     return this.state.chats.map((n, index) => {
-      console.log(n);
-      if(n.sender === this.props.id) {
-        return (
-            <Text style={[colors.turquoise]} key={index}>{n.text}</Text>
-          );
-      }
-      else {
+      if(this.state.chats.length-this.state.numberText < index+1) {
+        if(n.sender === this.props.id) {
           return (
-            <Text style={[colors.purple]} key={index}>{n.text}</Text>
-          );
+              <Text style={[colors.turquoise]} key={index}>{n.text}</Text>
+            );
+        }
+        else {
+            return (
+              <Text style={[colors.purple]} key={index}>{n.text}</Text>
+            );
+        }
       }
     })
   }
@@ -76,11 +76,19 @@ class SingleChat extends React.Component {
 
   }
 
+  loadMore=() => {
+    const newNum = this.state.numberText+10;
+    this.setState({numberText:newNum}); 
+  }
+
 
   render() {
     //&& this.props.matches.legnth > 0
       return (
         <ScrollView>
+          <TouchableOpacity onPress={this.loadMore}>
+            <Text>Load More!</Text>
+          </TouchableOpacity>
           <View>
             {this.showChats()}
           </View>
