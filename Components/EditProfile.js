@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
@@ -72,7 +72,21 @@ class EditProfile extends React.Component {
 
   submitPage = () => {
     console.log(this.state);
-    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+
+    if(this.promptOneQuestion===this.promptTwoQuestion || this.promptTwoQuestion===this.promptThreeQuestion || this.promptOneQuestion===this.promptThreeQuestion) {
+      Alert.alert(
+        'Repeat Prompts!',
+        'Select a different prompt to save!',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: true},
+      );
+    }
+    else {
+      this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+    }
+
   }
 
   firstNameChange = (text) => {
