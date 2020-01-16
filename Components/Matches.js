@@ -26,7 +26,7 @@ class Matches extends React.Component {
   returnMatches = () => {
     return this.props.potentialMatches.map((n) => {
       return (
-        <PotentialMentor key={n} userId={n} refresh={this.refresh}/>
+        <PotentialMentor key={n} userId={n} refresh={this.refresh} navigation={this.props.navigation}/>
       )
     });
   }

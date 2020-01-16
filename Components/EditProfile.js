@@ -12,8 +12,6 @@ import SurveyHeaderComponent from './surveyHeaderComponent'
 import { addToSurvey, getUser } from '../actions/index'
 import { connect } from 'react-redux';
 
-
-
 class EditProfile extends React.Component {
   constructor(props) {
     super(props);

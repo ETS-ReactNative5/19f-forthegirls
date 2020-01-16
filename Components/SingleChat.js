@@ -81,6 +81,17 @@ class SingleChat extends React.Component {
     this.setState({numberText:newNum}); 
   }
 
+  renderInput = () => {
+    // console.log(this.props.navigation.getParam('prompt'));
+    if(this.props.navigation.getParam('prompt')!==undefined) {
+      <TextInput defaultValue={this.props.navigation.getParam('prompt')} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+    }
+    else {
+      <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+    }
+
+  }
+
 
   render() {
     //&& this.props.matches.legnth > 0
@@ -92,7 +103,9 @@ class SingleChat extends React.Component {
           <View>
             {this.showChats()}
           </View>
-          <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+            {/* {this.renderInput()} */}
+            <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+
         </ScrollView>
       )
 

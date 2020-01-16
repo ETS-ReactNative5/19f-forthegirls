@@ -1,6 +1,7 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import Chats from '../Components/Chats';
 import SingleChat from '../Components/SingleChat';
+import Matches from '../Components/Matches';
 
 const ChatStack = createStackNavigator(
   {
@@ -8,6 +9,9 @@ const ChatStack = createStackNavigator(
   SingleChat: {
     screen: SingleChat,
   },
+  Match: {
+    screen: Matches,
+  }
 },
 {
   initialRouteName: 'Home',
