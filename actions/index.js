@@ -193,16 +193,16 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
-export function pairMatchToUser(user1, user2, prompt, navigation) {
-  console.log("pairing index")
+export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
+  // console.log("pairing index")
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
-            console.log("getting again");
+            // console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
-            navigation.navigate('SingleChat', {matchID: user2, prompt: prompt})
+            navigation.navigate('SingleChat', {matchID: matchID, prompt: prompt})
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });

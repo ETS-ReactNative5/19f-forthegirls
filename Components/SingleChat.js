@@ -13,15 +13,20 @@ class SingleChat extends React.Component {
     this.state = {
         chats: [],
         chatText: '',
-        numberText: 10
+        numberText: 10,
+        prompt: 'Click to Chat!'
       }
 
   }
 
   componentDidMount() {
-     
     this.getChats();
+    this.setPrompt();
 
+  }
+
+  setPrompt = () => {
+    this.setState({prompt: this.props.navigation.getParam('prompt')});
   }
 
   getChats () {
@@ -81,16 +86,16 @@ class SingleChat extends React.Component {
     this.setState({numberText:newNum}); 
   }
 
-  renderInput = () => {
-    // console.log(this.props.navigation.getParam('prompt'));
-    if(this.props.navigation.getParam('prompt')!==undefined) {
-      <TextInput defaultValue={this.props.navigation.getParam('prompt')} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
-    }
-    else {
-      <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
-    }
+  // renderInput = () => {
+  //   console.log("hi");
+  //   if(this.props.navigation.getParam('prompt')!==undefined) {
+  //     <TextInput defaultValue={this.props.navigation.getParam('prompt')} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+  //   }
+  //   else {
+  //     <TextInput defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+  //   }
 
-  }
+  // }
 
 
   render() {
@@ -104,7 +109,7 @@ class SingleChat extends React.Component {
             {this.showChats()}
           </View>
             {/* {this.renderInput()} */}
-            <TextInput defaultValue={"Click to Chat!"} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+            <TextInput defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
 
         </ScrollView>
       )

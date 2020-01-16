@@ -35,8 +35,8 @@ class PotentialMentor extends React.Component {
 
   yesMatchCallback = (prompt) => {
     if(prompt!==undefined) {
-      this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation);
-      console.log("handling chat");
+      this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
+      // console.log("handling chat");
     }
     // setTimeout(this.props.refresh, 2000);
 
