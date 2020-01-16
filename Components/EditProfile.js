@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Modal, TouchableHighlight } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
@@ -51,7 +51,8 @@ class EditProfile extends React.Component {
       // showing and hiding
       showSkills: false,
       showPreferences: false,
-      showCompany: false
+      showCompany: false,
+      showModal: false,
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -70,18 +71,44 @@ class EditProfile extends React.Component {
     this.setState({ [fieldId]: value });
   }
 
+  renderModal = () => {
+    if(this.state.showModal) {
+      return(
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={this.state.showModal}
+          onRequestClose={() => {
+           console.log('Modal has been closed.');
+        }}>
+          <View style={{marginTop: 22}}>
+                <View>
+                  <Text>Hello World!</Text>
+
+                  <TouchableHighlight
+                    onPress={() => {
+                      this.setModalVisable(!this.state.showModal);
+                    }}>
+                    <Text>Hide Modal</Text>
+                  </TouchableHighlight>
+                </View>
+            </View>
+        </Modal>
+      );
+    }
+  }
+
+  setModalVisable = (value) => {
+    this.setState({showModal: value});
+  }
+
   submitPage = () => {
     console.log(this.state);
-
+    //https://facebook.github.io/react-native/docs/modal
+    //How to use a modal in react native
     if(this.promptOneQuestion===this.promptTwoQuestion || this.promptTwoQuestion===this.promptThreeQuestion || this.promptOneQuestion===this.promptThreeQuestion) {
-      Alert.alert(
-        'Repeat Prompts!',
-        'Select a different prompt to save!',
-        [
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ],
-        {cancelable: true},
-      );
+      this.setState({showModal:!this.state.showModal});
+      
     }
     else {
       this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
@@ -223,6 +250,7 @@ class EditProfile extends React.Component {
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
         <View>
+          {this.renderModal()}
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="Basic Information" />
           </View>
