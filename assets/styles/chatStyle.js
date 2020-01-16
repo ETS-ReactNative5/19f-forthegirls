@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import colors from './basicStyle';
+import { NavigationEvents } from 'react-navigation';
 
 const chatList = StyleSheet.create({
   listItem: {
@@ -41,6 +42,32 @@ const chatList = StyleSheet.create({
     borderRadius: 0,
     marginRight: 10
   }
+});
+
+const singleChat = StyleSheet.create({
+  sender: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 140,
+    marginRight: 10,
+    borderRadius: 20,
+    backgroundColor: colors.turquoise.color,
+    height: 50,
+    width: 225,
+    paddingLeft: 10,
+  },
+  reciever: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 7,
+    marginRight: 10,
+    borderRadius: 20,
+    width: 225,
+    backgroundColor: colors.lightGrey.color,
+    height: 50,
+    paddingLeft: 10,
+  }
 })
 
 export default chatList;
+export { singleChat };
