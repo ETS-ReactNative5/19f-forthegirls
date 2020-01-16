@@ -66,6 +66,7 @@ const UserReducer = (state = {
 
         firstName: action.payload.result.firstName,
         lastName: action.payload.result.lastName,
+        location: action.payload.result.location,
         highSchool: action.payload.result.highSchool,
         collegeName: action.payload.result.collegeName,
         gradYear: action.payload.result.gradYear,
@@ -108,13 +109,13 @@ const UserReducer = (state = {
         promptThreeAnswer: action.payload.result.promptThreeAnswer,
 
       });
-      case ActionTypes.USER_GET_POT_MATCHES:
-        return Object.assign({}, state, {
-          potentialMatches: action.payload,
+    case ActionTypes.USER_GET_POT_MATCHES:
+      return Object.assign({}, state, {
+        potentialMatches: action.payload,
       });
-      case ActionTypes.GET_MATCHES:
-        return Object.assign({}, state, {
-          matches: action.payload,
+    case ActionTypes.GET_MATCHES:
+      return Object.assign({}, state, {
+        matches: action.payload,
       });
     default:
       return state;

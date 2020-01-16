@@ -17,6 +17,7 @@ class BasicSignUpComponent extends React.Component {
       email: '',
       username: '',
       password: '',
+      location: '',
       highSchool: '',
       collegeName: '',
       gradYear: '',
@@ -49,10 +50,11 @@ class BasicSignUpComponent extends React.Component {
         username: this.state.username,
         password: this.state.password,
       }
-  
+
       const otherAnswers = {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
+        location: this.state.location,
         highSchool: this.state.highSchool,
         collegeName: this.state.collegeName,
         gradYear: this.state.gradYear,
@@ -62,7 +64,7 @@ class BasicSignUpComponent extends React.Component {
         college: this.state.college,
         pg: this.state.pg,
       }
-  
+
       this.props.signUpUser(fields, this.props.navigation, otherAnswers);
     }
   }
@@ -73,6 +75,10 @@ class BasicSignUpComponent extends React.Component {
 
   lastNameInput = (text) => {
     this.setState({ lastName: text });
+  }
+
+  locationInput = (text) => {
+    this.setState({ location: text });
   }
 
   emailInput = (text) => {
@@ -165,13 +171,13 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
-    <TextInput
-      style={textFieldStyle}
-      placeholder="High School"
-      onChangeText={this.highSchoolInput}
-      clearButtonMode='while-editing'
-      keyboardType='default'
-    />
+      <TextInput
+        style={textFieldStyle}
+        placeholder="High School"
+        onChangeText={this.highSchoolInput}
+        clearButtonMode='while-editing'
+        keyboardType='default'
+      />
     )
   }
 
@@ -179,36 +185,36 @@ class BasicSignUpComponent extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
-    <View>
-      <TextInput
-        style={textFieldStyle}
-        placeholder="High School Name"
-        onChangeText={this.highSchoolInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-      <TextInput
-        style={textFieldStyle}
-        placeholder="College"
-        onChangeText={this.collegeInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-      <TextInput
-        style={textFieldStyle}
-        placeholder="Graduation Year"
-        onChangeText={this.gradYearInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-      <TextInput
-        style={textFieldStyle}
-        placeholder="Current/Most Recent Job/Internship"
-        onChangeText={this.currentJobInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-    </View>
+      <View>
+        <TextInput
+          style={textFieldStyle}
+          placeholder="High School Name"
+          onChangeText={this.highSchoolInput}
+          clearButtonMode='while-editing'
+          keyboardType='default'
+        />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="College"
+          onChangeText={this.collegeInput}
+          clearButtonMode='while-editing'
+          keyboardType='default'
+        />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Graduation Year"
+          onChangeText={this.gradYearInput}
+          clearButtonMode='while-editing'
+          keyboardType='default'
+        />
+        <TextInput
+          style={textFieldStyle}
+          placeholder="Current/Most Recent Job/Internship"
+          onChangeText={this.currentJobInput}
+          clearButtonMode='while-editing'
+          keyboardType='default'
+        />
+      </View>
     );
   }
 
@@ -222,81 +228,87 @@ class BasicSignUpComponent extends React.Component {
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
-      <ScrollView style={surveyStyle.surveyBackground}>
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
-        </View>
-        <TextInput
-          style={textFieldStyle}
-          invalidTextFieldStyle={{ borderColor: colors.red.color }}
-          placeholder="First Name"
-          onChangeText={this.firstNameInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          invalidTextFieldStyle={{ borderColor: colors.red.color }}
-          placeholder="Last Name"
-          onChangeText={this.lastNameInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          onInputChange={(input) => this.onAgeChange(input)}
-          placeholder="Age"
-          onChangeText={this.ageInput}
-          clearButtonMode='while-editing'
-          keyboardType='phone-pad'
-        />
-        <TextInput
-          style={textFieldStyle}
-          invalidTextFieldStyle={{ borderColor: colors.red.color }}
-          placeholder="Email"
-          onChangeText={this.emailInput}
-          clearButtonMode='while-editing'
-          keyboardType='email-address'
-        />
-        <TextInput
-          style={textFieldStyle}
-          invalidTextFieldStyle={{ borderColor: colors.red.color }}
-          placeholder="Username"
-          onChangeText={this.usernameInput}
-          clearButtonMode='while-editing'
-        />
-        <TextInput
-          style={textFieldStyle}
-          invalidTextFieldStyle={{ borderColor: colors.red.color }}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={this.passwordInput}
-          clearButtonMode='while-editing'
-          secureTextEntry={true}
-        />
-        <View>
-          <Text style={headerText}>Stage of Life?</Text>
-          <View style={{
-            flexDirection: 'row',
-            flexWrap: 'no-wrap',
-            justifyContent: 'flex-start'
-          }}>
-            <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
-            <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
-            <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
+        <ScrollView style={surveyStyle.surveyBackground}>
+          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
           </View>
-        </View>
-        {this.state.hs === true ? this.renderHS() : (this.state.college || this.state.pg === true ? this.renderCollege() : this.renderNull())}
-        <View style={buttons.arrowView}>
-          <TouchableOpacity
-            onPress={this.sumbitUser}
-            inputs={this.state}>
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
-            />
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="First Name"
+            onChangeText={this.firstNameInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="Last Name"
+            onChangeText={this.lastNameInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+          <TextInput
+            style={textFieldStyle}
+            onInputChange={(input) => this.onAgeChange(input)}
+            placeholder="Age"
+            onChangeText={this.ageInput}
+            clearButtonMode='while-editing'
+            keyboardType='phone-pad'
+          />
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="Email"
+            onChangeText={this.emailInput}
+            clearButtonMode='while-editing'
+            keyboardType='email-address'
+          />
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="Username"
+            onChangeText={this.usernameInput}
+            clearButtonMode='while-editing'
+          />
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={this.passwordInput}
+            clearButtonMode='while-editing'
+          />
+          <TextInput
+            style={textFieldStyle}
+            invalidTextFieldStyle={{ borderColor: colors.red.color }}
+            placeholder="Location (City, State)"
+            onChangeText={this.locationInput}
+            clearButtonMode='while-editing'
+          />
+          <View>
+            <Text style={headerText}>Stage of Life?</Text>
+            <View style={{
+              flexDirection: 'row',
+              flexWrap: 'no-wrap',
+              justifyContent: 'flex-start'
+            }}>
+              <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
+              <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
+              <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
+            </View>
+          </View>
+          {this.state.hs === true ? this.renderHS() : (this.state.college || this.state.pg === true ? this.renderCollege() : this.renderNull())}
+          <View style={buttons.arrowView}>
+            <TouchableOpacity
+              onPress={this.sumbitUser}
+              inputs={this.state}>
+              <Image
+                source={require('./../assets/icons/arrownext.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     );
   }

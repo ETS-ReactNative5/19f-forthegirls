@@ -20,13 +20,17 @@ class EditProfile extends React.Component {
     this.state = {
       firstName: this.props.firstName,
       lastName: this.props.lastName,
+      location: this.props.location,
+
       promptOneQuestion: this.props.promptOneQuestion,
       promptOneAnswer: this.props.promptOneAnswer,
       promptTwoQuestion: this.props.promptTwoQuestion,
       promptTwoAnswer: this.props.promptTwoAnswer,
       promptThreeQuestion: this.props.promptThreeQuestion,
-      introextro: 50,
-      listenfollow: 50,
+
+      introextro: this.props.introextro,
+      listenfollow: this.props.listenfollow,
+
       frontEnd: this.props.frontEnd,
       backEnd: this.props.backEnd,
       small: this.props.small,
@@ -124,6 +128,10 @@ class EditProfile extends React.Component {
     this.setState({ lastName: text });
   }
 
+  locationChange = (text) => {
+    this.setState({ location: text });
+  }
+
   toggleSkills() {
     this.setState({
       showSkills: !this.state.showSkills
@@ -189,7 +197,6 @@ class EditProfile extends React.Component {
     }
   }
 
-
   p1Question = (value) => {
     this.setState({ promptOneQuestion: value });
   }
@@ -254,17 +261,28 @@ class EditProfile extends React.Component {
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="Basic Information" />
           </View>
+
           <TextInput
             style={textFieldStyle}
-            placeholder="first name"
+            placeholder={'First Name'}
+            maxLength={30}
             defaultValue={this.props.firstName || ''}
             onChangeText={this.firstNameChange}
           />
+
           <TextInput
             style={textFieldStyle}
-            placeholder="last name"
+            placeholder="Last Name"
+            maxLength={30}
             defaultValue={this.props.lastName || ''}
             onChangeText={this.lastNameChange}
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Location (City, State)"
+            maxLength={30}
+            defaultValue={this.props.location || ''}
+            onChangeText={this.locationChange}
           />
         </View>
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
@@ -405,6 +423,7 @@ const mapStateToProps = reduxState => (
     username: reduxState.auth.username,
     firstName: reduxState.user.firstName,
     lastName: reduxState.user.lastName,
+    location: reduxState.user.location,
     promptOneQuestion: reduxState.user.promptOneQuestion,
     promptOneAnswer: reduxState.user.promptOneAnswer,
     promptTwoQuestion: reduxState.user.promptTwoQuestion,
@@ -430,7 +449,9 @@ const mapStateToProps = reduxState => (
     mobile: reduxState.user.mobile,
     security: reduxState.user.security,
     algorithms: reduxState.user.algorithms,
-    storage: reduxState.user.storage
+    storage: reduxState.user.storage,
+    introextro: reduxState.user.extraversion,
+    listenfollow: reduxState.user.listening
   }
 );
 
