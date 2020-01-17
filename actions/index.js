@@ -193,13 +193,17 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
-export function pairMatchToUser(user1, user2) {
+export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
+  // console.log("pairing index")
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
+        console.log("matching");
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
+            console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
+            navigation.navigate('SingleChat', {matchID: matchID, prompt: prompt})
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -215,6 +219,8 @@ export function getPotentialMatches(username) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
+        console.log("in response");
+        console.log(response.data);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
