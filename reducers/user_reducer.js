@@ -43,8 +43,8 @@ const UserReducer = (state = {
   pg: false,
 
   // Personality
-  extraversion: 0,
-  listening: 0,
+  extraversion: 50,
+  listening: 50,
 
   // Prompts
   promptOneQuestion: '',
@@ -52,9 +52,7 @@ const UserReducer = (state = {
   promptTwoQuestion: '',
   promptTwoAnswer: '',
   promptThreeQuestion: '',
-  promptThreeAnswer: '',
-  introextro: 0,
-  listenFollow: 0,
+  promptThreeAnswer: ''
 
 }, action) => {
   switch (action.type) {

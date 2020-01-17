@@ -26,8 +26,8 @@ class EditProfile extends React.Component {
       promptTwoAnswer: this.props.promptTwoAnswer,
       promptThreeQuestion: this.props.promptThreeQuestion,
 
-      introextro: this.props.introextro,
-      listenfollow: this.props.listenfollow,
+      extraversion: this.props.extraversion !== undefined ? this.props.extraversion : 50,
+      listening: this.props.listening !== undefined ? this.props.listening : 50,
 
       frontEnd: this.props.frontEnd,
       backEnd: this.props.backEnd,
@@ -65,8 +65,9 @@ class EditProfile extends React.Component {
 
   componentDidMount() {
     this.props.getUser(this.props.id);
-    console.log(this.props.promptOneQuestion);
-    console.log(this.props.promptOneAnswer);
+
+    console.log(this.props.extraversion);
+    console.log(this.props.listening);
   }
 
   handleFieldChange(fieldId, value) {
@@ -105,6 +106,7 @@ class EditProfile extends React.Component {
   }
 
   submitPage = () => {
+
     console.log(this.state);
     //https://facebook.github.io/react-native/docs/modal
     //How to use a modal in react native
@@ -221,7 +223,7 @@ class EditProfile extends React.Component {
 
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
-    // console.log(`parent: ${this.state.introextro}`);
+    // console.log(`parent: ${this.state.extraversion}`);
   }
 
   opacityOnPress = () => {
@@ -332,8 +334,8 @@ class EditProfile extends React.Component {
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
           <SurveyHeaderComponent header="Tell Us About You!" />
         </View>
-        <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
-        <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
+        <SliderComponent id='extraversion' onChange={this.handleSliderChange} value={this.state.extraversion} min='introvert' max='extrovert' />
+        <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='listener' max='leader' />
 
 
         <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
@@ -448,8 +450,8 @@ const mapStateToProps = reduxState => (
     security: reduxState.user.security,
     algorithms: reduxState.user.algorithms,
     storage: reduxState.user.storage,
-    introextro: reduxState.user.extraversion,
-    listenfollow: reduxState.user.listening
+    extraversion: reduxState.user.extraversion,
+    listening: reduxState.user.listening
   }
 );
 
