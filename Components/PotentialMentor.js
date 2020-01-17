@@ -34,10 +34,10 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = (prompt) => {
-    if(prompt!==undefined) {
-      this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
+      console.log("matching...");
+      this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, "Hello", this.props.navigation, this.state.userMatch.id);
       // console.log("handling chat");
-    }
+
     // setTimeout(this.props.refresh, 2000);
 
     // this.setState({ matched: true, noAction: false })
@@ -74,13 +74,13 @@ class PotentialMentor extends React.Component {
           <View style={promptStyle.promptContainer}>
             <View >
               {/*  */}
-              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.promptOneQuestion)}>
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionOnePrompt)}>
                 <Prompt prompt={this.state.userMatch.promptOneQuestion} answer={this.state.userMatch.promptOneAnswer} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.promptTwoQuestion)}>
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionTwoPrompt)}>
                 <Prompt prompt={this.state.userMatch.promptTwoQuestion} answer={this.state.userMatch.promptTwoAnswer} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.promptThreeQuestion)}>
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionThreePrompt)}>
                 <Prompt prompt={this.state.userMatch.promptThreeQuestion} answer={this.state.userMatch.promptThreeAnswer} />
               </TouchableOpacity>
             </View>

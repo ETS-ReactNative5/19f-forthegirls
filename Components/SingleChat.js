@@ -14,7 +14,7 @@ class SingleChat extends React.Component {
         chats: [],
         chatText: '',
         numberText: 10,
-        prompt: 'Click to Chat!'
+        prompt: 'Click to chat!',
       }
 
   }
@@ -26,7 +26,11 @@ class SingleChat extends React.Component {
   }
 
   setPrompt = () => {
-    this.setState({prompt: this.props.navigation.getParam('prompt')});
+    if(this.props.navigation.getParam('prompt')!=='') {
+      this.setState({prompt: this.props.navigation.getParam('prompt')});
+      this.setState({chatText:this.props.navigation.getParam('prompt')});
+    }
+    
   }
 
   getChats () {
