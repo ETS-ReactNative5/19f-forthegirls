@@ -16,6 +16,8 @@ const eventPage = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    //may need to change--just looks super weird on my phone AJK
+    marginTop: -30,
   },
 
   singleEventView: {
@@ -145,7 +147,7 @@ const eventPage = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
 
   eventDetailRSVP: {
@@ -162,6 +164,24 @@ const eventPage = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     height: 25
+  },
+
+  viewOptionsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 7,
+    marginBottom:5,
+  },
+
+  pressed: {
+    borderRadius: 20,
+    backgroundColor: colors.deepPurple.color,
+  },
+  notPressed: {
+    borderRadius: 20,
+    backgroundColor: colors.white.color,
   },
 
   addEventContainer: {
