@@ -61,6 +61,16 @@ const eventPage = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  rsvpCounts: {
+    borderRadius: 10,
+    width: '40%',
+    backgroundColor: 'rgba(70, 81, 135, 0.6)',
+    marginTop: 10,
+    marginLeft: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+
   button: {
     color: colors.white.color,
   },
