@@ -32,13 +32,14 @@ class Events extends React.Component {
     this.props.navigation.navigate('Add', 5876700);
   }
 
-  renderEvent(nameProp, dateProp, locationProp, eventKey) {
+  renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey) {
     return (
       <View key={eventKey + 1}>
         <SingleEvent
           key={eventKey}
           name={nameProp}
           date={dateProp}
+          rsvps={rsvpsProp}
           location={locationProp}
           eventID={eventKey}
           navigation={this.props.navigation} />
@@ -49,7 +50,7 @@ class Events extends React.Component {
   renderEvents() {
     var renderedEvents = this.props.events.all.map((anEvent) => {
       return (
-        this.renderEvent(anEvent.title, anEvent.date, anEvent.location, anEvent.id)
+        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id)
       );
     })
 

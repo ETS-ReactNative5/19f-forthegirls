@@ -15,11 +15,16 @@ import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 class SingleEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      rsvps: this.props.rsvps,
+    };
     this.navToPage = this.navToPage.bind(this);
+    this.render = this.render.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
+    console.log(this.props.rsvps)
+    console.log(this.state.rsvps)
   }
 
   navToPage() {
@@ -42,6 +47,11 @@ class SingleEvent extends Component {
             <View style={eventPage.date}>
               <Text style={[colors.white, fonts.majorHeading, fontEffects.italic]}>
                 {this.props.date}
+              </Text>
+            </View>
+            <View style={eventPage.rsvpCounts}>
+              <Text style={[colors.white, fonts.majorHeading, fontEffects.italic]}>
+                {this.state.rsvps ? this.state.rsvps.length : null} RSVPs
               </Text>
             </View>
           </ImageBackground>

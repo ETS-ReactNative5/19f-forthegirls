@@ -24,6 +24,7 @@ export const ActionTypes = {
   UNRSVP_EVENT: 'UNRSVP_EVENT',
   FETCH_EVENT: 'FETCH_EVENT',
   FETCH_EVENTS: 'FETCH_EVENTS',
+  FETCH_RSVP_CONNECTIONS: 'FETCH_RSVP_CONNECTIONS',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -301,6 +302,18 @@ export function fetchEvent(id) {
     axios.get(`${ROOT_URL}/events/${id}`).then((response) => {
       dispatch({
         type: ActionTypes.FETCH_EVENT,
+        payload: response.data,
+      });
+    }).catch((error) => {
+    });
+  };
+}
+
+export function fetchRsvpConnections(userId, eventId) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_RSVP_CONNECTIONS,
         payload: response.data,
       });
     }).catch((error) => {
