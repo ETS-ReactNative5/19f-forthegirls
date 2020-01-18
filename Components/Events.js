@@ -14,10 +14,15 @@ class Events extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      viewAll: true,
+    };
 
     this.renderEvent = this.renderEvent.bind(this);
     this.renderEvents = this.renderEvents.bind(this);
     this.navToAdd = this.navToAdd.bind(this);
+    this.doViewAll = this.doViewAll.bind(this);
+    this.dontViewAll = this.dontViewAll.bind(this);
   }
 
   componentDidMount() {
@@ -30,6 +35,14 @@ class Events extends React.Component {
 
   navToAdd() {
     this.props.navigation.navigate('Add', 5876700);
+  }
+
+  doViewAll() {
+    this.setState({viewAll:true});
+  }
+
+  dontViewAll() {
+    this.setState({viewAll:false});
   }
 
   renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey) {
@@ -60,6 +73,30 @@ class Events extends React.Component {
   render() {
     return (
       <View style={eventPage.wholeContainer}>
+      <View style={eventPage.viewOptionsContainer}>
+        <View style={this.state.viewAll
+          ? eventPage.addEventOpacity
+          : eventPage.notPressed}>
+          <TouchableOpacity onPress={this.doViewAll}>
+            <Text style={[eventPage.addEventText, this.state.viewAll
+              ? colors.white
+              : colors.deepPurple,  fonts.minorHeading]}>
+              See All
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={this.state.viewAll
+          ? eventPage.notPressed
+          : eventPage.addEventOpacity}>
+          <TouchableOpacity onPress={this.dontViewAll}>
+            <Text style={[eventPage.addEventText, this.state.viewAll
+              ? colors.deepPurple
+              : colors.white, fonts.minorHeading]}>
+              See RSVP'd
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.renderEvents()}
         </ScrollView>
