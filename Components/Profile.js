@@ -7,6 +7,9 @@ import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser } from '../actions';
 
 import { withNavigation } from 'react-navigation';
+
+import { ImagePicker, Permissions } from 'expo';
+
 //import CsComponent from './csComponent';
 
 class Profile extends React.Component {
