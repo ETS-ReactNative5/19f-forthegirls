@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
@@ -19,8 +19,14 @@ class Profile extends React.Component {
 
     this.state = {
       editing: false,
-      isMyProfile: true
+      isMyProfile: true,
+      image: null,
+      width: 0,
+      height: 0,
     };
+
+    this.photoUpload = this.photoUpload.bind(this);
+
 
   }
 
@@ -62,20 +68,18 @@ class Profile extends React.Component {
   }
 
 
-  photoUpload = async () => {
+photoUpload = async () => {
   const result = await ImagePicker.launchImageLibraryAsync({
     base64: true,
 });
 
+
   if (!result.cancelled) {
-    Image.getSize(result.uri, (imgWidth, imgHeight) => {
-      this.setState({
-        image: result,
-        width: imgWidth,
-        height: imgHeight,
-      });
-    });
+    this.setState({ image: result.uri, width: result.width, height: result.height });
   }
+
+  console.log("priting reults")
+  console.log(this.state);
 };
 
   handleInput = (text) => {
@@ -94,6 +98,7 @@ class Profile extends React.Component {
   opacityOnPress = () => {
     this.props.navigation.navigate('EditProfile', {})
   }
+
 
   render() {
 
@@ -120,6 +125,9 @@ class Profile extends React.Component {
       )
     }
 
+    var image = this.state.image != null ? <Image source={{ uri: this.state.image}} style={{width: 100, height: 100}} />  : <Text> hi</Text>;
+
+
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
@@ -127,9 +135,12 @@ class Profile extends React.Component {
           onPress={this.photoUpload}>
           <Text>Click for photo upload</Text>
         </TouchableOpacity>
+        {image}
+
 
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
+
         <View style={profile.basicInfo}>
           <View style={profile.basicInfoLeft}>
             <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
