@@ -8,7 +8,8 @@ import { getUser, editUser, signoutUser } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
-import { ImagePicker, Permissions } from 'expo';
+import { ImagePicker } from 'expo';
+import * as Permissions from 'expo-permissions';
 
 //import CsComponent from './csComponent';
 
@@ -50,6 +51,14 @@ class Profile extends React.Component {
     }
     else if (this.props.isMyProfile && this.state.editing) {
       return (<Button title="Save Changes" onPress={this.changeEditStatus} />)
+    }
+  }
+
+  async photoUpload() {
+    console.log("hi");
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      console.log('Hey! You might want to enable camera roll access for my app, it is good.');
     }
   }
 
@@ -98,6 +107,11 @@ class Profile extends React.Component {
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
+        <TouchableOpacity
+          onPress={this.photoUpload}>
+          <Text>Click for photo upload</Text>
+        </TouchableOpacity>
+
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
         <View style={profile.basicInfo}>
