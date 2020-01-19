@@ -66,7 +66,22 @@ const singleChat = StyleSheet.create({
     backgroundColor: colors.lightGrey.color,
     height: 50,
     paddingLeft: 10,
-  }
+  },
+  loadmore: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 125,
+    marginRight: 10,
+    borderWidth: 2,
+    borderColor: colors.lessOpaquePurple.color,
+    borderRadius: 20,
+    backgroundColor: colors.veryLightPurple.color,
+    height: 30,
+    width: 150,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 10,
+  },
 })
 
 export default chatList;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput } from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
@@ -15,7 +15,7 @@ class SingleChat extends React.Component {
     this.state = {
       chats: [],
       chatText: '',
-      numberText: 10,
+      numberText: 8,
       prompt: 'Click to chat!',
     }
 
@@ -111,17 +111,19 @@ class SingleChat extends React.Component {
   render() {
     //&& this.props.matches.legnth > 0
     return (
-      <ScrollView>
-        <TouchableOpacity onPress={this.loadMore}>
-          <Text>Load More!</Text>
-        </TouchableOpacity>
-        <View>
-          {this.showChats()}
-        </View>
-        {/* {this.renderInput()} */}
-        <TextInput defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+      <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
+        <ScrollView>
+          <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
+            <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
+          </TouchableOpacity>
+          <View>
+            {this.showChats()}
+          </View>
+          {/* {this.renderInput()} */}
+          <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
 
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     )
 
 

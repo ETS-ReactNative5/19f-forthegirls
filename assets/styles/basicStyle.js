@@ -55,7 +55,7 @@ const fonts = StyleSheet.create({
 const fontEffects = StyleSheet.create({
   bold: { fontWeight: 'bold' },
   italic: { fontStyle: 'italic' },
-  center: { textAlign: 'center' }
+  center: { textAlign: 'center', alignItems: 'center' }
 });
 
 const logo = StyleSheet.create({
