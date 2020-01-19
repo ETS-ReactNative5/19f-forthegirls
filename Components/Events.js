@@ -5,7 +5,7 @@ import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
-import { fetchEvents } from '../actions';
+import { fetchEvents, fetchYourEvents, getUser } from '../actions';
 
 class Events extends React.Component {
   static navigationOptions = {
@@ -18,8 +18,10 @@ class Events extends React.Component {
       viewAll: true,
     };
 
+    this.displayEvents = this.displayEvents.bind(this);
     this.renderEvent = this.renderEvent.bind(this);
     this.renderEvents = this.renderEvents.bind(this);
+    this.renderYourEvents = this.renderYourEvents.bind(this);
     this.navToAdd = this.navToAdd.bind(this);
     this.doViewAll = this.doViewAll.bind(this);
     this.dontViewAll = this.dontViewAll.bind(this);
@@ -27,10 +29,12 @@ class Events extends React.Component {
 
   componentDidMount() {
     this.props.fetchEvents();
+    this.props.fetchYourEvents(this.props.id);
   }
 
   componentDidUpdate(prevProps, prevState) {
     this.props.fetchEvents();
+    this.props.fetchYourEvents(this.props.id);
   }
 
   navToAdd() {
@@ -43,6 +47,15 @@ class Events extends React.Component {
 
   dontViewAll() {
     this.setState({viewAll:false});
+  }
+
+  displayEvents(){
+    if(this.state.viewAll){
+      return this.renderEvents();
+    }
+    else{
+      return this.renderYourEvents();
+    }
   }
 
   renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey) {
@@ -61,12 +74,20 @@ class Events extends React.Component {
   }
 
   renderEvents() {
-    var renderedEvents = this.props.events.all.map((anEvent) => {
+    var renderedEvents = this.props.all.map((anEvent) => {
       return (
         this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id)
       );
     })
+    return renderedEvents;
+  }
 
+  renderYourEvents() {
+    var renderedEvents = this.props.allYours.map((anEvent) => {
+      return (
+        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id)
+      );
+    })
     return renderedEvents;
   }
 
@@ -98,7 +119,7 @@ class Events extends React.Component {
         </View>
       </View>
         <ScrollView contentContainerStyle={eventPage.scroll} >
-          {this.renderEvents()}
+          {this.displayEvents()}
         </ScrollView>
         <View style={eventPage.addEventContainer}>
           <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
@@ -115,8 +136,10 @@ class Events extends React.Component {
 // connects particular parts of redux state to this components props
 const mapStateToProps = state => (
   {
-    events: state.events,
+    id: state.auth.id,
+    all: state.events.all,
+    allYours: state.events.allYours,
   }
 );
 
-export default (connect(mapStateToProps, { fetchEvents })(Events));
+export default (connect(mapStateToProps, { getUser, fetchEvents, fetchYourEvents })(Events));
