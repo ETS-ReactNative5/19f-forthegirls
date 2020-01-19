@@ -125,18 +125,19 @@ photoUpload = async () => {
       )
     }
 
-    var image = this.state.image != null ? <Image source={{ uri: this.state.image}} style={{width: 100, height: 100}} />  : <Text> hi</Text>;
+    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
+    imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
 
+    image = this.state.image != null ? imageImage : imageNoImage;
 
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
         <TouchableOpacity
           onPress={this.photoUpload}>
-          <Text>Click for photo upload</Text>
+          <Text>Click to change photo</Text>
         </TouchableOpacity>
         {image}
-
 
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
