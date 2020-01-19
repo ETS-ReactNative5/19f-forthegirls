@@ -8,7 +8,7 @@ import { getUser, editUser, signoutUser } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
-import { ImagePicker } from 'expo';
+import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
 //import CsComponent from './csComponent';
@@ -23,6 +23,13 @@ class Profile extends React.Component {
     };
 
   }
+
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      console.log('Please enable camera');
+    }
+}
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -54,13 +61,22 @@ class Profile extends React.Component {
     }
   }
 
-  async photoUpload() {
-    console.log("hi");
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      console.log('Hey! You might want to enable camera roll access for my app, it is good.');
-    }
+
+  photoUpload = async () => {
+  const result = await ImagePicker.launchImageLibraryAsync({
+    base64: true,
+});
+
+  if (!result.cancelled) {
+    Image.getSize(result.uri, (imgWidth, imgHeight) => {
+      this.setState({
+        image: result,
+        width: imgWidth,
+        height: imgHeight,
+      });
+    });
   }
+};
 
   handleInput = (text) => {
     this.setState(prevState => ({
