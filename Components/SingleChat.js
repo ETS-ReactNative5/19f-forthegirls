@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput } from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import { singleChat } from '../assets/styles/chatStyle';
+import surveyStyle from '../assets/styles/surveyStyle';
 import axios from 'axios';
 import Match from './Match';
 
@@ -11,11 +13,11 @@ class SingleChat extends React.Component {
     super(props);
 
     this.state = {
-        chats: [],
-        chatText: '',
-        numberText: 10,
-        prompt: 'Click to chat!',
-      }
+      chats: [],
+      chatText: '',
+      numberText: 8,
+      prompt: 'Click to chat!',
+    }
 
   }
 
@@ -26,45 +28,49 @@ class SingleChat extends React.Component {
   }
 
   setPrompt = () => {
-    if(this.props.navigation.getParam('prompt')!=='') {
-      this.setState({prompt: this.props.navigation.getParam('prompt')});
-      this.setState({chatText:this.props.navigation.getParam('prompt')});
+    if (this.props.navigation.getParam('prompt') !== '') {
+      this.setState({ prompt: this.props.navigation.getParam('prompt') });
+      this.setState({ chatText: this.props.navigation.getParam('prompt') });
     }
-    
+
   }
 
-  getChats () {
+  getChats() {
 
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
-    .then((response) => {
+      .then((response) => {
         this.setState({ chats: response.data });
-    }).catch((error) => {
-      console.log(error);
-    });
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   showChats() {
     return this.state.chats.map((n, index) => {
-      if(this.state.chats.length-this.state.numberText < index+1) {
-        if(n.sender === this.props.id) {
+      if (this.state.chats.length - this.state.numberText < index + 1) {
+        if (n.sender === this.props.id) {
           return (
-              <Text style={[colors.turquoise]} key={index}>{n.text}</Text>
-            );
+            <View style={singleChat.sender} key={index}>
+              <Text style={[colors.white, fonts.bodyText]} key={index}>{n.text}</Text>
+            </View>
+          );
         }
         else {
-            return (
-              <Text style={[colors.purple]} key={index}>{n.text}</Text>
-            );
+          return (
+            <View style={singleChat.reciever} key={index}>
+              <Text style={[colors.black, fonts.bodyText]} key={index}>{n.text}</Text>
+            </View>
+          );
         }
       }
     })
   }
 
   addChat = (text) => {
-    this.setState({chatText:text});
+    this.setState({ chatText: text });
   }
 
   sendChat = () => {
@@ -77,17 +83,17 @@ class SingleChat extends React.Component {
 
 
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
-    .then((response) => {
-      this.getChats();
-    }).catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        this.getChats();
+      }).catch((error) => {
+        console.log(error);
+      });
 
   }
 
-  loadMore=() => {
-    const newNum = this.state.numberText+10;
-    this.setState({numberText:newNum}); 
+  loadMore = () => {
+    const newNum = this.state.numberText + 10;
+    this.setState({ numberText: newNum });
   }
 
   // renderInput = () => {
@@ -104,19 +110,21 @@ class SingleChat extends React.Component {
 
   render() {
     //&& this.props.matches.legnth > 0
-      return (
+    return (
+      <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
         <ScrollView>
-          <TouchableOpacity onPress={this.loadMore}>
-            <Text>Load More!</Text>
+          <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
+            <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
           </TouchableOpacity>
           <View>
             {this.showChats()}
           </View>
-            {/* {this.renderInput()} */}
-            <TextInput defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+          {/* {this.renderInput()} */}
+          <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
 
         </ScrollView>
-      )
+      </KeyboardAvoidingView>
+    )
 
 
     // else {

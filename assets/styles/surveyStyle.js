@@ -27,10 +27,6 @@ const surveyStyle = StyleSheet.create({
     justifyContent: 'space-evenly'
   },
 
-  textField: {
-    borderRadius: 20,
-  },
-
   surveyHeaderContainer: {
     backgroundColor: colors.veryLightPurple.color,
     width: '100%',
