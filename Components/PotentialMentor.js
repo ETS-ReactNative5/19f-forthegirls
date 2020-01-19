@@ -15,7 +15,6 @@ class PotentialMentor extends React.Component {
       userMatch: {},
       matched: false,
       noAction: true,
-      mounted: false
     }
 
   }
@@ -24,28 +23,24 @@ class PotentialMentor extends React.Component {
     this.setState({mounted: true});
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
-        if(this.state.mounted) {
           this.setState({ userMatch: response.data.result });
-        }
       }).catch((error) => {
         console.log(error);
       });
   }
-
-  componentWillUnmount() {
-    this.setState({mounted: false});
-  }
-
   noMatchCallback = () => {
     // api call to remove person from matches
     this.setState({ matched: false, noAction: false })
   }
 
-  yesMatchCallback = () => {
-    this.props.pairMatchToUser(this.props.username, this.state.userMatch.username);
-    setTimeout(this.props.refresh, 2000);
+  yesMatchCallback = (prompt) => {
+      console.log("matching...");
+      this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, "Hello", this.props.navigation, this.state.userMatch.id);
+      // console.log("handling chat");
 
-    this.setState({ matched: true, noAction: false })
+    // setTimeout(this.props.refresh, 2000);
+
+    // this.setState({ matched: true, noAction: false })
   }
 
   showMatch = () => {
@@ -78,9 +73,16 @@ class PotentialMentor extends React.Component {
           </View>
           <View style={promptStyle.promptContainer}>
             <View >
-              <Prompt prompt={this.state.userMatch.promptOneQuestion} answer={this.state.userMatch.promptOneAnswer} />
-              <Prompt prompt={this.state.userMatch.promptTwoQuestion} answer={this.state.userMatch.promptTwoAnswer} />
-              <Prompt prompt={this.state.userMatch.promptThreeQuestion} answer={this.state.userMatch.promptThreeAnswer} />
+              {/*  */}
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionOnePrompt)}>
+                <Prompt prompt={this.state.userMatch.promptOneQuestion} answer={this.state.userMatch.promptOneAnswer} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionTwoPrompt)}>
+                <Prompt prompt={this.state.userMatch.promptTwoQuestion} answer={this.state.userMatch.promptTwoAnswer} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.yesMatchCallback(this.state.userMatch.questionThreePrompt)}>
+                <Prompt prompt={this.state.userMatch.promptThreeQuestion} answer={this.state.userMatch.promptThreeAnswer} />
+              </TouchableOpacity>
             </View>
           </View>
           <View style={buttons.yesNoContainer}>
@@ -89,11 +91,11 @@ class PotentialMentor extends React.Component {
                 source={noMatch}
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.yesMatchCallback} >
+            {/* <TouchableOpacity onPress={this.yesMatchCallback} >
               <Image
                 source={yesMatch}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View >
       )

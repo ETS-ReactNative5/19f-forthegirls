@@ -50,7 +50,7 @@ class Match extends React.Component {
           <TouchableOpacity
             key={this.props.i}
             //this.pressUser(this.state.match.email)
-            onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id })}>
+            onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '' })}>
             <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
           </TouchableOpacity>
         </View>
