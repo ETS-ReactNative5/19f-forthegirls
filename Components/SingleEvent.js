@@ -23,8 +23,6 @@ class SingleEvent extends Component {
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
-    console.log(this.props.rsvps)
-    console.log(this.state.rsvps)
   }
 
   navToPage() {
