@@ -34,12 +34,11 @@ const chatList = StyleSheet.create({
   delete: {
     marginTop: 10,
     borderWidth: 2,
-    height: 50,
-    width: 50,
+    height: 45,
+    width: 45,
     padding: 5,
     borderColor: colors.red.color,
-    backgroundColor: colors.white.color,
-    borderRadius: 0,
+    borderRadius: 15,
     marginRight: 10
   }
 });
