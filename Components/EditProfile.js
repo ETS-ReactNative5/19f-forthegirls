@@ -6,6 +6,7 @@ import TouchableComponent from './touchableComponent';
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
+import { singleChat } from '../assets/styles/chatStyle';
 import profile from '../assets/styles/profileStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
@@ -61,6 +62,7 @@ class EditProfile extends React.Component {
     this.toggleSkills = this.toggleSkills.bind(this);
     this.togglePreferences = this.togglePreferences.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
@@ -75,34 +77,34 @@ class EditProfile extends React.Component {
   }
 
   renderModal = () => {
-    if(this.state.showModal) {
-      return(
+    if (this.state.showModal) {
+      return (
         <Modal
           animationType="fade"
           transparent={false}
           visible={this.state.showModal}
           onRequestClose={() => {
-           console.log('Modal has been closed.');
-        }}>
-          <View style={{marginTop: 22}}>
-                <View>
-                  <Text>Hello World!</Text>
+            console.log('Modal has been closed.');
+          }}>
+          <View style={{ marginTop: 22 }}>
+            <View>
+              <Text>Hello World!</Text>
 
-                  <TouchableHighlight
-                    onPress={() => {
-                      this.setModalVisable(!this.state.showModal);
-                    }}>
-                    <Text>Hide Modal</Text>
-                  </TouchableHighlight>
-                </View>
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisable(!this.state.showModal);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
             </View>
+          </View>
         </Modal>
       );
     }
   }
 
   setModalVisable = (value) => {
-    this.setState({showModal: value});
+    this.setState({ showModal: value });
   }
 
   submitPage = () => {
@@ -110,9 +112,9 @@ class EditProfile extends React.Component {
     console.log(this.state);
     //https://facebook.github.io/react-native/docs/modal
     //How to use a modal in react native
-    if(this.promptOneQuestion===this.promptTwoQuestion || this.promptTwoQuestion===this.promptThreeQuestion || this.promptOneQuestion===this.promptThreeQuestion) {
-      this.setState({showModal:!this.state.showModal});
-      
+    if (this.promptOneQuestion === this.promptTwoQuestion || this.promptTwoQuestion === this.promptThreeQuestion || this.promptOneQuestion === this.promptThreeQuestion) {
+      this.setState({ showModal: !this.state.showModal });
+
     }
     else {
       this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
@@ -230,6 +232,10 @@ class EditProfile extends React.Component {
     this.props.navigation.navigate('Home', {})
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   render() {
     let data = [{
       value: 'Woman in tech inspiration?',
@@ -255,160 +261,173 @@ class EditProfile extends React.Component {
     var skillsHeaderT = { flexDirection: 'row', justifyContent: 'space-between' }
 
     return (
-      <ScrollView style={surveyStyle.surveyBackground}>
-        <View>
-          {this.renderModal()}
-          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-            <SurveyHeaderComponent header="Basic Information" />
-          </View>
-
-          <TextInput
-            style={textFieldStyle}
-            placeholder={'First Name'}
-            maxLength={30}
-            defaultValue={this.props.firstName || ''}
-            onChangeText={this.firstNameChange}
-          />
-
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Last Name"
-            maxLength={30}
-            defaultValue={this.props.lastName || ''}
-            onChangeText={this.lastNameChange}
-          />
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Location (City, State)"
-            maxLength={30}
-            defaultValue={this.props.location || ''}
-            onChangeText={this.locationChange}
-          />
-        </View>
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="Answer 3 Prompts!" />
-        </View>
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 1'
-          data={data}
-          value={this.props.promptOneQuestion || 'Question 1'}
-          onChangeText={this.p1Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 1 Answer"
-          defaultValue={this.props.promptOneAnswer || ''}
-          onChangeText={this.p1Answer}
-        />
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 2'
-          value={this.props.promptTwoQuestion || 'Question 2'}
-          data={data}
-          onChangeText={this.p2Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 2 Answer"
-          defaultValue={this.props.promptTwoAnswer || ''}
-          onChangeText={this.p2Answer}
-        />
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 3'
-          value={this.props.promptThreeQuestion || 'Question 3'}
-          data={data}
-          onChangeText={this.p3Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 3 Answer"
-          defaultValue={this.props.promptThreeAnswer || ''}
-          onChangeText={this.p3Answer}
-        />
-
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="Tell Us About You!" />
-        </View>
-        <SliderComponent id='extraversion' onChange={this.handleSliderChange} value={this.state.extraversion} min='introvert' max='extrovert' />
-        <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='listener' max='leader' />
-
-
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="CS Skills, Preferences, and Interests" />
-        </View>
-
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>CS Skills</Text>
+      <View>
+        <View style={singleChat.header}>
+          <View style={[singleChat.arrowBack]}>
             <TouchableOpacity
-              onPress={this.toggleSkills}>
+              onPress={this.goBack}>
               <Image
-                source={this.state.showSkills ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                source={require('./../assets/icons/arrowback.png')}
               />
             </TouchableOpacity>
           </View>
-          <View>
-            <View>
-              {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
-            </View>
-          </View>
+          <View style={singleChat.headerTextContainer}><Text style={fonts.minorHeading}>Edit Profile</Text></View>
         </View>
-
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>CS Preferences</Text>
-            <TouchableOpacity
-              onPress={this.togglePreferences}>
-              <Image
-                source={this.state.showPreferences ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
-              />
-            </TouchableOpacity>
-          </View>
+        <ScrollView style={surveyStyle.surveyBackground}>
           <View>
-            <View>
-              {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+            {this.renderModal()}
+            <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+              <SurveyHeaderComponent header="Basic Information" />
             </View>
-          </View>
-        </View>
 
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>Company Preferences</Text>
-            <TouchableOpacity
-              onPress={this.toggleCompany}>
-              <Image
-                source={this.state.showCompany ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <View>
-              {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
-            </View>
-          </View>
-        </View>
-
-        <View style={buttons.arrowView}>
-          <TouchableOpacity
-            onPress={this.submitPage}>
-            <Text> Submit </Text>
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
+            <TextInput
+              style={textFieldStyle}
+              placeholder={'First Name'}
+              maxLength={30}
+              defaultValue={this.props.firstName || ''}
+              onChangeText={this.firstNameChange}
             />
+
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Last Name"
+              maxLength={30}
+              defaultValue={this.props.lastName || ''}
+              onChangeText={this.lastNameChange}
+            />
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Location (City, State)"
+              maxLength={30}
+              defaultValue={this.props.location || ''}
+              onChangeText={this.locationChange}
+            />
+          </View>
+          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+            <SurveyHeaderComponent header="Answer 3 Prompts!" />
+          </View>
+          <Dropdown
+            itemTextStyle={itemTextStyle}
+            selectedItemColor={selectedItemColor}
+            label='Question 1'
+            data={data}
+            value={this.props.promptOneQuestion || 'Question 1'}
+            onChangeText={this.p1Question}
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Prompt 1 Answer"
+            defaultValue={this.props.promptOneAnswer || ''}
+            onChangeText={this.p1Answer}
+          />
+          <Dropdown
+            itemTextStyle={itemTextStyle}
+            selectedItemColor={selectedItemColor}
+            label='Question 2'
+            value={this.props.promptTwoQuestion || 'Question 2'}
+            data={data}
+            onChangeText={this.p2Question}
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Prompt 2 Answer"
+            defaultValue={this.props.promptTwoAnswer || ''}
+            onChangeText={this.p2Answer}
+          />
+          <Dropdown
+            itemTextStyle={itemTextStyle}
+            selectedItemColor={selectedItemColor}
+            label='Question 3'
+            value={this.props.promptThreeQuestion || 'Question 3'}
+            data={data}
+            onChangeText={this.p3Question}
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Prompt 3 Answer"
+            defaultValue={this.props.promptThreeAnswer || ''}
+            onChangeText={this.p3Answer}
+          />
+
+          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+            <SurveyHeaderComponent header="Tell Us About You!" />
+          </View>
+          <SliderComponent id='extraversion' onChange={this.handleSliderChange} value={this.state.extraversion} min='introvert' max='extrovert' />
+          <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='listener' max='leader' />
+
+
+          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+            <SurveyHeaderComponent header="CS Skills, Preferences, and Interests" />
+          </View>
+
+          <View style={profile.editProfileContainer}>
+            <View style={skillsHeaderT}>
+              <Text style={headerText}>CS Skills</Text>
+              <TouchableOpacity
+                onPress={this.toggleSkills}>
+                <Image
+                  source={this.state.showSkills ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <View>
+                {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
+              </View>
+            </View>
+          </View>
+
+          <View style={profile.editProfileContainer}>
+            <View style={skillsHeaderT}>
+              <Text style={headerText}>CS Preferences</Text>
+              <TouchableOpacity
+                onPress={this.togglePreferences}>
+                <Image
+                  source={this.state.showPreferences ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <View>
+                {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+              </View>
+            </View>
+          </View>
+
+          <View style={profile.editProfileContainer}>
+            <View style={skillsHeaderT}>
+              <Text style={headerText}>Company Preferences</Text>
+              <TouchableOpacity
+                onPress={this.toggleCompany}>
+                <Image
+                  source={this.state.showCompany ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View>
+              <View>
+                {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+              </View>
+            </View>
+          </View>
+
+          <View style={buttons.arrowView}>
+            <TouchableOpacity
+              onPress={this.submitPage}>
+              <Text> Submit </Text>
+              <Image
+                source={require('./../assets/icons/arrownext.png')}
+              />
+            </TouchableOpacity>
+          </View>
+
+
+          <TouchableOpacity
+            onPress={this.opacityOnPress}>
+            <Text>go back (dont save)</Text>
           </TouchableOpacity>
-        </View>
-
-
-        <TouchableOpacity
-          onPress={this.opacityOnPress}>
-          <Text>go back (dont save)</Text>
-        </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
+      </View>
 
 
 

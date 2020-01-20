@@ -74,13 +74,29 @@ const singleChat = StyleSheet.create({
     borderWidth: 2,
     borderColor: colors.lessOpaquePurple.color,
     borderRadius: 20,
-    backgroundColor: colors.veryLightPurple.color,
+    backgroundColor: colors.white.color,
     height: 30,
     width: 150,
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: 10,
   },
+  arrowBack: {
+    alignItems: 'flex-start',
+    marginTop: 5,
+    marginLeft: 5,
+    marginBottom: 5
+  },
+  header: {
+    flexDirection: 'row',
+    backgroundColor: colors.veryLightPurple.color,
+  },
+  headerTextContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 
 export default chatList;
