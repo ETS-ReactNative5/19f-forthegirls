@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
 import { getUser, getMatches } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
@@ -18,6 +18,8 @@ class SingleChat extends React.Component {
       numberText: 8,
       prompt: 'Click to chat!',
     }
+
+    this.goBack = this.goBack.bind(this);
 
   }
 
@@ -96,6 +98,9 @@ class SingleChat extends React.Component {
     this.setState({ numberText: newNum });
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
   // renderInput = () => {
   //   console.log("hi");
   //   if(this.props.navigation.getParam('prompt')!==undefined) {
@@ -111,19 +116,35 @@ class SingleChat extends React.Component {
   render() {
     //&& this.props.matches.legnth > 0
     return (
-      <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
-        <ScrollView>
-          <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
-            <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
-          </TouchableOpacity>
-          <View>
-            {this.showChats()}
+      <View>
+        <View style={singleChat.header}>
+          <View style={singleChat.arrowBack}>
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+            </TouchableOpacity>
           </View>
-          {/* {this.renderInput()} */}
-          <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+          <View style={singleChat.headerTextContainer}>
+            <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
+          </View>
+        </View>
+        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
 
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <ScrollView>
+            <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
+              <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
+            </TouchableOpacity>
+            <View>
+              {this.showChats()}
+            </View>
+            {/* {this.renderInput()} */}
+            <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
     )
 
 

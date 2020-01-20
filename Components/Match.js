@@ -17,10 +17,10 @@ class Match extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({mounted: true});
+    this.setState({ mounted: true });
     axios.get(`https://for-the-girls.herokuapp.com/api/users/${this.props.userId}`)
       .then((response) => {
-        if(this.state.mounted) {
+        if (this.state.mounted) {
           this.setState({ match: response.data.result });
         }
       }).catch((error) => {
@@ -29,7 +29,7 @@ class Match extends React.Component {
   }
 
   componentWillUnmount() {
-    this.setState({mounted: false});
+    this.setState({ mounted: false });
   }
 
 
@@ -44,24 +44,21 @@ class Match extends React.Component {
 
   render() {
     return (
-      <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
-        <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
-        <View style={chatList.chatButton}>
-          <TouchableOpacity
-            key={this.props.i}
-            //this.pressUser(this.state.match.email)
-            onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '' })}>
-            <Text style={[fonts.majorHeading, colors.turquoise, fontEffects.center]}>Chat</Text>
-          </TouchableOpacity>
+      <TouchableOpacity
+        key={this.props.i}
+        //this.pressUser(this.state.match.email)
+        onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username })}>
+        <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
+          <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
+          <View style={chatList.delete}>
+            <TouchableOpacity
+              key={this.props.i + 1}
+              onPress={() => this.deleteMatch()}>
+              <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={chatList.delete}>
-          <TouchableOpacity
-            key={this.props.i+1}
-            onPress={() => this.deleteMatch()}>
-            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
