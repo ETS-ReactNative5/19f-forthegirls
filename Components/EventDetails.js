@@ -12,6 +12,7 @@ import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
+import EventMap from './EventMap.js'
 
 class EventDetails extends Component {
   constructor(props) {
@@ -59,6 +60,7 @@ class EventDetails extends Component {
   }
 
   render() {
+
     return (
       <View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
@@ -76,6 +78,7 @@ class EventDetails extends Component {
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
           </View>
         </View>
+        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude}/>
         <View style={eventPage.eventDetailDescription}>
           <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
