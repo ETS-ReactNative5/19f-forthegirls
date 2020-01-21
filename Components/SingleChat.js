@@ -19,6 +19,7 @@ class SingleChat extends React.Component {
       prompt: 'Click to chat!',
     }
 
+    this.resetText = this.resetText.bind(this);
     this.goBack = this.goBack.bind(this);
 
   }
@@ -75,6 +76,10 @@ class SingleChat extends React.Component {
     this.setState({ chatText: text });
   }
 
+  resetText = () => {
+    this.setState({ text: '' })
+  }
+
   sendChat = () => {
 
     fields = {
@@ -83,6 +88,8 @@ class SingleChat extends React.Component {
       text: this.state.chatText
     }
 
+    this.setState({ chatText: '', prompt: '' })
+
 
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
@@ -90,7 +97,6 @@ class SingleChat extends React.Component {
       }).catch((error) => {
         console.log(error);
       });
-
   }
 
   loadMore = () => {
@@ -130,8 +136,7 @@ class SingleChat extends React.Component {
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
-        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
-
+        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={150}>
           <ScrollView>
             <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
               <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
@@ -140,7 +145,24 @@ class SingleChat extends React.Component {
               {this.showChats()}
             </View>
             {/* {this.renderInput()} */}
-            <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+            <View style={singleChat.chatInputView}>
+              <TextInput
+                multiline={true}
+                clearTextOnFocus={true}
+                style={[singleChat.chatInput, fonts.minorHeading, colors.deepPurple]}
+                defaultValue={this.state.prompt}
+                onChangeText={this.addChat}
+                onEndEditing={this.sendChat}
+              //onSubmitEditing={this.resetText}
+              />
+              <TouchableOpacity
+                style={{ paddingTop: 2, paddingLeft: 5 }}
+                onPress={this.sendChat}>
+                <Image
+                  source={require('./../assets/icons/arrowup.png')}
+                />
+              </TouchableOpacity>
+            </View>
 
           </ScrollView>
         </KeyboardAvoidingView>
