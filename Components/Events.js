@@ -29,12 +29,10 @@ class Events extends React.Component {
 
   componentDidMount() {
     this.props.fetchEvents();
-    this.props.fetchYourEvents(this.props.id);
   }
 
   componentDidUpdate(prevProps, prevState) {
     this.props.fetchEvents();
-    this.props.fetchYourEvents(this.props.id);
   }
 
   navToAdd() {
@@ -43,10 +41,12 @@ class Events extends React.Component {
 
   doViewAll() {
     this.setState({viewAll:true});
+    this.props.fetchEvents();
   }
 
   dontViewAll() {
     this.setState({viewAll:false});
+    this.props.fetchYourEvents(this.props.id);
   }
 
   displayEvents(){
