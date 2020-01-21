@@ -12,6 +12,7 @@ import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
+import EventMap from './EventMap.js'
 
 class EventDetails extends Component {
   constructor(props) {
@@ -80,6 +81,7 @@ class EventDetails extends Component {
           <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
           </Text>
+          <EventMap></EventMap>
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
           <View>
