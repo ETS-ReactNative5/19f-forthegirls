@@ -243,20 +243,14 @@ export function getMatches(username) {
 }
 
 export function deleteMatch(userID, matchID, username) {
-  console.log("in delete match function");
-  console.log(userID, matchID);
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {
-        console.log("got matchID")
-        console.log(response.data);
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
-            console.log("deleteing match...");
             return axios.get(`${ROOT_URL}/matches/${username}`)
             .then((resp) => {
-              console.log("getting matcvhes again");
               dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
             }).catch((error) => {
               console.log(error);

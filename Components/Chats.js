@@ -17,7 +17,6 @@ class Chats extends React.Component {
 
   deleteMatch = (matchID) => {
     this.props.deleteMatch(this.props.id, matchID, this.props.username);
-    console.log("hit delete match button");
   }
 
   showMatches() {
