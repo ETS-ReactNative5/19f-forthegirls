@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { addEvent } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
+import Geocoder from 'react-native-geocoding';
 
 class AddEvent extends Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class AddEvent extends Component {
       time: '',
       location: '',
       description: '',
+      latitude: 0,
+      longitude: 0,
     };
 
     this.titleInput = this.titleInput.bind(this);
@@ -46,6 +49,7 @@ class AddEvent extends Component {
   locationInput(text) {
     this.setState({ location: text });
   }
+
   descriptionInput(text) {
     this.setState({ description: text });
   }
@@ -64,7 +68,19 @@ class AddEvent extends Component {
       );
     }
     else {
-      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
+
+      Geocoder.init("AIzaSyAWUDgz30Re2MMeq7cu0wFWN1iZf7HR1Ew"); // use a valid API key
+
+      console.log(this.state.location);
+      Geocoder.from("New York City")
+		  .then(json => {
+		  	var location = json.results[0].geometry.location;
+			  console.log(location);
+		  })
+		  .catch(error => console.warn(error));
+
+
+      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
       const popAction = StackActions.pop({
         n: 1,
       });
