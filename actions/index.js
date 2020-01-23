@@ -243,9 +243,8 @@ export function getMatches(username) {
 }
 
 export function deleteMatch(userID, matchID, username) {
-
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/matches/${userID}/${matchID}`)
+    axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
