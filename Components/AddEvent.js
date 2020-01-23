@@ -69,7 +69,7 @@ class AddEvent extends Component {
     }
     else {
 
-      Geocoder.init("AIzaSyBm4WqPorywJiXddWvFdXWCHrYlle1YS2k"); // use a valid API key
+      Geocoder.init("AIzaSyAWUDgz30Re2MMeq7cu0wFWN1iZf7HR1Ew"); // use a valid API key
 
       console.log(this.state.location);
       Geocoder.from("New York City")
