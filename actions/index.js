@@ -204,7 +204,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
           .then((res) => {
             console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
-            navigation.navigate('SingleChat', {matchID: matchID, prompt: prompt})
+            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2 })
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -251,12 +251,12 @@ export function deleteMatch(userID, matchID, username) {
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
             return axios.get(`${ROOT_URL}/matches/${username}`)
-            .then((resp) => {
-              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
-            }).catch((error) => {
-              console.log(error);
-              dispatch({ type: ActionTypes.SET_ERROR, error });
-            });
+              .then((resp) => {
+                dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+              }).catch((error) => {
+                console.log(error);
+                dispatch({ type: ActionTypes.SET_ERROR, error });
+              });
           }).catch((error) => {
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });

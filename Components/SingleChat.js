@@ -16,18 +16,17 @@ class SingleChat extends React.Component {
       chats: [],
       chatText: '',
       numberText: 8,
-      prompt: 'Click to chat!',
+      prompt: 'click'//this.props.navigation.getParam('prompt') || '',
     }
 
-    this.resetText = this.resetText.bind(this);
     this.goBack = this.goBack.bind(this);
 
   }
 
   componentDidMount() {
+    console.log(this.props.navigation.getParam('prompt'));
     this.getChats();
     this.setPrompt();
-
   }
 
   setPrompt = () => {
@@ -35,7 +34,6 @@ class SingleChat extends React.Component {
       this.setState({ prompt: this.props.navigation.getParam('prompt') });
       this.setState({ chatText: this.props.navigation.getParam('prompt') });
     }
-
   }
 
   getChats() {
@@ -73,11 +71,12 @@ class SingleChat extends React.Component {
   }
 
   addChat = (text) => {
+    // if (this.props.navigation.getParam('prompt') !== '') {
+    //   this.setState({ chatText: this.props.navigation.getParam('prompt') })
+    // } else {
     this.setState({ chatText: text });
-  }
+    // }
 
-  resetText = () => {
-    this.setState({ text: '' })
   }
 
   sendChat = () => {
@@ -88,12 +87,10 @@ class SingleChat extends React.Component {
       text: this.state.chatText
     }
 
-    this.setState({ chatText: '', prompt: '' })
-
-
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
         this.getChats();
+        this.setState({ chatText: '', prompt: '' })
       }).catch((error) => {
         console.log(error);
       });
@@ -120,6 +117,9 @@ class SingleChat extends React.Component {
 
 
   render() {
+    console.log('prompt::::')
+    console.log(this.props.navigation.getParam('prompt'));
+    console.log(this.state.prompt)
     //&& this.props.matches.legnth > 0
     return (
       <View>
@@ -148,12 +148,12 @@ class SingleChat extends React.Component {
             <View style={singleChat.chatInputView}>
               <TextInput
                 multiline={true}
-                clearTextOnFocus={true}
+                clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
                 style={[singleChat.chatInput, fonts.minorHeading, colors.deepPurple]}
-                defaultValue={this.state.prompt}
+                defaultValue={this.props.navigation.getParam('prompt')}
+                value={this.state.chatText}
                 onChangeText={this.addChat}
                 onEndEditing={this.sendChat}
-              //onSubmitEditing={this.resetText}
               />
               <TouchableOpacity
                 style={{ paddingTop: 2, paddingLeft: 5 }}
