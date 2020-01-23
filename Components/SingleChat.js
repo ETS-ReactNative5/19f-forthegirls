@@ -20,6 +20,7 @@ class SingleChat extends React.Component {
     }
 
     this.goBack = this.goBack.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
   }
 
@@ -115,6 +116,11 @@ class SingleChat extends React.Component {
 
   // }
 
+  handleKeyDown = (e) => {
+    if (e.nativeEvent.key == "Enter") {
+      this.sendChat();
+    }
+  }
 
   render() {
     console.log('prompt::::')
@@ -154,6 +160,7 @@ class SingleChat extends React.Component {
                 value={this.state.chatText}
                 onChangeText={this.addChat}
                 onEndEditing={this.sendChat}
+                onKeyPress={this.handleKeyDown}
               />
               <TouchableOpacity
                 style={{ paddingTop: 2, paddingLeft: 5 }}
