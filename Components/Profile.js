@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } fr
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser, signoutUser } from '../actions';
+import { getUser, editUser, signoutUser, addToSurvey } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
@@ -126,9 +126,11 @@ photoUpload = async () => {
     }
 
     imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
 
-    image = this.state.image != null ? imageImage : imageNoImage;
+    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
+    console.log("the image URL");
+    console.log(this.props.profileURL);
 
     // if (this.state.editing === false) {
     return (
@@ -195,7 +197,8 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
+
   }
 );
 
-export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser })(Profile));
+export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey })(Profile));

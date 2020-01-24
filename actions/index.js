@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
+export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
 
 export const ActionTypes = {
@@ -62,6 +62,7 @@ export function getUser(id) {
 //edits the user object
 //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
 export function editUser(fields) {
+  //profileURL
   return (dispatch) => {
     //need to give it email, username and password
     axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
@@ -141,7 +142,10 @@ export function signUpUser(fields, navigate, otherAnswers) {
 
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
+    console.log("i may get stuck here")
+    console.log(otherAnswers.profileURL)
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
+      console.log("about to navigate yay")
       navigate.navigate(navTo);
     }).catch((error) => {
       console.log(error);

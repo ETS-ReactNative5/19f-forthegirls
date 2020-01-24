@@ -11,8 +11,11 @@ import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
 import { addToSurvey, getUser } from '../actions/index'
 import { connect } from 'react-redux';
+import { uploadImage } from '../s3';
 
 
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -47,11 +50,15 @@ class EditProfile extends React.Component {
       security: this.props.security,
       algorithms: this.props.algorithms,
       storage: this.props.storage,
+      profileURL: this.props.profileURL,
 
       // showing and hiding
       showSkills: false,
       showPreferences: false,
-      showCompany: false
+      showCompany: false,
+
+      image: this.props.image,
+      imagefull: null,
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -66,13 +73,49 @@ class EditProfile extends React.Component {
     console.log(this.props.promptOneAnswer);
   }
 
+  async componentWillMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    if (status !== 'granted') {
+      console.log('Please enable camera');
+    }
+}
+
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
   }
 
+  photoUpload = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      base64: true,
+    });
+    if (!result.cancelled) {
+      this.setState({ image: result.uri, imagefull: result });
+    }
+  };
+
   submitPage = () => {
-    console.log(this.state);
-    this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+    // console.log(this.state);
+    if(this.state.imagefull != null){
+      console.log("Bellow should work :()")
+      //console.log(this.state.imagefull)
+      let i = this.state.imagefull.uri.length;
+      while (this.state.imagefull.uri.charAt(i) !== '/') {
+        i--;
+      }
+      this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
+      uploadImage(this.state.imagefull).then((url) => {
+        console.log(typeof(url))
+        this.setState({profileURL: String(url)})
+        console.log("UTL")
+        console.log(this.state.profileURL)
+        this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+
+      })
+    }
+    else {
+        console.log("Here again")
+        this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+    }
   }
 
   firstNameChange = (text) => {
@@ -206,8 +249,19 @@ class EditProfile extends React.Component {
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     var skillsHeaderT = { flexDirection: 'row', justifyContent: 'space-between' }
 
+
+    var imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
+    var imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
+
+    var image = this.state.image != null && this.state.image != "" ? imageImage : imageNoImage;
+
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
+        <TouchableOpacity
+          onPress={this.photoUpload}>
+          <Text>Click to change photo</Text>
+        </TouchableOpacity>
+        {image}
         <View>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="Basic Information" />
@@ -388,7 +442,9 @@ const mapStateToProps = reduxState => (
     mobile: reduxState.user.mobile,
     security: reduxState.user.security,
     algorithms: reduxState.user.algorithms,
-    storage: reduxState.user.storage
+    storage: reduxState.user.storage,
+    profileURL: reduxState.user.profileURL,
+
   }
 );
 
