@@ -12,6 +12,7 @@ import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
 import { addToSurvey, getUser } from '../actions/index'
 import { connect } from 'react-redux';
+import ErrorModal from './ErrorModal'
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ class EditProfile extends React.Component {
       showPreferences: false,
       showCompany: false,
       showModal: false,
+      modalMessage: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -78,27 +80,9 @@ class EditProfile extends React.Component {
 
   renderModal = () => {
     if (this.state.showModal) {
+      console.log(this.state.modalMessage);
       return (
-        <Modal
-          animationType="fade"
-          transparent={false}
-          visible={this.state.showModal}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}>
-          <View style={{ marginTop: 22 }}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisable(!this.state.showModal);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-          </View>
-        </Modal>
+        <ErrorModal errorMessage={this.state.modalMessage} />
       );
     }
   }
@@ -113,7 +97,7 @@ class EditProfile extends React.Component {
     //https://facebook.github.io/react-native/docs/modal
     //How to use a modal in react native
     if (this.promptOneQuestion === this.promptTwoQuestion || this.promptTwoQuestion === this.promptThreeQuestion || this.promptOneQuestion === this.promptThreeQuestion) {
-      this.setState({ showModal: !this.state.showModal });
+      this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts" });
 
     }
     else {
