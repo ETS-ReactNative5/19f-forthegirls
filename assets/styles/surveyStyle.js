@@ -39,10 +39,12 @@ const surveyStyle = StyleSheet.create({
   surveyHeader: {
     backgroundColor: colors.white.color,
     alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
+    marginTop: 10,
+    padding: 10,
     borderRadius: 20,
-    width: '90%'
+    borderWidth: 2,
+    borderColor: colors.turquoise.color,
+    width: '100%'
   },
 
   surveyHeaderText: {
@@ -51,15 +53,26 @@ const surveyStyle = StyleSheet.create({
     marginBottom: 5
   },
 
-  textField: {
+  textFieldContainer: {
+    backgroundColor: colors.veryLightPurple.color,
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 7,
     marginRight: 10,
-    borderWidth: 2,
-    borderColor: colors.deepPurple.color,
     borderRadius: 20,
-    backgroundColor: colors.white.color,
+    height: 50,
+    paddingLeft: 10,
+    display: 'flex',
+    justifyContent: 'center'
+  },
+
+  signInUpTextField: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 7,
+    marginRight: 10,
+    borderRadius: 20,
+    backgroundColor: colors.veryLightPurple.color,
     height: 50,
     paddingLeft: 10,
   },
@@ -81,10 +94,10 @@ const surveyStyle = StyleSheet.create({
   },
 
   surveyBackground: {
-    paddingLeft: 5,
+    // paddingLeft: 5,
     height: '100%',
     display: 'flex',
-    backgroundColor: colors.veryLightPurple.color
+    backgroundColor: colors.white.color
   }
 
 

@@ -224,7 +224,7 @@ class BasicSignUpComponent extends React.Component {
 
   //need to check unique from here
   render() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
+    var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     return (
       <KeyboardAvoidingView behavior="padding" enabled>

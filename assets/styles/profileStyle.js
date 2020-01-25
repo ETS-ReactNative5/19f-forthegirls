@@ -35,7 +35,7 @@ const profile = StyleSheet.create({
   editProfileContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: colors.lightGrey.color,
+    backgroundColor: colors.veryLightPurple.color,
     borderRadius: 20,
     margin: 10,
     padding: 5
