@@ -106,9 +106,10 @@ class EditProfile extends React.Component {
   submitPage = () => {
     // console.log(this.state);
     if (this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) {
-      console.log("here doign this")
-      console.log()
-      this.setState({ showModal: !this.state.showModal });
+      this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
+    }
+    else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
+      this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out your basic information!" });
     }
     else {
       if (this.state.imagefull != null) {
@@ -140,7 +141,7 @@ class EditProfile extends React.Component {
     if (this.state.showModal) {
       console.log(this.state.modalMessage);
       return (
-        <ErrorModal errorMessage={this.state.modalMessage} />
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
       );
     }
   }
@@ -149,19 +150,27 @@ class EditProfile extends React.Component {
     this.setState({ showModal: value });
   }
 
-  submitPage = () => {
+  // submitPage = () => {
 
-    console.log(this.state);
-    //https://facebook.github.io/react-native/docs/modal
-    //How to use a modal in react native
-    if (this.promptOneQuestion === this.promptTwoQuestion || this.promptTwoQuestion === this.promptThreeQuestion || this.promptOneQuestion === this.promptThreeQuestion) {
-      this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts" });
+  //   console.log(this.state);
+  //   //https://facebook.github.io/react-native/docs/modal
+  //   //How to use a modal in react native
+  //   if (this.promptOneQuestion === this.promptTwoQuestion || this.promptTwoQuestion === this.promptThreeQuestion || this.promptOneQuestion === this.promptThreeQuestion) {
+  //     this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
+  //   }
+  //   if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
+  //     this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out your basic information!" });
+  //   }
+  //   else {
 
-    }
-    else {
-      this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
-    }
+  //     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+  //   }
 
+  // }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+    console.log("resetting modal");
   }
 
   firstNameChange = (text) => {

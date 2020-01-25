@@ -14,14 +14,12 @@ class ErrorModal extends Component {
 
     closeModal = () => {
       this.setState({visible:false});
+      this.props.reset();
     }
     
 
     render() {
-      console.log("in modal");
-      console.log(this.props.errorMessage);
       return (
-        <View style={styles.container}>
             <Modal
                 visible={this.state.visible}
                 animationType={'none'}
@@ -40,7 +38,6 @@ class ErrorModal extends Component {
                   </Button>
                 </View>
             </Modal>
-            </View>
       );
     }
     
