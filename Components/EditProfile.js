@@ -108,6 +108,7 @@ class EditProfile extends React.Component {
         this.setState({profileURL: String(url)})
         console.log("UTL")
         console.log(this.state.profileURL)
+        this.setState({imagefull: null})
         this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
 
       })
@@ -443,7 +444,7 @@ const mapStateToProps = reduxState => (
     security: reduxState.user.security,
     algorithms: reduxState.user.algorithms,
     storage: reduxState.user.storage,
-    profileURL: reduxState.user.profileURL,
+    // profileURL: reduxState.user.profileURL,
 
   }
 );

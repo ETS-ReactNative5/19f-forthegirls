@@ -101,7 +101,7 @@ photoUpload = async () => {
 
 
   render() {
-
+    console.log("herehehrehehehhehehe")
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -197,7 +197,7 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
-
+    profileURL: reduxState.user.profileURL,
   }
 );
 
