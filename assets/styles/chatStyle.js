@@ -45,25 +45,27 @@ const chatList = StyleSheet.create({
 
 const singleChat = StyleSheet.create({
   sender: {
+    padding: 3,
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 140,
     marginRight: 10,
     borderRadius: 20,
     backgroundColor: colors.turquoise.color,
-    height: 50,
+    height: 'auto',
     width: 225,
     paddingLeft: 10,
   },
   reciever: {
+    padding: 3,
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 7,
     marginRight: 10,
     borderRadius: 20,
-    width: 225,
     backgroundColor: colors.lightGrey.color,
-    height: 50,
+    height: 'auto',
+    width: 225,
     paddingLeft: 10,
   },
   loadmore: {
@@ -96,6 +98,21 @@ const singleChat = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  chatInputView: {
+    margin: 5,
+    flexDirection: 'row',
+    borderWidth: 2,
+    borderColor: colors.deepPurple.color,
+    borderRadius: 20,
+  },
+  chatInput: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 7,
+    marginRight: 10,
+    height: 30,
+    width: 300
   }
 })
 
