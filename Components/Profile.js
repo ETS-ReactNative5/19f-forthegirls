@@ -111,9 +111,6 @@ class Profile extends React.Component {
     imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
-    console.log("the image URL");
-    console.log(this.props.profileURL);
-
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>

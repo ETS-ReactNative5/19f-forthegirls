@@ -252,9 +252,9 @@ class EditProfile extends React.Component {
 
 
     var imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    var imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
 
-    var image = this.state.image != null && this.state.image != "" ? imageImage : imageNoImage;
+    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
@@ -444,7 +444,7 @@ const mapStateToProps = reduxState => (
     security: reduxState.user.security,
     algorithms: reduxState.user.algorithms,
     storage: reduxState.user.storage,
-    // profileURL: reduxState.user.profileURL,
+    profileURL: reduxState.user.profileURL,
 
   }
 );
