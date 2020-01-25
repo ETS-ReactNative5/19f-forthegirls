@@ -494,33 +494,10 @@ class EditProfile extends React.Component {
               </View>
             </View>
           </View>
-
-
-
-
           <TouchableOpacity
             onPress={this.submitPage}>
             <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
           </TouchableOpacity>
-
-
-
-
-
-          {/* <View style={buttons.arrowView}>
-            <TouchableOpacity
-              onPress={this.submitPage}>
-              <Image
-                source={require('./../assets/icons/arrownext.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            onPress={this.opacityOnPress}>
-            <Image
-              source={require('./../assets/icons/arrowback.png')}
-            />
-          </TouchableOpacity> */}
         </ScrollView>
       </View >
     );
