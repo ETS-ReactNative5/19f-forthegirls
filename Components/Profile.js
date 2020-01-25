@@ -106,14 +106,16 @@ class Profile extends React.Component {
       )
     }
 
-    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
+    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 125, height: 125,  borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9' }} />
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
-        {image}
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+          {image}
+        </View>
 
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
