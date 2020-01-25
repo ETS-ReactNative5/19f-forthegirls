@@ -73,11 +73,11 @@ class AddEvent extends Component {
 
       console.log(this.state.location);
       Geocoder.from("New York City")
-		  .then(json => {
-		  	var location = json.results[0].geometry.location;
-			  console.log(location);
-		  })
-		  .catch(error => console.warn(error));
+        .then(json => {
+          var location = json.results[0].geometry.location;
+          console.log(location);
+        })
+        .catch(error => console.warn(error));
 
 
       this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
@@ -89,52 +89,60 @@ class AddEvent extends Component {
   }
 
   render() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
+    var textFieldStyle = [fonts.bodyText]
     return (
-      <View style={{ backgroundColor: colors.veryLightPurple.color }}>
-        <TextInput
-          style={textFieldStyle}
-          keyboardType='default'
-          placeholder="Event Title"
-          onChangeText={this.titleInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Date (MM/DD/YY)"
-          keyboardType='default'
-          onChangeText={this.dateInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Time (24:00)"
-          keyboardType='default'
-          onChangeText={this.timeInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Location"
-          keyboardType='default'
-          onChangeText={this.locationInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Description"
-          keyboardType='default'
-          onChangeText={this.descriptionInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing'
-          multiline={true} />
+      <View style={{ backgroundColor: colors.white.color }}>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            keyboardType='default'
+            placeholder="Event Title"
+            onChangeText={this.titleInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Date (MM/DD/YY)"
+            keyboardType='default'
+            onChangeText={this.dateInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Time (24:00)"
+            keyboardType='default'
+            onChangeText={this.timeInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Location"
+            keyboardType='default'
+            onChangeText={this.locationInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Description"
+            keyboardType='default'
+            onChangeText={this.descriptionInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing'
+            multiline={true} />
+        </View>
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
-            <TouchableOpacity
-              onPress={this.addEvent}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={this.addEvent}>
+            <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
+          </TouchableOpacity>
         </View>
       </View>
     );
