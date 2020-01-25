@@ -21,8 +21,8 @@ class SliderComponent extends React.Component {
           maximumValue={100}
           onSlidingComplete={this.onChange}
           value={this.props.value}
-          maximumTrackTintColor={colors.white.color}
-          minimumTrackTintColor={colors.white.color}
+          maximumTrackTintColor={colors.veryLightPurple.color}
+          minimumTrackTintColor={colors.veryLightPurple.color}
           width={300}
           style={{ marginLeft: 30 }}
 
@@ -30,8 +30,7 @@ class SliderComponent extends React.Component {
         <View style={{
           width: 350,
           flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginLeft: 12
+          justifyContent: 'space-between'
         }}>
           <Text style={[fonts.bodyText, colors.deepPurple]}>{this.props.min}</Text>
           <Text style={[fonts.bodyText, colors.deepPurple]}>{this.props.max}</Text>

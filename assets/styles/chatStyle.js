@@ -91,7 +91,7 @@ const singleChat = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: colors.veryLightPurple.color,
+    backgroundColor: colors.white.color,
   },
   headerTextContainer: {
     flex: 1,
