@@ -25,9 +25,6 @@ class Profile extends React.Component {
       height: 0,
     };
 
-    this.photoUpload = this.photoUpload.bind(this);
-
-
   }
 
   async componentWillMount() {
@@ -66,21 +63,6 @@ class Profile extends React.Component {
       return (<Button title="Save Changes" onPress={this.changeEditStatus} />)
     }
   }
-
-
-photoUpload = async () => {
-  const result = await ImagePicker.launchImageLibraryAsync({
-    base64: true,
-});
-
-
-  if (!result.cancelled) {
-    this.setState({ image: result.uri, width: result.width, height: result.height });
-  }
-
-  console.log("priting reults")
-  console.log(this.state);
-};
 
   handleInput = (text) => {
     this.setState(prevState => ({
@@ -135,10 +117,6 @@ photoUpload = async () => {
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
-        <TouchableOpacity
-          onPress={this.photoUpload}>
-          <Text>Click to change photo</Text>
-        </TouchableOpacity>
         {image}
 
         {this.isMyProfile(this.props.isMyProfile)}
