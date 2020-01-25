@@ -54,7 +54,7 @@ class AddEvent extends Component {
     this.setState({ description: text });
   }
 
-  addEvent() {
+  addEvent = () => {
     if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
       //https://facebook.github.io/react-native/docs/alert
       Alert.alert(
@@ -69,22 +69,21 @@ class AddEvent extends Component {
     }
     else {
 
-      Geocoder.init("AIzaSyAWUDgz30Re2MMeq7cu0wFWN1iZf7HR1Ew"); // use a valid API key
-
-      console.log(this.state.location);
-      Geocoder.from("New York City")
+      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
+      Geocoder.from(this.state.location)
         .then(json => {
           var location = json.results[0].geometry.location;
-          console.log(location);
+          this.setState({latitude: location.lat, longitude: location.lng})
+
+          this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
+          const popAction = StackActions.pop({
+          n: 1,
+          });
+          this.props.navigation.dispatch(popAction);
         })
         .catch(error => console.warn(error));
 
-
-      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
-      const popAction = StackActions.pop({
-        n: 1,
-      });
-      this.props.navigation.dispatch(popAction);
+      
     }
   }
 
