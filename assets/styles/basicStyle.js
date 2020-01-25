@@ -67,7 +67,9 @@ const logo = StyleSheet.create({
   logoText: {
     textAlign: 'center',
     flexDirection: 'column',
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
