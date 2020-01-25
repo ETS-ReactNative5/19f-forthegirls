@@ -81,8 +81,15 @@ class AddEvent extends Component {
           });
           this.props.navigation.dispatch(popAction);
         })
-        .catch(error => console.warn(error));
-
+        .catch((error) =>  {
+          console.log(error);
+          this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
+          const popAction = StackActions.pop({
+            n: 1,
+            });
+            this.props.navigation.dispatch(popAction);
+          }
+        );
       
     }
   }
