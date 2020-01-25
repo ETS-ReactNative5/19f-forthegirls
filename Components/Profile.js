@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } fr
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser, signoutUser } from '../actions';
+import { getUser, editUser, signoutUser, addToSurvey } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
@@ -25,9 +25,6 @@ class Profile extends React.Component {
       height: 0,
       progress: 0,
     };
-
-    this.photoUpload = this.photoUpload.bind(this);
-
 
   }
 
@@ -66,21 +63,6 @@ class Profile extends React.Component {
     }
   }
 
-
-photoUpload = async () => {
-  const result = await ImagePicker.launchImageLibraryAsync({
-    base64: true,
-});
-
-
-  if (!result.cancelled) {
-    this.setState({ image: result.uri, width: result.width, height: result.height });
-  }
-
-  console.log("priting reults")
-  console.log(this.state);
-};
-
   handleInput = (text) => {
     this.setState(prevState => ({
       questionAnswers: {
@@ -100,7 +82,7 @@ photoUpload = async () => {
 
 
   render() {
-
+    console.log("herehehrehehehhehehe")
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -124,19 +106,16 @@ photoUpload = async () => {
       )
     }
 
-    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
+    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 125, height: 125,  borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9' }} />
 
-    image = this.state.image != null ? imageImage : imageNoImage;
-
+    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
-        <TouchableOpacity
-          onPress={this.photoUpload}>
-          <Text>Click to change photo</Text>
-        </TouchableOpacity>
-        {image}
+        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+          {image}
+        </View>
 
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
@@ -194,7 +173,8 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
+    profileURL: reduxState.user.profileURL,
   }
 );
 
-export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser })(Profile));
+export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey })(Profile));
