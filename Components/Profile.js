@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
-import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser, signoutUser } from '../actions';
+import { getUser, editUser, signoutUser, addToSurvey } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
@@ -26,9 +26,6 @@ class Profile extends React.Component {
       progress: 0,
     };
 
-    this.photoUpload = this.photoUpload.bind(this);
-
-
   }
 
   async componentWillMount() {
@@ -36,7 +33,7 @@ class Profile extends React.Component {
     if (status !== 'granted') {
       console.log('Please enable camera');
     }
-}
+  }
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -66,21 +63,6 @@ class Profile extends React.Component {
     }
   }
 
-
-photoUpload = async () => {
-  const result = await ImagePicker.launchImageLibraryAsync({
-    base64: true,
-});
-
-
-  if (!result.cancelled) {
-    this.setState({ image: result.uri, width: result.width, height: result.height });
-  }
-
-  console.log("priting reults")
-  console.log(this.state);
-};
-
   handleInput = (text) => {
     this.setState(prevState => ({
       questionAnswers: {
@@ -100,7 +82,7 @@ photoUpload = async () => {
 
 
   render() {
-
+    console.log("herehehrehehehhehehe")
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -116,27 +98,20 @@ photoUpload = async () => {
           <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
           <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
           <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
-          <TouchableOpacity
-            onPress={this.opacityOnPress}>
-            <Text>click here to edit profile</Text>
-          </TouchableOpacity>
         </View>
       )
     }
 
-    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    imageImage = <Image source={{ uri: this.state.image }} style={{ width: 100, height: 100 }} />
+    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
 
-    image = this.state.image != null ? imageImage : imageNoImage;
-
+    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
     // if (this.state.editing === false) {
     return (
       <View style={profile.profileContainer}>
-        <TouchableOpacity
-          onPress={this.photoUpload}>
-          <Text>Click to change photo</Text>
-        </TouchableOpacity>
-        {image}
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+          {image}
+        </View>
 
         {this.isMyProfile(this.props.isMyProfile)}
         {/* <Button onPress={this.logout} title="Log Out" /> */}
@@ -155,12 +130,18 @@ photoUpload = async () => {
           {prompts}
         </View>
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
+          <View style={buttons.container}>
+            <TouchableOpacity
+              onPress={this.opacityOnPress}>
+              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={this.logout}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log Out</Text>
+              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
             </TouchableOpacity>
+
           </View>
+
         </View>
       </View>
     )
@@ -194,7 +175,8 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
+    profileURL: reduxState.user.profileURL,
   }
 );
 
-export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser })(Profile));
+export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey })(Profile));

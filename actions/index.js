@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
+export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
 
 export const ActionTypes = {
@@ -63,6 +63,7 @@ export function getUser(id) {
 //edits the user object
 //axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
 export function editUser(fields) {
+  //profileURL
   return (dispatch) => {
     //need to give it email, username and password
     axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
@@ -142,7 +143,10 @@ export function signUpUser(fields, navigate, otherAnswers) {
 
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
+    console.log("i may get stuck here")
+    console.log(otherAnswers.profileURL)
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
+      console.log("about to navigate yay")
       navigate.navigate(navTo);
     }).catch((error) => {
       console.log(error);
@@ -204,7 +208,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
           .then((res) => {
             console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
-            navigation.navigate('SingleChat', {matchID: matchID, prompt: prompt})
+            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2 })
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -250,12 +254,12 @@ export function deleteMatch(userID, matchID, username) {
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
             return axios.get(`${ROOT_URL}/matches/${username}`)
-            .then((resp) => {
-              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
-            }).catch((error) => {
-              console.log(error);
-              dispatch({ type: ActionTypes.SET_ERROR, error });
-            });
+              .then((resp) => {
+                dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+              }).catch((error) => {
+                console.log(error);
+                dispatch({ type: ActionTypes.SET_ERROR, error });
+              });
           }).catch((error) => {
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });

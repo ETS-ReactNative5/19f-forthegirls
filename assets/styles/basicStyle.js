@@ -19,6 +19,9 @@ const colors = StyleSheet.create({
   lightGrey: {
     color: '#F4F4F4'
   },
+  darkGrey: {
+    color: '#C4C4C4'
+  },
   veryLightPurple: {
     color: '#46518725'
   },
@@ -67,7 +70,9 @@ const logo = StyleSheet.create({
   logoText: {
     textAlign: 'center',
     flexDirection: 'column',
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
@@ -91,19 +96,38 @@ const buttons = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 30
   },
-  logInButton: {
+  logInOutButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
     borderWidth: 2,
-    height: 60,
+    height: 40,
     width: 120,
-    padding: 10,
-    borderColor: colors.white.color,
+    padding: 5,
+    marginBottom: 10,
+    borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
-    borderRadius: 20,
+    borderRadius: 20
+  },
+  logInButton: {
     marginLeft: 125
+  },
+  submitProfileButton: {
+    marginLeft: 100
   }
 
 })
 
+const profileImage = StyleSheet.create({
+  basic: {
+    width: 125,
+    height: 125,
+    borderRadius: 63,
+    borderWidth: 3,
+    borderColor: colors.turquoise.color
+  }
+})
+
 export default colors;
-export { colors, fonts, fontEffects, logo, buttons }
+export { colors, fonts, fontEffects, logo, buttons, profileImage }

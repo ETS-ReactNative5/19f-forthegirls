@@ -25,7 +25,11 @@ class ErrorModal extends Component {
             <Modal
                 visible={this.state.visible}
                 animationType={'none'}
+                transparent={true}
                 onRequestClose={() => this.closeModal()}
+                style={{justifyContent: 'center',
+                alignItems: 'center',
+                margin: 0}}
             >
               <View style={styles.modal}>
                   <Text style={styles.text}>{this.props.errorMessage}</Text>
@@ -47,14 +51,23 @@ class ErrorModal extends Component {
 const styles = StyleSheet.create ({
   container: {
      alignItems: 'center',
-     backgroundColor: '#ede3f2',
-     padding: 100
+     padding: 100,
+     height: '50%',
+     width: '50%',
+     marginTop: 200,
+     marginBottom: 200,
+     marginLeft: 50,
+     marginRight: 50,
   },
   modal: {
      flex: 1,
      alignItems: 'center',
-     backgroundColor: '#f7021a',
-     padding: 100
+     backgroundColor: '#ffffff',
+     padding: 100,
+     marginTop: 200,
+     marginBottom: 200,
+     marginLeft: 50,
+     marginRight: 50,
   },
   text: {
      color: '#3f2949',

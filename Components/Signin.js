@@ -28,7 +28,7 @@ class SignIn extends React.Component {
   }
 
   render() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
+    var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     return (
       <View style={surveyStyle.surveyBackground}>
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
@@ -48,10 +48,10 @@ class SignIn extends React.Component {
           clearButtonMode='while-editing'
         />
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
+          <View style={[buttons.logInOutButton, buttons.logInButton]}>
             <TouchableOpacity
               onPress={this.checkSignIn}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log In</Text>
+              <Text style={[fonts.minorHeading, colors.white, fontEffects.center]}>Log In</Text>
             </TouchableOpacity>
           </View>
         </View>
