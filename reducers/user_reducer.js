@@ -6,7 +6,7 @@ const UserReducer = (state = {
   matches: [],
   // potentialMatches: [],
 
-  // basic 
+  // basic
   firstName: '',
   lastName: '',
   highSchool: '',
@@ -52,7 +52,8 @@ const UserReducer = (state = {
   promptTwoQuestion: '',
   promptTwoAnswer: '',
   promptThreeQuestion: '',
-  promptThreeAnswer: ''
+  promptThreeAnswer: '',
+  profileURL: '',
 
 }, action) => {
   switch (action.type) {
@@ -105,6 +106,8 @@ const UserReducer = (state = {
         promptTwoAnswer: action.payload.result.promptTwoAnswer,
         promptThreeQuestion: action.payload.result.promptThreeQuestion,
         promptThreeAnswer: action.payload.result.promptThreeAnswer,
+
+        profileURL: action.payload.result.profileURL,
 
       });
     case ActionTypes.USER_GET_POT_MATCHES:
