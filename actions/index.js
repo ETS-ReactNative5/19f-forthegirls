@@ -24,6 +24,8 @@ export const ActionTypes = {
   UNRSVP_EVENT: 'UNRSVP_EVENT',
   FETCH_EVENT: 'FETCH_EVENT',
   FETCH_EVENTS: 'FETCH_EVENTS',
+  FETCH_YOUR_EVENTS: 'FETCH_YOUR_EVENTS',
+  FETCH_RSVP_CONNECTIONS: 'FETCH_RSVP_CONNECTIONS',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -49,7 +51,6 @@ export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
-        console.log(response.data);
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
@@ -197,13 +198,17 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
-export function pairMatchToUser(user1, user2) {
+export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
+  // console.log("pairing index")
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
+        console.log("matching");
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
+            console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
+            navigation.navigate('SingleChat', {matchID: matchID, prompt: prompt})
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -219,6 +224,8 @@ export function getPotentialMatches(username) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
+        console.log("in response");
+        console.log(response.data);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
@@ -240,9 +247,8 @@ export function getMatches(username) {
 }
 
 export function deleteMatch(userID, matchID, username) {
-
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/matches/${userID}/${matchID}`)
+    axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
@@ -294,11 +300,36 @@ export function fetchEvents() {
   };
 }
 
+export function fetchYourEvents(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_YOUR_EVENTS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
 export function fetchEvent(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/${id}`).then((response) => {
       dispatch({
         type: ActionTypes.FETCH_EVENT,
+        payload: response.data,
+      });
+    }).catch((error) => {
+    });
+  };
+}
+
+export function fetchRsvpConnections(userId, eventId) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_RSVP_CONNECTIONS,
         payload: response.data,
       });
     }).catch((error) => {

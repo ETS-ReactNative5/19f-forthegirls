@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Modal, TouchableHighlight } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
 import TextField from 'react-native-text-field';
 import colors, { buttons, fonts, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
+import { singleChat } from '../assets/styles/chatStyle';
 import profile from '../assets/styles/profileStyle';
 import SliderComponent from './sliderComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent'
@@ -23,13 +24,17 @@ class EditProfile extends React.Component {
     this.state = {
       firstName: this.props.firstName,
       lastName: this.props.lastName,
+      location: this.props.location,
+
       promptOneQuestion: this.props.promptOneQuestion,
       promptOneAnswer: this.props.promptOneAnswer,
       promptTwoQuestion: this.props.promptTwoQuestion,
       promptTwoAnswer: this.props.promptTwoAnswer,
       promptThreeQuestion: this.props.promptThreeQuestion,
-      introextro: 50,
-      listenfollow: 50,
+
+      extraversion: this.props.extraversion !== undefined ? this.props.extraversion : 50,
+      listening: this.props.listening !== undefined ? this.props.listening : 50,
+
       frontEnd: this.props.frontEnd,
       backEnd: this.props.backEnd,
       small: this.props.small,
@@ -59,18 +64,21 @@ class EditProfile extends React.Component {
 
       image: this.props.image,
       imagefull: null,
+      showModal: false,
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.toggleSkills = this.toggleSkills.bind(this);
     this.togglePreferences = this.togglePreferences.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
+    this.goBack = this.goBack.bind(this);
   }
 
   componentDidMount() {
     this.props.getUser(this.props.id);
-    console.log(this.props.promptOneQuestion);
-    console.log(this.props.promptOneAnswer);
+
+    console.log(this.props.extraversion);
+    console.log(this.props.listening);
   }
 
   async componentWillMount() {
@@ -85,38 +93,78 @@ class EditProfile extends React.Component {
   }
 
   photoUpload = async () => {
+    console.log("in poto upload")
     const result = await ImagePicker.launchImageLibraryAsync({
       base64: true,
     });
     if (!result.cancelled) {
       this.setState({ image: result.uri, imagefull: result });
+      console.log("settig image hehre")
     }
   };
 
   submitPage = () => {
     // console.log(this.state);
-    if(this.state.imagefull != null){
-      console.log("Bellow should work :()")
-      //console.log(this.state.imagefull)
-      let i = this.state.imagefull.uri.length;
-      while (this.state.imagefull.uri.charAt(i) !== '/') {
-        i--;
-      }
-      this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
-      uploadImage(this.state.imagefull).then((url) => {
-        console.log(typeof(url))
-        this.setState({profileURL: String(url)})
-        console.log("UTL")
-        console.log(this.state.profileURL)
-        this.setState({imagefull: null})
-        this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
-
-      })
+    if (this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) {
+      console.log("here doign this")
+      console.log()
+      this.setState({ showModal: !this.state.showModal });
     }
     else {
-        console.log("Here again")
-        this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+      if(this.state.imagefull != null){
+        console.log("Bellow should work :()")
+        //console.log(this.state.imagefull)
+        let i = this.state.imagefull.uri.length;
+        while (this.state.imagefull.uri.charAt(i) !== '/') {
+          i--;
+        }
+        this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
+        uploadImage(this.state.imagefull).then((url) => {
+          console.log(typeof(url))
+          this.setState({profileURL: String(url)})
+          console.log("UTL")
+          console.log(this.state.profileURL)
+          this.setState({imagefull: null})
+          this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+
+        })
+      }
+      else {
+          console.log("Here again")
+          this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
+      }
     }
+  }
+
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={this.state.showModal}
+          onRequestClose={() => {
+            console.log('Modal has been closed.');
+          }}>
+          <View style={{ marginTop: 22 }}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setModalVisable(!this.state.showModal);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      );
+    }
+  }
+
+  setModalVisable = (value) => {
+    this.setState({ showModal: value });
   }
 
   firstNameChange = (text) => {
@@ -127,25 +175,29 @@ class EditProfile extends React.Component {
     this.setState({ lastName: text });
   }
 
-  toggleSkills() {
+  locationChange = (text) => {
+    this.setState({ location: text });
+  }
+
+  toggleSkills = () => {
     this.setState({
       showSkills: !this.state.showSkills
     });
   }
 
-  togglePreferences() {
+  togglePreferences = () => {
     this.setState({
       showPreferences: !this.state.showPreferences
     });
   }
 
-  toggleCompany() {
+  toggleCompany = () =>{
     this.setState({
       showCompany: !this.state.showCompany
     });
   }
 
-  showSkills(val) {
+  showSkills = (val) => {
     if (val) {
       return (
         <View style={surveyStyle.items} >
@@ -161,7 +213,7 @@ class EditProfile extends React.Component {
     }
   }
 
-  showPreferences(val) {
+  showPreferences = (val) => {
     if (val) {
       return (
         <View style={surveyStyle.items}>
@@ -172,7 +224,7 @@ class EditProfile extends React.Component {
     }
   }
 
-  showCompany(val) {
+  showCompany = (val) => {
     if (val) {
       return (
         <View style={surveyStyle.items}>
@@ -192,9 +244,9 @@ class EditProfile extends React.Component {
     }
   }
 
-
   p1Question = (value) => {
     this.setState({ promptOneQuestion: value });
+    console.log("ere")
   }
 
   p1Answer = (text) => {
@@ -219,11 +271,15 @@ class EditProfile extends React.Component {
 
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
-    // console.log(`parent: ${this.state.introextro}`);
+    // console.log(`parent: ${this.state.extraversion}`);
   }
 
   opacityOnPress = () => {
     this.props.navigation.navigate('Home', {})
+  }
+
+  goBack = () => {
+    this.props.navigation.pop();
   }
 
   render() {
@@ -252,9 +308,19 @@ class EditProfile extends React.Component {
 
 
     var imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
+    var imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
 
-    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
+    var image;
+    if(this.state.imagefull != null){
+      image = <Image source={{ uri: this.state.imagefull.uri }} style={{ width: 100, height: 100 }} />
+    }
+    else if (this.props.profileURL != "" && this.props.profileURL != null)
+    {
+      image = imageImage;
+    }
+    else  {
+      image = imageNoImage;
+    }
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
@@ -262,154 +328,175 @@ class EditProfile extends React.Component {
           onPress={this.photoUpload}>
           <Text>Click to change photo</Text>
         </TouchableOpacity>
+
         {image}
-        <View>
-          <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-            <SurveyHeaderComponent header="Basic Information" />
-          </View>
-          <TextInput
-            style={textFieldStyle}
-            placeholder="first name"
-            defaultValue={this.props.firstName || ''}
-            onChangeText={this.firstNameChange}
-          />
-          <TextInput
-            style={textFieldStyle}
-            placeholder="last name"
-            defaultValue={this.props.lastName || ''}
-            onChangeText={this.lastNameChange}
-          />
-        </View>
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="Answer 3 Prompts!" />
-        </View>
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 1'
-          data={data}
-          value={this.props.promptOneQuestion || 'Question 1'}
-          onChangeText={this.p1Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 1 Answer"
-          defaultValue={this.props.promptOneAnswer || ''}
-          onChangeText={this.p1Answer}
-        />
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 2'
-          value={this.props.promptTwoQuestion || 'Question 2'}
-          data={data}
-          onChangeText={this.p2Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 2 Answer"
-          defaultValue={this.props.promptTwoAnswer || ''}
-          onChangeText={this.p2Answer}
-        />
-        <Dropdown
-          itemTextStyle={itemTextStyle}
-          selectedItemColor={selectedItemColor}
-          label='Question 3'
-          value={this.props.promptThreeQuestion || 'Question 3'}
-          data={data}
-          onChangeText={this.p3Question}
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Prompt 3 Answer"
-          defaultValue={this.props.promptThreeAnswer || ''}
-          onChangeText={this.p3Answer}
-        />
 
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="Tell Us About You!" />
-        </View>
-        <SliderComponent id='introextro' onChange={this.handleSliderChange} value={this.state.introextro} min='introvert' max='extrovert' />
-        <SliderComponent id='listenfollow' onChange={this.handleSliderChange} value={this.state.listenfollow} min='listener' max='leader' />
-
-
-        <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-          <SurveyHeaderComponent header="CS Skills, Preferences, and Interests" />
-        </View>
-
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>CS Skills</Text>
+        <View style={singleChat.header}>
+          <View style={[singleChat.arrowBack]}>
             <TouchableOpacity
-              onPress={this.toggleSkills}>
+              onPress={this.goBack}>
               <Image
-                source={this.state.showSkills ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                source={require('./../assets/icons/arrowback.png')}
               />
             </TouchableOpacity>
           </View>
-          <View>
-            <View>
-              {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
-            </View>
+
+          <View style={singleChat.headerTextContainer}>
+            <Text style={fonts.minorHeading}>Edit Profile</Text>
           </View>
         </View>
 
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>CS Preferences</Text>
-            <TouchableOpacity
-              onPress={this.togglePreferences}>
-              <Image
-                source={this.state.showPreferences ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+          <ScrollView style={surveyStyle.surveyBackground}>
+            <View>
+                {this.renderModal()}
+
+                <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+                  <SurveyHeaderComponent header="Basic Information" />
+                </View>
+
+                <TextInput
+                style={textFieldStyle}
+                placeholder={'First Name'}
+                maxLength={30}
+                defaultValue={this.props.firstName || ''}
+                onChangeText={this.firstNameChange}
+               />
+                <TextInput
+                style={textFieldStyle}
+                placeholder="Last Name"
+                maxLength={30}
+                defaultValue={this.props.lastName || ''}
+                onChangeText={this.lastNameChange}
+                />
+                <TextInput
+                style={textFieldStyle}
+                placeholder="Location (City, State)"
+                maxLength={30}
+                defaultValue={this.props.location || ''}
+                onChangeText={this.locationChange}
               />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <View>
-              {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
             </View>
-          </View>
-        </View>
-
-        <View style={profile.editProfileContainer}>
-          <View style={skillsHeaderT}>
-            <Text style={headerText}>Company Preferences</Text>
-            <TouchableOpacity
-              onPress={this.toggleCompany}>
-              <Image
-                source={this.state.showCompany ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+            <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+                <SurveyHeaderComponent header="Answer 3 Prompts!" />
+            </View>
+            <Dropdown
+                itemTextStyle={itemTextStyle}
+                selectedItemColor={selectedItemColor}
+                label='Question 1'
+                data={data}
+                value={this.props.promptOneQuestion || 'Question 1'}
+                onChangeText={this.p1Question}
               />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <View>
-              {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+            <TextInput
+                style={textFieldStyle}
+                placeholder="Prompt 1 Answer"
+                defaultValue={this.props.promptOneAnswer || ''}
+                onChangeText={this.p1Answer}
+              />
+            <Dropdown
+                itemTextStyle={itemTextStyle}
+                selectedItemColor={selectedItemColor}
+                label='Question 2'
+                value={this.props.promptTwoQuestion || 'Question 2'}
+                data={data}
+                onChangeText={this.p2Question}
+              />
+            <TextInput
+                style={textFieldStyle}
+                placeholder="Prompt 2 Answer"
+                defaultValue={this.props.promptTwoAnswer || ''}
+                onChangeText={this.p2Answer}
+              />
+            <Dropdown
+                itemTextStyle={itemTextStyle}
+                selectedItemColor={selectedItemColor}
+                label='Question 3'
+                value={this.props.promptThreeQuestion || 'Question 3'}
+                data={data}
+                onChangeText={this.p3Question}
+              />
+            <TextInput
+                style={textFieldStyle}
+                placeholder="Prompt 3 Answer"
+                defaultValue={this.props.promptThreeAnswer || ''}
+                onChangeText={this.p3Answer}
+              />
+            <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+                <SurveyHeaderComponent header="Tell Us About You!" />
             </View>
-          </View>
-        </View>
+            <SliderComponent id='extraversion' onChange={this.handleSliderChange} value={this.state.extraversion} min='introvert' max='extrovert' />
+            <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='listener' max='leader' />
+            <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
+                <SurveyHeaderComponent header="CS Skills, Preferences, and Interests" />
+            </View>
+            <View style={profile.editProfileContainer}>
+                <View style={skillsHeaderT}>
+                  <Text style={headerText}>CS Skills</Text>
+                  <TouchableOpacity
+                    onPress={this.toggleSkills}>
+                    <Image
+                      source={this.state.showSkills ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <View>
+                    {this.state.showSkills ? this.showSkills(true) : this.showSkills(false)}
+                  </View>
+                </View>
+            </View>
+            <View style={profile.editProfileContainer}>
+                <View style={skillsHeaderT}>
+                  <Text style={headerText}>CS Preferences</Text>
+                  <TouchableOpacity
+                    onPress={this.togglePreferences}>
+                    <Image
+                      source={this.state.showPreferences ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <View>
+                    {this.state.showPreferences ? this.showPreferences(true) : this.showPreferences(false)}
+                  </View>
+                </View>
+            </View>
+            <View style={profile.editProfileContainer}>
+                <View style={skillsHeaderT}>
+                  <Text style={headerText}>Company Preferences</Text>
+                  <TouchableOpacity
+                    onPress={this.toggleCompany}>
+                    <Image
+                      source={this.state.showCompany ? require('./../assets/icons/arrowup.png') : require('./../assets/icons/arrowdown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                  <View>
+                    {this.state.showCompany ? this.showCompany(true) : this.showCompany(false)}
+                  </View>
+                </View>
+            </View>
 
-        <View style={buttons.arrowView}>
-          <TouchableOpacity
-            onPress={this.submitPage}>
-            <Text> Submit </Text>
-            <Image
-              source={require('./../assets/icons/arrownext.png')}
-            />
-          </TouchableOpacity>
-        </View>
-
-
-        <TouchableOpacity
-          onPress={this.opacityOnPress}>
-          <Text>go back (dont save)</Text>
-        </TouchableOpacity>
+            <View style={buttons.arrowView}>
+                <TouchableOpacity
+                  onPress={this.submitPage}>
+                  <Text> Submit </Text>
+                  <Image
+                    source={require('./../assets/icons/arrownext.png')}
+                  />
+                </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              onPress={this.opacityOnPress}>
+                  <Text>go back (dont save)</Text>
+            </TouchableOpacity>
+          </ScrollView>
       </ScrollView>
-
-
-
     );
   }
 }
+
 
 const mapStateToProps = reduxState => (
   {
@@ -418,6 +505,7 @@ const mapStateToProps = reduxState => (
     username: reduxState.auth.username,
     firstName: reduxState.user.firstName,
     lastName: reduxState.user.lastName,
+    location: reduxState.user.location,
     promptOneQuestion: reduxState.user.promptOneQuestion,
     promptOneAnswer: reduxState.user.promptOneAnswer,
     promptTwoQuestion: reduxState.user.promptTwoQuestion,
@@ -445,7 +533,6 @@ const mapStateToProps = reduxState => (
     algorithms: reduxState.user.algorithms,
     storage: reduxState.user.storage,
     profileURL: reduxState.user.profileURL,
-
   }
 );
 

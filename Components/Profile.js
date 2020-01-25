@@ -23,6 +23,7 @@ class Profile extends React.Component {
       image: null,
       width: 0,
       height: 0,
+      progress: 0,
     };
 
   }
@@ -51,8 +52,6 @@ class Profile extends React.Component {
     // Remove the event listener
     this.focusListener.remove();
   }
-
-
 
 
   isMyProfile() {

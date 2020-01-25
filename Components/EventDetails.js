@@ -11,7 +11,8 @@ import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
-import { rsvpEvent, unrsvpEvent, getUser, fetchEvent } from '../actions';
+import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
+import EventMap from './EventMap.js'
 
 class EventDetails extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class EventDetails extends Component {
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
+    this.props.fetchRsvpConnections(this.props.id, this.props.navigation.getParam("eventID", null))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -58,6 +60,7 @@ class EventDetails extends Component {
   }
 
   render() {
+
     return (
       <View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
@@ -75,12 +78,16 @@ class EventDetails extends Component {
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
           </View>
         </View>
+        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude}/>
         <View style={eventPage.eventDetailDescription}>
           <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
           </Text>
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
+          <View>
+            <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.connections ? this.props.connections.length : null} Connections have Rsvp'd! </Text>
+          </View>
           <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
             <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
               {this.state.rsvp
@@ -98,7 +105,8 @@ const mapStateToProps = reduxState => (
   {
     id: reduxState.auth.id,
     event: reduxState.events.event,
+    connections: reduxState.events.connections,
   }
 );
 
-export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent })(EventDetails);
+export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections })(EventDetails);
