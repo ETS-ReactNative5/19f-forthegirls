@@ -143,10 +143,7 @@ export function signUpUser(fields, navigate, otherAnswers) {
 
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
-    console.log("i may get stuck here")
-    console.log(otherAnswers.profileURL)
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
-      console.log("about to navigate yay")
       navigate.navigate(navTo);
     }).catch((error) => {
       console.log(error);
@@ -224,8 +221,6 @@ export function getPotentialMatches(username) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
-        console.log("in response");
-        console.log(response.data);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
@@ -274,10 +269,13 @@ export function deleteMatch(userID, matchID, username) {
 //----------------- EVENTS ------------------//
 export function addEvent(fields) {
   return (dispatch) => {
-    //need to give it email, username and password
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
-        dispatch({ type: ActionTypes.ADD_EVENT, payload: response.data });
+        return axios.get(`${ROOT_URL}/events`).then((response) => {
+          dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
+        }).catch((error) => {
+          console.log(error);
+        });
       }).then(() => {
         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
@@ -341,7 +339,11 @@ export function rsvpEvent(userID, eventID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
-        dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
+        return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
+          dispatch({ type: ActionTypes.FETCH_YOUR_EVENTS, payload: response.data });
+        }).catch((error) => {
+          console.log(error);
+        });
       }).then(() => {
         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {
@@ -355,7 +357,11 @@ export function unrsvpEvent(userID, eventID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/unrsvp/${eventID}`, { userID: userID })
       .then((response) => {
-        dispatch({ type: ActionTypes.RSVP_EVENT, payload: response.data });
+        return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
+          dispatch({ type: ActionTypes.FETCH_YOUR_EVENTS, payload: response.data });
+        }).catch((error) => {
+          console.log(error);
+        });
       }).then(() => {
         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
       }).catch((error) => {

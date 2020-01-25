@@ -32,10 +32,6 @@ class Events extends React.Component {
     this.props.fetchYourEvents();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-      this.props.fetchEvents();
-  }
-
   navToAdd() {
     this.props.navigation.navigate('Add', 5876700);
   }
