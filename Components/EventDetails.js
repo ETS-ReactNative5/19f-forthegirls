@@ -5,10 +5,14 @@ import {
   StyleSheet,
   Image,
   Button,
+  Modal,
   TouchableOpacity,
+  TouchableHighlight,
+  ScrollView,
 } from 'react-native';
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
+import modalStyle from '../assets/styles/modalStyle';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
@@ -19,10 +23,15 @@ class EventDetails extends Component {
     super(props);
     this.state = {
       rsvp: null,
+      showingModal: false,
     };
 
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
+    this.changeModal = this.changeModal.bind(this);
+    this.renderModal = this.renderModal.bind(this);
+    this.renderConnections = this.renderConnections.bind(this);
+
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
@@ -33,6 +42,45 @@ class EventDetails extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.rsvp === null) {
       this.checkRSVP();
+    }
+  }
+
+  changeModal(){
+    this.setState({ showingModal: !this.state.showingModal });
+  }
+
+  renderConnections() {
+    var connected = this.props.connections.map((connect) => {
+      console.log(connect);
+      return (
+        <Text key={connect}>
+          {connect}
+        </Text>
+      );
+    })
+    return connected;
+  }
+
+  renderModal() {
+    if(this.state.showingModal){
+      return (
+        <Modal
+          animationType="fade"
+          transparent={false}
+          visible={this.state.showingModal}>
+          <View style={modalStyle.wholeModal}>
+            <ScrollView contentContainerStyle={modalStyle.scroll} >
+              {this.renderConnections()}
+            </ScrollView>
+            <TouchableHighlight
+              onPress={() => {
+                this.changeModal();
+              }}>
+              <Text style={modalStyle.hideModal}>Hide Modal</Text>
+            </TouchableHighlight>
+          </View>
+        </Modal>
+      );
     }
   }
 
@@ -85,8 +133,11 @@ class EventDetails extends Component {
           </Text>
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
+          {this.renderModal()}
           <View>
-            <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.connections ? this.props.connections.length : null} Connections have Rsvp'd! </Text>
+            <TouchableOpacity onPress={this.changeModal}>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.connections ? this.props.connections.length : null} Connections have Rsvp'd! </Text>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
             <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>

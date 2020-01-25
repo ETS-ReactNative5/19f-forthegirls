@@ -151,6 +151,7 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVP: {
+    marginTop: 20,
     borderRadius: 20,
     display: 'flex',
     flexDirection: 'column',
