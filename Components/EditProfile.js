@@ -307,12 +307,12 @@ class EditProfile extends React.Component {
     var skillsHeaderT = { flexDirection: 'row', justifyContent: 'space-between' }
 
 
-    var imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 100, height: 100}} />
-    var imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 100, height: 100 }} />
+    var imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
+    var imageImage = <Image source={{ uri: this.props.profileURL }} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
 
     var image;
     if(this.state.imagefull != null){
-      image = <Image source={{ uri: this.state.imagefull.uri }} style={{ width: 100, height: 100 }} />
+      image = <Image source={{ uri: this.state.imagefull.uri }} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
     }
     else if (this.props.profileURL != "" && this.props.profileURL != null)
     {
@@ -324,13 +324,6 @@ class EditProfile extends React.Component {
 
     return (
       <ScrollView style={surveyStyle.surveyBackground}>
-        <TouchableOpacity
-          onPress={this.photoUpload}>
-          <Text>Click to change photo</Text>
-        </TouchableOpacity>
-
-        {image}
-
         <View style={singleChat.header}>
           <View style={[singleChat.arrowBack]}>
             <TouchableOpacity
@@ -349,6 +342,13 @@ class EditProfile extends React.Component {
           <ScrollView style={surveyStyle.surveyBackground}>
             <View>
                 {this.renderModal()}
+                <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10}}>
+                  <TouchableOpacity
+                    onPress={this.photoUpload}>
+                    <Text>Click to change photo</Text>
+                  </TouchableOpacity>
+                  {image}
+                </View>
 
                 <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
                   <SurveyHeaderComponent header="Basic Information" />
