@@ -129,5 +129,28 @@ const profileImage = StyleSheet.create({
   }
 })
 
+const modal = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.white.color,
+    padding: 10,
+    marginTop: 300,
+    marginBottom: 300,
+    marginLeft: 50,
+    marginRight: 50,
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: colors.deepPurple.color
+  },
+  errorText: {
+    color: colors.deepPurple.color
+  },
+  closeButton: {
+    alignSelf: 'flex-end'
+  },
+})
+
 export default colors;
-export { colors, fonts, fontEffects, logo, buttons, profileImage }
+export { colors, fonts, fontEffects, logo, buttons, profileImage, modal }
