@@ -139,7 +139,6 @@ class EditProfile extends React.Component {
 
   renderModal = () => {
     if (this.state.showModal) {
-      console.log(this.state.modalMessage);
       return (
         <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
       );
@@ -170,7 +169,6 @@ class EditProfile extends React.Component {
 
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "" });
-    console.log("resetting modal");
   }
 
   firstNameChange = (text) => {

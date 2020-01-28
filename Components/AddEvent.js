@@ -11,6 +11,7 @@ import { addEvent } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import Geocoder from 'react-native-geocoding';
+import ErrorModal from './ErrorModal';
 
 class AddEvent extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class AddEvent extends Component {
       description: '',
       latitude: 0,
       longitude: 0,
+
+      showModal: false,
+      modalMessage: '', 
     };
 
     this.titleInput = this.titleInput.bind(this);
@@ -83,21 +87,36 @@ class AddEvent extends Component {
         })
         .catch((error) =>  {
           console.log(error);
-          this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
-          const popAction = StackActions.pop({
-            n: 1,
-            });
-            this.props.navigation.dispatch(popAction);
+          this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
+
+          // this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
+          // const popAction = StackActions.pop({
+          //   n: 1,
+          //   });
+          //   this.props.navigation.dispatch(popAction);
           }
         );
       
     }
   }
 
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
   render() {
     var textFieldStyle = [fonts.bodyText]
     return (
       <View style={{ backgroundColor: colors.white.color }}>
+        {this.renderModal()}
         <View style={surveyStyle.textFieldContainer}>
           <TextInput
             style={textFieldStyle}
