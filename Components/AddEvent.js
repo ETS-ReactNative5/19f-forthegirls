@@ -60,16 +60,7 @@ class AddEvent extends Component {
 
   addEvent = () => {
     if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
-      //https://facebook.github.io/react-native/docs/alert
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
-      );
+      this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
     }
     else {
 
@@ -88,12 +79,6 @@ class AddEvent extends Component {
         .catch((error) =>  {
           console.log(error);
           this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
-
-          // this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description });
-          // const popAction = StackActions.pop({
-          //   n: 1,
-          //   });
-          //   this.props.navigation.dispatch(popAction);
           }
         );
       
