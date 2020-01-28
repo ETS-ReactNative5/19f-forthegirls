@@ -11,8 +11,6 @@ import { withNavigation } from 'react-navigation';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
-//import CsComponent from './csComponent';
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -106,7 +104,7 @@ class Profile extends React.Component {
     imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
-    // if (this.state.editing === false) {
+
     return (
       <View style={profile.profileContainer}>
         <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
@@ -139,20 +137,10 @@ class Profile extends React.Component {
               onPress={this.logout}>
               <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
             </TouchableOpacity>
-
           </View>
-
         </View>
       </View>
     )
-    // }
-    // else {
-    //   return (
-    //     <View style={profile.profileContainer}>
-    //       <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
-    //     </View>
-    //   )
-    // }
   }
 }
 
