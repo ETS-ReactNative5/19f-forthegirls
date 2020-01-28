@@ -107,6 +107,14 @@ class EventDetails extends Component {
     }
   }
 
+  renderMap = () => {
+    if(this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
+      return (
+        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude}/>
+      )
+    }
+  }
+
   render() {
 
     return (
@@ -126,7 +134,7 @@ class EventDetails extends Component {
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
           </View>
         </View>
-        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude}/>
+        {this.renderMap()}
         <View style={eventPage.eventDetailDescription}>
           <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
