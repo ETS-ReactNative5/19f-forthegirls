@@ -1,12 +1,13 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 import TextField from 'react-native-text-field';
-import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, buttons, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
-import { signUpUser } from '../actions/index'
+import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
+import ErrorModal from './ErrorModal'
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -26,23 +27,22 @@ class BasicSignUpComponent extends React.Component {
       hs: false,
       college: false,
       pg: false,
+
+      showModal: false,
+      modalMessage: '', 
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
+  componentWillUnmount() {
+    this.props.resetErrors();
+  }
+
+
   sumbitUser = () => {
 
     if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-      //https://facebook.github.io/react-native/docs/alert
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
-      );
+      this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
     }
     else {
       const fields = {
@@ -133,39 +133,51 @@ class BasicSignUpComponent extends React.Component {
   //   console.log(this.state);
   // }
 
-  submitPage = () => {
-    if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-      //https://facebook.github.io/react-native/docs/alert
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
       );
     }
-    // else {
-    //   var basicInfo = {
-    //     'firstname': this.state.firstName,
-    //     'lastname': this.state.lastName,
-    //     'email': this.state.email,
-    //     'username': this.state.username,
-    //     'password': this.state.password,
-    //     'age': this.state.age,
-    //     'hs': this.state.hs,
-    //     'college': this.state.college,
-    //     'pg': this.state.pg,
-    //     'highSchool': this.state.highSchool,
-    //     'college': this.state.college,
-    //     'gradYear': this.state.gradYear,
-    //     'currentJob': this.state.currentJob,
-    //   }
-    //   this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
-    // }
-
   }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
+  // submitPage = () => {
+  //   if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
+  //     //https://facebook.github.io/react-native/docs/alert
+  //     Alert.alert(
+  //       'Please Fill Out All Fields to Continue',
+  //       '',
+  //       [
+  //         { text: 'Cancel', style: 'cancel' },
+  //         { text: 'OK' },
+  //       ],
+  //       { cancelable: true }
+  //     );
+  //   }
+  //   // else {
+  //   //   var basicInfo = {
+  //   //     'firstname': this.state.firstName,
+  //   //     'lastname': this.state.lastName,
+  //   //     'email': this.state.email,
+  //   //     'username': this.state.username,
+  //   //     'password': this.state.password,
+  //   //     'age': this.state.age,
+  //   //     'hs': this.state.hs,
+  //   //     'college': this.state.college,
+  //   //     'pg': this.state.pg,
+  //   //     'highSchool': this.state.highSchool,
+  //   //     'college': this.state.college,
+  //   //     'gradYear': this.state.gradYear,
+  //   //     'currentJob': this.state.currentJob,
+  //   //   }
+  //   //   this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
+  //   // }
+
+  // }
 
   renderHS() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
@@ -222,6 +234,15 @@ class BasicSignUpComponent extends React.Component {
     return <View></View>
   }
 
+  renderError = () => {
+    console.log(this.props.error);
+    if(this.props.error !== null) {
+      return (
+        <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
+      )
+    }
+  }
+
   //need to check unique from here
   render() {
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
@@ -231,6 +252,8 @@ class BasicSignUpComponent extends React.Component {
         <ScrollView style={surveyStyle.surveyBackground}>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
+            {this.renderModal()}
+            {this.renderError()}
           </View>
           <TextInput
             style={textFieldStyle}
@@ -321,4 +344,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { signUpUser })(BasicSignUpComponent);
+export default connect(mapStateToProps, { signUpUser, resetErrors })(BasicSignUpComponent);
