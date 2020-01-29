@@ -34,26 +34,26 @@ class EditProfile extends React.Component {
       extraversion: this.props.extraversion !== undefined ? this.props.extraversion : 50,
       listening: this.props.listening !== undefined ? this.props.listening : 50,
 
-      frontEnd: this.props.frontEnd,
-      backEnd: this.props.backEnd,
-      small: this.props.small,
-      medium: this.props.medium,
-      large: this.props.large,
-      meritocratic: this.props.meritocratic,
-      nurturing: this.props.nurturing,
-      fratty: this.props.fratty,
-      fast: this.props.fast,
-      organized: this.props.organized,
-      stable: this.props.stable,
-      formal: this.props.formal,
-      relaxed: this.props.relaxed,
-      web: this.props.web,
-      user: this.props.user,
-      design: this.props.design,
-      mobile: this.props.mobile,
-      security: this.props.security,
-      algorithms: this.props.algorithms,
-      storage: this.props.storage,
+      score_frontEnd: this.props.frontEnd,
+      score_backEnd: this.props.backEnd,
+      score_small: this.props.small,
+      score_medium: this.props.medium,
+      score_large: this.props.large,
+      score_meritocratic: this.props.meritocratic,
+      score_nurturing: this.props.nurturing,
+      score_fratty: this.props.fratty,
+      score_fast: this.props.fast,
+      score_organized: this.props.organized,
+      score_stable: this.props.stable,
+      score_formal: this.props.formal,
+      score_relaxed: this.props.relaxed,
+      score_web: this.props.web,
+      score_user: this.props.user,
+      score_design: this.props.design,
+      score_mobile: this.props.mobile,
+      score_security: this.props.security,
+      score_algorithms: this.props.algorithms,
+      score_storage: this.props.storage,
       profileURL: this.props.profileURL,
 
       // showing and hiding
@@ -76,9 +76,6 @@ class EditProfile extends React.Component {
 
   componentDidMount() {
     this.props.getUser(this.props.id);
-
-    console.log(this.props.extraversion);
-    console.log(this.props.listening);
   }
 
   async componentWillMount() {
@@ -93,13 +90,11 @@ class EditProfile extends React.Component {
   }
 
   photoUpload = async () => {
-    console.log("in poto upload")
     const result = await ImagePicker.launchImageLibraryAsync({
       base64: true,
     });
     if (!result.cancelled) {
       this.setState({ image: result.uri, imagefull: result });
-      console.log("settig image hehre")
     }
   };
 
@@ -113,8 +108,6 @@ class EditProfile extends React.Component {
     }
     else {
       if (this.state.imagefull != null) {
-        console.log("Bellow should work :()")
-        //console.log(this.state.imagefull)
         let i = this.state.imagefull.uri.length;
         while (this.state.imagefull.uri.charAt(i) !== '/') {
           i--;
@@ -131,7 +124,6 @@ class EditProfile extends React.Component {
         })
       }
       else {
-        console.log("Here again")
         this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
       }
     }
@@ -205,13 +197,13 @@ class EditProfile extends React.Component {
     if (val) {
       return (
         <View style={surveyStyle.items} >
-          <TouchableComponent name='Web Applications' stateField='web' stateFieldStatus={this.state.web} onChange={this.handleFieldChange} />
-          <TouchableComponent name='User Interaction' stateField='user' stateFieldStatus={this.state.user} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Design' stateField='design' stateFieldStatus={this.state.design} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Mobile Applications' stateField='mobile' stateFieldStatus={this.state.mobile} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Security' stateField='security' stateFieldStatus={this.state.security} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Algorithms & Math' stateField='algorithms' stateFieldStatus={this.state.algorithms} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Storage & Infrastructure' stateField='storage' stateFieldStatus={this.state.storage} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Web Applications' stateField='score_web' stateFieldStatus={this.state.score_web} onChange={this.handleFieldChange} />
+          <TouchableComponent name='User Interaction' stateField='score_user' stateFieldStatus={this.state.score_user} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Design' stateField='score_design' stateFieldStatus={this.state.score_design} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Mobile Applications' stateField='score_mobile' stateFieldStatus={this.state.score_mobile} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Security' stateField='score_security' stateFieldStatus={this.state.score_security} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Algorithms & Math' stateField='score_algorithms' stateFieldStatus={this.state.score_algorithms} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Storage & Infrastructure' stateField='score_storage' stateFieldStatus={this.state.score_storage} onChange={this.handleFieldChange} />
         </View>
       )
     }
@@ -221,8 +213,8 @@ class EditProfile extends React.Component {
     if (val) {
       return (
         <View style={surveyStyle.items}>
-          <TouchableComponent name='Front End' stateField='frontEnd' stateFieldStatus={this.state.frontEnd} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Back End' stateField='backEnd' stateFieldStatus={this.state.backEnd} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Front End' stateField='score_frontEnd' stateFieldStatus={this.state.score_frontEnd} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Back End' stateField='score_backEnd' stateFieldStatus={this.state.score_backEnd} onChange={this.handleFieldChange} />
         </View>
       );
     }
@@ -232,17 +224,17 @@ class EditProfile extends React.Component {
     if (val) {
       return (
         <View style={surveyStyle.items}>
-          <TouchableComponent name='Small' stateField='small' stateFieldStatus={this.state.small} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Medium' stateField='medium' stateFieldStatus={this.state.medium} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Large' stateField='large' stateFieldStatus={this.state.large} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Meritocratic' stateField='meritocratic' stateFieldStatus={this.state.meritocratic} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Nurturing' stateField='nurturing' stateFieldStatus={this.state.nurturing} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Fratty' stateField='fratty' stateFieldStatus={this.state.fratty} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Fast-Paced' stateField='fast' stateFieldStatus={this.state.fast} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Organized' stateField='organized' stateFieldStatus={this.state.organized} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Stable' stateField='stable' stateFieldStatus={this.state.stable} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Formal' stateField='formal' stateFieldStatus={this.state.formal} onChange={this.handleFieldChange} />
-          <TouchableComponent name='Relaxed' stateField='relaxed' stateFieldStatus={this.state.relaxed} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Small' stateField='score_small' stateFieldStatus={this.state.score_small} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Medium' stateField='score_medium' stateFieldStatus={this.state.score_medium} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Large' stateField='score_large' stateFieldStatus={this.state.score_large} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Meritocratic' stateField='score_meritocratic' stateFieldStatus={this.state.score_meritocratic} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Nurturing' stateField='score_nurturing' stateFieldStatus={this.state.score_nurturing} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Fratty' stateField='score_fratty' stateFieldStatus={this.state.score_fratty} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Fast-Paced' stateField='score_fast' stateFieldStatus={this.state.score_fast} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Organized' stateField='score_organized' stateFieldStatus={this.state.score_organized} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Stable' stateField='score_stable' stateFieldStatus={this.state.score_stable} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Formal' stateField='score_formal' stateFieldStatus={this.state.score_formal} onChange={this.handleFieldChange} />
+          <TouchableComponent name='Relaxed' stateField='score_relaxed' stateFieldStatus={this.state.score_relaxed} onChange={this.handleFieldChange} />
         </View>
       )
     }
@@ -250,7 +242,6 @@ class EditProfile extends React.Component {
 
   p1Question = (value) => {
     this.setState({ promptOneQuestion: value });
-    console.log("ere")
   }
 
   p1Answer = (text) => {
@@ -275,7 +266,6 @@ class EditProfile extends React.Component {
 
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
-    // console.log(`parent: ${this.state.extraversion}`);
   }
 
   opacityOnPress = () => {
@@ -538,6 +528,8 @@ const mapStateToProps = reduxState => (
     algorithms: reduxState.user.algorithms,
     storage: reduxState.user.storage,
     profileURL: reduxState.user.profileURL,
+    extraversion: reduxState.user.extraversion,
+    listening: reduxState.user.listening
   }
 );
 
