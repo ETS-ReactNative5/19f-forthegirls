@@ -103,7 +103,7 @@ export function signinUser({ username, password, navigate }) {
 
     }).catch((error) => {
       console.log(error);
-      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
+      dispatch(authError(`Invalid username or password`));
     });
   };
 }
@@ -137,6 +137,9 @@ export function signUpUser(fields, navigate, otherAnswers) {
             console.log(error);
             // dispatch(authError(`Sign In Failed: ${error.response.data}`));
           });
+      }).catch((error) => {
+        console.log(error);
+        dispatch(authError(`Sign Up Failed: User Exists with this Information`));
       });
   }
 }
@@ -368,6 +371,16 @@ export function unrsvpEvent(userID, eventID) {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   };
+}
+
+///------------------ERRORS----------------------------------
+
+export function resetErrors() {
+  return (
+    {
+      type: ActionTypes.ERROR_CLEAR, payload: null,
+    }
+  );
 }
 
 
