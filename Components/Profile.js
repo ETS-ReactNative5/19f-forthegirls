@@ -36,7 +36,6 @@ class Profile extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     this.props.getUser(this.props.id);
-    console.log('hi');
     this.focusListener = navigation.addListener('didFocus', () => {
       this.props.getUser(this.props.id);
     });
@@ -80,7 +79,6 @@ class Profile extends React.Component {
 
 
   render() {
-    console.log("herehehrehehehhehehe")
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -163,7 +161,7 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
-    profileURL: reduxState.user.profileURL,
+    profileURL: reduxState.user.profileURL
   }
 );
 

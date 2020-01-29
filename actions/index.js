@@ -326,7 +326,8 @@ export function fetchEvent(id) {
 export function fetchRsvpConnections(userId, eventId) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
-      dispatch({type: ActionTypes.FETCH_RSVP_CONNECTIONS, payload: response.data,
+      dispatch({
+        type: ActionTypes.FETCH_RSVP_CONNECTIONS, payload: response.data,
       });
     }).catch((error) => {
     });
