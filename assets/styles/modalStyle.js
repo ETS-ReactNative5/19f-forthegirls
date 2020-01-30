@@ -3,11 +3,12 @@ import colors, { fonts } from './basicStyle';
 
 const modalStyle = StyleSheet.create({
   wholeModal: {
+    marginTop: 30,
     height: '80%',
-    width: '100%',
+    width: '90%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    //justifyContent: 'center',
     backgroundColor: colors.veryLightPurple.color
   },
 
@@ -20,8 +21,6 @@ const modalStyle = StyleSheet.create({
   },
 
   hideModal: {
-    width: '100%',
-    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     color: colors.deepPurple.color,
