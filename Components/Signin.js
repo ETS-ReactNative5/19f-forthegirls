@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
-import { signinUser } from '../actions';
+import { signinUser, resetErrors } from '../actions';
 import { connect } from 'react-redux';
 import surveyStyle from '../assets/styles/surveyStyle'
 import TextField from 'react-native-text-field';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import ErrorModal from './ErrorModal';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -12,11 +13,24 @@ class SignIn extends React.Component {
     this.state = {
       username: '',
       password: '',
+
+      showModal: false,
+      modalMessage: '', 
     }
   }
 
+  componentWillUnmount() {
+    this.props.resetErrors();
+  }
+
   checkSignIn = () => {
-    this.props.signinUser({ username: this.state.username, password: this.state.password, navigate: this.props.navigation });
+    if(this.state.username==='' || this.state.password==='') {
+      this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
+    }
+    else {
+      this.props.signinUser({ username: this.state.username, password: this.state.password, navigate: this.props.navigation });
+    }
+
   }
 
   usernameInput = (text) => {
@@ -27,11 +41,33 @@ class SignIn extends React.Component {
     this.setState({ password: text });
   }
 
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  renderError = () => {
+    if(this.props.error !== null) {
+      return (
+        <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
+      )
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
   render() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
+    var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     return (
       <View style={surveyStyle.surveyBackground}>
+        {this.renderModal()}
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
+        {this.renderError()}
         <TextInput
           style={textFieldStyle}
           placeholder="Username"
@@ -48,10 +84,10 @@ class SignIn extends React.Component {
           clearButtonMode='while-editing'
         />
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
+          <View style={[buttons.logInOutButton, buttons.logInButton]}>
             <TouchableOpacity
               onPress={this.checkSignIn}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log In</Text>
+              <Text style={[fonts.minorHeading, colors.white, fontEffects.center]}>Log In</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -66,4 +102,4 @@ function mapStateToProps(reduxState) {
   };
 }
 
-export default connect(mapStateToProps, { signinUser })(SignIn);
+export default connect(mapStateToProps, { signinUser, resetErrors })(SignIn);

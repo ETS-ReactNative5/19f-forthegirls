@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
 import { getUser, getMatches } from '../actions';
-import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import axios from 'axios';
@@ -16,17 +16,18 @@ class SingleChat extends React.Component {
       chats: [],
       chatText: '',
       numberText: 8,
-      prompt: 'Click to chat!',
+      prompt: 'click'//this.props.navigation.getParam('prompt') || '',
     }
 
     this.goBack = this.goBack.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
 
   }
 
   componentDidMount() {
+    console.log(this.props.navigation.getParam('prompt'));
     this.getChats();
     this.setPrompt();
-
   }
 
   setPrompt = () => {
@@ -34,7 +35,6 @@ class SingleChat extends React.Component {
       this.setState({ prompt: this.props.navigation.getParam('prompt') });
       this.setState({ chatText: this.props.navigation.getParam('prompt') });
     }
-
   }
 
   getChats() {
@@ -72,7 +72,12 @@ class SingleChat extends React.Component {
   }
 
   addChat = (text) => {
+    // if (this.props.navigation.getParam('prompt') !== '') {
+    //   this.setState({ chatText: this.props.navigation.getParam('prompt') })
+    // } else {
     this.setState({ chatText: text });
+    // }
+
   }
 
   sendChat = () => {
@@ -83,14 +88,13 @@ class SingleChat extends React.Component {
       text: this.state.chatText
     }
 
-
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
         this.getChats();
+        this.setState({ chatText: '', prompt: '' })
       }).catch((error) => {
         console.log(error);
       });
-
   }
 
   loadMore = () => {
@@ -112,9 +116,13 @@ class SingleChat extends React.Component {
 
   // }
 
+  handleKeyDown = (e) => {
+    if (e.nativeEvent.key == "Enter") {
+      this.sendChat();
+    }
+  }
 
   render() {
-    //&& this.props.matches.legnth > 0
     return (
       <View>
         <View style={singleChat.header}>
@@ -127,11 +135,11 @@ class SingleChat extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={singleChat.headerTextContainer}>
+            <Image source={this.props.navigation.getParam('profilePic') !== undefined ? { uri: this.props.navigation.getParam('profilePic') } : require('./../assets/icons/tim.jpg')} style={profileImage.singleChat} />
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
-        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={130}>
-
+        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={150}>
           <ScrollView>
             <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
               <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
@@ -140,7 +148,25 @@ class SingleChat extends React.Component {
               {this.showChats()}
             </View>
             {/* {this.renderInput()} */}
-            <TextInput style={[surveyStyle.textField, fonts.minorHeading, colors.deepPurple]} defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
+            <View style={singleChat.chatInputView}>
+              <TextInput
+                multiline={true}
+                clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
+                style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
+                defaultValue={this.props.navigation.getParam('prompt')}
+                value={this.state.chatText}
+                onChangeText={this.addChat}
+                onEndEditing={this.sendChat}
+                onKeyPress={this.handleKeyDown}
+              />
+              <TouchableOpacity
+                style={{ paddingTop: 2, paddingLeft: 5 }}
+                onPress={this.sendChat}>
+                <Image
+                  source={require('./../assets/icons/arrowup.png')}
+                />
+              </TouchableOpacity>
+            </View>
 
           </ScrollView>
         </KeyboardAvoidingView>

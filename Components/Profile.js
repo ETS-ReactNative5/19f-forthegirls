@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
-import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser, addToSurvey } from '../actions';
 
@@ -10,8 +10,6 @@ import { withNavigation } from 'react-navigation';
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-
-//import CsComponent from './csComponent';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -33,12 +31,11 @@ class Profile extends React.Component {
     if (status !== 'granted') {
       console.log('Please enable camera');
     }
-}
+  }
 
   componentDidMount() {
     const { navigation } = this.props;
     this.props.getUser(this.props.id);
-    console.log('hi');
     this.focusListener = navigation.addListener('didFocus', () => {
       this.props.getUser(this.props.id);
     });
@@ -82,7 +79,6 @@ class Profile extends React.Component {
 
 
   render() {
-    console.log("herehehrehehehhehehe")
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -98,22 +94,18 @@ class Profile extends React.Component {
           <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
           <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
           <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
-          <TouchableOpacity
-            onPress={this.opacityOnPress}>
-            <Text>click here to edit profile</Text>
-          </TouchableOpacity>
         </View>
       )
     }
 
-    imageNoImage =  <Image source={require('./../assets/icons/tim.jpg')} style={{width: 125, height: 125, borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9'}} />
-    imageImage = <Image source={{ uri: this.props.profileURL }} style={{ width: 125, height: 125,  borderRadius: 63,  borderWidth: 3, borderColor: '#28C3A9' }} />
+    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
-    // if (this.state.editing === false) {
+
     return (
       <View style={profile.profileContainer}>
-        <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
           {image}
         </View>
 
@@ -134,23 +126,19 @@ class Profile extends React.Component {
           {prompts}
         </View>
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
+          <View style={buttons.container}>
+            <TouchableOpacity
+              onPress={this.opacityOnPress}>
+              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={this.logout}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Log Out</Text>
+              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
             </TouchableOpacity>
           </View>
         </View>
       </View>
     )
-    // }
-    // else {
-    //   return (
-    //     <View style={profile.profileContainer}>
-    //       <Text style={[colors.black, fonts.majorHeading]}>Loading...</Text>
-    //     </View>
-    //   )
-    // }
   }
 }
 
@@ -173,7 +161,7 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
-    profileURL: reduxState.user.profileURL,
+    profileURL: reduxState.user.profileURL
   }
 );
 

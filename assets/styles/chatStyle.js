@@ -7,8 +7,7 @@ const chatList = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     height: 70,
-    width: '100%',
-    justifyContent: 'space-between'
+    width: '100%'
   },
   listItemPurple: {
     backgroundColor: colors.lessOpaquePurple.color,
@@ -17,6 +16,7 @@ const chatList = StyleSheet.create({
     backgroundColor: colors.white.color
   },
   username: {
+    marginTop: 10,
     padding: 10
   },
   chatButton: {
@@ -39,31 +39,37 @@ const chatList = StyleSheet.create({
     padding: 5,
     borderColor: colors.red.color,
     borderRadius: 15,
-    marginRight: 10
+    marginRight: 10,
+    flexDirection: 'row',
+    position: 'absolute',
+    marginLeft: 325,
+    justifyContent: 'center'
   }
 });
 
 const singleChat = StyleSheet.create({
   sender: {
+    padding: 3,
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 140,
     marginRight: 10,
     borderRadius: 20,
     backgroundColor: colors.turquoise.color,
-    height: 50,
+    height: 'auto',
     width: 225,
     paddingLeft: 10,
   },
   reciever: {
+    padding: 3,
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 7,
     marginRight: 10,
     borderRadius: 20,
-    width: 225,
     backgroundColor: colors.lightGrey.color,
-    height: 50,
+    height: 'auto',
+    width: 225,
     paddingLeft: 10,
   },
   loadmore: {
@@ -89,13 +95,28 @@ const singleChat = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: colors.veryLightPurple.color,
+    backgroundColor: colors.lightGrey.color,
   },
   headerTextContainer: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  chatInputView: {
+    margin: 5,
+    flexDirection: 'row',
+    borderWidth: 2,
+    borderColor: colors.deepPurple.color,
+    borderRadius: 20,
+  },
+  chatInput: {
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 7,
+    marginRight: 10,
+    height: 30,
+    width: 300
   }
 })
 

@@ -11,6 +11,7 @@ import { addEvent } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import Geocoder from 'react-native-geocoding';
+import ErrorModal from './ErrorModal';
 
 class AddEvent extends Component {
   constructor(props) {
@@ -23,6 +24,9 @@ class AddEvent extends Component {
       description: '',
       latitude: 0,
       longitude: 0,
+
+      showModal: false,
+      modalMessage: '', 
     };
 
     this.titleInput = this.titleInput.bind(this);
@@ -54,87 +58,101 @@ class AddEvent extends Component {
     this.setState({ description: text });
   }
 
-  addEvent() {
+  addEvent = () => {
     if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
-      //https://facebook.github.io/react-native/docs/alert
-      Alert.alert(
-        'Please Fill Out All Fields to Continue',
-        '',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'OK' },
-        ],
-        { cancelable: true }
-      );
+      this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
     }
     else {
 
-      Geocoder.init("AIzaSyAWUDgz30Re2MMeq7cu0wFWN1iZf7HR1Ew"); // use a valid API key
+      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
+      Geocoder.from(this.state.location)
+        .then(json => {
+          var location = json.results[0].geometry.location;
+          this.setState({latitude: location.lat, longitude: location.lng})
 
-      console.log(this.state.location);
-      Geocoder.from("New York City")
-		  .then(json => {
-		  	var location = json.results[0].geometry.location;
-			  console.log(location);
-		  })
-		  .catch(error => console.warn(error));
-
-
-      this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
-      const popAction = StackActions.pop({
-        n: 1,
-      });
-      this.props.navigation.dispatch(popAction);
+          this.props.addEvent({ title: this.state.title, date: this.state.date, time: this.state.time, location: this.state.location, description: this.state.description, latitude: this.state.latitude, longitude: this.state.longitude });
+          const popAction = StackActions.pop({
+          n: 1,
+          });
+          this.props.navigation.dispatch(popAction);
+        })
+        .catch((error) =>  {
+          console.log(error);
+          this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
+          }
+        );
+      
     }
   }
 
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
   render() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
+    var textFieldStyle = [fonts.bodyText]
     return (
-      <View style={{ backgroundColor: colors.veryLightPurple.color }}>
-        <TextInput
-          style={textFieldStyle}
-          keyboardType='default'
-          placeholder="Event Title"
-          onChangeText={this.titleInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Date (MM/DD/YY)"
-          keyboardType='default'
-          onChangeText={this.dateInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Time (24:00)"
-          keyboardType='default'
-          onChangeText={this.timeInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Location"
-          keyboardType='default'
-          onChangeText={this.locationInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing' />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Event Description"
-          keyboardType='default'
-          onChangeText={this.descriptionInput}
-          autoCapitalize='none'
-          clearButtonMode='while-editing'
-          multiline={true} />
+      <View style={{ backgroundColor: colors.white.color }}>
+        {this.renderModal()}
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            keyboardType='default'
+            placeholder="Event Title"
+            onChangeText={this.titleInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Date (MM/DD/YY)"
+            keyboardType='default'
+            onChangeText={this.dateInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Time (24:00)"
+            keyboardType='default'
+            onChangeText={this.timeInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Location"
+            keyboardType='default'
+            onChangeText={this.locationInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing' />
+        </View>
+        <View style={surveyStyle.textFieldContainer}>
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Event Description"
+            keyboardType='default'
+            onChangeText={this.descriptionInput}
+            autoCapitalize='none'
+            clearButtonMode='while-editing'
+            multiline={true} />
+        </View>
         <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.logInButton}>
-            <TouchableOpacity
-              onPress={this.addEvent}>
-              <Text style={[fonts.majorHeading, colors.white, fontEffects.center]}>Submit</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            onPress={this.addEvent}>
+            <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
+          </TouchableOpacity>
         </View>
       </View>
     );

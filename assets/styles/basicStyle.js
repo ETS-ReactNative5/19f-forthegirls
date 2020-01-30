@@ -19,6 +19,9 @@ const colors = StyleSheet.create({
   lightGrey: {
     color: '#F4F4F4'
   },
+  darkGrey: {
+    color: '#C4C4C4'
+  },
   veryLightPurple: {
     color: '#46518725'
   },
@@ -67,7 +70,9 @@ const logo = StyleSheet.create({
   logoText: {
     textAlign: 'center',
     flexDirection: 'column',
-    marginTop: 30
+    marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 
@@ -91,19 +96,79 @@ const buttons = StyleSheet.create({
     alignItems: 'flex-end',
     marginTop: 30
   },
-  logInButton: {
+  logInOutButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 10,
     borderWidth: 2,
-    height: 60,
+    height: 40,
     width: 120,
-    padding: 10,
-    borderColor: colors.white.color,
+    padding: 5,
+    marginBottom: 10,
+    borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
-    borderRadius: 20,
+    borderRadius: 20
+  },
+  logInButton: {
     marginLeft: 125
+  },
+  submitProfileButton: {
+    marginLeft: 100
   }
 
 })
 
+const profileImage = StyleSheet.create({
+  basic: {
+    width: 125,
+    height: 125,
+    borderRadius: 63,
+    borderWidth: 3,
+    borderColor: colors.turquoise.color
+  },
+  allChatsPage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: colors.turquoise.color,
+    marginTop: 5,
+    marginLeft: 5
+  },
+  singleChat: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: colors.turquoise.color,
+    margin: 5
+  },
+
+})
+
+const modal = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.white.color,
+    padding: 10,
+    marginTop: 300,
+    marginBottom: 300,
+    marginLeft: 50,
+    marginRight: 50,
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: colors.deepPurple.color
+  },
+  errorText: {
+    color: colors.deepPurple.color
+  },
+  closeButton: {
+    alignSelf: 'flex-end'
+  },
+})
+
 export default colors;
-export { colors, fonts, fontEffects, logo, buttons }
+export { colors, fonts, fontEffects, logo, buttons, profileImage, modal }

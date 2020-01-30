@@ -85,7 +85,7 @@ const eventPage = StyleSheet.create({
 
   eventDetail: {
     width: '100%',
-    height: '100%',
+    height: '70%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -151,6 +151,7 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVP: {
+    marginTop: 20,
     borderRadius: 20,
     display: 'flex',
     flexDirection: 'column',
