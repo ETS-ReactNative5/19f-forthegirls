@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-export const ROOT_URL = 'http://localhost:9090/api'; //'https://for-the-girls.herokuapp.com/api';
+export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 export const ActionTypes = {
   // USERS
   // CREATE_USER: 'CREATE_USER',
@@ -38,7 +38,12 @@ export const ActionTypes = {
   ADD_CS: 'ADD_CS',
   ADD_DEMO: 'ADD_DEMO',
   ADD_EDU: 'ADD_EDU',
-  ADD_PERSONAL: 'ADD_PERSONAL'
+  ADD_PERSONAL: 'ADD_PERSONAL',
+
+  //AWARDS
+  FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
+  FETCH_AWARD: 'FETCH_AWARD',
+
 };
 
 //----------------- USERS ------------------//
@@ -304,6 +309,32 @@ export function fetchYourEvents(id) {
     axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
       dispatch({
         type: ActionTypes.FETCH_YOUR_EVENTS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+export function fetchYourAwards(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/checkAward/${id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_YOUR_AWARDS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+export function fetchAwardStatus(id, awardTitle) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/checkAward/${id}/${awardTitle}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_AWARD,
         payload: response.data,
       });
     }).catch((error) => {
