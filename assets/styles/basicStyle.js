@@ -144,6 +144,13 @@ const profileImage = StyleSheet.create({
     borderColor: colors.turquoise.color,
     margin: 5
   },
+  eventConnection: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: colors.deepPurple.color
+  },
 
 })
 
@@ -168,6 +175,20 @@ const modal = StyleSheet.create({
   closeButton: {
     alignSelf: 'flex-end'
   },
+  eventContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: colors.white.color,
+    padding: 10,
+    marginTop: 200,
+    marginBottom: 200,
+    marginLeft: 25,
+    marginRight: 25,
+    borderRadius: 20,
+    borderWidth: 3,
+    borderColor: colors.deepPurple.color
+  }
 })
 
 export default colors;

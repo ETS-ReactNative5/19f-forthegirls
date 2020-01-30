@@ -26,7 +26,7 @@ class SingleEvent extends Component {
   }
 
   navToPage() {
-    this.props.navigation.navigate('Detail', { eventID: this.props.eventID });
+    this.props.navigation.navigate('Detail', { eventID: this.props.eventID, eventName: this.props.name });
   }
 
   render() {

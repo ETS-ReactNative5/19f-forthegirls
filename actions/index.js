@@ -222,8 +222,11 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
 export function getPotentialMatches(username) {
   //matches/potential/:username
   return (dispatch) => {
+    console.log(username);
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
+        console.log('in the then ')
+        console.log(response);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
@@ -329,6 +332,8 @@ export function fetchEvent(id) {
 export function fetchRsvpConnections(userId, eventId) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
+      console.log('fetch rsvp connections')
+      console.log(response.data);
       dispatch({
         type: ActionTypes.FETCH_RSVP_CONNECTIONS, payload: response.data,
       });

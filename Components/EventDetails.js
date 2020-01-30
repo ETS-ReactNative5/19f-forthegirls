@@ -13,10 +13,11 @@ import {
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import modalStyle from '../assets/styles/modalStyle';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, modal, buttons, profileImage } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
 import EventMap from './EventMap.js'
+import SurveyHeaderComponent from './surveyHeaderComponent.js'
 
 class EventDetails extends Component {
   constructor(props) {
@@ -45,38 +46,42 @@ class EventDetails extends Component {
     }
   }
 
-  changeModal(){
+  changeModal() {
     this.setState({ showingModal: !this.state.showingModal });
   }
 
   renderConnections() {
     var connected = this.props.connections.map((connect) => {
-      console.log(connect);
+      //console.log(this.props.connections);
       return (
-        <Text key={connect}>
-          {connect}
-        </Text>
+        <View key={connect._id} style={{ margin: 7 }}>
+          <Image source={connect.profileURL !== undefined ? { uri: connect.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.eventConnection} />
+          <Text style={[fonts.minorHeading, colors.deepPurple]}>
+            {connect.firstName}
+          </Text>
+        </View>
       );
     })
     return connected;
   }
 
   renderModal() {
-    if(this.state.showingModal){
+    if (this.state.showingModal) {
       return (
         <Modal
           animationType="fade"
-          transparent={false}
+          transparent={true}
           visible={this.state.showingModal}>
-          <View style={modalStyle.wholeModal}>
-            <ScrollView contentContainerStyle={modalStyle.scroll} >
-              {this.renderConnections()}
+          <View style={modal.eventContainer}>
+            <SurveyHeaderComponent header={`Attending ${this.props.navigation.getParam("eventName")}`} />
+            <ScrollView>
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'flex-start' }}>{this.renderConnections()}</View>
             </ScrollView>
             <TouchableHighlight
               onPress={() => {
                 this.changeModal();
               }}>
-              <Text style={modalStyle.hideModal}>Hide Modal</Text>
+              <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Okay</Text></View>
             </TouchableHighlight>
           </View>
         </Modal>
@@ -97,20 +102,20 @@ class EventDetails extends Component {
   }
 
   handleRSVP() {
-    if(this.state.rsvp===false){
+    if (this.state.rsvp === false) {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
     }
-    else{
+    else {
       this.props.unrsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: false });
     }
   }
 
   renderMap = () => {
-    if(this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
+    if (this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
       return (
-        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude}/>
+        <EventMap latitude={this.props.event.latitude} longitude={this.props.event.longitude} />
       )
     }
   }
@@ -118,7 +123,7 @@ class EventDetails extends Component {
   render() {
 
     return (
-      <View style={eventPage.eventDetail}>
+      <ScrollView><View style={eventPage.eventDetail}>
         <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
         <View style={eventPage.eventDetailTitleBox} >
           <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
@@ -142,9 +147,10 @@ class EventDetails extends Component {
         </View>
         <View style={eventPage.eventDetailRSVPContainer} >
           {this.renderModal()}
-          <View>
+          <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
+            <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
             <TouchableOpacity onPress={this.changeModal}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.connections ? this.props.connections.length : null} Connections have Rsvp'd! </Text>
+              <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
             </TouchableOpacity>
           </View>
           <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
@@ -154,8 +160,8 @@ class EventDetails extends Component {
                 : 'RSVP'}
             </Text>
           </TouchableOpacity>
-        </View>
-      </View>
+        </View></View>
+      </ScrollView>
     );
   }
 }
