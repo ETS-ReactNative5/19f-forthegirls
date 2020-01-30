@@ -7,8 +7,7 @@ const chatList = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     height: 70,
-    width: '100%',
-    justifyContent: 'space-between'
+    width: '100%'
   },
   listItemPurple: {
     backgroundColor: colors.lessOpaquePurple.color,
@@ -17,6 +16,7 @@ const chatList = StyleSheet.create({
     backgroundColor: colors.white.color
   },
   username: {
+    marginTop: 10,
     padding: 10
   },
   chatButton: {
@@ -39,7 +39,11 @@ const chatList = StyleSheet.create({
     padding: 5,
     borderColor: colors.red.color,
     borderRadius: 15,
-    marginRight: 10
+    marginRight: 10,
+    flexDirection: 'row',
+    position: 'absolute',
+    marginLeft: 325,
+    justifyContent: 'center'
   }
 });
 

@@ -126,6 +126,15 @@ const profileImage = StyleSheet.create({
     borderRadius: 63,
     borderWidth: 3,
     borderColor: colors.turquoise.color
+  },
+  allChatsPage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: colors.turquoise.color,
+    marginTop: 5,
+    marginLeft: 5
   }
 })
 
