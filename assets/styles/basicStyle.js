@@ -135,7 +135,16 @@ const profileImage = StyleSheet.create({
     borderColor: colors.turquoise.color,
     marginTop: 5,
     marginLeft: 5
-  }
+  },
+  singleChat: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: colors.turquoise.color,
+    margin: 5
+  },
+
 })
 
 const modal = StyleSheet.create({

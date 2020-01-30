@@ -95,11 +95,11 @@ const singleChat = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: colors.white.color,
+    backgroundColor: colors.lightGrey.color,
   },
   headerTextContainer: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },

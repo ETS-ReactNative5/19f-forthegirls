@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
 import { getUser, getMatches } from '../actions';
-import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import axios from 'axios';
@@ -123,10 +123,6 @@ class SingleChat extends React.Component {
   }
 
   render() {
-    console.log('prompt::::')
-    console.log(this.props.navigation.getParam('prompt'));
-    console.log(this.state.prompt)
-    //&& this.props.matches.legnth > 0
     return (
       <View>
         <View style={singleChat.header}>
@@ -139,6 +135,7 @@ class SingleChat extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={singleChat.headerTextContainer}>
+            <Image source={this.props.navigation.getParam('profilePic') !== undefined ? { uri: this.props.navigation.getParam('profilePic') } : require('./../assets/icons/tim.jpg')} style={profileImage.singleChat} />
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
