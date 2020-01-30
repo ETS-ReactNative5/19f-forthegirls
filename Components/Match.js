@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
 import axios from 'axios';
 import chatList from '../assets/styles/chatStyle';
@@ -46,17 +46,17 @@ class Match extends React.Component {
     return (
       <TouchableOpacity
         key={this.props.i}
-        //this.pressUser(this.state.match.email)
         onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username })}>
         <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
+          <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
           <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
-          <View style={chatList.delete}>
-            <TouchableOpacity
-              key={this.props.i + 1}
-              onPress={() => this.deleteMatch()}>
-              <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
-            </TouchableOpacity>
-          </View>
+        </View>
+        <View style={chatList.delete}>
+          <TouchableOpacity
+            key={this.props.i + 1}
+            onPress={() => this.deleteMatch()}>
+            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     )
