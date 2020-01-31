@@ -85,10 +85,9 @@ export function editUser(fields) {
 export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
-      //  username: response.data.username
       dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
 
-      //NEED TO ADD TOKEN
+      //How to add tokens using react native
       //https://facebook.github.io/react-native/docs/asyncstorage
       _storeData = async () => {
         try {
@@ -101,7 +100,6 @@ export function signinUser({ username, password, navigate }) {
       };
 
       _storeData();
-
       navigate.navigate("Main");
 
     }).catch((error) => {
@@ -120,7 +118,6 @@ export function signUpUser(fields, navigate, otherAnswers) {
           .then((res) => {
             dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
 
-            //should add token in here
             _storeData = async () => {
               try {
                 await AsyncStorage.setItem('token', response.data.token);
@@ -133,12 +130,10 @@ export function signUpUser(fields, navigate, otherAnswers) {
 
             _storeData();
 
-            //somehow get to next page
             navigate.navigate("Main");
           })
           .catch((error) => {
             console.log(error);
-            // dispatch(authError(`Sign In Failed: ${error.response.data}`));
           });
       }).catch((error) => {
         console.log(error);
@@ -153,7 +148,6 @@ export function addToSurvey(otherAnswers, username, navigate, navTo) {
       navigate.navigate(navTo);
     }).catch((error) => {
       console.log(error);
-      // dispatch(authError(`Sign In Failed: ${error.response.data}`));
     });
   }
 }
@@ -179,17 +173,9 @@ export function signoutUser(navigate) {
 
     //add navigation back to log in screen
     deleteToken();
-
     navigate.navigate('StartScreen')
-    //somehow get to next page
   };
-  // return (dispatch) => {
-  //   localStorage.removeItem('token');
-  //   dispatch({ type: ActionTypes.DEAUTH_USER });
-  //   history.push('/');
-  // };
 }
-
 
 // trigger to deauth if there is error
 // can also use in your error reducer if you have one to display an error message
@@ -202,14 +188,11 @@ export function authError(error) {
 
 //----------------- MATCHES ------------------//
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
-  // console.log("pairing index")
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
-        console.log("matching");
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
-            console.log("getting again");
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
             navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2 })
           }).catch((error) => {
@@ -225,11 +208,8 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
 export function getPotentialMatches(username) {
   //matches/potential/:username
   return (dispatch) => {
-    console.log(username);
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
-        console.log('in the then ')
-        console.log(response);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
@@ -272,8 +252,6 @@ export function deleteMatch(userID, matchID, username) {
       });
   }
 }
-
-
 
 //----------------- EVENTS ------------------//
 export function addEvent(fields) {
@@ -321,10 +299,8 @@ export function fetchYourEvents(id) {
 }
 
 export function fetchYourAwards(id) {
-  console.log("GERE")
   return (dispatch) => {
     axios.get(`${ROOT_URL}/awards/checkAllAwards/${id}`).then((response) => {
-      console.log("ERE@@@@")
       dispatch({
         type: ActionTypes.FETCH_YOUR_AWARDS,
         payload: response.data,
@@ -363,8 +339,6 @@ export function fetchEvent(id) {
 export function fetchRsvpConnections(userId, eventId) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
-      console.log('fetch rsvp connections')
-      console.log(response.data);
       dispatch({
         type: ActionTypes.FETCH_RSVP_CONNECTIONS, payload: response.data,
       });
@@ -420,89 +394,3 @@ export function resetErrors() {
 }
 
 
-//----------------- SURVEY ------------------//
-// export function addBasicInfo(id, fields) {
-//   console.log('adding basic info from survey');
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/survey/basicInfo/${id}`, fields)
-//       .then((response) => {
-//         console.log('success?');
-//         dispatch({ type: ActionTypes.ADD_BASICINFO, payload: response.data });
-//       }).then(() => {
-//         console.log('success2?');
-//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
-//       }).catch((error) => {
-//         console.log('fail?');
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }
-
-
-// export function addCS(id, fields) {
-//   console.log('adding cs info from survey');
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/survey/cs/${id}`, fields)
-//       .then((response) => {
-//         console.log('success?');
-//         dispatch({ type: ActionTypes.ADD_CS, payload: response.data });
-//       }).then(() => {
-//         console.log('success2?');
-//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
-//       }).catch((error) => {
-//         console.log('fail?');
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }
-
-// export function addDemo(id, fields) {
-//   console.log('adding demo info from survey');
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/survey/demo/${id}`, fields)
-//       .then((response) => {
-//         console.log('success?');
-//         dispatch({ type: ActionTypes.ADD_DEMO, payload: response.data });
-//       }).then(() => {
-//         console.log('success2?');
-//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
-//       }).catch((error) => {
-//         console.log('fail?');
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }
-
-// export function addEdu(id, fields) {
-//   console.log('adding education info from survey');
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/survey/edu/${id}`, fields)
-//       .then((response) => {
-//         console.log('success?');
-//         dispatch({ type: ActionTypes.ADD_EDU, payload: response.data });
-//       }).then(() => {
-//         console.log('success2?');
-//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
-//       }).catch((error) => {
-//         console.log('fail?');
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }
-
-// export function addPersonal(id, fields) {
-//   console.log('adding personality info from survey');
-//   return (dispatch) => {
-//     axios.post(`${ROOT_URL}/survey/personal/${id}`, fields)
-//       .then((response) => {
-//         console.log('success?');
-//         dispatch({ type: ActionTypes.ADD_PERSONAL, payload: response.data });
-//       }).then(() => {
-//         console.log('success2?');
-//         dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
-//       }).catch((error) => {
-//         console.log('fail?');
-//         dispatch({ type: ActionTypes.SET_ERROR, error });
-//       });
-//   };
-// }

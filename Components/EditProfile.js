@@ -141,24 +141,6 @@ class EditProfile extends React.Component {
     this.setState({ showModal: value });
   }
 
-  // submitPage = () => {
-
-  //   console.log(this.state);
-  //   //https://facebook.github.io/react-native/docs/modal
-  //   //How to use a modal in react native
-  //   if (this.promptOneQuestion === this.promptTwoQuestion || this.promptTwoQuestion === this.promptThreeQuestion || this.promptOneQuestion === this.promptThreeQuestion) {
-  //     this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
-  //   }
-  //   if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
-  //     this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out your basic information!" });
-  //   }
-  //   else {
-
-  //     this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
-  //   }
-
-  // }
-
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "" });
   }

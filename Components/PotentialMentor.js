@@ -33,8 +33,6 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = (prompt) => {
-    console.log("matching...");
-    console.log(prompt);
     if (prompt === '1') {
       prompt = this.state.userMatch.promptOneAnswer;
     }
@@ -45,11 +43,6 @@ class PotentialMentor extends React.Component {
       prompt = this.state.userMatch.promptThreeAnswer;
     }
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
-    // console.log("handling chat");
-
-    // setTimeout(this.props.refresh, 2000);
-
-    // this.setState({ matched: true, noAction: false })
   }
 
   showMatch = () => {
@@ -100,11 +93,6 @@ class PotentialMentor extends React.Component {
                 source={noMatch}
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={this.yesMatchCallback} >
-              <Image
-                source={yesMatch}
-              />
-            </TouchableOpacity> */}
           </View>
         </View >
       )

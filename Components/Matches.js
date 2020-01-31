@@ -15,18 +15,12 @@ class Matches extends React.Component {
     this.props.getPotentialMatches(this.props.username);
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   this.props.getPotentialMatches(this.props.username);
-  // }
-
   refresh = () => {
     this.props.getPotentialMatches(this.props.username);
   }
 
   returnMatches = () => {
     return this.props.potentialMatches.map((n) => {
-      console.log("returning matches");
-      console.log(n);
       return (
         <PotentialMentor key={n} userId={n} refresh={this.refresh} navigation={this.props.navigation}/>
       )
@@ -34,11 +28,16 @@ class Matches extends React.Component {
   }
 
   render() {
-    if (this.props.potentialMatches !== undefined) {
+    if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) {
       return (
         <ScrollView>
           {this.returnMatches()}
         </ScrollView>
+      )
+    }
+    else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth === 0) {
+      return (
+        <Text>No matches right now!</Text>
       )
     }
     else {
