@@ -5,7 +5,6 @@ import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
-import BadgesComponent from './Badges.js';
 import { withNavigation } from 'react-navigation';
 
 import * as ImagePicker from 'expo-image-picker';
@@ -79,9 +78,40 @@ class Profile extends React.Component {
     this.props.navigation.navigate('EditProfile', {})
   }
 
+  threeRSVPS = () => {
+    if(this.props.allYours[1]){
+      return <Image source={require('./../assets/icons/eventsbadge.png')} />
+    }
+    return null;
+  }
+
+  messageFive = () => {
+    if(this.props.allYours[3]){
+      return <Image source={require('./../assets/icons/messageFive.png')} />
+    }
+    return null;
+  }
+
+  firstMatch = () => {
+    if(this.props.allYours[5]){
+      return <Image source={require('./../assets/icons/socialbutterfly.png')} />
+    }
+    return null;
+  }
+
+  badge = () => {
+    return (
+      <View style={{flexDirection: 'row'}}>
+      {this.threeRSVPS()}
+      {this.messageFive()}
+      {this.firstMatch()}
+      {<Image source={require('./../assets/icons/founders.png')} />}
+      </View>
+    )
+  }
+
 
   render() {
-
     console.log("fetchign awards");
     console.log(this.props.allYours);
 
@@ -109,6 +139,13 @@ class Profile extends React.Component {
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
 
+    rewards = null;
+    if(this.props.allYours != null){
+      rewards = this.badge()
+    }
+
+
+
     return (
       <View style={profile.profileContainer}>
         <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
@@ -131,7 +168,9 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
-        <BadgesComponent />
+        <View>
+          {rewards}
+        </View>
         <View style={{ justifyContent: 'flex-end' }}>
           <View style={buttons.container}>
             <TouchableOpacity
