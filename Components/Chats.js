@@ -21,7 +21,6 @@ class Chats extends React.Component {
 
   showMatches() {
     var i = -1;
-    // console.log(this.props.matches);
     return this.props.matches.map((n) => {
       i++;
       return (
@@ -31,7 +30,6 @@ class Chats extends React.Component {
   }
 
   render() {
-    //&& this.props.matches.legnth > 0
     if (this.props.matches !== undefined && this.props.matches.legnth !== 0) {
       return (
         <ScrollView>
@@ -42,7 +40,7 @@ class Chats extends React.Component {
         </ScrollView>
       )
     }
-    else if (this.props.matches.length !== 0) {
+    else if (this.props.matches !== undefined && this.props.matches.length !== 0) {
       return (
         <View>
           <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>

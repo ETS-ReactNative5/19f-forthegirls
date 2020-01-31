@@ -33,8 +33,6 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = (prompt) => {
-    console.log("matching...");
-    console.log(prompt);
     if (prompt === '1') {
       prompt = this.state.userMatch.promptOneAnswer;
     }
@@ -45,11 +43,6 @@ class PotentialMentor extends React.Component {
       prompt = this.state.userMatch.promptThreeAnswer;
     }
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
-    // console.log("handling chat");
-
-    // setTimeout(this.props.refresh, 2000);
-
-    // this.setState({ matched: true, noAction: false })
   }
 
   showMatch = () => {
@@ -64,7 +57,7 @@ class PotentialMentor extends React.Component {
     var yesMatch = require('../assets/icons/chatSelected.png');
     var noMatch = require('../assets/icons/dontMatch.png');
 
-    if (this.state.userMatch !== undefined && this.state.userMatch.legnth !== 0) {
+    if (this.state.userMatch !== undefined) {
       return (
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
@@ -100,17 +93,9 @@ class PotentialMentor extends React.Component {
                 source={noMatch}
               />
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={this.yesMatchCallback} >
-              <Image
-                source={yesMatch}
-              />
-            </TouchableOpacity> */}
           </View>
         </View >
       )
-    }
-    else if (this.state.userMatch.legnth === 0) {
-      <Text>No potential matches right now!</Text>
     }
     else {
       return (

@@ -32,12 +32,6 @@ class Match extends React.Component {
     this.setState({ mounted: false });
   }
 
-
-  // pressUser = (email) => {
-  //   Linking.openURL('mailto:' + email + '?subject=We Matched!')
-  //     .catch((error) => console.log("email error" + error));
-  // }
-
   deleteMatch = () => {
     this.props.deleteMatch(this.props.matchID);
   }
