@@ -64,7 +64,7 @@ class PotentialMentor extends React.Component {
     var yesMatch = require('../assets/icons/chatSelected.png');
     var noMatch = require('../assets/icons/dontMatch.png');
 
-    if (this.state.userMatch !== undefined) {
+    if (this.state.userMatch !== undefined && this.state.userMatch.legnth !== 0) {
       return (
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
@@ -108,6 +108,9 @@ class PotentialMentor extends React.Component {
           </View>
         </View >
       )
+    }
+    else if (this.state.userMatch.legnth === 0) {
+      <Text>No potential matches right now!</Text>
     }
     else {
       return (
