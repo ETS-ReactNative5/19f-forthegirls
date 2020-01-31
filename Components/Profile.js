@@ -5,7 +5,7 @@ import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
-
+import BadgesComponent from './Badges.js';
 import { withNavigation } from 'react-navigation';
 
 import * as ImagePicker from 'expo-image-picker';
@@ -131,6 +131,7 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
+        <BadgesComponent />
         <View style={{ justifyContent: 'flex-end' }}>
           <View style={buttons.container}>
             <TouchableOpacity
