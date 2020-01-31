@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import ErrorReducer from './error_reducer';
 import UserReducer from './user_reducer';
 import AuthReducer from './auth_reducer';
+import AwardsReducer from './awards_reducer';
 import EventReducer from './event_reducer';
 import CSReducer from './survey_reducers/cs_reducer';
 import DemographicReducer from './survey_reducers/demographic_reducer';
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   basic: BasicReducer,
   education: EducationReducer,
   personality: PersonalityReducer,
+  awards: AwardsReducer,
 });
 
 export default rootReducer;

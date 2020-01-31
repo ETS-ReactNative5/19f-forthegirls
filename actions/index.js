@@ -318,8 +318,10 @@ export function fetchYourEvents(id) {
 }
 
 export function fetchYourAwards(id) {
+  console.log("GERE")
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/checkAward/${id}`).then((response) => {
+    axios.get(`${ROOT_URL}/awards/checkAllAwards/${id}`).then((response) => {
+      console.log("ERE@@@@")
       dispatch({
         type: ActionTypes.FETCH_YOUR_AWARDS,
         payload: response.data,
@@ -332,7 +334,7 @@ export function fetchYourAwards(id) {
 
 export function fetchAwardStatus(id, awardTitle) {
   return (dispatch) => {
-    axios.get(`${ROOT_URL}/checkAward/${id}/${awardTitle}`).then((response) => {
+    axios.get(`${ROOT_URL}/awards/checkAward/${id}/${awardTitle}`).then((response) => {
       dispatch({
         type: ActionTypes.FETCH_AWARD,
         payload: response.data,

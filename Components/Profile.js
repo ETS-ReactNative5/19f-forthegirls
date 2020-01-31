@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } fr
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser, signoutUser, addToSurvey } from '../actions';
+import { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 
 import { withNavigation } from 'react-navigation';
 
@@ -38,6 +38,8 @@ class Profile extends React.Component {
     this.props.getUser(this.props.id);
     this.focusListener = navigation.addListener('didFocus', () => {
       this.props.getUser(this.props.id);
+      this.props.fetchYourAwards(this.props.id);
+
     });
 
     // console.log('in profile, p1 q and a after get user on comp did mount')
@@ -79,6 +81,10 @@ class Profile extends React.Component {
 
 
   render() {
+
+    console.log("fetchign awards");
+    console.log(this.props.allYours);
+
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -161,8 +167,10 @@ const mapStateToProps = reduxState => (
     promptTwoAnswer: reduxState.user.promptTwoAnswer,
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
-    profileURL: reduxState.user.profileURL
+    profileURL: reduxState.user.profileURL,
+    allYours:reduxState.awards.allYours,
+
   }
 );
 
-export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey })(Profile));
+export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards })(Profile));
