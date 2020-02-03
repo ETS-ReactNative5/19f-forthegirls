@@ -114,7 +114,19 @@ const buttons = StyleSheet.create({
     marginLeft: 125
   },
   submitProfileButton: {
-    marginLeft: 100
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 5,
+    marginRight: 5,
+    borderWidth: 2,
+    height: 40,
+    width: 75,
+    padding: 5,
+    marginBottom: 5,
+    borderColor: colors.turquoise.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20
   }
 
 })
