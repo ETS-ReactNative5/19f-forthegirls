@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, TouchableHighlight, ProgressViewIOS } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
@@ -65,6 +65,7 @@ class EditProfile extends React.Component {
       imagefull: null,
       showModal: false,
       modalMessage: '',
+      progress: 0.0,
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -72,10 +73,13 @@ class EditProfile extends React.Component {
     this.togglePreferences = this.togglePreferences.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
     this.goBack = this.goBack.bind(this);
+    this.calcProgress = this.calcProgress.bind(this);
+
   }
 
   componentDidMount() {
     this.props.getUser(this.props.id);
+    this.calcProgress();
   }
 
   async componentWillMount() {
@@ -137,6 +141,33 @@ class EditProfile extends React.Component {
     }
   }
 
+  calcProgress = () => {
+    let sum = 0.0;
+    if(this.promptOneAnswer !== '') {
+      console.log("ans1");
+      sum+=.2;
+    }
+    if(this.promptTwoAnswer !== '') {
+      console.log("ans2");
+      sum+=.2;
+    }
+    if(this.promptThreeAnswer !== '') {
+      console.log("ans3");
+      sum+=.2;
+    }
+    console.log(this.state.image);
+    if(this.state.image !== undefined) {
+      console.log("ans4");
+      sum+=.2;
+    }
+    if(this.state.extraversion !== 50 && this.state.listening !== 50) {
+      console.log("ans5");
+      sum+=.2;
+    }
+
+    this.setState({progress: sum});
+  }
+
   setModalVisable = (value) => {
     this.setState({ showModal: value });
   }
@@ -173,6 +204,16 @@ class EditProfile extends React.Component {
     this.setState({
       showCompany: !this.state.showCompany
     });
+  }
+
+  progressBar = () => {
+    console.log("progress bar");
+    console.log(this.state.progress);
+    return (
+      <View>
+          <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
+      </View>
+    )
   }
 
   showSkills = (val) => {
@@ -313,7 +354,7 @@ class EditProfile extends React.Component {
             <Text style={fonts.minorHeading}>Edit Profile</Text>
           </View>
         </View>
-
+        {this.progressBar()}
         <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
           <View>
             {this.renderModal()}
