@@ -144,24 +144,18 @@ class EditProfile extends React.Component {
   calcProgress = () => {
     let sum = 0.0;
     if(this.promptOneAnswer !== '') {
-      console.log("ans1");
       sum+=.2;
     }
     if(this.promptTwoAnswer !== '') {
-      console.log("ans2");
       sum+=.2;
     }
     if(this.promptThreeAnswer !== '') {
-      console.log("ans3");
       sum+=.2;
     }
-    console.log(this.state.image);
-    if(this.state.image !== undefined) {
-      console.log("ans4");
+    if(this.props.profileURL != "" && this.props.profileURL != null) {
       sum+=.2;
     }
     if(this.state.extraversion !== 50 && this.state.listening !== 50) {
-      console.log("ans5");
       sum+=.2;
     }
 
@@ -207,13 +201,13 @@ class EditProfile extends React.Component {
   }
 
   progressBar = () => {
-    console.log("progress bar");
-    console.log(this.state.progress);
-    return (
-      <View>
-          <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
-      </View>
-    )
+    if(this.state.progress !== 1) {
+      return (
+        <View>
+            <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
+        </View>
+      )
+    }
   }
 
   showSkills = (val) => {
