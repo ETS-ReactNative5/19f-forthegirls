@@ -70,6 +70,11 @@ const profile = StyleSheet.create({
   match: {
     borderWidth: 10,
     borderColor: colors.turquoise.color
+  },
+  editProfileHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: colors.white.color
   }
 });
 

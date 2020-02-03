@@ -299,7 +299,7 @@ class EditProfile extends React.Component {
 
     return (
       <View style={{ backgroundColor: colors.lightGrey.color }}>
-        <View style={singleChat.header}>
+        <View style={profile.editProfileHeader}>
           <View style={[singleChat.arrowBack]}>
             <TouchableOpacity
               onPress={this.goBack}>
@@ -308,10 +308,13 @@ class EditProfile extends React.Component {
               />
             </TouchableOpacity>
           </View>
-
           <View style={singleChat.headerTextContainer}>
             <Text style={fonts.minorHeading}>Edit Profile</Text>
           </View>
+          <TouchableOpacity
+            onPress={this.submitPage}>
+            <View style={buttons.submitProfileButton}><Text style={[fonts.minorHeading, colors.white]}>Done</Text></View>
+          </TouchableOpacity>
         </View>
 
         <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
@@ -464,10 +467,7 @@ class EditProfile extends React.Component {
               </View>
             </View>
           </View>
-          <TouchableOpacity
-            onPress={this.submitPage}>
-            <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
-          </TouchableOpacity>
+
         </ScrollView>
       </View >
     );
