@@ -30,6 +30,7 @@ class EditProfile extends React.Component {
       promptTwoQuestion: this.props.promptTwoQuestion,
       promptTwoAnswer: this.props.promptTwoAnswer,
       promptThreeQuestion: this.props.promptThreeQuestion,
+      promptThreeAnswer: this.props.promptThreeAnswer,
 
       extraversion: this.props.extraversion !== undefined ? this.props.extraversion : 50,
       listening: this.props.listening !== undefined ? this.props.listening : 50,
@@ -146,37 +147,30 @@ class EditProfile extends React.Component {
   calcProgress = () => {
     let sum = 1.0;
     let message = '';
-    console.log("top of calc");
-    console.log(this.promptOneAnswer);
     if(this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
       sum-=.2;
-      console.log(1);
       message = "Fill out the first prompt to fill up the progress bar!";
     }
     if(this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
       sum-=.2;
-      console.log(2);
       if(message === '') {
         message = "Fill out the second prompt to fill up the progress bar!";
       }
     }
     if(this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
       sum-=.2;
-      console.log(3);
       if(message === '') {
         message = "Fill out the third prompt to fill up the progress bar!";
       }
     }
     if(this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
       sum-=.2;
-      console.log(4);
       if(message === '') {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
     if(this.state.extraversion === 50 || this.state.listening === 50) {
       sum-=.2;
-      console.log(5);
       if(message === '') {
         message = "Adjust the personality sliders to fill up the progress bar!";
       }
