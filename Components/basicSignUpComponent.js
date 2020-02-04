@@ -8,6 +8,7 @@ import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
 import ErrorModal from './ErrorModal'
+import Geocoder from 'react-native-geocoding';
 
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
@@ -27,6 +28,9 @@ class BasicSignUpComponent extends React.Component {
       hs: false,
       college: false,
       pg: false,
+
+      latitude: 0,
+      longitude: 0,
 
       showModal: false,
       modalMessage: '', 
@@ -51,21 +55,38 @@ class BasicSignUpComponent extends React.Component {
         password: this.state.password,
       }
 
-      const otherAnswers = {
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        location: this.state.location,
-        highSchool: this.state.highSchool,
-        collegeName: this.state.collegeName,
-        gradYear: this.state.gradYear,
-        currentJob: this.state.currentJob,
-        age: this.state.age,
-        hs: this.state.hs,
-        college: this.state.college,
-        pg: this.state.pg,
-      }
+      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
 
-      this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+      Geocoder.from(this.state.location)
+          .then(json => {
+            var location = json.results[0].geometry.location;
+            // this.setState({latitude: location.lat, longitude: location.lng})
+
+            const otherAnswers = {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              location: this.state.location,
+              highSchool: this.state.highSchool,
+              collegeName: this.state.collegeName,
+              gradYear: this.state.gradYear,
+              currentJob: this.state.currentJob,
+              age: this.state.age,
+              hs: this.state.hs,
+              college: this.state.college,
+              pg: this.state.pg,
+              latitude: location.lat,
+              longitude: location.lng,
+            }
+      
+            this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+
+          })
+          .catch((error) =>  {
+              console.log(error);
+              this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
+            }
+          );
+  
     }
   }
 
@@ -129,10 +150,6 @@ class BasicSignUpComponent extends React.Component {
     this.setState({ currentJob: text });
   }
 
-  // checkState = () => {
-  //   console.log(this.state);
-  // }
-
   renderModal = () => {
     if (this.state.showModal) {
       return (
@@ -144,40 +161,6 @@ class BasicSignUpComponent extends React.Component {
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "" });
   }
-
-  // submitPage = () => {
-  //   if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-  //     //https://facebook.github.io/react-native/docs/alert
-  //     Alert.alert(
-  //       'Please Fill Out All Fields to Continue',
-  //       '',
-  //       [
-  //         { text: 'Cancel', style: 'cancel' },
-  //         { text: 'OK' },
-  //       ],
-  //       { cancelable: true }
-  //     );
-  //   }
-  //   // else {
-  //   //   var basicInfo = {
-  //   //     'firstname': this.state.firstName,
-  //   //     'lastname': this.state.lastName,
-  //   //     'email': this.state.email,
-  //   //     'username': this.state.username,
-  //   //     'password': this.state.password,
-  //   //     'age': this.state.age,
-  //   //     'hs': this.state.hs,
-  //   //     'college': this.state.college,
-  //   //     'pg': this.state.pg,
-  //   //     'highSchool': this.state.highSchool,
-  //   //     'college': this.state.college,
-  //   //     'gradYear': this.state.gradYear,
-  //   //     'currentJob': this.state.currentJob,
-  //   //   }
-  //   //   this.props.navigation.navigate('CsInfo', { basicInfo: basicInfo });
-  //   // }
-
-  // }
 
   renderHS() {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
@@ -235,7 +218,6 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderError = () => {
-    console.log(this.props.error);
     if(this.props.error !== null) {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
