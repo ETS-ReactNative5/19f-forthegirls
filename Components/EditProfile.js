@@ -66,6 +66,8 @@ class EditProfile extends React.Component {
       showModal: false,
       modalMessage: '',
       progress: 0.0,
+
+      progressMessage: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -104,7 +106,7 @@ class EditProfile extends React.Component {
 
   submitPage = () => {
     // console.log(this.state);
-    if (this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) {
+    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined))  {
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -142,24 +144,53 @@ class EditProfile extends React.Component {
   }
 
   calcProgress = () => {
-    let sum = 0.0;
-    if(this.promptOneAnswer !== '') {
-      sum+=.2;
+    let sum = 1.0;
+    let message = '';
+    console.log("top of calc");
+    console.log(this.promptOneAnswer);
+    if(this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
+      sum-=.2;
+      console.log(1);
+      message = "Fill out the first prompt to fill up the progress bar!";
     }
-    if(this.promptTwoAnswer !== '') {
-      sum+=.2;
+    if(this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
+      sum-=.2;
+      console.log(2);
+      if(message === '') {
+        message = "Fill out the second prompt to fill up the progress bar!";
+      }
     }
-    if(this.promptThreeAnswer !== '') {
-      sum+=.2;
+    if(this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
+      sum-=.2;
+      console.log(3);
+      if(message === '') {
+        message = "Fill out the third prompt to fill up the progress bar!";
+      }
     }
-    if(this.props.profileURL != "" && this.props.profileURL != null) {
-      sum+=.2;
+    if(this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
+      sum-=.2;
+      console.log(4);
+      if(message === '') {
+        message = "Add a profile picture to fill up the progress bar!";
+      }
     }
-    if(this.state.extraversion !== 50 && this.state.listening !== 50) {
-      sum+=.2;
+    if(this.state.extraversion === 50 || this.state.listening === 50) {
+      sum-=.2;
+      console.log(5);
+      if(message === '') {
+        message = "Adjust the personality sliders to fill up the progress bar!";
+      }
     }
 
-    this.setState({progress: sum});
+    this.setState({progress: sum, progressMessage: message });
+  }
+
+  showProgressModal = () => {
+    if(this.state.progress !== 1.0) {
+      return (
+        <ErrorModal errorMessage={this.state.progressMessage} reset={this.resetProgressModal}></ErrorModal>
+      )
+    }
   }
 
   setModalVisable = (value) => {
@@ -168,6 +199,10 @@ class EditProfile extends React.Component {
 
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "" });
+  }
+
+  resetProgressModal = () => {
+    this.setState({ showModal: false, progressMessage: "" });
   }
 
   firstNameChange = (text) => {
@@ -355,6 +390,7 @@ class EditProfile extends React.Component {
         <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
           <View>
             {this.renderModal()}
+            {this.showProgressModal()}
             <TouchableOpacity onPress={this.photoUpload}>
               <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
                 {image}
