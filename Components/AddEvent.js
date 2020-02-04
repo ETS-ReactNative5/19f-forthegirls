@@ -77,7 +77,6 @@ class AddEvent extends Component {
           this.props.navigation.dispatch(popAction);
         })
         .catch((error) =>  {
-          console.log(error);
           this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
           }
         );
