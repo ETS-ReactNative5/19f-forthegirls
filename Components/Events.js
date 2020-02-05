@@ -56,7 +56,6 @@ class Events extends React.Component {
   }
 
   renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey, photoProp) {
-    console.log(photoProp);
     return (
       <View key={eventKey + 1}>
         <SingleEvent

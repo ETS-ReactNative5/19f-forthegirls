@@ -13,16 +13,16 @@ function getSignedRequest(file) {
 // since we already know what the url will be - just not that it has been uploaded
 function uploadFileToS3(signedRequest, file, url) {
   const base64 = decode(file.base64);
-  //   console.log("uri")
+  console.log("uri")
   // //  console.log(file.base64)
-  //   console.log(file.uri)
+  console.log(file.uri)
   //   console.log("here2")
   return new Promise((fulfill, reject) => {
     // console.log("here 3")
-    // console.log("base 64")
-    //console.log(base64);
-    // console.log("content type")
-    // console.log(file.type)
+    console.log("base 64")
+    console.log(base64);
+    console.log("content type")
+    console.log(file.type)
     // console.log("signed request")
     // console.log(signedRequest)
     axios.put(signedRequest, base64, { headers: { 'Content-Type': file.type } }).then((response) => {

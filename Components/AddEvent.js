@@ -84,46 +84,27 @@ class AddEvent extends Component {
     }
   };
 
-  submitPhoto = async () => {
-    if (this.state.imagefull != null) {
-      let i = this.state.imagefull.uri.length;
-      while (this.state.imagefull.uri.charAt(i) !== '/') {
-        i--;
-      }
-      this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
-      uploadImage(this.state.imagefull).then((url) => {
-        this.setState({ eventPhotoURL: String(url) })
-        this.setState({ imagefull: null })
-
-        console.log('event photo url state: ');
-        console.log(`hiiiiii ${this.state.eventPhotoURL}`);
-      })
-    }
-  }
-
   addEvent = () => {
     if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
-
-    this.submitPhoto();
 
     Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
     Geocoder.from(this.state.location)
       .then(json => {
         var location = json.results[0].geometry.location;
         this.setState({ latitude: location.lat, longitude: location.lng })
-        console.log(this.state.eventPhotoURL);
-        this.props.addEvent({
-          title: this.state.title,
-          date: this.state.date,
-          time: this.state.time,
-          location: this.state.location,
-          description: this.state.description,
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          eventPhotoURL: this.state.eventPhotoURL
-        });
+
+        // this.props.addEvent({
+        //   title: this.state.title,
+        //   date: this.state.date,
+        //   time: this.state.time,
+        //   location: this.state.location,
+        //   description: this.state.description,
+        //   latitude: this.state.latitude,
+        //   longitude: this.state.longitude,
+        //   eventPhotoURL: photoURL
+        // });
         const popAction = StackActions.pop({
           n: 1,
         });
@@ -135,6 +116,45 @@ class AddEvent extends Component {
       }
       );
 
+    if (this.state.imagefull != null) {
+      console.log('image full state not null');
+      let i = this.state.imagefull.uri.length;
+      while (this.state.imagefull.uri.charAt(i) !== '/') {
+        i--;
+      }
+      this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
+      uploadImage(this.state.imagefull).then((url) => {
+        this.setState({ eventPhotoURL: String(url) })
+        this.setState({ imagefull: null })
+
+        this.props.addEvent({
+          title: this.state.title,
+          date: this.state.date,
+          time: this.state.time,
+          location: this.state.location,
+          description: this.state.description,
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+          eventPhotoURL: this.state.eventPhotoURL
+        });
+
+        console.log('event photo url state in upload image : ');
+        console.log(`${this.state.eventPhotoURL}`);
+
+      })
+    } else {
+      console.log('image full state ISSSSS null');
+      this.props.addEvent({
+        title: this.state.title,
+        date: this.state.date,
+        time: this.state.time,
+        location: this.state.location,
+        description: this.state.description,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
+        eventPhotoURL: this.state.photoURL
+      });
+    }
 
   }
 

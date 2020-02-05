@@ -105,9 +105,6 @@ class Profile extends React.Component {
 
 
   render() {
-    console.log("fetchign awards");
-    console.log(this.props.allYours);
-
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
