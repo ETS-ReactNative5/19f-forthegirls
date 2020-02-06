@@ -25,13 +25,6 @@ class Profile extends React.Component {
 
   }
 
-  async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      console.log('Please enable camera');
-    }
-  }
-
   componentDidMount() {
     const { navigation } = this.props;
     this.props.getUser(this.props.id);
@@ -79,21 +72,21 @@ class Profile extends React.Component {
   }
 
   threeRSVPS = () => {
-    if(this.props.allYours[1]){
+    if (this.props.allYours[1]) {
       return <Image source={require('./../assets/icons/eventsbadge.png')} />
     }
     return null;
   }
 
   messageFive = () => {
-    if(this.props.allYours[3]){
+    if (this.props.allYours[3]) {
       return <Image source={require('./../assets/icons/messageFive.png')} />
     }
     return null;
   }
 
   firstMatch = () => {
-    if(this.props.allYours[5]){
+    if (this.props.allYours[5]) {
       return <Image source={require('./../assets/icons/socialbutterfly.png')} />
     }
     return null;
@@ -128,9 +121,6 @@ class Profile extends React.Component {
 
 
   render() {
-    console.log("fetchign awards");
-    console.log(this.props.allYours);
-
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
@@ -156,7 +146,7 @@ class Profile extends React.Component {
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
 
     rewards = null;
-    if(this.props.allYours != null){
+    if (this.props.allYours != null) {
       rewards = this.badge()
     }
 
@@ -226,7 +216,7 @@ const mapStateToProps = reduxState => (
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
     profileURL: reduxState.user.profileURL,
-    allYours:reduxState.awards.allYours,
+    allYours: reduxState.awards.allYours,
 
   }
 );

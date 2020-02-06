@@ -121,10 +121,14 @@ class EventDetails extends Component {
   }
 
   render() {
+    imageNoImage = require('../img/EventBackground.jpg')
+    imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
+
+    image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     return (
       <ScrollView><View style={eventPage.eventDetail}>
-        <Image source={require('../img/EventBackground.jpg')} style={eventPage.eventDetailImage} />
+        <Image source={image} style={eventPage.eventDetailImage} />
         <View style={eventPage.eventDetailTitleBox} >
           <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
             {this.props.event.title}

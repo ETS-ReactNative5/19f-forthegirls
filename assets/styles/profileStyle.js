@@ -4,8 +4,6 @@ import colors, { fonts } from './basicStyle';
 const promptStyle = StyleSheet.create({
   promptBox: {
     backgroundColor: colors.white.color,
-    //shadowOffset: { width: 4, height: 4 },
-    //shadowOpacity: 0.25,
     borderRadius: 20,
     width: 325,
     padding: 10,
