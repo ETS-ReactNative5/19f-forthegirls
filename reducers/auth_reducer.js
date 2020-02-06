@@ -1,6 +1,7 @@
 import { ActionTypes } from '../actions';
 
-//add username?
+//This reducer functions to store if a user is logged in or not, and if they are, key information such as username and id
+
 const UserReducer = (state = {
     authenticated: false,
     username: '',

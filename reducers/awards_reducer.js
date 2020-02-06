@@ -1,5 +1,7 @@
 import { ActionTypes } from '../actions';
 
+//This reducer stores the badges users have gotten in state
+
 const AwardsReducer = (state = {
   allYours: [{}],
   award: {},
