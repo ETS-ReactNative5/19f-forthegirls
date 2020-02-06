@@ -73,35 +73,35 @@ class Profile extends React.Component {
 
   threeRSVPS = () => {
     if (this.props.allYours[1]) {
-      return <Image source={require('./../assets/icons/globetrotter.png')} />
+      return <Image style={profile.award} source={require('./../assets/icons/globetrotter.png')} />
     }
     return null;
   }
 
   messageFive = () => {
     if (this.props.allYours[3]) {
-      return <Image source={require('./../assets/icons/messageFive.png')} />
+      return <Image style={profile.award} source={require('./../assets/icons/messageFive.png')} />
     }
     return null;
   }
 
   firstMatch = () => {
     if (this.props.allYours[5]) {
-      return <Image source={require('./../assets/icons/firstMatch.png')} />
+      return <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
     }
     return null;
   }
 
   hundredMessages = () => {
     if (this.props.allYours[7]) {
-      return <Image source={require('./../assets/icons/chattyCathy.png')} />
+      return <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
     }
     return null;
   }
 
   firstEvent = () => {
     if (this.props.allYours[9]) {
-      return <Image source={require('./../assets/icons/socialbutterfly.png')} />
+      return <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
     }
     return null;
   }
@@ -115,7 +115,7 @@ class Profile extends React.Component {
         {this.firstMatch()}
         {this.firstEvent()}
         {this.hundredMessages()}
-        {<Image source={require('./../assets/icons/founders.png')} />}
+        {<Image style={profile.award} source={require('./../assets/icons/founders.png')} />}
       </View>
     )
   }
@@ -151,10 +151,6 @@ class Profile extends React.Component {
       rewards = this.badge()
     }
 
-    console.log(this.props.allYours);
-    console.log("^^^");
-
-
     return (
       <View style={profile.profileContainer}>
         <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
@@ -177,7 +173,7 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
-        <View style={{ marginLeft: 10, marginTop: 5 }}>
+        <View style={{ marginLeft: 7, marginTop: 5 }}>
           {rewards}
         </View>
         <View style={{ justifyContent: 'flex-end' }}>
