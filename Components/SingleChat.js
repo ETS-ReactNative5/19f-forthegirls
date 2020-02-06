@@ -123,6 +123,8 @@ class SingleChat extends React.Component {
   }
 
   render() {
+    console.log(this.props.navigation.getParam('firstMatchAward'));
+    console.log("^^^^ signel chat props!")
     return (
       <View>
         <View style={singleChat.header}>
