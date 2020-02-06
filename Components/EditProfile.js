@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, Modal, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Image, TextInput, TouchableHighlight, ProgressViewIOS } from 'react-native';
 import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
@@ -30,6 +30,7 @@ class EditProfile extends React.Component {
       promptTwoQuestion: this.props.promptTwoQuestion,
       promptTwoAnswer: this.props.promptTwoAnswer,
       promptThreeQuestion: this.props.promptThreeQuestion,
+      promptThreeAnswer: this.props.promptThreeAnswer,
 
       extraversion: this.props.extraversion !== undefined ? this.props.extraversion : 50,
       listening: this.props.listening !== undefined ? this.props.listening : 50,
@@ -65,6 +66,9 @@ class EditProfile extends React.Component {
       imagefull: null,
       showModal: false,
       modalMessage: '',
+      progress: 0.0,
+
+      progressMessage: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -72,10 +76,13 @@ class EditProfile extends React.Component {
     this.togglePreferences = this.togglePreferences.bind(this);
     this.toggleCompany = this.toggleCompany.bind(this);
     this.goBack = this.goBack.bind(this);
+    this.calcProgress = this.calcProgress.bind(this);
+
   }
 
   componentDidMount() {
     this.props.getUser(this.props.id);
+    this.calcProgress();
   }
 
   async componentWillMount() {
@@ -100,7 +107,7 @@ class EditProfile extends React.Component {
 
   submitPage = () => {
     // console.log(this.state);
-    if (this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) {
+    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined))  {
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -137,12 +144,59 @@ class EditProfile extends React.Component {
     }
   }
 
+  calcProgress = () => {
+    let sum = 1.0;
+    let message = '';
+    if(this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
+      sum-=.2;
+      message = "Fill out the first prompt to fill up the progress bar!";
+    }
+    if(this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
+      sum-=.2;
+      if(message === '') {
+        message = "Fill out the second prompt to fill up the progress bar!";
+      }
+    }
+    if(this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
+      sum-=.2;
+      if(message === '') {
+        message = "Fill out the third prompt to fill up the progress bar!";
+      }
+    }
+    if(this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
+      sum-=.2;
+      if(message === '') {
+        message = "Add a profile picture to fill up the progress bar!";
+      }
+    }
+    if(this.state.extraversion === 50 || this.state.listening === 50) {
+      sum-=.2;
+      if(message === '') {
+        message = "Adjust the personality sliders to fill up the progress bar!";
+      }
+    }
+
+    this.setState({progress: sum, progressMessage: message });
+  }
+
+  showProgressModal = () => {
+    if(this.state.progress !== 1.0) {
+      return (
+        <ErrorModal errorMessage={this.state.progressMessage} reset={this.resetProgressModal}></ErrorModal>
+      )
+    }
+  }
+
   setModalVisable = (value) => {
     this.setState({ showModal: value });
   }
 
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "" });
+  }
+
+  resetProgressModal = () => {
+    this.setState({ showModal: false, progressMessage: "" });
   }
 
   firstNameChange = (text) => {
@@ -173,6 +227,16 @@ class EditProfile extends React.Component {
     this.setState({
       showCompany: !this.state.showCompany
     });
+  }
+
+  progressBar = () => {
+    if(this.state.progress !== 1) {
+      return (
+        <View>
+            <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
+        </View>
+      )
+    }
   }
 
   showSkills = (val) => {
@@ -316,10 +380,11 @@ class EditProfile extends React.Component {
             <View style={buttons.submitProfileButton}><Text style={[fonts.minorHeading, colors.white]}>Done</Text></View>
           </TouchableOpacity>
         </View>
-
+        {this.progressBar()}
         <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
           <View>
             {this.renderModal()}
+            {this.showProgressModal()}
             <TouchableOpacity onPress={this.photoUpload}>
               <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
                 {image}
