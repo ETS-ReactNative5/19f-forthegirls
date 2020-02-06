@@ -119,6 +119,8 @@ class Profile extends React.Component {
       {this.threeRSVPS()}
       {this.messageFive()}
       {this.firstMatch()}
+      {this.firstEvent()}
+      {this.hundredMessages()}
       {<Image source={require('./../assets/icons/founders.png')} />}
       </View>
     )
