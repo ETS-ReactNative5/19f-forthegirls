@@ -135,7 +135,8 @@ class AddEvent extends Component {
           description: this.state.description,
           latitude: this.state.latitude,
           longitude: this.state.longitude,
-          eventPhotoURL: this.state.eventPhotoURL
+          eventPhotoURL: this.state.eventPhotoURL,
+          authorID: this.props.id,
         });
 
         console.log('event photo url state in upload image : ');
@@ -152,7 +153,8 @@ class AddEvent extends Component {
         description: this.state.description,
         latitude: this.state.latitude,
         longitude: this.state.longitude,
-        eventPhotoURL: this.state.photoURL
+        eventPhotoURL: this.state.photoURL,
+        authorID: this.props.id,
       });
     }
 
@@ -257,6 +259,7 @@ class AddEvent extends Component {
 const mapStateToProps = reduxState => (
   {
     username: reduxState.user.username,
+    id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
   }
