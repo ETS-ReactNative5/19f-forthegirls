@@ -49,7 +49,6 @@ export const ActionTypes = {
 //----------------- USERS ------------------//
 
 //retrieves the specified user object from the database
-
 export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
@@ -64,7 +63,6 @@ export function getUser(id) {
 }
 
 //edits the user object
-//axios.post(`${ROOT_URL}/posts`, post, { headers: { authorization: localStorage.getItem('token') } })
 export function editUser(fields) {
   //profileURL
   return (dispatch) => {
@@ -82,6 +80,7 @@ export function editUser(fields) {
 
 //---------------------------- AUTH --------------------------------//
 
+//signs the user in based on previously created credentials and saves their information on the phone
 export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
@@ -109,7 +108,7 @@ export function signinUser({ username, password, navigate }) {
   };
 }
 
-
+//creates a new user and then signs them in and saves their information on the phone
 export function signUpUser(fields, navigate, otherAnswers) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, fields)
@@ -142,6 +141,7 @@ export function signUpUser(fields, navigate, otherAnswers) {
   }
 }
 
+//adds user information (name, location, etc) to a user on the backend 
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
@@ -152,11 +152,7 @@ export function addToSurvey(otherAnswers, username, navigate, navTo) {
   }
 }
 
-
-// /users/survey/username put
-
-// deletes token from localstorage
-// and deauths
+// deletes token from localstorage and logs a user out
 export function signoutUser(navigate) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.DEAUTH_USER });
@@ -187,6 +183,7 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
+//given two users, it creates a match between the users and redirects the matcher to chat 
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
@@ -212,6 +209,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   }
 }
 
+//gets all the potential matches for a user based on our algorithm's suggestions
 export function getPotentialMatches(username) {
   //matches/potential/:username
   return (dispatch) => {
@@ -225,6 +223,7 @@ export function getPotentialMatches(username) {
   }
 }
 
+//gets all the user's previously made matches
 export function getMatches(username) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/${username}`)
@@ -237,6 +236,7 @@ export function getMatches(username) {
   }
 }
 
+//removes a match between two people by finding their match object and removing it
 export function deleteMatch(userID, matchID, username) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
@@ -261,6 +261,7 @@ export function deleteMatch(userID, matchID, username) {
 }
 
 //----------------- EVENTS ------------------//
+//creates a new event 
 export function addEvent(fields) {
   console.log("In add events axious");
   console.log(fields);
@@ -281,6 +282,7 @@ export function addEvent(fields) {
   };
 }
 
+//gets all previously created events by any user
 export function fetchEvents() {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events`).then((response) => {
@@ -294,6 +296,7 @@ export function fetchEvents() {
   };
 }
 
+//gets all the events the user has RSVP'd to (i.e. is attending)
 export function fetchYourEvents(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
@@ -307,32 +310,7 @@ export function fetchYourEvents(id) {
   };
 }
 
-export function fetchYourAwards(id) {
-  return (dispatch) => {
-    axios.get(`${ROOT_URL}/awards/checkAllAwards/${id}`).then((response) => {
-      dispatch({
-        type: ActionTypes.FETCH_YOUR_AWARDS,
-        payload: response.data,
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
-  };
-}
-
-export function fetchAwardStatus(id, awardTitle) {
-  return (dispatch) => {
-    axios.get(`${ROOT_URL}/awards/checkAward/${id}/${awardTitle}`).then((response) => {
-      dispatch({
-        type: ActionTypes.FETCH_AWARD,
-        payload: response.data,
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
-  };
-}
-
+//Gets the information regarding a specific event
 export function fetchEvent(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/${id}`).then((response) => {
@@ -345,6 +323,7 @@ export function fetchEvent(id) {
   };
 }
 
+//Gets the other users who have RSVP'd to a specific event
 export function fetchRsvpConnections(userId, eventId) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/connections/${userId}/${eventId}`).then((response) => {
@@ -356,6 +335,7 @@ export function fetchRsvpConnections(userId, eventId) {
   };
 }
 
+//Enables a user to RSVP to a specific event to say they are attending
 export function rsvpEvent(userID, eventID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
@@ -374,6 +354,7 @@ export function rsvpEvent(userID, eventID) {
   };
 }
 
+//Enables a user to unRSVP from a specific event to say they are no longer attending
 export function unrsvpEvent(userID, eventID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/unrsvp/${eventID}`, { userID: userID })
@@ -392,8 +373,38 @@ export function unrsvpEvent(userID, eventID) {
   };
 }
 
+//--------------------------------------BADGES----------------------------------------
+//Gets all the user's badges (i.e. milestones they've achieved on the app)
+export function fetchYourAwards(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/awards/checkAllAwards/${id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_YOUR_AWARDS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+//Gets the status of one award (i.e. if this person has achieved this badge or not)
+export function fetchAwardStatus(id, awardTitle) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/awards/checkAward/${id}/${awardTitle}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_AWARD,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
 ///------------------ERRORS----------------------------------
 
+//When we store errors in state, resets the errors so they are no longer in state
 export function resetErrors() {
   return (
     {

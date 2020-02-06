@@ -73,6 +73,10 @@ const profile = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: colors.white.color
+  },
+  award: {
+    marginLeft: 3,
+    marginRight: 3
   }
 });
 
