@@ -124,8 +124,13 @@ class AddEvent extends Component {
       }
       this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
       uploadImage(this.state.imagefull).then((url) => {
+        console.log(url);
+        console.log("^^^ url")
         this.setState({ eventPhotoURL: String(url) })
         this.setState({ imagefull: null })
+
+        console.log("event photo url")
+        console.log(this.state.eventPhotoURL)
 
         this.props.addEvent({
           title: this.state.title,
@@ -135,7 +140,7 @@ class AddEvent extends Component {
           description: this.state.description,
           latitude: this.state.latitude,
           longitude: this.state.longitude,
-          eventPhotoURL: this.state.eventPhotoURL,
+          eventPhotoURL: String(url),
           authorID: this.props.id,
         });
 
