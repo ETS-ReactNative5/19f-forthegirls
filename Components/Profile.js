@@ -151,9 +151,6 @@ class Profile extends React.Component {
       rewards = this.badge()
     }
 
-    console.log(this.props.allYours);
-    console.log("^^^");
-
 
     return (
       <View style={profile.profileContainer}>

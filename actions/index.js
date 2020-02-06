@@ -193,6 +193,9 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
       .then((response) => {
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
+            console.log(res.data);
+            console.log(len(res.data))
+            console.log("matching data ^^ ")
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
             navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2 })
           }).catch((error) => {
