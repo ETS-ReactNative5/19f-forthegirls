@@ -256,6 +256,8 @@ export function deleteMatch(userID, matchID, username) {
 //----------------- EVENTS ------------------//
 //creates a new event 
 export function addEvent(fields) {
+  console.log("In add events axious");
+  console.log(fields);
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
@@ -403,5 +405,3 @@ export function resetErrors() {
     }
   );
 }
-
-

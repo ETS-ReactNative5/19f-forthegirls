@@ -37,25 +37,29 @@ class Events extends React.Component {
   }
 
   doViewAll() {
-    this.setState({viewAll:true});
+    this.setState({ viewAll: true });
     this.props.fetchEvents();
   }
 
   dontViewAll() {
-    this.setState({viewAll:false});
+    this.setState({ viewAll: false });
     this.props.fetchYourEvents(this.props.id);
   }
 
-  displayEvents(){
-    if(this.state.viewAll){
+  displayEvents() {
+    if (this.state.viewAll) {
       return this.renderEvents();
     }
-    else{
+    else {
       return this.renderYourEvents();
     }
   }
 
-  renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey) {
+  renderEvent(nameProp, dateProp, rsvpsProp, locationProp, eventKey, photoProp) {
+    console.log("photo prop");
+    console.log(photoProp);
+    console.log("name")
+    console.log(nameProp)
     return (
       <View key={eventKey + 1}>
         <SingleEvent
@@ -65,6 +69,7 @@ class Events extends React.Component {
           rsvps={rsvpsProp}
           location={locationProp}
           eventID={eventKey}
+          eventPhotoURL={photoProp}
           navigation={this.props.navigation} />
       </View>
     );
@@ -73,7 +78,7 @@ class Events extends React.Component {
   renderEvents() {
     var renderedEvents = this.props.all.map((anEvent) => {
       return (
-        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id)
+        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id, anEvent.eventPhotoURL)
       );
     })
     return renderedEvents;
@@ -82,7 +87,7 @@ class Events extends React.Component {
   renderYourEvents() {
     var renderedEvents = this.props.allYours.map((anEvent) => {
       return (
-        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id)
+        this.renderEvent(anEvent.title, anEvent.date, anEvent.rsvps, anEvent.location, anEvent.id, anEvent.eventPhotoURL)
       );
     })
     return renderedEvents;
@@ -91,30 +96,30 @@ class Events extends React.Component {
   render() {
     return (
       <View style={eventPage.wholeContainer}>
-      <View style={eventPage.viewOptionsContainer}>
-        <View style={this.state.viewAll
-          ? eventPage.addEventOpacity
-          : eventPage.notPressed}>
-          <TouchableOpacity onPress={this.doViewAll}>
-            <Text style={[eventPage.addEventText, this.state.viewAll
-              ? colors.white
-              : colors.deepPurple,  fonts.minorHeading]}>
-              See All
+        <View style={eventPage.viewOptionsContainer}>
+          <View style={this.state.viewAll
+            ? eventPage.addEventOpacity
+            : eventPage.notPressed}>
+            <TouchableOpacity onPress={this.doViewAll}>
+              <Text style={[eventPage.addEventText, this.state.viewAll
+                ? colors.white
+                : colors.deepPurple, fonts.minorHeading]}>
+                See All
             </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={this.state.viewAll
-          ? eventPage.notPressed
-          : eventPage.addEventOpacity}>
-          <TouchableOpacity onPress={this.dontViewAll}>
-            <Text style={[eventPage.addEventText, this.state.viewAll
-              ? colors.deepPurple
-              : colors.white, fonts.minorHeading]}>
-              See RSVP'd
+            </TouchableOpacity>
+          </View>
+          <View style={this.state.viewAll
+            ? eventPage.notPressed
+            : eventPage.addEventOpacity}>
+            <TouchableOpacity onPress={this.dontViewAll}>
+              <Text style={[eventPage.addEventText, this.state.viewAll
+                ? colors.deepPurple
+                : colors.white, fonts.minorHeading]}>
+                See RSVP'd
             </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
         <ScrollView contentContainerStyle={eventPage.scroll} >
           {this.displayEvents()}
         </ScrollView>
