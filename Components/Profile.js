@@ -92,19 +92,20 @@ class Profile extends React.Component {
     return null;
   }
 
-  firstEvent = () => {
+  hundredMessages = () => {
     if(this.props.allYours[7]){
+      return <Image source={require('./../assets/icons/hundredMessages.png')} />
+    }
+    return null;
+  }
+
+  firstEvent = () => {
+    if(this.props.allYours[9]){
       return <Image source={require('./../assets/icons/firstevent.png')} />
     }
     return null;
   }
 
-  hundredMessages = () => {
-    if(this.props.allYours[9]){
-      return <Image source={require('./../assets/icons/hundredMessages.png')} />
-    }
-    return null;
-  }
 
   badge = () => {
     return (
