@@ -26,7 +26,7 @@ class BasicSignUpComponent extends React.Component {
       currentJob: '',
       age: 0,
       hs: false,
-      college: false,
+      college: true,
       pg: false,
 
       latitude: 0,
