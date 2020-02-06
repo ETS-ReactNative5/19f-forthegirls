@@ -10,16 +10,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { AsyncStorage } from 'react-native';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions'
 
+const PUSH_REGISTRATION_ENDPOINT = 'http://60ece2db.ngrok.io/token';
+const MESSAGE_ENPOINT = 'http://60ece2db.ngrok.io/message';
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
 ));
 
+//https://levelup.gitconnected.com/react-native-adding-push-notifications-to-your-app-with-expo-8e4b659ddbfb
 //https://facebook.github.io/react-native/docs/asyncstorage
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -27,6 +30,11 @@ class App extends React.Component {
     this.state = {
       fontLoaded: false,
       signedIn: false,
+
+      username: '',
+
+      notification: null,
+      messageText: ''
     }
   }
 
@@ -41,11 +49,48 @@ class App extends React.Component {
       if (value.token !== null) {
       //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
-        this.setState({signedIn: true});
+        this.setState({signedIn: true, username: value.username});
       }
     } catch (error) {
       console.log("error getting token");
     }
+  }
+
+  handleNotification = (notification) => {
+    this.setState({ notification });
+  }
+
+  registerForPushNotificationsAsync = async () => {
+    try {
+
+    }
+    catch (error) {
+      
+    }
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      return;
+    }
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log("printing token");
+    console.log(token);
+    return fetch(PUSH_REGISTRATION_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        token: {
+          value: token,
+        },
+        user: {
+          username: this.state.username,
+        },
+      }),
+    });
+
+    this.notificationSubscription = Notifications.addListener(this.handleNotification);
   }
 
   async componentDidMount() {
@@ -64,7 +109,11 @@ class App extends React.Component {
     } catch (error) {
       console.log(error);
     }
+    console.log("in here");
+    this.registerForPushNotificationsAsync();
   }
+
+
 
   render() {
     if (this.state.fontLoaded) {
