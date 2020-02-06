@@ -99,6 +99,20 @@ class Profile extends React.Component {
     return null;
   }
 
+  firstEvent = () => {
+    if(this.props.allYours[7]){
+      return <Image source={require('./../assets/icons/firstevent.png')} />
+    }
+    return null;
+  }
+
+  hundredMessages = () => {
+    if(this.props.allYours[9]){
+      return <Image source={require('./../assets/icons/hundredMessages.png')} />
+    }
+    return null;
+  }
+
   badge = () => {
     return (
       <View style={{flexDirection: 'row'}}>
@@ -144,6 +158,8 @@ class Profile extends React.Component {
       rewards = this.badge()
     }
 
+    console.log(this.props.allYours);
+    console.log("^^^");
 
 
     return (
