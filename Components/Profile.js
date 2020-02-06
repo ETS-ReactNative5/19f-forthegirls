@@ -73,7 +73,7 @@ class Profile extends React.Component {
 
   threeRSVPS = () => {
     if (this.props.allYours[1]) {
-      return <Image source={require('./../assets/icons/eventsbadge.png')} />
+      return <Image source={require('./../assets/icons/globetrotter.png')} />
     }
     return null;
   }
@@ -87,21 +87,21 @@ class Profile extends React.Component {
 
   firstMatch = () => {
     if (this.props.allYours[5]) {
-      return <Image source={require('./../assets/icons/socialbutterfly.png')} />
+      return <Image source={require('./../assets/icons/firstMatch.png')} />
     }
     return null;
   }
 
   hundredMessages = () => {
-    if(this.props.allYours[7]){
-      return <Image source={require('./../assets/icons/hundredMessages.png')} />
+    if (this.props.allYours[7]) {
+      return <Image source={require('./../assets/icons/chattyCathy.png')} />
     }
     return null;
   }
 
   firstEvent = () => {
-    if(this.props.allYours[9]){
-      return <Image source={require('./../assets/icons/firstevent.png')} />
+    if (this.props.allYours[9]) {
+      return <Image source={require('./../assets/icons/socialbutterfly.png')} />
     }
     return null;
   }
@@ -109,13 +109,13 @@ class Profile extends React.Component {
 
   badge = () => {
     return (
-      <View style={{flexDirection: 'row'}}>
-      {this.threeRSVPS()}
-      {this.messageFive()}
-      {this.firstMatch()}
-      {this.firstEvent()}
-      {this.hundredMessages()}
-      {<Image source={require('./../assets/icons/founders.png')} />}
+      <View style={{ flexDirection: 'row' }}>
+        {this.threeRSVPS()}
+        {this.messageFive()}
+        {this.firstMatch()}
+        {this.firstEvent()}
+        {this.hundredMessages()}
+        {<Image source={require('./../assets/icons/founders.png')} />}
       </View>
     )
   }
@@ -127,7 +127,7 @@ class Profile extends React.Component {
       prompts = (
         <TouchableOpacity
           onPress={this.opacityOnPress}>
-          <Text>click here to add matching data</Text>
+          <Text style={[colors.turquoise, fonts.minorHeading]}>click here to enhance your profile!</Text>
         </TouchableOpacity>
       )
     }
@@ -177,7 +177,7 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
-        <View>
+        <View style={{ marginLeft: 10, marginTop: 5 }}>
           {rewards}
         </View>
         <View style={{ justifyContent: 'flex-end' }}>
