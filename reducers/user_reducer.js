@@ -1,12 +1,12 @@
 import { ActionTypes } from '../actions';
 
+//This reducer enables us to store all user information in state to be used throughout the app
+
 const UserReducer = (state = {
+  // basic
   username: '',
   email: '',
   matches: [],
-  // potentialMatches: [],
-
-  // basic
   firstName: '',
   lastName: '',
   highSchool: '',
@@ -15,7 +15,6 @@ const UserReducer = (state = {
   currentJob: '',
 
   // CS:
-
   frontEnd: false,
   backEnd: false,
   small: false,
