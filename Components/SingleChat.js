@@ -7,12 +7,16 @@ import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import axios from 'axios';
 import Match from './Match';
+import ErrorModal from './ErrorModal'
 
 class SingleChat extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      showModal: false,
+      modalMessage: '',
+
       chats: [],
       chatText: '',
       numberText: 8,
@@ -38,6 +42,10 @@ class SingleChat extends React.Component {
   }
 
   getChats() {
+
+    if (this.props.navigation.getParam('firstMatchAward')){
+      this.setState({showModal: true, modalMessage: 'You got a badge!!!'});
+    }
 
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
@@ -122,12 +130,35 @@ class SingleChat extends React.Component {
     }
   }
 
+  // renderError = () => {
+  //   if(this.props.error !== null) {
+  //     return (
+  //       <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
+  //     )
+  //   }
+  // }
+
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
+
   render() {
     console.log(this.props.navigation.getParam('firstMatchAward'));
     console.log("^^^^ signel chat props!")
+
     return (
       <View>
         <View style={singleChat.header}>
+        {this.renderModal()}
           <View style={singleChat.arrowBack}>
             <TouchableOpacity
               onPress={this.goBack}>
