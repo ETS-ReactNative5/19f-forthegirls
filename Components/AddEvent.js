@@ -95,16 +95,6 @@ class AddEvent extends Component {
         var location = json.results[0].geometry.location;
         this.setState({ latitude: location.lat, longitude: location.lng })
 
-        // this.props.addEvent({
-        //   title: this.state.title,
-        //   date: this.state.date,
-        //   time: this.state.time,
-        //   location: this.state.location,
-        //   description: this.state.description,
-        //   latitude: this.state.latitude,
-        //   longitude: this.state.longitude,
-        //   eventPhotoURL: photoURL
-        // });
         const popAction = StackActions.pop({
           n: 1,
         });
@@ -136,7 +126,7 @@ class AddEvent extends Component {
           longitude: this.state.longitude,
           eventPhotoURL: String(url),
           authorID: this.props.id,
-        });
+        }, this.props.navigation, this.props.id);
       })
     } else {
       this.props.addEvent({
@@ -149,7 +139,7 @@ class AddEvent extends Component {
         longitude: this.state.longitude,
         eventPhotoURL: this.state.photoURL,
         authorID: this.props.id,
-      });
+      }, this.props.navigation, this.props.id);
     }
 
   }
@@ -181,6 +171,9 @@ class AddEvent extends Component {
     else {
       image = imageNoImage;
     }
+
+    // console.log("trying to find ID");
+    // console.log(this.props.id);
 
     var textFieldStyle = [fonts.bodyText]
     return (

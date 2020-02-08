@@ -259,14 +259,23 @@ export function deleteMatch(userID, matchID, username) {
 
 //----------------- EVENTS ------------------//
 //creates a new event
-export function addEvent(fields) {
-  console.log("In add events axious");
-  console.log(fields);
+export function addEvent(fields, navigation, id) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
         return axios.get(`${ROOT_URL}/events`).then((response) => {
           dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
+          var count = 0;
+          for (var i = 0; i < response.data.length; i++ ){
+            if (response.data[i].authorID == id){
+              count = count+1;
+            }
+          }
+          var firstEventAward = false;
+          if (count == 1) {
+            firstEventAward = true;
+          }
+          navigation.navigate('Home', {firstEventAward: firstEventAward })
         }).catch((error) => {
           console.log(error);
         });
