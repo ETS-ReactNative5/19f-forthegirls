@@ -117,20 +117,14 @@ class AddEvent extends Component {
       );
 
     if (this.state.imagefull != null) {
-      console.log('image full state not null');
       let i = this.state.imagefull.uri.length;
       while (this.state.imagefull.uri.charAt(i) !== '/') {
         i--;
       }
       this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
       uploadImage(this.state.imagefull).then((url) => {
-        console.log(url);
-        console.log("^^^ url")
         this.setState({ eventPhotoURL: String(url) })
         this.setState({ imagefull: null })
-
-        console.log("event photo url")
-        console.log(this.state.eventPhotoURL)
 
         this.props.addEvent({
           title: this.state.title,
@@ -143,13 +137,8 @@ class AddEvent extends Component {
           eventPhotoURL: String(url),
           authorID: this.props.id,
         });
-
-        console.log('event photo url state in upload image : ');
-        console.log(`${this.state.eventPhotoURL}`);
-
       })
     } else {
-      console.log('image full state ISSSSS null');
       this.props.addEvent({
         title: this.state.title,
         date: this.state.date,
