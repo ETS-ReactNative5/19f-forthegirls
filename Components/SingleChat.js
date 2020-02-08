@@ -113,30 +113,12 @@ class SingleChat extends React.Component {
   goBack = () => {
     this.props.navigation.pop();
   }
-  // renderInput = () => {
-  //   console.log("hi");
-  //   if(this.props.navigation.getParam('prompt')!==undefined) {
-  //     <TextInput defaultValue={this.props.navigation.getParam('prompt')} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
-  //   }
-  //   else {
-  //     <TextInput defaultValue={this.state.prompt} onChangeText={this.addChat} onEndEditing={this.sendChat}></TextInput>
-  //   }
-
-  // }
 
   handleKeyDown = (e) => {
     if (e.nativeEvent.key == "Enter") {
       this.sendChat();
     }
   }
-
-  // renderError = () => {
-  //   if(this.props.error !== null) {
-  //     return (
-  //       <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
-  //     )
-  //   }
-  // }
 
   renderModal = () => {
     if (this.state.showModal) {
@@ -205,14 +187,6 @@ class SingleChat extends React.Component {
         </KeyboardAvoidingView>
       </View>
     )
-
-
-    // else {
-    //   this.props.getMatches(this.props.username);
-    //   return (
-    //     <Text>Loading...</Text>
-    //   )
-    // }
 
   }
 }
