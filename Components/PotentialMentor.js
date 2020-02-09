@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
 import { pairMatchToUser } from '../actions';
 import { Linking } from 'react-native'
@@ -57,12 +57,21 @@ class PotentialMentor extends React.Component {
     var yesMatch = require('../assets/icons/chatSelected.png');
     var noMatch = require('../assets/icons/dontMatch.png');
 
+    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageImage = <Image source={{ uri: this.state.userMatch.profileURL }} style={profileImage.basic} />
+
+    image = this.state.userMatch.profileURL != "" && this.state.userMatch.profileURL != null ? imageImage : imageNoImage;
+
+
     if (this.state.userMatch !== undefined) {
       return (
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
           profile.profileContainer]}>
           {this.showMatch()}
+          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+            {image}
+          </View>
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>

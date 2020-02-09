@@ -25,13 +25,6 @@ class Profile extends React.Component {
 
   }
 
-  async componentWillMount() {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status !== 'granted') {
-      console.log('Please enable camera');
-    }
-  }
-
   componentDidMount() {
     const { navigation } = this.props;
     this.props.getUser(this.props.id);
@@ -79,48 +72,62 @@ class Profile extends React.Component {
   }
 
   threeRSVPS = () => {
-    if(this.props.allYours[1]){
-      return <Image source={require('./../assets/icons/eventsbadge.png')} />
+    if (this.props.allYours[1]) {
+      return <Image style={profile.award} source={require('./../assets/icons/globetrotter.png')} />
     }
     return null;
   }
 
   messageFive = () => {
-    if(this.props.allYours[3]){
-      return <Image source={require('./../assets/icons/messageFive.png')} />
+    if (this.props.allYours[3]) {
+      return <Image style={profile.award} source={require('./../assets/icons/messageFive.png')} />
     }
     return null;
   }
 
   firstMatch = () => {
-    if(this.props.allYours[5]){
-      return <Image source={require('./../assets/icons/socialbutterfly.png')} />
+    if (this.props.allYours[5]) {
+      return <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
     }
     return null;
   }
 
+  hundredMessages = () => {
+    if (this.props.allYours[7]) {
+      return <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
+    }
+    return null;
+  }
+
+  firstEvent = () => {
+    if (this.props.allYours[9]) {
+      return <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
+    }
+    return null;
+  }
+
+
   badge = () => {
     return (
-      <View style={{flexDirection: 'row'}}>
-      {this.threeRSVPS()}
-      {this.messageFive()}
-      {this.firstMatch()}
-      {<Image source={require('./../assets/icons/founders.png')} />}
+      <View style={{ flexDirection: 'row' }}>
+        {this.threeRSVPS()}
+        {this.messageFive()}
+        {this.firstMatch()}
+        {this.firstEvent()}
+        {this.hundredMessages()}
+        {<Image style={profile.award} source={require('./../assets/icons/founders.png')} />}
       </View>
     )
   }
 
 
   render() {
-    console.log("fetchign awards");
-    console.log(this.props.allYours);
-
     var prompts;
     if (this.props.promptOneQuestion == null) {
       prompts = (
         <TouchableOpacity
           onPress={this.opacityOnPress}>
-          <Text>click here to add matching data</Text>
+          <Text style={[colors.turquoise, fonts.minorHeading]}>click here to enhance your profile!</Text>
         </TouchableOpacity>
       )
     }
@@ -140,11 +147,9 @@ class Profile extends React.Component {
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
 
     rewards = null;
-    if(this.props.allYours != null){
+    if (this.props.allYours != null) {
       rewards = this.badge()
     }
-
-
 
     return (
       <View style={profile.profileContainer}>
@@ -168,7 +173,7 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
-        <View>
+        <View style={{ marginLeft: 7, marginTop: 5 }}>
           {rewards}
         </View>
         <View style={{ justifyContent: 'flex-end' }}>
@@ -208,7 +213,7 @@ const mapStateToProps = reduxState => (
     promptThreeQuestion: reduxState.user.promptThreeQuestion,
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
     profileURL: reduxState.user.profileURL,
-    allYours:reduxState.awards.allYours,
+    allYours: reduxState.awards.allYours,
 
   }
 );

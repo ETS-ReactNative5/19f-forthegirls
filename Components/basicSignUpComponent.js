@@ -26,14 +26,14 @@ class BasicSignUpComponent extends React.Component {
       currentJob: '',
       age: 0,
       hs: false,
-      college: false,
+      college: true,
       pg: false,
 
       latitude: 0,
       longitude: 0,
 
       showModal: false,
-      modalMessage: '', 
+      modalMessage: '',
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
@@ -77,7 +77,7 @@ class BasicSignUpComponent extends React.Component {
               latitude: location.lat,
               longitude: location.lng,
             }
-      
+
             this.props.signUpUser(fields, this.props.navigation, otherAnswers);
 
           })
@@ -86,7 +86,7 @@ class BasicSignUpComponent extends React.Component {
               this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
             }
           );
-  
+
     }
   }
 
@@ -291,17 +291,34 @@ class BasicSignUpComponent extends React.Component {
             onChangeText={this.locationInput}
             clearButtonMode='while-editing'
           />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="High School Name"
+            onChangeText={this.highSchoolInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="College"
+            onChangeText={this.collegeInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+          <TextInput
+            style={textFieldStyle}
+            placeholder="Graduation Year"
+            onChangeText={this.gradYearInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
           <View>
-            <Text style={headerText}>Stage of Life?</Text>
             <View style={{
               flexDirection: 'row',
               flexWrap: 'no-wrap',
               justifyContent: 'flex-start'
             }}>
-              <TouchableComponent name='High School' stateField='hs' stateFieldStatus={this.state.hs} onChange={this.handleFieldChange} />
-              <TouchableComponent name='College' stateField='college' stateFieldStatus={this.state.college} onChange={this.handleFieldChange} />
-              <TouchableComponent name='Post Grad' stateField='pg' stateFieldStatus={this.state.pg} onChange={this.handleFieldChange} />
-            </View>
+           </View>
           </View>
           {this.state.hs === true ? this.renderHS() : (this.state.college || this.state.pg === true ? this.renderCollege() : this.renderNull())}
           <View style={buttons.arrowView}>

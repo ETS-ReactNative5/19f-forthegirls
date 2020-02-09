@@ -1,5 +1,7 @@
 import { ActionTypes } from '../actions';
 
+//This reducer stores various errors in state
+
 const ErrorReducer = (state = '', action) => {
     switch (action.type) {
       case ActionTypes.SET_ERROR:

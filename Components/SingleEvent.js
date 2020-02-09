@@ -6,10 +6,11 @@ import {
   ImageBackground,
   Button,
   TouchableOpacity,
+  Image
 } from 'react-native';
 import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
 
 
 class SingleEvent extends Component {
@@ -26,14 +27,19 @@ class SingleEvent extends Component {
   }
 
   navToPage() {
-    this.props.navigation.navigate('Detail', { eventID: this.props.eventID, eventName: this.props.name });
+    this.props.navigation.navigate('Detail', { eventID: this.props.eventID, eventName: this.props.name, eventPhotoURL: this.props.eventPhotoURL });
   }
 
   render() {
+    imageNoImage = require('../img/EventBackground.jpg')
+    imageImage = { uri: this.props.eventPhotoURL }
+
+    image = this.props.eventPhotoURL != "" && this.props.eventPhotoURL != null ? imageImage : imageNoImage;
+
     return (
       <TouchableOpacity onPress={this.navToPage}>
         <View style={eventPage.singleEventView}>
-          <ImageBackground source={require('../img/EventBackground.jpg')} style={eventPage.backgroundImage}>
+          <ImageBackground source={image} style={eventPage.backgroundImage}>
             <View style={eventPage.title}>
               <Text style={[eventPage.titleMargin, colors.white, fonts.majorHeading]}>
                 {this.props.name}
