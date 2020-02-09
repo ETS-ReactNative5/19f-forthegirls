@@ -106,7 +106,6 @@ class EditProfile extends React.Component {
   };
 
   submitPage = () => {
-    // console.log(this.state);
     if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined))  {
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
@@ -121,10 +120,7 @@ class EditProfile extends React.Component {
         }
         this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
         uploadImage(this.state.imagefull).then((url) => {
-          console.log(typeof (url))
           this.setState({ profileURL: String(url) })
-          console.log("UTL")
-          console.log(this.state.profileURL)
           this.setState({ imagefull: null })
           this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
 
