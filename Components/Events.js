@@ -6,6 +6,7 @@ import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
+import ErrorModal from './ErrorModal'
 
 class Events extends React.Component {
   static navigationOptions = {
@@ -16,6 +17,10 @@ class Events extends React.Component {
     super(props);
     this.state = {
       viewAll: true,
+
+      showModal: false,
+      modalMessage: '',
+      awardChange: true,
     };
 
     this.displayEvents = this.displayEvents.bind(this);
@@ -30,6 +35,10 @@ class Events extends React.Component {
   componentDidMount() {
     this.props.fetchEvents();
     this.props.fetchYourEvents();
+
+    if (this.props.navigation.getParam('firstEventAward')){
+      this.setState({showModal: true, modalMessage: 'You got a badge!!!'});
+    }
   }
 
   navToAdd() {
@@ -89,12 +98,32 @@ class Events extends React.Component {
     return renderedEvents;
   }
 
+  changeState = () => {
+    this.setState({showModal: true, modalMessage: 'You got a badge!!!', awardChange: false});
+  }
+
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
   render() {
     console.log(this.props.navigation.getParam('firstEventAward'))
     console.log("First event award ^^ ")
+    if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange){
+      this.changeState();
+    }
     return (
       <View style={eventPage.wholeContainer}>
         <View style={eventPage.viewOptionsContainer}>
+        {this.renderModal()}
           <View style={this.state.viewAll
             ? eventPage.addEventOpacity
             : eventPage.notPressed}>

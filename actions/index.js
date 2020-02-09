@@ -264,7 +264,6 @@ export function addEvent(fields, navigation, id) {
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
         return axios.get(`${ROOT_URL}/events`).then((response) => {
-          dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
           var count = 0;
           for (var i = 0; i < response.data.length; i++ ){
             if (response.data[i].authorID == id){
@@ -275,6 +274,7 @@ export function addEvent(fields, navigation, id) {
           if (count == 1) {
             firstEventAward = true;
           }
+          dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
           navigation.navigate('Home', {firstEventAward: firstEventAward })
         }).catch((error) => {
           console.log(error);
