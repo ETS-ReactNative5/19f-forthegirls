@@ -115,8 +115,6 @@ class Events extends React.Component {
   }
 
   render() {
-    console.log(this.props.navigation.getParam('firstEventAward'))
-    console.log("First event award ^^ ")
     if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange){
       this.changeState();
     }
