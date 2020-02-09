@@ -55,6 +55,7 @@ app.post('/token', (req, res) => {
 });
 
 app.post('/message', (req, res) => {
+    console.log(req);
     handlePushTokens(req.body.message);
     console.log(`Received message, ${req.body.message}`);
     res.send(`Received message, ${req.body.message}`);

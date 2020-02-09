@@ -9,6 +9,8 @@ class StartScreen extends React.Component {
     this.state = {}
   }
 
+  
+
   render() {
       var logo = require('../assets/icons/logo.png');
       return (

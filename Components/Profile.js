@@ -7,6 +7,7 @@ import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 import { withNavigation } from 'react-navigation';
 
+
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 
@@ -67,7 +68,24 @@ class Profile extends React.Component {
     this.props.signoutUser(this.props.navigation);
   }
 
+  sendMessage = async () => {
+    const MESSAGE_ENPOINT = 'http://b37b74bd.ngrok.io/message';
+    fetch(MESSAGE_ENPOINT, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: "hello",
+      }),
+    });
+  }
+
   opacityOnPress = () => {
+    
+    this.sendMessage();
+
     this.props.navigation.navigate('EditProfile', {})
   }
 
