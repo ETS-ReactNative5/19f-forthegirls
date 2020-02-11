@@ -15,8 +15,6 @@ class Profile extends React.Component {
     super(props);
 
     this.state = {
-      editing: false,
-      isMyProfile: true,
       image: null,
       width: 0,
       height: 0,
@@ -37,16 +35,6 @@ class Profile extends React.Component {
   componentWillUnmount() {
     // Remove the event listener
     this.focusListener.remove();
-  }
-
-
-  isMyProfile() {
-    if (this.props.isMyProfile && !this.state.editing) {
-      return (<Button title="Edit" onPress={this.changeEditStatus} />)
-    }
-    else if (this.props.isMyProfile && this.state.editing) {
-      return (<Button title="Save Changes" onPress={this.changeEditStatus} />)
-    }
   }
 
   handleInput = (text) => {
@@ -151,13 +139,10 @@ class Profile extends React.Component {
         <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
           {image}
         </View>
-
-        {this.isMyProfile(this.props.isMyProfile)}
-
         <View style={profile.basicInfo}>
           <View style={profile.basicInfoLeft}>
             <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.currentJob === '' ? 'high schooler' : this.props.currentJob}</Text>
+            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.location}</Text>
           </View>
           <View style={profile.jobStuff}>
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
@@ -200,6 +185,7 @@ const mapStateToProps = reduxState => (
     collegeName: reduxState.user.collegeName,
     gradYear: reduxState.user.gradYear,
     currentJob: reduxState.user.currentJob,
+    location: reduxState.user.location,
     promptOneQuestion: reduxState.user.promptOneQuestion,
     promptOneAnswer: reduxState.user.promptOneAnswer,
     promptTwoQuestion: reduxState.user.promptTwoQuestion,

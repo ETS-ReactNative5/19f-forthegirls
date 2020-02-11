@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  Keyboard
+  Keyboard,
+  KeyboardAvoidingView
 } from 'react-native';
 import { StackActions } from 'react-navigation'
 import { connect } from 'react-redux';
@@ -177,68 +178,70 @@ class AddEvent extends Component {
 
     var textFieldStyle = [fonts.bodyText]
     return (
-      <ScrollView contentContainerStyle={{ backgroundColor: colors.white.color }}>
-        {this.renderModal()}
-        <TouchableOpacity onPress={this.photoUpload}>
-          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
-            {image}
-            <Text style={[colors.turquoise, fonts.minorHeading]}>Change Event Photo</Text>
-          </View>
-        </TouchableOpacity>
-        <View style={surveyStyle.textFieldContainer}>
-          <TextInput
-            style={textFieldStyle}
-            keyboardType='default'
-            placeholder="Event Title"
-            onChangeText={this.titleInput}
-            autoCapitalize='none'
-            clearButtonMode='while-editing' />
-        </View>
-        <View style={surveyStyle.textFieldContainer}>
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Event Date (MM/DD/YY)"
-            keyboardType='default'
-            onChangeText={this.dateInput}
-            autoCapitalize='none'
-            clearButtonMode='while-editing' />
-        </View>
-        <View style={surveyStyle.textFieldContainer}>
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Event Time (24:00)"
-            keyboardType='default'
-            onChangeText={this.timeInput}
-            autoCapitalize='none'
-            clearButtonMode='while-editing' />
-        </View>
-        <View style={surveyStyle.textFieldContainer}>
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Event Location"
-            keyboardType='default'
-            onChangeText={this.locationInput}
-            autoCapitalize='none'
-            clearButtonMode='while-editing' />
-        </View>
-        <View style={surveyStyle.textFieldContainer}>
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Event Description"
-            keyboardType='default'
-            onChangeText={this.descriptionInput}
-            autoCapitalize='none'
-            clearButtonMode='while-editing'
-            multiline={true}
-            onSubmitEditing={() => { Keyboard.dismiss() }} />
-        </View>
-        <View style={{ justifyContent: 'flex-end' }}>
-          <TouchableOpacity
-            onPress={this.addEvent}>
-            <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
+      <KeyboardAvoidingView behavior="padding" enabled>
+        <ScrollView contentContainerStyle={{ backgroundColor: colors.white.color }}>
+          {this.renderModal()}
+          <TouchableOpacity onPress={this.photoUpload}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
+              {image}
+              <Text style={[colors.turquoise, fonts.minorHeading]}>Change Event Photo</Text>
+            </View>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
+          <View style={surveyStyle.textFieldContainer}>
+            <TextInput
+              style={textFieldStyle}
+              keyboardType='default'
+              placeholder="Event Title"
+              onChangeText={this.titleInput}
+              autoCapitalize='none'
+              clearButtonMode='while-editing' />
+          </View>
+          <View style={surveyStyle.textFieldContainer}>
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Event Date (MM/DD/YY)"
+              keyboardType='default'
+              onChangeText={this.dateInput}
+              autoCapitalize='none'
+              clearButtonMode='while-editing' />
+          </View>
+          <View style={surveyStyle.textFieldContainer}>
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Event Time (24:00)"
+              keyboardType='default'
+              onChangeText={this.timeInput}
+              autoCapitalize='none'
+              clearButtonMode='while-editing' />
+          </View>
+          <View style={surveyStyle.textFieldContainer}>
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Event Location"
+              keyboardType='default'
+              onChangeText={this.locationInput}
+              autoCapitalize='none'
+              clearButtonMode='while-editing' />
+          </View>
+          <View style={surveyStyle.textFieldContainer}>
+            <TextInput
+              style={textFieldStyle}
+              placeholder="Event Description"
+              keyboardType='default'
+              onChangeText={this.descriptionInput}
+              autoCapitalize='none'
+              clearButtonMode='while-editing'
+              multiline={true}
+              onSubmitEditing={() => { Keyboard.dismiss() }} />
+          </View>
+          <View style={{ justifyContent: 'flex-end' }}>
+            <TouchableOpacity
+              onPress={this.addEvent}>
+              <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
