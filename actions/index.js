@@ -210,7 +210,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
             var award = false;
-            if(res.data.length === 1){
+            if (res.data.length === 1) {
               award = true;
             }
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
@@ -284,9 +284,9 @@ export function addEvent(fields, navigation, id) {
       .then((response) => {
         return axios.get(`${ROOT_URL}/events`).then((response) => {
           var count = 0;
-          for (var i = 0; i < response.data.length; i++ ){
-            if (response.data[i].authorID == id){
-              count = count+1;
+          for (var i = 0; i < response.data.length; i++) {
+            if (response.data[i].authorID == id) {
+              count = count + 1;
             }
           }
           var firstEventAward = false;
@@ -294,7 +294,7 @@ export function addEvent(fields, navigation, id) {
             firstEventAward = true;
           }
           dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
-          navigation.navigate('Home', {firstEventAward: firstEventAward })
+          navigation.navigate('Home', { firstEventAward: firstEventAward })
         }).catch((error) => {
           console.log(error);
         });
@@ -367,7 +367,7 @@ export function rsvpEvent(userID, eventID) {
       .then((response) => {
         return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
           var threeEventAward = false;
-          if(response.data.length == 3){
+          if (response.data.length == 2) {
             threeEventAward = true;
           }
 

@@ -6,7 +6,7 @@ import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
-import ErrorModal from './ErrorModal'
+import AwardModal from './AwardModal'
 
 class Events extends React.Component {
   static navigationOptions = {
@@ -19,7 +19,8 @@ class Events extends React.Component {
       viewAll: true,
 
       showModal: false,
-      modalMessage: '',
+      awardMessage: '',
+      awardImage: null,
       awardChange: true,
     };
 
@@ -36,8 +37,8 @@ class Events extends React.Component {
     this.props.fetchEvents();
     this.props.fetchYourEvents();
 
-    if (this.props.navigation.getParam('firstEventAward')){
-      this.setState({showModal: true, modalMessage: 'You got a badge!!!'});
+    if (this.props.navigation.getParam('firstEventAward')) {
+      this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
     }
   }
 
@@ -99,29 +100,29 @@ class Events extends React.Component {
   }
 
   changeState = () => {
-    this.setState({showModal: true, modalMessage: 'You got a badge!!!', awardChange: false});
+    this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png'), awardChange: false });
   }
 
   renderModal = () => {
     if (this.state.showModal) {
       return (
-        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+        <AwardModal awardMessage={this.state.awardMessage} awardImage={this.state.awardImage} reset={this.resetModal} />
       );
     }
   }
 
   resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "" });
+    this.setState({ showModal: false, awardMessage: "" });
   }
 
   render() {
-    if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange){
+    if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange) {
       this.changeState();
     }
     return (
       <View style={eventPage.wholeContainer}>
         <View style={eventPage.viewOptionsContainer}>
-        {this.renderModal()}
+          {this.renderModal()}
           <View style={this.state.viewAll
             ? eventPage.addEventOpacity
             : eventPage.notPressed}>
