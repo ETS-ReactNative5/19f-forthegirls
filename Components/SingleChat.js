@@ -7,7 +7,7 @@ import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import axios from 'axios';
 import Match from './Match';
-import ErrorModal from './ErrorModal'
+import AwardModal from './AwardModal'
 
 class SingleChat extends React.Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class SingleChat extends React.Component {
 
     this.state = {
       showModal: false,
-      modalMessage: '',
+      awardMessage: '',
+      awardImage: null,
 
       chats: [],
       chatText: '',
@@ -43,8 +44,8 @@ class SingleChat extends React.Component {
 
   getChats() {
 
-    if (this.props.navigation.getParam('firstMatchAward')){
-      this.setState({showModal: true, modalMessage: 'You got a badge!!!'});
+    if (this.props.navigation.getParam('firstMatchAward')) {
+      this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
     const firstID = this.props.id;
@@ -123,7 +124,7 @@ class SingleChat extends React.Component {
   renderModal = () => {
     if (this.state.showModal) {
       return (
-        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+        <AwardModal awardMessage={this.state.awardMessage} awardImage={this.state.awardImage} reset={this.resetModal} />
       );
     }
   }
@@ -134,13 +135,10 @@ class SingleChat extends React.Component {
 
 
   render() {
-    console.log(this.props.navigation.getParam('firstMatchAward'));
-    console.log("^^^^ signel chat props!")
-
     return (
       <View>
         <View style={singleChat.header}>
-        {this.renderModal()}
+          {this.renderModal()}
           <View style={singleChat.arrowBack}>
             <TouchableOpacity
               onPress={this.goBack}>

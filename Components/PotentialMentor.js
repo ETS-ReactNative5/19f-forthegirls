@@ -75,7 +75,7 @@ class PotentialMentor extends React.Component {
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
               <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.currentJob === '' ? 'high schooler' : this.state.userMatch.currentJob}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.location}</Text>
             </View>
             <View style={profile.jobStuff}>
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
