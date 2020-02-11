@@ -44,7 +44,26 @@ export const ActionTypes = {
   FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
   FETCH_AWARD: 'FETCH_AWARD',
 
+  //ACTIVITY
+  ADD_ACTIVITY: 'ADD_ACTIVITY',
+
 };
+
+//----------------- ACTIVITY ------------------//
+
+//adds a login to a user's activity log
+export function addActivity(fields) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/activity/add/:${fields.id}`, fields)
+      .then((response) => {
+        dispatch({ type: ActionTypes.ADD_ACTIVITY, payload: response.data });
+      }).then(() => {
+        dispatch({ type: ActionTypes.CLEAR_ERROR, payload: null });
+      }).catch((error) => {
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  };
+}
 
 //----------------- USERS ------------------//
 
@@ -347,6 +366,12 @@ export function rsvpEvent(userID, eventID) {
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
         return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
+          var threeEventAward = false;
+          if(response.data.length == 3){
+            threeEventAward = true;
+          }
+
+
           dispatch({ type: ActionTypes.FETCH_YOUR_EVENTS, payload: response.data });
         }).catch((error) => {
           console.log(error);

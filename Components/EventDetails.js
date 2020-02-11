@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import ErrorModal from './ErrorModal'
+
 import {
   View,
   Text,
@@ -18,6 +21,8 @@ import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
 import EventMap from './EventMap.js'
 import SurveyHeaderComponent from './surveyHeaderComponent.js'
+export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
+
 
 class EventDetails extends Component {
   constructor(props) {
@@ -25,6 +30,9 @@ class EventDetails extends Component {
     this.state = {
       rsvp: null,
       showingModal: false,
+      rsvpLength: 0,
+      showModal: false,
+      modalMessage: '',
     };
 
     this.handleRSVP = this.handleRSVP.bind(this);
@@ -38,6 +46,12 @@ class EventDetails extends Component {
   componentDidMount() {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
     this.props.fetchRsvpConnections(this.props.id, this.props.navigation.getParam("eventID", null))
+    axios.get(`${ROOT_URL}/events/rsvp/your/${this.props.id}`).then((response) => {
+      this.setState({rsvpLength: response.data.length})
+    }).catch((error) => {
+      console.log(error);
+    });
+
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -104,6 +118,11 @@ class EventDetails extends Component {
     if (this.state.rsvp === false) {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
+      console.log(this.state.rsvpLength)
+      if (this.state.rsvpLength == 3){
+        console.log("HEREEEEe")
+        this.setState({showModal:true, modalMessage: "You got a badge!!"});
+      }
     }
     else {
       this.props.unrsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
@@ -119,6 +138,18 @@ class EventDetails extends Component {
     }
   }
 
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "" });
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
@@ -126,7 +157,10 @@ class EventDetails extends Component {
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     return (
-      <ScrollView><View style={eventPage.eventDetail}>
+      <ScrollView>
+      <View style={eventPage.eventDetail}>
+      {this.renderModal()}
+
         <Image source={image} style={eventPage.eventDetailImage} />
         <View style={eventPage.eventDetailTitleBox} >
           <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
@@ -142,7 +176,8 @@ class EventDetails extends Component {
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
           </View>
         </View>
-        {this.renderMap()}
+        {//this.renderMap()
+        }
         <View style={eventPage.eventDetailDescription}>
           <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
             {this.props.event.description}
@@ -163,7 +198,8 @@ class EventDetails extends Component {
                 : 'RSVP'}
             </Text>
           </TouchableOpacity>
-        </View></View>
+        </View>
+        </View>
       </ScrollView>
     );
   }
