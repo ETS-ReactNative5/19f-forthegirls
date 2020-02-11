@@ -141,7 +141,7 @@ export function signUpUser(fields, navigate, otherAnswers) {
   }
 }
 
-//adds user information (name, location, etc) to a user on the backend 
+//adds user information (name, location, etc) to a user on the backend
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
@@ -184,16 +184,13 @@ export function authError(error) {
 }
 
 //----------------- MATCHES ------------------//
-//given two users, it creates a match between the users and redirects the matcher to chat 
+//given two users, it creates a match between the users and redirects the matcher to chat
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
-            console.log(res.data);
-            console.log(res.data.length)
-            console.log("matching data ^^ ")
             var award = false;
             if(res.data.length === 1){
               award = true;
@@ -262,15 +259,24 @@ export function deleteMatch(userID, matchID, username) {
 }
 
 //----------------- EVENTS ------------------//
-//creates a new event 
-export function addEvent(fields) {
-  console.log("In add events axious");
-  console.log(fields);
+//creates a new event
+export function addEvent(fields, navigation, id) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/add`, fields)
       .then((response) => {
         return axios.get(`${ROOT_URL}/events`).then((response) => {
+          var count = 0;
+          for (var i = 0; i < response.data.length; i++ ){
+            if (response.data[i].authorID == id){
+              count = count+1;
+            }
+          }
+          var firstEventAward = false;
+          if (count == 1) {
+            firstEventAward = true;
+          }
           dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
+          navigation.navigate('Home', {firstEventAward: firstEventAward })
         }).catch((error) => {
           console.log(error);
         });

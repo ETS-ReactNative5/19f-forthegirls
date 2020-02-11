@@ -34,11 +34,6 @@ class Profile extends React.Component {
       this.props.fetchYourAwards(this.props.id);
 
     });
-
-    // console.log('in profile, p1 q and a after get user on comp did mount')
-    // console.log(this.props.promptOneQuestion);
-    // console.log(this.props.promptOneAnswer);
-    // this.listener = this.props.navigation.addListener("didFocus", this.props.getUser(this.props.id));
   }
   componentWillUnmount() {
     // Remove the event listener
@@ -176,7 +171,6 @@ class Profile extends React.Component {
         </View>
 
         {this.isMyProfile(this.props.isMyProfile)}
-        {/* <Button onPress={this.logout} title="Log Out" /> */}
 
         <View style={profile.basicInfo}>
           <View style={profile.basicInfoLeft}>

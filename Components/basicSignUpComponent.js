@@ -320,7 +320,6 @@ class BasicSignUpComponent extends React.Component {
             }}>
            </View>
           </View>
-          {this.state.hs === true ? this.renderHS() : (this.state.college || this.state.pg === true ? this.renderCollege() : this.renderNull())}
           <View style={buttons.arrowView}>
             <TouchableOpacity
               onPress={this.sumbitUser}

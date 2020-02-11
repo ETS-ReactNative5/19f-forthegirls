@@ -95,16 +95,6 @@ class AddEvent extends Component {
         var location = json.results[0].geometry.location;
         this.setState({ latitude: location.lat, longitude: location.lng })
 
-        // this.props.addEvent({
-        //   title: this.state.title,
-        //   date: this.state.date,
-        //   time: this.state.time,
-        //   location: this.state.location,
-        //   description: this.state.description,
-        //   latitude: this.state.latitude,
-        //   longitude: this.state.longitude,
-        //   eventPhotoURL: photoURL
-        // });
         const popAction = StackActions.pop({
           n: 1,
         });
@@ -117,20 +107,14 @@ class AddEvent extends Component {
       );
 
     if (this.state.imagefull != null) {
-      console.log('image full state not null');
       let i = this.state.imagefull.uri.length;
       while (this.state.imagefull.uri.charAt(i) !== '/') {
         i--;
       }
       this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
       uploadImage(this.state.imagefull).then((url) => {
-        console.log(url);
-        console.log("^^^ url")
         this.setState({ eventPhotoURL: String(url) })
         this.setState({ imagefull: null })
-
-        console.log("event photo url")
-        console.log(this.state.eventPhotoURL)
 
         this.props.addEvent({
           title: this.state.title,
@@ -142,14 +126,9 @@ class AddEvent extends Component {
           longitude: this.state.longitude,
           eventPhotoURL: String(url),
           authorID: this.props.id,
-        });
-
-        console.log('event photo url state in upload image : ');
-        console.log(`${this.state.eventPhotoURL}`);
-
+        }, this.props.navigation, this.props.id);
       })
     } else {
-      console.log('image full state ISSSSS null');
       this.props.addEvent({
         title: this.state.title,
         date: this.state.date,
@@ -160,7 +139,7 @@ class AddEvent extends Component {
         longitude: this.state.longitude,
         eventPhotoURL: this.state.photoURL,
         authorID: this.props.id,
-      });
+      }, this.props.navigation, this.props.id);
     }
 
   }
@@ -192,6 +171,9 @@ class AddEvent extends Component {
     else {
       image = imageNoImage;
     }
+
+    // console.log("trying to find ID");
+    // console.log(this.props.id);
 
     var textFieldStyle = [fonts.bodyText]
     return (
