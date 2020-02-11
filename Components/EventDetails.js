@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorModal from './ErrorModal'
-
+import AwardModal from './AwardModal'
 import {
   View,
   Text,
@@ -33,6 +33,9 @@ class EventDetails extends Component {
       rsvpLength: 0,
       showModal: false,
       modalMessage: '',
+      showAwardModal: false,
+      awardMessage: '',
+      awardImage: null
     };
 
     this.handleRSVP = this.handleRSVP.bind(this);
@@ -40,6 +43,7 @@ class EventDetails extends Component {
     this.changeModal = this.changeModal.bind(this);
     this.renderModal = this.renderModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
+    this.renderAwardModal = this.renderAwardModal.bind(this);
 
   }
   // ---------- componentDidMount here! -----------//
@@ -47,10 +51,11 @@ class EventDetails extends Component {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
     this.props.fetchRsvpConnections(this.props.id, this.props.navigation.getParam("eventID", null))
     axios.get(`${ROOT_URL}/events/rsvp/your/${this.props.id}`).then((response) => {
-      this.setState({rsvpLength: response.data.length})
+      this.setState({ rsvpLength: response.data.length })
     }).catch((error) => {
       console.log(error);
     });
+
 
   }
 
@@ -119,9 +124,9 @@ class EventDetails extends Component {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
       console.log(this.state.rsvpLength)
-      if (this.state.rsvpLength == 3){
-        console.log("HEREEEEe")
-        this.setState({showModal:true, modalMessage: "You got a badge!!"});
+      if (this.state.rsvpLength == 3) {
+        this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
+
       }
     }
     else {
@@ -150,6 +155,18 @@ class EventDetails extends Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
+  renderAwardModal() {
+    if (this.state.showAwardModal) {
+      return (
+        <AwardModal awardMessage={this.state.awardMessage} awardImage={this.state.awardImage} reset={this.resetAwardModal} />
+      );
+    }
+  }
+
+  resetAwardModal = () => {
+    this.setState({ showAwardModal: false, awardMessage: "", awardImage: null });
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
@@ -158,47 +175,47 @@ class EventDetails extends Component {
 
     return (
       <ScrollView>
-      <View style={eventPage.eventDetail}>
-      {this.renderModal()}
+        <View style={eventPage.eventDetail}>
+          {this.renderAwardModal()}
 
-        <Image source={image} style={eventPage.eventDetailImage} />
-        <View style={eventPage.eventDetailTitleBox} >
-          <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
-            {this.props.event.title}
-          </Text>
-        </View>
-        <View style={eventPage.eventDetailLogistics}>
-          <View style={eventPage.eventDetailDayTime}>
-            <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+          <Image source={image} style={eventPage.eventDetailImage} />
+          <View style={eventPage.eventDetailTitleBox} >
+            <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
+              {this.props.event.title}
+            </Text>
           </View>
-          <View style={eventPage.eventDetailLocation}>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+          <View style={eventPage.eventDetailLogistics}>
+            <View style={eventPage.eventDetailDayTime}>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+            </View>
+            <View style={eventPage.eventDetailLocation}>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+            </View>
           </View>
-        </View>
-        {//this.renderMap()
-        }
-        <View style={eventPage.eventDetailDescription}>
-          <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
-            {this.props.event.description}
-          </Text>
-        </View>
-        <View style={eventPage.eventDetailRSVPContainer} >
-          {this.renderModal()}
-          <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
-            <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-            <TouchableOpacity onPress={this.changeModal}>
-              <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+          {//this.renderMap()
+          }
+          <View style={eventPage.eventDetailDescription}>
+            <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
+              {this.props.event.description}
+            </Text>
+          </View>
+          <View style={eventPage.eventDetailRSVPContainer} >
+            {this.renderModal()}
+            <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
+              <TouchableOpacity onPress={this.changeModal}>
+                <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
+              <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
+                {this.state.rsvp
+                  ? 'You have RSVPd!'
+                  : 'RSVP'}
+              </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
-            <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
-              {this.state.rsvp
-                ? 'You have RSVPd!'
-                : 'RSVP'}
-            </Text>
-          </TouchableOpacity>
-        </View>
         </View>
       </ScrollView>
     );
