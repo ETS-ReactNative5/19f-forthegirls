@@ -366,6 +366,12 @@ export function rsvpEvent(userID, eventID) {
     axios.post(`${ROOT_URL}/events/rsvp/${eventID}`, { userID: userID })
       .then((response) => {
         return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
+          var threeEventAward = false;
+          if(response.data.length == 3){
+            threeEventAward = true;
+          }
+
+
           dispatch({ type: ActionTypes.FETCH_YOUR_EVENTS, payload: response.data });
         }).catch((error) => {
           console.log(error);
