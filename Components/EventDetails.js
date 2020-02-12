@@ -30,6 +30,7 @@ class EventDetails extends Component {
     this.state = {
       rsvp: null,
       showingModal: false,
+      showingConnectionsModal: false,
       rsvpLength: 0,
       showModal: false,
       modalMessage: '',
@@ -40,8 +41,9 @@ class EventDetails extends Component {
 
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
-    this.changeModal = this.changeModal.bind(this);
-    this.renderModal = this.renderModal.bind(this);
+    this.changeConnectionsModal = this.changeConnectionsModal.bind(this);
+    //this.renderModal = this.renderModal.bind(this);
+    this.renderConnectionsModal = this.renderConnectionsModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
     this.renderAwardModal = this.renderAwardModal.bind(this);
 
@@ -65,8 +67,8 @@ class EventDetails extends Component {
     }
   }
 
-  changeModal() {
-    this.setState({ showingModal: !this.state.showingModal });
+  changeConnectionsModal() {
+    this.setState({ showingConnectionsModal: !this.state.showingConnectionsModal });
   }
 
   renderConnections() {
@@ -83,13 +85,13 @@ class EventDetails extends Component {
     return connected;
   }
 
-  renderModal() {
-    if (this.state.showingModal) {
+  renderConnectionsModal() {
+    if (this.state.showingConnectionsModal) {
       return (
         <Modal
           animationType="fade"
           transparent={true}
-          visible={this.state.showingModal}>
+          visible={this.state.showingConnectionsModal}>
           <View style={modal.eventContainer}>
             <SurveyHeaderComponent header={`Attending ${this.props.navigation.getParam("eventName")}`} />
             <ScrollView>
@@ -97,7 +99,7 @@ class EventDetails extends Component {
             </ScrollView>
             <TouchableHighlight
               onPress={() => {
-                this.changeModal();
+                this.changeConnectionsModal();
               }}>
               <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Okay</Text></View>
             </TouchableHighlight>
@@ -143,17 +145,17 @@ class EventDetails extends Component {
     }
   }
 
-  renderModal = () => {
-    if (this.state.showModal) {
-      return (
-        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
-      );
-    }
-  }
+  // renderModal = () => {
+  //   if (this.state.showModal) {
+  //     return (
+  //       <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+  //     );
+  //   }
+  // }
 
-  resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "" });
-  }
+  // resetModal = () => {
+  //   this.setState({ showModal: false, modalMessage: "" });
+  // }
 
   renderAwardModal() {
     if (this.state.showAwardModal) {
@@ -201,10 +203,10 @@ class EventDetails extends Component {
             </Text>
           </View>
           <View style={eventPage.eventDetailRSVPContainer} >
-            {this.renderModal()}
+            {this.renderConnectionsModal()}
             <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
               <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-              <TouchableOpacity onPress={this.changeModal}>
+              <TouchableOpacity onPress={this.changeConnectionsModal}>
                 <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
               </TouchableOpacity>
             </View>
