@@ -124,7 +124,7 @@ class EventDetails extends Component {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
       console.log(this.state.rsvpLength)
-      if (this.state.rsvpLength == 3) {
+      if (this.state.rsvpLength == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
 
       }
