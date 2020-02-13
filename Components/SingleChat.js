@@ -20,6 +20,7 @@ class SingleChat extends React.Component {
       awardAward: true,
       numChats: 0,
       chats: [],
+      numContacted: 0,
       chatText: '',
       numberText: 8,
       prompt: 'click'//this.props.navigation.getParam('prompt') || '',
@@ -48,6 +49,14 @@ class SingleChat extends React.Component {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
+    .then((response) => {
+        this.setState({numContacted: response.data})
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
     .then((response) => {
@@ -105,6 +114,17 @@ class SingleChat extends React.Component {
       receiver: this.props.navigation.getParam('matchID'),
       text: this.state.chatText
     }
+
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
+    .then((response) => {
+        if (response.data == 5 && this.state.numContacted == 4){
+          this.setState({ numContacted: 5,  awardAward: true, showModal: true, awardMessage: '5 contacted award!', awardImage: require('./../assets/icons/firstMatch.png') })
+        }
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
