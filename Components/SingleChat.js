@@ -110,7 +110,9 @@ class SingleChat extends React.Component {
       .then((response) => {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
-        
+        if(this.state.numChats == 99){
+          this.setState({ awardAward: true, showModal: true, awardMessage: '100 Matches Badge!!', awardImage: require('./../assets/icons/firstMatch.png') });
+        }
       }).catch((error) => {
         console.log(error);
       });
