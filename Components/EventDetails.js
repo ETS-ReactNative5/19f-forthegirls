@@ -42,7 +42,6 @@ class EventDetails extends Component {
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
     this.changeConnectionsModal = this.changeConnectionsModal.bind(this);
-    //this.renderModal = this.renderModal.bind(this);
     this.renderConnectionsModal = this.renderConnectionsModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
     this.renderAwardModal = this.renderAwardModal.bind(this);
@@ -145,18 +144,6 @@ class EventDetails extends Component {
     }
   }
 
-  // renderModal = () => {
-  //   if (this.state.showModal) {
-  //     return (
-  //       <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
-  //     );
-  //   }
-  // }
-
-  // resetModal = () => {
-  //   this.setState({ showModal: false, modalMessage: "" });
-  // }
-
   renderAwardModal() {
     if (this.state.showAwardModal) {
       return (
@@ -195,8 +182,8 @@ class EventDetails extends Component {
               <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
             </View>
           </View>
-          {//this.renderMap()
-          }
+          {this.renderMap()}
+
           <View style={eventPage.eventDetailDescription}>
             <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
               {this.props.event.description}

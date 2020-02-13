@@ -173,9 +173,6 @@ class AddEvent extends Component {
       image = imageNoImage;
     }
 
-    // console.log("trying to find ID");
-    // console.log(this.props.id);
-
     var textFieldStyle = [fonts.bodyText]
     return (
       <KeyboardAvoidingView behavior="padding" enabled>

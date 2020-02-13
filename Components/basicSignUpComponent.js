@@ -162,61 +162,6 @@ class BasicSignUpComponent extends React.Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
-  renderHS() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
-    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (
-      <TextInput
-        style={textFieldStyle}
-        placeholder="High School"
-        onChangeText={this.highSchoolInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-    )
-  }
-
-  renderCollege() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
-    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (
-      <View>
-        <TextInput
-          style={textFieldStyle}
-          placeholder="High School Name"
-          onChangeText={this.highSchoolInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="College"
-          onChangeText={this.collegeInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Graduation Year"
-          onChangeText={this.gradYearInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Current/Most Recent Job/Internship"
-          onChangeText={this.currentJobInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-      </View>
-    );
-  }
-
-  renderNull() {
-    return <View></View>
-  }
-
   renderError = () => {
     if(this.props.error !== null) {
       return (
