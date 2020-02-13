@@ -17,6 +17,7 @@ class SingleChat extends React.Component {
       showModal: false,
       awardMessage: '',
       awardImage: null,
+      awardAward: true,
 
       chats: [],
       chatText: '',
@@ -44,7 +45,7 @@ class SingleChat extends React.Component {
 
   getChats() {
 
-    if (this.props.navigation.getParam('firstMatchAward')) {
+    if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
@@ -130,7 +131,7 @@ class SingleChat extends React.Component {
   }
 
   resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "" });
+    this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
 
 
