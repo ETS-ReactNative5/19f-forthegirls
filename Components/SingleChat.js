@@ -18,7 +18,7 @@ class SingleChat extends React.Component {
       awardMessage: '',
       awardImage: null,
       awardAward: true,
-
+      numChats: 0,
       chats: [],
       chatText: '',
       numberText: 8,
@@ -48,6 +48,14 @@ class SingleChat extends React.Component {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
+    .then((response) => {
+        this.setState({numChats: response.data})
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
@@ -102,6 +110,7 @@ class SingleChat extends React.Component {
       .then((response) => {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
+        
       }).catch((error) => {
         console.log(error);
       });
@@ -136,6 +145,7 @@ class SingleChat extends React.Component {
 
 
   render() {
+    console.log(this.state.numChats)
     return (
       <View>
         <View style={singleChat.header}>
