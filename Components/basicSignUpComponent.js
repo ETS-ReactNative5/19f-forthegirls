@@ -54,9 +54,10 @@ class BasicSignUpComponent extends React.Component {
         username: this.state.username,
         password: this.state.password,
       }
-
+      console.log("printing push token");
+      console.log(this.props.pushToken);
       Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
-
+      
       Geocoder.from(this.state.location)
           .then(json => {
             var location = json.results[0].geometry.location;
@@ -76,6 +77,7 @@ class BasicSignUpComponent extends React.Component {
               pg: this.state.pg,
               latitude: location.lat,
               longitude: location.lng,
+              pushToken: this.state.pushToken,
             }
 
             this.props.signUpUser(fields, this.props.navigation, otherAnswers);
@@ -339,6 +341,7 @@ const mapStateToProps = reduxState => (
   {
     error: reduxState.error,
     username: reduxState.auth.username,
+    pushToken: reduxState.auth.pushToken,
   }
 );
 

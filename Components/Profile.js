@@ -64,7 +64,7 @@ class Profile extends React.Component {
   }
 
   sendMessage = async () => {
-    const MESSAGE_ENPOINT = 'http://b37b74bd.ngrok.io/message';
+    const MESSAGE_ENPOINT = 'http://e6a6945d.ngrok.io/message';
     fetch(MESSAGE_ENPOINT, {
       method: 'POST',
       headers: {

@@ -13,7 +13,7 @@ import { AsyncStorage } from 'react-native';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions'
 
-const PUSH_REGISTRATION_ENDPOINT = 'http://b37b74bd.ngrok.io/token';
+const PUSH_REGISTRATION_ENDPOINT = 'http://e6a6945d.ngrok.io/token';
 // const MESSAGE_ENPOINT = 'http://b37b74bd.ngrok.io/message';
 
 const store = createStore(reducers, {}, compose(
@@ -66,40 +66,38 @@ class App extends React.Component {
       return;
     }
     try {
-      let token = await Notifications.getExpoPushTokenAsync();
-      if(token) {
-        await AsyncStorage.setItem('notification', token);
+      let pushToken = await Notifications.getExpoPushTokenAsync();
+      if(pushToken) {
+        await AsyncStorage.setItem('pushToken', pushToken);
+        store.dispatch({ type: 'AUTH_TOKEN', payload: pushToken });
       }
-
-      store.dispatch({type: 'AUTH_NOTI', payload: {notification: token}});
-      try {
-        return fetch(PUSH_REGISTRATION_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token: {
-            value: token,
-          },
-          user: {
-            username: this.state.username,
-          },
-        }),
-      });
-      }
-      catch (error) {
-        console.log("in here");
-        console.log(error);
-      }
+      // try {
+      //   return fetch(PUSH_REGISTRATION_ENDPOINT, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     token: {
+      //       value: token,
+      //     },
+      //     user: {
+      //       username: this.state.username,
+      //     },
+      //   }),
+      // });
+      // }
+      // catch (error) {
+      //   console.log("in here");
+      //   console.log(error);
+      // }
     }
     catch (error) {
       console.log("in here");
       console.log(error);
     }
     
-
     this.notificationSubscription = Notifications.addListener(this.handleNotification);
   }
 

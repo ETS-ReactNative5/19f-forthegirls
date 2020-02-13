@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
+export const ROOT_URL = 'http://localhost:9090/api';
 export const ActionTypes = {
   // USERS
   // CREATE_USER: 'CREATE_USER',
@@ -13,6 +13,7 @@ export const ActionTypes = {
 
   //AUTH
   AUTH_USER: 'AUTH_USER',
+  AUTH_TOKEN: 'AUTH_TOKEN',
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
 
