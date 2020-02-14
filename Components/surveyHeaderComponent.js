@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
 import colors, { fonts, buttons } from '../assets/styles/basicStyle';
+import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 
 class SurveyHeaderComponent extends React.Component {
@@ -12,7 +13,7 @@ class SurveyHeaderComponent extends React.Component {
     return (
       <View style={surveyStyle.surveyHeader}>
         <Text style={[fonts.minorHeading, surveyStyle.surveyHeaderText]}>{this.props.header}</Text>
-      </View>
+        </View>
     );
   }
 }
