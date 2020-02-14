@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, Image } from 'react-native';
+import { singleChat } from '../assets/styles/chatStyle';
 import { signinUser, resetErrors } from '../actions';
 import { connect } from 'react-redux';
 import surveyStyle from '../assets/styles/surveyStyle'
@@ -52,7 +53,7 @@ class SignIn extends React.Component {
   }
 
   renderLoading = () => {
-    if(this.state.loading === true) {
+    if(this.state.loading === true && !this.state.showModal && this.props.error === null) {
       return (
         <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You In!</Text>
       )
@@ -71,12 +72,24 @@ class SignIn extends React.Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   render() {
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     return (
       <View style={surveyStyle.surveyBackground}>
-        {this.renderModal()}
+      <View style={[singleChat.arrowBack]}>
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+            </TouchableOpacity>
+        </View>
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
+        {this.renderModal()}
         {this.renderError()}
         {this.renderLoading()}
         <TextInput

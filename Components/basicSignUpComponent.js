@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import TextField from 'react-native-text-field';
+import { singleChat } from '../assets/styles/chatStyle';
 import colors, { fonts, buttons, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
-import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
@@ -170,6 +169,10 @@ class BasicSignUpComponent extends React.Component {
     }
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   //need to check unique from here
   render() {
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
@@ -177,8 +180,16 @@ class BasicSignUpComponent extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <ScrollView style={surveyStyle.surveyBackground}>
+        <View style={[singleChat.arrowBack]}>
+          <TouchableOpacity
+            onPress={this.goBack}>
+            <Image
+              source={require('./../assets/icons/arrowback.png')}
+            />
+         </TouchableOpacity>
+          </View>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
+            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" goBack={this.goBack}/>
             {this.renderModal()}
             {this.renderError()}
           </View>

@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from 'react-native';
-import { Dropdown } from 'react-native-material-dropdown';
-import TextField from 'react-native-text-field';
-import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { singleChat } from '../assets/styles/chatStyle';
+import {fonts } from '../assets/styles/basicStyle';
 
 
 //this.props.navigation.navigate(name of page you want to go to)
@@ -14,22 +13,22 @@ class SignUp extends React.Component {
     this.state = {}
   }
 
-  render() {
+  goBack = () => {
+    this.props.navigation.pop();
+  }
 
-    let data = [{
-      value: 'Morgan',
-    }, {
-      value: 'Annika',
-    }, {
-      value: 'Frances',
-    }, {
-      value: 'Sami',
-    }, {
-      value: 'Alexis',
-    }];
+  render() {
 
     return (
       <View style={{ backgroundColor: '#46518725', width: '100%', height: '100%', justifyContent: 'center' }}>
+        <View style={[singleChat.arrowBack]}>
+          <TouchableOpacity
+            onPress={this.goBack}>
+            <Image
+              source={require('./../assets/icons/arrowback.png')}
+            />
+         </TouchableOpacity>
+      </View>
         <View style={{ backgroundColor: '#FFFFFF', alignItems: 'center' }}>
           <Text style={[fonts.majorHeading, { alignItems: 'center' }]}>Hi! Welcome to <Text style={{ color: '#28C3A9' }}> For the Girls </Text> </Text>
         </View>

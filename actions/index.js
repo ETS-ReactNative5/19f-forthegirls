@@ -437,9 +437,10 @@ export function fetchAwardStatus(id, awardTitle) {
 
 //When we store errors in state, resets the errors so they are no longer in state
 export function resetErrors() {
-  return (
-    {
-      type: ActionTypes.ERROR_CLEAR, payload: null,
-    }
-  );
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_ERROR,
+      payload: null,
+    });
+  }
 }
