@@ -16,6 +16,7 @@ class SignIn extends React.Component {
 
       showModal: false,
       modalMessage: '', 
+      loading: false,
     }
   }
 
@@ -28,6 +29,7 @@ class SignIn extends React.Component {
       this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
     }
     else {
+      this.setState({loading: true});
       this.props.signinUser({ username: this.state.username, password: this.state.password, navigate: this.props.navigation });
     }
 
@@ -46,6 +48,14 @@ class SignIn extends React.Component {
       return (
         <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
       );
+    }
+  }
+
+  renderLoading = () => {
+    if(this.state.loading === true) {
+      return (
+        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You In!</Text>
+      )
     }
   }
 
@@ -68,6 +78,7 @@ class SignIn extends React.Component {
         {this.renderModal()}
         <Text style={[colors.black, fonts.majorHeading, fontEffects.center]}>Welcome Back!</Text>
         {this.renderError()}
+        {this.renderLoading()}
         <TextInput
           style={textFieldStyle}
           placeholder="Username"
