@@ -255,7 +255,8 @@ class BasicSignUpComponent extends React.Component {
             placeholder="Graduation Year"
             onChangeText={this.gradYearInput}
             clearButtonMode='while-editing'
-            keyboardType='default'
+            returnKeyType='done'
+            keyboardType='numeric'
           />
           <View>
             <View style={{

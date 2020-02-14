@@ -119,45 +119,53 @@ class Events extends React.Component {
     if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange) {
       this.changeState();
     }
-    return (
-      <View style={eventPage.wholeContainer}>
-        <View style={eventPage.viewOptionsContainer}>
-          {this.renderModal()}
-          <View style={this.state.viewAll
-            ? eventPage.addEventOpacity
-            : eventPage.notPressed}>
-            <TouchableOpacity onPress={this.doViewAll}>
-              <Text style={[eventPage.addEventText, this.state.viewAll
-                ? colors.white
-                : colors.deepPurple, fonts.minorHeading]}>
-                See All
-            </Text>
-            </TouchableOpacity>
+    if (this.props.all !== undefined) {
+      return (
+        <View style={eventPage.wholeContainer}>
+          <View style={eventPage.viewOptionsContainer}>
+            {this.renderModal()}
+            <View style={this.state.viewAll
+              ? eventPage.addEventOpacity
+              : eventPage.notPressed}>
+              <TouchableOpacity onPress={this.doViewAll}>
+                <Text style={[eventPage.addEventText, this.state.viewAll
+                  ? colors.white
+                  : colors.deepPurple, fonts.minorHeading]}>
+                  See All
+              </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={this.state.viewAll
+              ? eventPage.notPressed
+              : eventPage.addEventOpacity}>
+              <TouchableOpacity onPress={this.dontViewAll}>
+                <Text style={[eventPage.addEventText, this.state.viewAll
+                  ? colors.deepPurple
+                  : colors.white, fonts.minorHeading]}>
+                  See RSVP'd
+              </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={this.state.viewAll
-            ? eventPage.notPressed
-            : eventPage.addEventOpacity}>
-            <TouchableOpacity onPress={this.dontViewAll}>
-              <Text style={[eventPage.addEventText, this.state.viewAll
-                ? colors.deepPurple
-                : colors.white, fonts.minorHeading]}>
-                See RSVP'd
-            </Text>
+          <ScrollView contentContainerStyle={eventPage.scroll} >
+            {this.displayEvents()}
+          </ScrollView>
+          <View style={eventPage.addEventContainer}>
+            <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
+              <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
+                Add Event
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView contentContainerStyle={eventPage.scroll} >
-          {this.displayEvents()}
-        </ScrollView>
-        <View style={eventPage.addEventContainer}>
-          <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
-            <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
-              Add Event
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+      );
+    }
+    else {
+      return (
+        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Events!</Text>
+      );
+    }
+    
   }
 }
 

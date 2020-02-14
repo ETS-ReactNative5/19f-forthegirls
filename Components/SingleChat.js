@@ -33,6 +33,8 @@ class SingleChat extends React.Component {
 
   componentDidMount() {
     console.log(this.props.navigation.getParam('prompt'));
+    //https://stackoverflow.com/questions/39426083/update-react-component-every-second
+    this.interval = setInterval(() => this.getOnlyChats(), 5000);
     this.getChats();
     this.setPrompt();
   }
@@ -42,6 +44,10 @@ class SingleChat extends React.Component {
       this.setState({ prompt: this.props.navigation.getParam('prompt') });
       this.setState({ chatText: this.props.navigation.getParam('prompt') });
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   getChats() {
@@ -64,11 +70,12 @@ class SingleChat extends React.Component {
     }).catch((error) => {
       console.log(error);
     });
+    
+  }
 
-
+  getOnlyChats = () => {
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
-
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
       .then((response) => {
         this.setState({ chats: response.data });
