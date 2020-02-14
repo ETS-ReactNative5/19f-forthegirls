@@ -9,8 +9,14 @@ import {
   Image,
   Easing
 } from 'react-native';
+import colors, { fonts } from '../assets/styles/basicStyle';
 import PotentialMentor from './PotentialMentor';
 import { getPotentialMatches } from '../actions';
+
+/* animation: 
+ // https://facebook.github.io/react-native/docs/animated#timing
+ // https://stackoverflow.com/questions/37445090/react-native-how-do-you-animate-the-rotation-of-an-image
+*/
 
 class Matches extends React.Component {
   constructor(props) {
@@ -26,6 +32,7 @@ class Matches extends React.Component {
   componentDidMount() {
     this.props.getPotentialMatches(this.props.username);
     this.spin();
+    this.setState({ animation: true })
   }
 
   refresh = () => {
@@ -39,9 +46,15 @@ class Matches extends React.Component {
       {
         toValue: 1,
         duration: 500,
-        easing: Easing.inOut(Easing.ease)
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: true
       }
     ).start(() => this.spin())
+    if ((this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) ||
+      (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth === 0)) {
+      this.setState({ animation: false })
+    }
+
   }
 
   returnMatches = () => {
@@ -57,7 +70,27 @@ class Matches extends React.Component {
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
     })
-    if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0 && this.state.animation === false) {
+    var loading = (
+      <View style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%'
+      }}>
+        <Animated.Image
+          style={{
+            height: 200,
+            width: 200,
+            transform: [{ rotate: spin }]
+          }}
+          source={require('./../assets/icons/loading.png')}
+        />
+        <Text style={[fonts.majorHeading, colors.deepPurple]}>Loading Matches!</Text>
+      </View>);
+
+    if (this.state.animation) {
+      return (loading);
+    }
+    else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) {
       return (
         <ScrollView>
           {this.returnMatches()}
@@ -66,24 +99,17 @@ class Matches extends React.Component {
     }
     else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth === 0) {
       return (
-        <Text>No matches right now!</Text>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100%'
+        }}>
+          <Text style={[fonts.majorHeading, colors.deepPurple]}>No matches right now!</Text>
+        </View>
       )
     }
     else {
-      return (
-        <View style={styles.container}>
-          <Animated.Image
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: 500,
-              width: 500,
-              transform: [{ rotate: spin }]
-            }}
-            source={require('./../assets/icons/loading.png')}
-          />
-        </View>
-      )
+      return (loading);
     }
 
   }
