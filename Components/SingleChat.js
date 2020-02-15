@@ -34,7 +34,7 @@ class SingleChat extends React.Component {
   componentDidMount() {
     console.log(this.props.navigation.getParam('prompt'));
     //https://stackoverflow.com/questions/39426083/update-react-component-every-second
-    this.interval = setInterval(() => this.getOnlyChats(), 5000);
+    this.interval = setInterval(() => this.getOnlyChats(), 500);
     this.getChats();
     this.setPrompt();
   }
@@ -57,20 +57,20 @@ class SingleChat extends React.Component {
     }
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-    .then((response) => {
-        this.setState({numContacted: response.data})
-    }).catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        this.setState({ numContacted: response.data })
+      }).catch((error) => {
+        console.log(error);
+      });
 
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
-    .then((response) => {
-        this.setState({numChats: response.data})
-    }).catch((error) => {
-      console.log(error);
-    });
-    
+      .then((response) => {
+        this.setState({ numChats: response.data })
+      }).catch((error) => {
+        console.log(error);
+      });
+
   }
 
   getOnlyChats = () => {
@@ -124,20 +124,20 @@ class SingleChat extends React.Component {
 
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-    .then((response) => {
-        if (response.data == 5 && this.state.numContacted == 4){
-          this.setState({ numContacted: 5,  awardAward: true, showModal: true, awardMessage: '5 contacted award!', awardImage: require('./../assets/icons/firstMatch.png') })
+      .then((response) => {
+        if (response.data == 5 && this.state.numContacted == 4) {
+          this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: '5 contacted award!', awardImage: require('./../assets/icons/firstMatch.png') })
         }
-    }).catch((error) => {
-      console.log(error);
-    });
+      }).catch((error) => {
+        console.log(error);
+      });
 
 
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
-        if(this.state.numChats == 99){
+        if (this.state.numChats == 99) {
           this.setState({ awardAward: true, showModal: true, awardMessage: '100 Matches Badge!!', awardImage: require('./../assets/icons/firstMatch.png') });
         }
       }).catch((error) => {
@@ -172,6 +172,15 @@ class SingleChat extends React.Component {
     this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
 
+  loadMore = () => {
+    if (this.state.chats.length > 10) {
+      return (
+        <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
+          <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
+        </TouchableOpacity>
+      )
+    }
+  }
 
   render() {
     console.log(this.state.numChats)
@@ -194,9 +203,7 @@ class SingleChat extends React.Component {
         </View>
         <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={150}>
           <ScrollView>
-            <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
-              <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
-            </TouchableOpacity>
+            {this.loadMore()}
             <View>
               {this.showChats()}
             </View>

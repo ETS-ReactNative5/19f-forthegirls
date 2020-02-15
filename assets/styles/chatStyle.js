@@ -104,6 +104,8 @@ const singleChat = StyleSheet.create({
     alignItems: 'center'
   },
   chatInputView: {
+    marginTop: 250,
+    marginBottom: 50,
     margin: 5,
     flexDirection: 'row',
     borderWidth: 2,
@@ -116,7 +118,7 @@ const singleChat = StyleSheet.create({
     marginLeft: 7,
     marginRight: 10,
     height: 30,
-    width: 300
+    width: '95%'
   }
 })
 
