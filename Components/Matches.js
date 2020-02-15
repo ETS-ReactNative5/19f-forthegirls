@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ErrorModal from './ErrorModal'
 import {
   StyleSheet,
   Text,
@@ -11,7 +12,7 @@ import {
 } from 'react-native';
 import colors, { fonts } from '../assets/styles/basicStyle';
 import PotentialMentor from './PotentialMentor';
-import { getPotentialMatches } from '../actions';
+import { getPotentialMatches, editUserVisit } from '../actions';
 
 /* animation: 
  // https://facebook.github.io/react-native/docs/animated#timing
@@ -22,7 +23,10 @@ class Matches extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      animation: false
+      animation: false,
+      showModal: false,
+      modalMessage: '',
+      firstTime: false,
     }
     this.spinValue = new Animated.Value(0);
 
@@ -32,7 +36,7 @@ class Matches extends React.Component {
   componentDidMount() {
     this.props.getPotentialMatches(this.props.username);
     this.spin();
-    this.setState({ animation: true })
+    this.setState({ animation: true, firstTime: this.props.firstTime});
   }
 
   refresh = () => {
@@ -55,6 +59,19 @@ class Matches extends React.Component {
       this.setState({ animation: false })
     }
 
+  }
+
+  firstTime = () => {
+    if(this.state.firstTime) {
+      return (
+        <ErrorModal errorMessage={"This is your matches page! Click anywhere on a person's profile to match. Click on the questions to start talking about that topic!"} reset={this.resetModal}></ErrorModal>
+      )
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "", firstTime: false });
+    this.props.editUserVisit(this.props.username, this.props.id, {firstTime: false});
   }
 
   returnMatches = () => {
@@ -93,6 +110,7 @@ class Matches extends React.Component {
     else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) {
       return (
         <ScrollView>
+          {this.firstTime()}
           {this.returnMatches()}
         </ScrollView>
       )
@@ -121,7 +139,8 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     potentialMatches: reduxState.user.potentialMatches,
+    firstTime: reduxState.user.firstTime,
   }
 );
 
-export default connect(mapStateToProps, { getPotentialMatches })(Matches);
+export default connect(mapStateToProps, { getPotentialMatches, editUserVisit })(Matches);
