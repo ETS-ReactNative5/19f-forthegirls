@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ErrorModal from './ErrorModal'
+import Walkthrough from './Walkthrough'
 import {
   StyleSheet,
   Text,
@@ -64,7 +64,7 @@ class Matches extends React.Component {
   firstTime = () => {
     if(this.state.firstTime) {
       return (
-        <ErrorModal errorMessage={"This is your matches page! Click anywhere on a person's profile to match. Click on the questions to start talking about that topic!"} reset={this.resetModal}></ErrorModal>
+        <Walkthrough reset={this.resetModal}></Walkthrough>
       )
     }
   }
