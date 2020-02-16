@@ -175,7 +175,7 @@ class AddEvent extends Component {
 
     var textFieldStyle = [fonts.bodyText]
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView contentContainerStyle={{ backgroundColor: colors.white.color }}>
           {this.renderModal()}
           <TouchableOpacity onPress={this.photoUpload}>
