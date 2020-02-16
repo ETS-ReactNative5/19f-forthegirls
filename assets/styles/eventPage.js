@@ -85,8 +85,9 @@ const eventPage = StyleSheet.create({
 
   eventDetail: {
     width: '100%',
-    height: '70%',
+    //height: '80%',
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -133,6 +134,7 @@ const eventPage = StyleSheet.create({
 
   eventDetailDescription: {
     width: '100%',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginTop: 30,
@@ -143,15 +145,15 @@ const eventPage = StyleSheet.create({
   },
 
   eventDetailRSVPContainer: {
-    height: '70%',
+    marginTop: 10,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
 
   eventDetailRSVP: {
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 20,
     display: 'flex',
     flexDirection: 'column',
@@ -173,7 +175,7 @@ const eventPage = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: 7,
-    marginBottom:5,
+    marginBottom: 5,
   },
 
   pressed: {
