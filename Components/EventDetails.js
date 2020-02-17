@@ -118,9 +118,7 @@ class EventDetails extends Component {
     if (this.state.rsvp === false) {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
-      console.log(this.state.rsvpLength)
       if (this.state.rsvpLength == 3){
-        console.log("HEREEEEe")
         this.setState({showModal:true, modalMessage: "You got a badge!!"});
       }
     }
