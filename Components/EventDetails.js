@@ -127,7 +127,6 @@ class EventDetails extends Component {
       console.log(this.state.rsvpLength)
       if (this.state.rsvpLength == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
-
       }
     }
     else {
