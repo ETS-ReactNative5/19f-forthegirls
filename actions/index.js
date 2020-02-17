@@ -67,7 +67,7 @@ export function addActivity(fields) {
 
 //----------------- USERS ------------------//
 
-//retrieves the specified user object from the database
+// retrieves the specified user object from the database
 export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
@@ -81,12 +81,10 @@ export function getUser(id) {
   };
 }
 
-//edits the user object
-export function editUser(fields) {
-  //profileURL
+export function editUserVisit(username, id, otherAnswers) {
   return (dispatch) => {
-    //need to give it email, username and password
-    axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
+    axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
+      axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
@@ -94,7 +92,10 @@ export function editUser(fields) {
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
-  };
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 //---------------------------- AUTH --------------------------------//
@@ -160,6 +161,8 @@ export function signUpUser(fields, navigate, otherAnswers) {
   }
 }
 
+
+
 //adds user information (name, location, etc) to a user on the backend
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
   return (dispatch) => {
@@ -210,7 +213,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
         return axios.get(`${ROOT_URL}/matches/${user1}`)
           .then((res) => {
             var award = false;
-            if(res.data.length === 1){
+            if (res.data.length === 1) {
               award = true;
             }
             dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
@@ -284,9 +287,9 @@ export function addEvent(fields, navigation, id) {
       .then((response) => {
         return axios.get(`${ROOT_URL}/events`).then((response) => {
           var count = 0;
-          for (var i = 0; i < response.data.length; i++ ){
-            if (response.data[i].authorID == id){
-              count = count+1;
+          for (var i = 0; i < response.data.length; i++) {
+            if (response.data[i].authorID == id) {
+              count = count + 1;
             }
           }
           var firstEventAward = false;
@@ -294,7 +297,7 @@ export function addEvent(fields, navigation, id) {
             firstEventAward = true;
           }
           dispatch({ type: ActionTypes.FETCH_EVENTS, payload: response.data });
-          navigation.navigate('Home', {firstEventAward: firstEventAward })
+          navigation.navigate('Home', { firstEventAward: firstEventAward })
         }).catch((error) => {
           console.log(error);
         });
@@ -367,7 +370,7 @@ export function rsvpEvent(userID, eventID) {
       .then((response) => {
         return axios.get(`${ROOT_URL}/events/rsvp/your/${userID}`).then((response) => {
           var threeEventAward = false;
-          if(response.data.length == 3){
+          if (response.data.length == 2) {
             threeEventAward = true;
           }
 
@@ -437,9 +440,10 @@ export function fetchAwardStatus(id, awardTitle) {
 
 //When we store errors in state, resets the errors so they are no longer in state
 export function resetErrors() {
-  return (
-    {
-      type: ActionTypes.ERROR_CLEAR, payload: null,
-    }
-  );
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_ERROR,
+      payload: null,
+    });
+  }
 }

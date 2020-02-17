@@ -33,6 +33,9 @@ class PotentialMentor extends React.Component {
   }
 
   yesMatchCallback = (prompt) => {
+    if(prompt === '0') {
+      prompt = "Hi " + this.state.userMatch.firstName + '!';
+    }
     if (prompt === '1') {
       prompt = this.state.userMatch.promptOneAnswer;
     }
@@ -45,13 +48,13 @@ class PotentialMentor extends React.Component {
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
   }
 
-  showMatch = () => {
-    if (this.state.matched) {
-      const email = this.state.userMatch.username;
-      Linking.openURL('mailto:' + email + '?subject=We Matched!')
-        .catch((error) => console.log(error));
-    }
-  }
+  // showMatch = () => {
+  //   if (this.state.matched) {
+  //     const email = this.state.userMatch.username;
+  //     Linking.openURL('mailto:' + email + '?subject=We Matched!')
+  //       .catch((error) => console.log(error));
+  //   }
+  // }
 
   render() {
     var yesMatch = require('../assets/icons/chatSelected.png');
@@ -68,18 +71,24 @@ class PotentialMentor extends React.Component {
         <View style={
           [this.state.noAction ? profile.normal : (this.state.matched ? profile.match : profile.dimmed),
           profile.profileContainer]}>
-          {this.showMatch()}
+          {/* {this.showMatch()} */}
           <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-            {image}
+          <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
+              {image}
+          </TouchableOpacity>
           </View>
           <View style={profile.basicInfo}>
             <View style={profile.basicInfoLeft}>
-              <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.location}</Text>
+              <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
+                <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.location}</Text>
+              </TouchableOpacity>
             </View>
             <View style={profile.jobStuff}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.gradYear}</Text>
+              <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
+                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.gradYear}</Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={promptStyle.promptContainer}>
@@ -108,7 +117,7 @@ class PotentialMentor extends React.Component {
     }
     else {
       return (
-        <Text>Loading...</Text>
+        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Matches!</Text>
       )
     }
   }

@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } fr
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
-import { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
+import { getUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 import { withNavigation } from 'react-navigation';
 
 import * as ImagePicker from 'expo-image-picker';
@@ -198,4 +198,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default withNavigation(connect(mapStateToProps, { getUser, editUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards })(Profile));
+export default withNavigation(connect(mapStateToProps, { getUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards })(Profile));

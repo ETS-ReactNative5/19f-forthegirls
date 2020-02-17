@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import TextField from 'react-native-text-field';
+import { singleChat } from '../assets/styles/chatStyle';
 import colors, { fonts, buttons, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
-import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
@@ -162,67 +161,16 @@ class BasicSignUpComponent extends React.Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
-  renderHS() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
-    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (
-      <TextInput
-        style={textFieldStyle}
-        placeholder="High School"
-        onChangeText={this.highSchoolInput}
-        clearButtonMode='while-editing'
-        keyboardType='default'
-      />
-    )
-  }
-
-  renderCollege() {
-    var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
-    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
-    return (
-      <View>
-        <TextInput
-          style={textFieldStyle}
-          placeholder="High School Name"
-          onChangeText={this.highSchoolInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="College"
-          onChangeText={this.collegeInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Graduation Year"
-          onChangeText={this.gradYearInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-        <TextInput
-          style={textFieldStyle}
-          placeholder="Current/Most Recent Job/Internship"
-          onChangeText={this.currentJobInput}
-          clearButtonMode='while-editing'
-          keyboardType='default'
-        />
-      </View>
-    );
-  }
-
-  renderNull() {
-    return <View></View>
-  }
-
   renderError = () => {
     if(this.props.error !== null) {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
     }
+  }
+
+  goBack = () => {
+    this.props.navigation.pop();
   }
 
   //need to check unique from here
@@ -232,8 +180,16 @@ class BasicSignUpComponent extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled>
         <ScrollView style={surveyStyle.surveyBackground}>
+        <View style={[singleChat.arrowBack]}>
+          <TouchableOpacity
+            onPress={this.goBack}>
+            <Image
+              source={require('./../assets/icons/arrowback.png')}
+            />
+         </TouchableOpacity>
+          </View>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
+            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" goBack={this.goBack}/>
             {this.renderModal()}
             {this.renderError()}
           </View>
@@ -310,7 +266,8 @@ class BasicSignUpComponent extends React.Component {
             placeholder="Graduation Year"
             onChangeText={this.gradYearInput}
             clearButtonMode='while-editing'
-            keyboardType='default'
+            returnKeyType='done'
+            keyboardType='numeric'
           />
           <View>
             <View style={{

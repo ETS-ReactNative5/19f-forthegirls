@@ -55,6 +55,8 @@ const UserReducer = (state = {
   promptThreeAnswer: '',
   profileURL: '',
 
+  firstTime: false,
+
 }, action) => {
   switch (action.type) {
     case ActionTypes.FETCH_USER:
@@ -108,6 +110,7 @@ const UserReducer = (state = {
         promptThreeAnswer: action.payload.result.promptThreeAnswer,
 
         profileURL: action.payload.result.profileURL,
+        firstTime: action.payload.result.firstTime,
 
       });
     case ActionTypes.USER_GET_POT_MATCHES:

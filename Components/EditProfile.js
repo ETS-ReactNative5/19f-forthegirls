@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
 import TextField from 'react-native-text-field';
-import colors, { buttons, fonts, profileImage } from '../assets/styles/basicStyle';
+import colors, { buttons, fonts, profileImage, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import profile from '../assets/styles/profileStyle';
@@ -69,6 +69,7 @@ class EditProfile extends React.Component {
       progress: 0.0,
 
       progressMessage: '',
+      loading: false,
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -106,7 +107,7 @@ class EditProfile extends React.Component {
   };
 
   submitPage = () => {
-    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined))  {
+    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined)) {
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -127,8 +128,19 @@ class EditProfile extends React.Component {
         })
       }
       else {
+
+        this.setState({ loading: true });
+
         this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
       }
+    }
+  }
+
+  renderLoadingModal = () => {
+    if (this.state.loading) {
+      return (
+        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Saving your info!</Text>
+      );
     }
   }
 
@@ -143,40 +155,40 @@ class EditProfile extends React.Component {
   calcProgress = () => {
     let sum = 1.0;
     let message = '';
-    if(this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
-      sum-=.2;
+    if (this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
+      sum -= .2;
       message = "Fill out the first prompt to fill up the progress bar!";
     }
-    if(this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Fill out the second prompt to fill up the progress bar!";
       }
     }
-    if(this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Fill out the third prompt to fill up the progress bar!";
       }
     }
-    if(this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
-    if(this.state.extraversion === 50 || this.state.listening === 50) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.extraversion === 50 || this.state.listening === 50) {
+      sum -= .2;
+      if (message === '') {
         message = "Adjust the personality sliders to fill up the progress bar!";
       }
     }
 
-    this.setState({progress: sum, progressMessage: message });
+    this.setState({ progress: sum, progressMessage: message });
   }
 
   showProgressModal = () => {
-    if(this.state.progress !== 1.0) {
+    if (this.state.progress !== 1.0) {
       return (
         <ErrorModal errorMessage={this.state.progressMessage} reset={this.resetProgressModal}></ErrorModal>
       )
@@ -226,10 +238,10 @@ class EditProfile extends React.Component {
   }
 
   progressBar = () => {
-    if(this.state.progress !== 1) {
+    if (this.state.progress !== 1) {
       return (
         <View>
-            <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
+          <ProgressViewIOS style={{ margin: 20 }} progressTintColor={colors.turquoise.color} progress={this.state.progress} />
         </View>
       )
     }
@@ -377,9 +389,10 @@ class EditProfile extends React.Component {
           </TouchableOpacity>
         </View>
         {this.progressBar()}
-        <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
+        <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 100 }}>
           <View>
             {this.renderModal()}
+            {this.renderLoadingModal()}
             {this.showProgressModal()}
             <TouchableOpacity onPress={this.photoUpload}>
               <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10, marginBottom: 10 }}>
@@ -398,6 +411,7 @@ class EditProfile extends React.Component {
                 maxLength={30}
                 defaultValue={this.props.firstName || ''}
                 onChangeText={this.firstNameChange}
+                clearButtonMode='while-editing'
               />
             </View>
             <View style={surveyStyle.textFieldContainer}>
@@ -407,6 +421,7 @@ class EditProfile extends React.Component {
                 maxLength={30}
                 defaultValue={this.props.lastName || ''}
                 onChangeText={this.lastNameChange}
+                clearButtonMode='while-editing'
               />
             </View>
             <View style={surveyStyle.textFieldContainer}>
@@ -416,6 +431,7 @@ class EditProfile extends React.Component {
                 maxLength={30}
                 defaultValue={this.props.location || ''}
                 onChangeText={this.locationChange}
+                clearButtonMode='while-editing'
               />
             </View>
           </View>
@@ -437,6 +453,7 @@ class EditProfile extends React.Component {
                 placeholder="Prompt 1 Answer"
                 defaultValue={this.props.promptOneAnswer || ''}
                 onChangeText={this.p1Answer}
+                clearButtonMode='while-editing'
               />
             </View>
           </View>
@@ -454,6 +471,7 @@ class EditProfile extends React.Component {
               placeholder="Prompt 2 Answer"
               defaultValue={this.props.promptTwoAnswer || ''}
               onChangeText={this.p2Answer}
+              clearButtonMode='while-editing'
             />
           </View>
           <Dropdown
@@ -470,6 +488,7 @@ class EditProfile extends React.Component {
               placeholder="Prompt 3 Answer"
               defaultValue={this.props.promptThreeAnswer || ''}
               onChangeText={this.p3Answer}
+              clearButtonMode='while-editing'
             />
           </View>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 3, marginBottom: 3 }}>

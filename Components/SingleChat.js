@@ -17,8 +17,10 @@ class SingleChat extends React.Component {
       showModal: false,
       awardMessage: '',
       awardImage: null,
-
+      awardAward: true,
+      numChats: 0,
       chats: [],
+      numContacted: 0,
       chatText: '',
       numberText: 8,
       prompt: 'click'//this.props.navigation.getParam('prompt') || '',
@@ -31,6 +33,8 @@ class SingleChat extends React.Component {
 
   componentDidMount() {
     console.log(this.props.navigation.getParam('prompt'));
+    //https://stackoverflow.com/questions/39426083/update-react-component-every-second
+    this.interval = setInterval(() => this.getOnlyChats(), 5000);
     this.getChats();
     this.setPrompt();
   }
@@ -42,15 +46,36 @@ class SingleChat extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   getChats() {
 
-    if (this.props.navigation.getParam('firstMatchAward')) {
+    if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
+    .then((response) => {
+        this.setState({numContacted: response.data})
+    }).catch((error) => {
+      console.log(error);
+    });
+
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
+    .then((response) => {
+        this.setState({numChats: response.data})
+    }).catch((error) => {
+      console.log(error);
+    });
+    
+  }
+
+  getOnlyChats = () => {
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
-
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
       .then((response) => {
         this.setState({ chats: response.data });
@@ -97,10 +122,24 @@ class SingleChat extends React.Component {
       text: this.state.chatText
     }
 
+
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
+    .then((response) => {
+        if (response.data == 5 && this.state.numContacted == 4){
+          this.setState({ numContacted: 5,  awardAward: true, showModal: true, awardMessage: '5 contacted award!', awardImage: require('./../assets/icons/firstMatch.png') })
+        }
+    }).catch((error) => {
+      console.log(error);
+    });
+
+
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
       .then((response) => {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
+        if(this.state.numChats == 99){
+          this.setState({ awardAward: true, showModal: true, awardMessage: '100 Matches Badge!!', awardImage: require('./../assets/icons/firstMatch.png') });
+        }
       }).catch((error) => {
         console.log(error);
       });
@@ -130,11 +169,12 @@ class SingleChat extends React.Component {
   }
 
   resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "" });
+    this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
 
 
   render() {
+    console.log(this.state.numChats)
     return (
       <View>
         <View style={singleChat.header}>

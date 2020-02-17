@@ -38,6 +38,7 @@ const surveyStyle = StyleSheet.create({
 
   surveyHeader: {
     backgroundColor: colors.white.color,
+    display: 'flex',
     alignItems: 'center',
     marginTop: 10,
     padding: 10,

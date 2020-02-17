@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
 import ErrorModal from './ErrorModal'
 import {NavigationEvents} from 'react-navigation';
+import AwardModal from './AwardModal'
 
 class Events extends React.Component {
   static navigationOptions = {
@@ -20,7 +21,8 @@ class Events extends React.Component {
       viewAll: true,
 
       showModal: false,
-      modalMessage: '',
+      awardMessage: '',
+      awardImage: null,
       awardChange: true,
     };
 
@@ -38,8 +40,8 @@ class Events extends React.Component {
     this.props.fetchEvents();
     this.props.fetchYourEvents();
 
-    if (this.props.navigation.getParam('firstEventAward')){
-      this.setState({showModal: true, modalMessage: 'You got a badge!!!'});
+    if (this.props.navigation.getParam('firstEventAward')) {
+      this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
     }
   }
 
@@ -101,7 +103,7 @@ class Events extends React.Component {
   }
 
   changeState = () => {
-    this.setState({showModal: true, modalMessage: 'You got a badge!!!', awardChange: false});
+    this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png'), awardChange: false });
   }
 
   refetchOnBackPress = () => {
@@ -113,60 +115,66 @@ class Events extends React.Component {
   renderModal = () => {
     if (this.state.showModal) {
       return (
-        <ErrorModal errorMessage={this.state.modalMessage} reset={this.resetModal} />
+        <AwardModal awardMessage={this.state.awardMessage} awardImage={this.state.awardImage} reset={this.resetModal} />
       );
     }
   }
 
   resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "" });
+    this.setState({ showModal: false, awardMessage: "" });
   }
 
   render() {
-    if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange){
+    if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange) {
       this.changeState();
     }
-    return (
-      <View style={eventPage.wholeContainer}>
-      <NavigationEvents onDidFocus={this.refetchOnBackPress}>
-      </NavigationEvents>
-        <View style={eventPage.viewOptionsContainer}>
-        {this.renderModal()}
-          <View style={this.state.viewAll
-            ? eventPage.addEventOpacity
-            : eventPage.notPressed}>
-            <TouchableOpacity onPress={this.doViewAll}>
-              <Text style={[eventPage.addEventText, this.state.viewAll
-                ? colors.white
-                : colors.deepPurple, fonts.minorHeading]}>
-                See All
-            </Text>
-            </TouchableOpacity>
+    if (this.props.all !== undefined) {
+      return (
+        <View style={eventPage.wholeContainer}>
+          <View style={eventPage.viewOptionsContainer}>
+            {this.renderModal()}
+            <View style={this.state.viewAll
+              ? eventPage.addEventOpacity
+              : eventPage.notPressed}>
+              <TouchableOpacity onPress={this.doViewAll}>
+                <Text style={[eventPage.addEventText, this.state.viewAll
+                  ? colors.white
+                  : colors.deepPurple, fonts.minorHeading]}>
+                  See All
+              </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={this.state.viewAll
+              ? eventPage.notPressed
+              : eventPage.addEventOpacity}>
+              <TouchableOpacity onPress={this.dontViewAll}>
+                <Text style={[eventPage.addEventText, this.state.viewAll
+                  ? colors.deepPurple
+                  : colors.white, fonts.minorHeading]}>
+                  See RSVP'd
+              </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={this.state.viewAll
-            ? eventPage.notPressed
-            : eventPage.addEventOpacity}>
-            <TouchableOpacity onPress={this.dontViewAll}>
-              <Text style={[eventPage.addEventText, this.state.viewAll
-                ? colors.deepPurple
-                : colors.white, fonts.minorHeading]}>
-                See RSVP'd
-            </Text>
+          <ScrollView contentContainerStyle={eventPage.scroll} >
+            {this.displayEvents()}
+          </ScrollView>
+          <View style={eventPage.addEventContainer}>
+            <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
+              <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
+                Add Event
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-        <ScrollView contentContainerStyle={eventPage.scroll} >
-          {this.displayEvents()}
-        </ScrollView>
-        <View style={eventPage.addEventContainer}>
-          <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
-            <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
-              Add Event
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+      );
+    }
+    else {
+      return (
+        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Events!</Text>
+      );
+    }
+    
   }
 }
 
