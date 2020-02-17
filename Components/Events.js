@@ -131,6 +131,8 @@ class Events extends React.Component {
     if (this.props.all !== undefined) {
       return (
         <View style={eventPage.wholeContainer}>
+        <NavigationEvents onDidFocus={this.refetchOnBackPress}>
+        </NavigationEvents>
           <View style={eventPage.viewOptionsContainer}>
             {this.renderModal()}
             <View style={this.state.viewAll
@@ -174,7 +176,7 @@ class Events extends React.Component {
         <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Events!</Text>
       );
     }
-    
+
   }
 }
 
