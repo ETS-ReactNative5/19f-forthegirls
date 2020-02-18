@@ -48,13 +48,31 @@ class PotentialMentor extends React.Component {
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
   }
 
-  // showMatch = () => {
-  //   if (this.state.matched) {
-  //     const email = this.state.userMatch.username;
-  //     Linking.openURL('mailto:' + email + '?subject=We Matched!')
-  //       .catch((error) => console.log(error));
-  //   }
-  // }
+  getPrompt = (num) => {
+    if(num===1){
+      return (
+        <TouchableOpacity onPress={() => this.yesMatchCallback('1')}>
+          <Prompt prompt={this.state.userMatch.promptOneQuestion} answer={this.state.userMatch.promptOneAnswer} />
+        </TouchableOpacity>
+      );
+    }
+    else if(num===2){
+      return (
+        <TouchableOpacity onPress={() => this.yesMatchCallback('2')}>
+          <Prompt prompt={this.state.userMatch.promptTwoQuestion} answer={this.state.userMatch.promptTwoAnswer} />
+        </TouchableOpacity>
+      );
+    }
+    else{
+      return (
+        <TouchableOpacity onPress={() => this.yesMatchCallback('3')}>
+          <Prompt prompt={this.state.userMatch.promptThreeQuestion} answer={this.state.userMatch.promptThreeAnswer} />
+        </TouchableOpacity>
+      );
+    }
+  }
+
+
 
   render() {
     var yesMatch = require('../assets/icons/chatSelected.png');
@@ -92,18 +110,11 @@ class PotentialMentor extends React.Component {
             </View>
           </View>
           <View style={promptStyle.promptContainer}>
-            <View >
-              {/*  */}
-              <TouchableOpacity onPress={() => this.yesMatchCallback('1')}>
-                <Prompt prompt={this.state.userMatch.promptOneQuestion} answer={this.state.userMatch.promptOneAnswer} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.yesMatchCallback('2')}>
-                <Prompt prompt={this.state.userMatch.promptTwoQuestion} answer={this.state.userMatch.promptTwoAnswer} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.yesMatchCallback('3')}>
-                <Prompt prompt={this.state.userMatch.promptThreeQuestion} answer={this.state.userMatch.promptThreeAnswer} />
-              </TouchableOpacity>
-            </View>
+              <View>
+              {this.state.userMatch.promptOneAnswer ? this.getPrompt(1) : null}
+              {this.state.userMatch.promptTwoAnswer ? this.getPrompt(2) : null}
+              {this.state.userMatch.promptThreeAnswer ? this.getPrompt(3) : null}
+              </View>
           </View>
           <View style={buttons.yesNoContainer}>
             <TouchableOpacity onPress={this.noMatchCallback}>
