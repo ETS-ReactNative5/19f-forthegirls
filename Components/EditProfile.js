@@ -447,7 +447,6 @@ class EditProfile extends React.Component {
             pickerStyle={dropdownPickerStyle}
             itemTextStyle={itemTextStyle}
             selectedItemColor={selectedItemColor}
-            itemColor={itemColor}
             label='Question 1'
             labelTextStyle={fonts.bodyText}
             data={data}
@@ -487,8 +486,6 @@ class EditProfile extends React.Component {
           </View>
           <Dropdown
             pickerStyle={dropdownPickerStyle}
-            itemTextStyle={itemTextStyle}
-            selectedItemTextStyle={[fonts.bodyText]}
             selectedItemColor={selectedItemColor}
             label='Question 3'
             labelTextStyle={fonts.bodyText}
