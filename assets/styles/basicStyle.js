@@ -137,6 +137,13 @@ const profileImage = StyleSheet.create({
     height: 125,
     borderRadius: 63,
     borderWidth: 3,
+    borderColor: colors.deepPurple.color
+  },
+  edit: {
+    width: 125,
+    height: 125,
+    borderRadius: 63,
+    borderWidth: 3,
     borderColor: colors.turquoise.color
   },
   allChatsPage: {
