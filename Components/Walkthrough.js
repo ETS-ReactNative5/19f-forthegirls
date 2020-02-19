@@ -15,17 +15,24 @@ class Walkthrough extends Component {
     }
   }
 
-  nextPage = () => {
-      this.setState({text: 'You can also click on the questions to start talking about that topic!', buttonText: 'Okay', page: 2})
+  pageTwo = () => {
+    this.setState({ text: 'You can also click on the questions to start talking about that topic!', buttonText: 'Next', page: 2 })
+  }
+
+  pageThree = () => {
+    this.setState({ text: 'Press the X to indicate you do not want to match with that person right now', buttonText: 'Okay', page: 3 })
   }
 
   closeModal = () => {
-    if(this.state.page ===1) {
-        this.nextPage();
+    if (this.state.page === 1) {
+      this.pageTwo();
+    }
+    else if (this.state.page === 2) {
+      this.pageThree();
     }
     else {
-        this.setState({ visible: false });
-        this.props.reset();
+      this.setState({ visible: false });
+      this.props.reset();
     }
   }
 
