@@ -94,7 +94,7 @@ const buttons = StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignItems: 'flex-end',
-    marginTop: 30
+    marginLeft: 80
   },
   logInOutButton: {
     display: 'flex',
@@ -133,6 +133,13 @@ const buttons = StyleSheet.create({
 
 const profileImage = StyleSheet.create({
   basic: {
+    width: 125,
+    height: 125,
+    borderRadius: 63,
+    borderWidth: 3,
+    borderColor: colors.deepPurple.color
+  },
+  edit: {
     width: 125,
     height: 125,
     borderRadius: 63,
