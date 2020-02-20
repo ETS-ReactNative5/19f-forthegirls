@@ -41,7 +41,7 @@ class Events extends React.Component {
     this.props.fetchYourEvents();
 
     if (this.props.navigation.getParam('firstEventAward')) {
-      this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
+      this.setState({ showModal: true, awardMessage: 'You got the First Event Created Badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
     }
   }
 
@@ -103,7 +103,7 @@ class Events extends React.Component {
   }
 
   changeState = () => {
-    this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png'), awardChange: false });
+    this.setState({ showModal: true, awardMessage: 'You got the First Event Created Badge!', awardImage: require('./../assets/icons/socialbutterfly.png'), awardChange: false });
   }
 
   refetchOnBackPress = () => {
