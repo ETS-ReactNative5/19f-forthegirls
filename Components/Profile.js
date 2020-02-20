@@ -166,12 +166,6 @@ class Profile extends React.Component {
             <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
           </View>
         </View>
-        <View style={promptStyle.promptContainer}>
-          {prompts}
-        </View>
-        <View style={{ marginLeft: 7, marginTop: 5 }}>
-          {rewards}
-        </View>
         <View style={{ justifyContent: 'flex-end' }}>
           <View style={buttons.container}>
             <TouchableOpacity
@@ -184,6 +178,13 @@ class Profile extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={promptStyle.promptContainer}>
+          {prompts}
+        </View>
+        <View style={{ marginLeft: 7, marginTop: 5, marginBottom: 5 }}>
+          {rewards}
+        </View>
+
       </View>
     )
   }
