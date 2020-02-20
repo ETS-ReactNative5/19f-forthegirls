@@ -53,7 +53,7 @@ class SingleChat extends React.Component {
   getChats() {
 
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
-      this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
+      this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
@@ -65,11 +65,12 @@ class SingleChat extends React.Component {
 
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
-      .then((response) => {
-        this.setState({ numChats: response.data })
-      }).catch((error) => {
-        console.log(error);
-      });
+    .then((response) => {
+        this.setState({numChats: response.data})
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
   }
 
@@ -124,9 +125,9 @@ class SingleChat extends React.Component {
 
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-      .then((response) => {
-        if (response.data == 5 && this.state.numContacted == 4) {
-          this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'Award: You\'ve started 5 conversations!', awardImage: require('./../assets/icons/messageFive.png') })
+    .then((response) => {
+        if (response.data == 5 && this.state.numContacted == 4){
+          this.setState({ numContacted: 5,  awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') })
         }
       }).catch((error) => {
         console.log(error);
@@ -137,8 +138,9 @@ class SingleChat extends React.Component {
       .then((response) => {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
-        if (this.state.numChats == 99) {
-          this.setState({ awardAward: true, showModal: true, awardMessage: '100 Messages Badge!', awardImage: require('./../assets/icons/chattyCathy.png') });
+        if(this.state.numChats == 99){
+          this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/hundredMessages.png') });
+
         }
       }).catch((error) => {
         console.log(error);
