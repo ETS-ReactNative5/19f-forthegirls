@@ -90,7 +90,7 @@ class SingleChat extends React.Component {
         if (n.sender === this.props.id) {
           return (
             <View style={singleChat.sender} key={index}>
-              <Text style={[colors.white, fonts.bodyText]} key={index}>{n.text}</Text>
+              <Text style={[colors.white, fonts.bodyText, singleChat.chatFont]} key={index}>{n.text}</Text>
             </View>
           );
         }
