@@ -51,6 +51,8 @@ class Profile extends React.Component {
   }
 
   opacityOnPress = () => {
+    this.sendMessage();
+
     this.props.navigation.navigate('EditProfile', {})
   }
 
@@ -60,6 +62,21 @@ class Profile extends React.Component {
     }
     return null;
   }
+
+  sendMessage = async () => {
+    const MESSAGE_ENPOINT = 'http://e6a6945d.ngrok.io/message';
+    fetch(MESSAGE_ENPOINT, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: "hello",
+      }),
+    });
+  }
+
 
   messageFive = () => {
     if (this.props.allYours[3]) {

@@ -183,6 +183,7 @@ export function signoutUser(navigate) {
         await AsyncStorage.removeItem('token');
         await AsyncStorage.removeItem('id');
         await AsyncStorage.removeItem('username');
+        await AsyncStorage.removeItem('notification');
       } catch (error) {
         // Error retrieving data
         console.log(error.message);
