@@ -6,6 +6,8 @@ import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
+import ErrorModal from './ErrorModal'
+import {NavigationEvents} from 'react-navigation';
 import AwardModal from './AwardModal'
 
 class Events extends React.Component {
@@ -31,6 +33,7 @@ class Events extends React.Component {
     this.navToAdd = this.navToAdd.bind(this);
     this.doViewAll = this.doViewAll.bind(this);
     this.dontViewAll = this.dontViewAll.bind(this);
+    this.refetchOnBackPress = this.refetchOnBackPress.bind(this);
   }
 
   componentDidMount() {
@@ -103,6 +106,12 @@ class Events extends React.Component {
     this.setState({ showModal: true, awardMessage: 'first event created badge!', awardImage: require('./../assets/icons/socialbutterfly.png'), awardChange: false });
   }
 
+  refetchOnBackPress = () => {
+    this.props.fetchEvents();
+    this.props.fetchYourEvents();
+  }
+
+
   renderModal = () => {
     if (this.state.showModal) {
       return (
@@ -122,6 +131,8 @@ class Events extends React.Component {
     if (this.props.all !== undefined) {
       return (
         <View style={eventPage.wholeContainer}>
+        <NavigationEvents onDidFocus={this.refetchOnBackPress}>
+        </NavigationEvents>
           <View style={eventPage.viewOptionsContainer}>
             {this.renderModal()}
             <View style={this.state.viewAll
@@ -165,7 +176,7 @@ class Events extends React.Component {
         <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Events!</Text>
       );
     }
-    
+
   }
 }
 

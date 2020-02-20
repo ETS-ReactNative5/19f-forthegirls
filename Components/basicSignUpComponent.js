@@ -1,9 +1,8 @@
 import React from 'react';
 import { Image, Text, View, Button, Alert, ScrollView, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import TextField from 'react-native-text-field';
+import { singleChat } from '../assets/styles/chatStyle';
 import colors, { fonts, buttons, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
-import TouchableComponent from './touchableComponent';
 import SurveyHeaderComponent from './surveyHeaderComponent';
 import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
@@ -46,7 +45,7 @@ class BasicSignUpComponent extends React.Component {
   sumbitUser = () => {
 
     if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
-      this.setState({showModal: true, modalMessage: 'Please fill out the entire form.'});
+      this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
     else {
       const fields = {
@@ -58,34 +57,34 @@ class BasicSignUpComponent extends React.Component {
       Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
 
       Geocoder.from(this.state.location)
-          .then(json => {
-            var location = json.results[0].geometry.location;
-            // this.setState({latitude: location.lat, longitude: location.lng})
+        .then(json => {
+          var location = json.results[0].geometry.location;
+          // this.setState({latitude: location.lat, longitude: location.lng})
 
-            const otherAnswers = {
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              location: this.state.location,
-              highSchool: this.state.highSchool,
-              collegeName: this.state.collegeName,
-              gradYear: this.state.gradYear,
-              currentJob: this.state.currentJob,
-              age: this.state.age,
-              hs: this.state.hs,
-              college: this.state.college,
-              pg: this.state.pg,
-              latitude: location.lat,
-              longitude: location.lng,
-            }
+          const otherAnswers = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            location: this.state.location,
+            highSchool: this.state.highSchool,
+            collegeName: this.state.collegeName,
+            gradYear: this.state.gradYear,
+            currentJob: this.state.currentJob,
+            age: this.state.age,
+            hs: this.state.hs,
+            college: this.state.college,
+            pg: this.state.pg,
+            latitude: location.lat,
+            longitude: location.lng,
+          }
 
-            this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+          this.props.signUpUser(fields, this.props.navigation, otherAnswers);
 
-          })
-          .catch((error) =>  {
-              console.log(error);
-              this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
-            }
-          );
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({ showModal: true, modalMessage: 'Please input a valid location.' });
+        }
+        );
 
     }
   }
@@ -163,108 +162,141 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderError = () => {
-    if(this.props.error !== null) {
+    if (this.props.error !== null) {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
     }
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   //need to check unique from here
   render() {
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
-    var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
+    var endFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText, surveyStyle.endField]
+    var secondaryHeaderText = [fonts.minorHeading, colors.turquoise, surveyStyle.secondaryHeader]
     return (
-      <KeyboardAvoidingView behavior="padding" enabled>
+      <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView style={surveyStyle.surveyBackground}>
+          <View style={[singleChat.arrowBack]}>
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
-            <SurveyHeaderComponent text="Lets sign you up for an account!" header="Basic Information" />
+            <SurveyHeaderComponent header="Sign up!" goBack={this.goBack} />
             {this.renderModal()}
             {this.renderError()}
           </View>
+          <Text style={secondaryHeaderText}>First, the basics:</Text>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <View style={{ flex: 2 }}>
+              <TextInput
+                style={textFieldStyle}
+                invalidTextFieldStyle={{ borderColor: colors.red.color }}
+                placeholder="First Name"
+                onChangeText={this.firstNameInput}
+                clearButtonMode='while-editing'
+                keyboardType='default'
+              /></View>
+            <View style={{ flex: 2 }}>
+              <TextInput
+                style={textFieldStyle}
+                invalidTextFieldStyle={{ borderColor: colors.red.color }}
+                placeholder="Last Name"
+                onChangeText={this.lastNameInput}
+                clearButtonMode='while-editing'
+                keyboardType='default'
+              /></View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                style={endFieldStyle}
+                onInputChange={(input) => this.onAgeChange(input)}
+                placeholder="Age"
+                onChangeText={this.ageInput}
+                clearButtonMode='while-editing'
+                keyboardType='phone-pad'
+              />
+            </View>
+          </View>
           <TextInput
-            style={textFieldStyle}
-            invalidTextFieldStyle={{ borderColor: colors.red.color }}
-            placeholder="First Name"
-            onChangeText={this.firstNameInput}
-            clearButtonMode='while-editing'
-            keyboardType='default'
-          />
-          <TextInput
-            style={textFieldStyle}
-            invalidTextFieldStyle={{ borderColor: colors.red.color }}
-            placeholder="Last Name"
-            onChangeText={this.lastNameInput}
-            clearButtonMode='while-editing'
-            keyboardType='default'
-          />
-          <TextInput
-            style={textFieldStyle}
-            onInputChange={(input) => this.onAgeChange(input)}
-            placeholder="Age"
-            onChangeText={this.ageInput}
-            clearButtonMode='while-editing'
-            keyboardType='phone-pad'
-          />
-          <TextInput
-            style={textFieldStyle}
+            style={endFieldStyle}
             invalidTextFieldStyle={{ borderColor: colors.red.color }}
             placeholder="Email"
             onChangeText={this.emailInput}
             clearButtonMode='while-editing'
             keyboardType='email-address'
           />
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
+          <Text style={secondaryHeaderText}>Next, a few specifics:</Text>
           <TextInput
-            style={textFieldStyle}
-            invalidTextFieldStyle={{ borderColor: colors.red.color }}
-            placeholder="Username"
-            onChangeText={this.usernameInput}
-            clearButtonMode='while-editing'
-          />
-          <TextInput
-            style={textFieldStyle}
-            invalidTextFieldStyle={{ borderColor: colors.red.color }}
-            placeholder="Password"
-            secureTextEntry={true}
-            onChangeText={this.passwordInput}
-            clearButtonMode='while-editing'
-          />
-          <TextInput
-            style={textFieldStyle}
+            style={endFieldStyle}
             invalidTextFieldStyle={{ borderColor: colors.red.color }}
             placeholder="Location (City, State)"
             onChangeText={this.locationInput}
             clearButtonMode='while-editing'
           />
           <TextInput
-            style={textFieldStyle}
+            style={endFieldStyle}
             placeholder="High School Name"
             onChangeText={this.highSchoolInput}
             clearButtonMode='while-editing'
             keyboardType='default'
           />
-          <TextInput
-            style={textFieldStyle}
-            placeholder="College"
-            onChangeText={this.collegeInput}
-            clearButtonMode='while-editing'
-            keyboardType='default'
-          />
-          <TextInput
-            style={textFieldStyle}
-            placeholder="Graduation Year"
-            onChangeText={this.gradYearInput}
-            clearButtonMode='while-editing'
-            returnKeyType='done'
-            keyboardType='numeric'
-          />
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <View style={{ flex: 2 }}>
+              <TextInput
+                style={textFieldStyle}
+                placeholder="College or University"
+                onChangeText={this.collegeInput}
+                clearButtonMode='while-editing'
+                keyboardType='default'
+              /></View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                style={endFieldStyle}
+                placeholder="Grad Year"
+                onChangeText={this.gradYearInput}
+                clearButtonMode='while-editing'
+                returnKeyType='done'
+                keyboardType='numeric'
+              />
+            </View>
+          </View>
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
+          <Text style={secondaryHeaderText}>And finally, your log-in information:</Text>
+          <View style={{ flexDirection: 'row', width: '100%' }}>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                style={textFieldStyle}
+                invalidTextFieldStyle={{ borderColor: colors.red.color }}
+                placeholder="Username"
+                onChangeText={this.usernameInput}
+                clearButtonMode='while-editing'
+              /></View>
+            <View style={{ flex: 1 }}>
+              <TextInput
+                style={endFieldStyle}
+                invalidTextFieldStyle={{ borderColor: colors.red.color }}
+                placeholder="Password"
+                secureTextEntry={true}
+                onChangeText={this.passwordInput}
+                clearButtonMode='while-editing'
+              /></View>
+          </View>
           <View>
             <View style={{
               flexDirection: 'row',
               flexWrap: 'no-wrap',
               justifyContent: 'flex-start'
             }}>
-           </View>
+            </View>
           </View>
           <View style={buttons.arrowView}>
             <TouchableOpacity
@@ -276,7 +308,7 @@ class BasicSignUpComponent extends React.Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardAvoidingView >
     );
   }
 }

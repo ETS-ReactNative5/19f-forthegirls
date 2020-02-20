@@ -127,7 +127,6 @@ class EventDetails extends Component {
       console.log(this.state.rsvpLength)
       if (this.state.rsvpLength == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
-
       }
     }
     else {
@@ -163,13 +162,13 @@ class EventDetails extends Component {
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     return (
+      //<View style={{ flex: 1 }}>
       <ScrollView>
         <View style={eventPage.eventDetail}>
           {this.renderAwardModal()}
-
           <Image source={image} style={eventPage.eventDetailImage} />
           <View style={eventPage.eventDetailTitleBox} >
-            <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>
+            <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
               {this.props.event.title}
             </Text>
           </View>
@@ -207,6 +206,7 @@ class EventDetails extends Component {
           </View>
         </View>
       </ScrollView>
+      ///</View>
     );
   }
 }

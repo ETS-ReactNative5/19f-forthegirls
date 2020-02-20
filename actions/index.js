@@ -67,7 +67,7 @@ export function addActivity(fields) {
 
 //----------------- USERS ------------------//
 
-//retrieves the specified user object from the database
+// retrieves the specified user object from the database
 export function getUser(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/users/${id}`)
@@ -81,12 +81,10 @@ export function getUser(id) {
   };
 }
 
-//edits the user object
-export function editUser(fields) {
-  //profileURL
+export function editUserVisit(username, id, otherAnswers) {
   return (dispatch) => {
-    //need to give it email, username and password
-    axios.put(`${ROOT_URL}/users/${fields.username}`, fields)
+    axios.put(`${ROOT_URL}/users/survey/${username}`, otherAnswers).then((res) => {
+      axios.get(`${ROOT_URL}/users/${id}`)
       .then((response) => {
         dispatch({ type: ActionTypes.FETCH_USER, payload: response.data });
       }).then(() => {
@@ -94,7 +92,10 @@ export function editUser(fields) {
       }).catch((error) => {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
-  };
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 //---------------------------- AUTH --------------------------------//
@@ -159,6 +160,8 @@ export function signUpUser(fields, navigate, otherAnswers) {
       });
   }
 }
+
+
 
 //adds user information (name, location, etc) to a user on the backend
 export function addToSurvey(otherAnswers, username, navigate, navTo) {
@@ -437,9 +440,10 @@ export function fetchAwardStatus(id, awardTitle) {
 
 //When we store errors in state, resets the errors so they are no longer in state
 export function resetErrors() {
-  return (
-    {
-      type: ActionTypes.ERROR_CLEAR, payload: null,
-    }
-  );
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_ERROR,
+      payload: null,
+    });
+  }
 }

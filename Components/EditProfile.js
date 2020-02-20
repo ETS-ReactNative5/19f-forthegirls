@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import TouchableComponent from './touchableComponent';
 
 import TextField from 'react-native-text-field';
-import colors, { buttons, fonts, profileImage, fontEffects} from '../assets/styles/basicStyle';
+import colors, { buttons, fonts, profileImage, fontEffects } from '../assets/styles/basicStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import profile from '../assets/styles/profileStyle';
@@ -107,7 +107,10 @@ class EditProfile extends React.Component {
   };
 
   submitPage = () => {
-    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined))  {
+    if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined)) {
+      console.log(this.state.promptOneQuestion);
+      console.log(this.state.promptTwoQuestion);
+      console.log(this.state.promptThreeQuestion);
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -129,8 +132,8 @@ class EditProfile extends React.Component {
       }
       else {
 
-        this.setState({loading: true});
-        
+        this.setState({ loading: true });
+
         this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
       }
     }
@@ -155,40 +158,40 @@ class EditProfile extends React.Component {
   calcProgress = () => {
     let sum = 1.0;
     let message = '';
-    if(this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
-      sum-=.2;
+    if (this.state.promptOneAnswer === '' || this.state.promptOneAnswer === undefined) {
+      sum -= .2;
       message = "Fill out the first prompt to fill up the progress bar!";
     }
-    if(this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.promptTwoAnswer === '' || this.state.promptTwoAnswer === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Fill out the second prompt to fill up the progress bar!";
       }
     }
-    if(this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.promptThreeAnswer === '' || this.state.promptThreeAnswer === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Fill out the third prompt to fill up the progress bar!";
       }
     }
-    if(this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
-      sum-=.2;
-      if(message === '') {
+    if (this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
+      sum -= .2;
+      if (message === '') {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
-    if(this.state.extraversion === 50 || this.state.listening === 50) {
-      sum-=.2;
-      if(message === '') {
+    if (this.state.extraversion === 50 || this.state.listening === 50) {
+      sum -= .2;
+      if (message === '') {
         message = "Adjust the personality sliders to fill up the progress bar!";
       }
     }
 
-    this.setState({progress: sum, progressMessage: message });
+    this.setState({ progress: sum, progressMessage: message });
   }
 
   showProgressModal = () => {
-    if(this.state.progress !== 1.0) {
+    if (this.state.progress !== 1.0) {
       return (
         <ErrorModal errorMessage={this.state.progressMessage} reset={this.resetProgressModal}></ErrorModal>
       )
@@ -238,10 +241,10 @@ class EditProfile extends React.Component {
   }
 
   progressBar = () => {
-    if(this.state.progress !== 1) {
+    if (this.state.progress !== 1) {
       return (
         <View>
-            <ProgressViewIOS style={{margin: 20}} progressTintColor={colors.turquoise.color} progress={this.state.progress}/>
+          <ProgressViewIOS style={{ margin: 20 }} progressTintColor={colors.turquoise.color} progress={this.state.progress} />
         </View>
       )
     }
@@ -351,16 +354,18 @@ class EditProfile extends React.Component {
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
+    var itemColor = colors.black.color
     var headerText = [fonts.minorHeading, colors.deepPurple, surveyStyle.csComponentHeader]
     var skillsHeaderT = { flexDirection: 'row', justifyContent: 'space-between' }
+    var dropdownPickerStyle = { borderRadius: 20 }
 
 
-    var imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
-    var imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
+    var imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.edit} />
+    var imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.edit} />
 
     var image;
     if (this.state.imagefull != null) {
-      image = <Image source={{ uri: this.state.imagefull.uri }} style={profileImage.basic} />
+      image = <Image source={{ uri: this.state.imagefull.uri }} style={profileImage.edit} />
     }
     else if (this.props.profileURL != "" && this.props.profileURL != null) {
       image = imageImage;
@@ -381,7 +386,7 @@ class EditProfile extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={singleChat.headerTextContainer}>
-            <Text style={fonts.minorHeading}>Edit Profile</Text>
+            <Text style={[fonts.minorHeading, colors.deepPurple]}>Editing Profile</Text>
           </View>
           <TouchableOpacity
             onPress={this.submitPage}>
@@ -389,7 +394,7 @@ class EditProfile extends React.Component {
           </TouchableOpacity>
         </View>
         {this.progressBar()}
-        <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 50 }}>
+        <ScrollView style={{ backgroundColor: colors.lightGrey.color, margin: 10, marginBottom: 85 }}>
           <View>
             {this.renderModal()}
             {this.renderLoadingModal()}
@@ -439,9 +444,11 @@ class EditProfile extends React.Component {
             <SurveyHeaderComponent header="Answer 3 Prompts!" />
           </View>
           <Dropdown
+            pickerStyle={dropdownPickerStyle}
             itemTextStyle={itemTextStyle}
             selectedItemColor={selectedItemColor}
             label='Question 1'
+            labelTextStyle={fonts.bodyText}
             data={data}
             value={this.props.promptOneQuestion || 'Question 1'}
             onChangeText={this.p1Question}
@@ -458,15 +465,18 @@ class EditProfile extends React.Component {
             </View>
           </View>
           <Dropdown
+            pickerStyle={dropdownPickerStyle}
             itemTextStyle={itemTextStyle}
             selectedItemColor={selectedItemColor}
             label='Question 2'
+            labelTextStyle={fonts.bodyText}
             value={this.props.promptTwoQuestion || 'Question 2'}
             data={data}
             onChangeText={this.p2Question}
           />
           <View style={surveyStyle.textFieldContainer}>
             <TextInput
+
               style={textFieldStyle}
               placeholder="Prompt 2 Answer"
               defaultValue={this.props.promptTwoAnswer || ''}
@@ -475,9 +485,11 @@ class EditProfile extends React.Component {
             />
           </View>
           <Dropdown
+            pickerStyle={dropdownPickerStyle}
             itemTextStyle={itemTextStyle}
             selectedItemColor={selectedItemColor}
             label='Question 3'
+            labelTextStyle={fonts.bodyText}
             value={this.props.promptThreeQuestion || 'Question 3'}
             data={data}
             onChangeText={this.p3Question}

@@ -16,9 +16,6 @@ import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basic
 class SingleEvent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      rsvps: this.props.rsvps,
-    };
     this.navToPage = this.navToPage.bind(this);
     this.render = this.render.bind(this);
   }
@@ -55,7 +52,7 @@ class SingleEvent extends Component {
             </View>
             <View style={eventPage.rsvpCounts}>
               <Text style={[colors.white, fonts.majorHeading, fontEffects.italic]}>
-                {this.state.rsvps ? this.state.rsvps.length : null} RSVPs
+                {this.props.rsvps ? this.props.rsvps.length : null} RSVPs
               </Text>
             </View>
           </ImageBackground>
