@@ -45,7 +45,15 @@ const surveyStyle = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 2,
     borderColor: colors.turquoise.color,
-    width: '100%'
+    width: '95%',
+    marginLeft: 5,
+    marginRight: 5
+  },
+  secondaryHeader: {
+    marginLeft: 10
+  },
+  endField: {
+    marginRight: 7
   },
 
   surveyHeaderText: {
@@ -71,7 +79,7 @@ const surveyStyle = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
     marginLeft: 7,
-    marginRight: 10,
+    // marginRight: 10,
     borderRadius: 20,
     backgroundColor: colors.veryLightPurple.color,
     height: 50,

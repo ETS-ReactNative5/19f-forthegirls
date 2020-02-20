@@ -94,7 +94,7 @@ const buttons = StyleSheet.create({
     width: '100%',
     flexDirection: 'row-reverse',
     alignItems: 'flex-end',
-    marginTop: 30
+    marginLeft: 80
   },
   logInOutButton: {
     display: 'flex',
