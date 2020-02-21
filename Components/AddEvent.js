@@ -19,6 +19,7 @@ import ErrorModal from './ErrorModal';
 import { uploadImage } from '../s3';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import DatePicker from './DatePicker.js'
 
 class AddEvent extends Component {
   constructor(props) {
@@ -38,6 +39,9 @@ class AddEvent extends Component {
 
       showModal: false,
       modalMessage: '',
+
+      showDate: false,
+      dateText: 'Event Date and Time',
     };
 
     this.titleInput = this.titleInput.bind(this);
@@ -157,6 +161,24 @@ class AddEvent extends Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
+  setDate = () => {
+    this.setState({ showDate: true, dateText: '' });
+  }
+
+  saveDate = (dateChosen) => {
+    console.log(dateChosen);
+    this.setState({ showDate: false, date: dateChosen, dateText: dateChosen });
+  }
+
+  showPicker = () => {
+    console.log("picker");
+    if(this.state.showDate) {
+      return (
+        <DatePicker saveDate={this.saveDate}/>
+      );
+    }
+  }
+
   render() {
     var imageNoImage = <Image source={require('../img/EventBackground.jpg')} />
     var imageImage = <Image source={{ uri: this.state.eventPhotoURL }} />
@@ -194,15 +216,20 @@ class AddEvent extends Component {
               clearButtonMode='while-editing' />
           </View>
           <View style={surveyStyle.textFieldContainer}>
-            <TextInput
+          <TouchableOpacity onPress={this.setDate}>
+            {this.showPicker()}
+            <Text style={textFieldStyle}>Event Date and Time</Text>
+          </TouchableOpacity>
+          </View>
+            {/* <TextInput
               style={textFieldStyle}
-              placeholder="Event Date (MM/DD/YY)"
+              placeholder="Event Date and Time"
               keyboardType='default'
               onChangeText={this.dateInput}
               autoCapitalize='none'
-              clearButtonMode='while-editing' />
-          </View>
-          <View style={surveyStyle.textFieldContainer}>
+              clearButtonMode='while-editing' /> */}
+          
+          {/* <View style={surveyStyle.textFieldContainer}>
             <TextInput
               style={textFieldStyle}
               placeholder="Event Time (24:00)"
@@ -210,7 +237,7 @@ class AddEvent extends Component {
               onChangeText={this.timeInput}
               autoCapitalize='none'
               clearButtonMode='while-editing' />
-          </View>
+          </View> */}
           <View style={surveyStyle.textFieldContainer}>
             <TextInput
               style={textFieldStyle}
