@@ -66,6 +66,10 @@ class Profile extends React.Component {
       this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!!!', awardImage: require('./../assets/icons/globetrotter.png') });
   }
 
+  makeModalPopMessageFive = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!!!', awardImage: require('./../assets/icons/messageFive.png') });
+  }
+
   threeRSVPS = () => {
     if (this.props.allYours[1]) {
       return (
@@ -79,8 +83,11 @@ class Profile extends React.Component {
 
   messageFive = () => {
     if (this.props.allYours[3]) {
-      return <Image style={profile.award} source={require('./../assets/icons/messageFive.png')} />
-    }
+      return (
+        <TouchableOpacity onPress={this.makeModalPopMessageFive}>
+          <Image style={profile.award} source={require('./../assets/icons/messageFive.png')} />
+        </TouchableOpacity>
+    )}
     return null;
   }
 
