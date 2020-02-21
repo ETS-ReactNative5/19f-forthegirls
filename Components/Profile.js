@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
@@ -139,7 +139,7 @@ class Profile extends React.Component {
 
   badge = () => {
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <ScrollView horizontal={true} contentContainerStyle={{ flexDirection: 'row' }}>
         {this.threeRSVPS()}
         {this.messageFive()}
         {this.firstMatch()}
@@ -149,7 +149,7 @@ class Profile extends React.Component {
           <Image style={profile.award} source={require('./../assets/icons/founders.png')} />
           </TouchableOpacity>
         }
-      </View>
+      </ScrollView>
     )
   }
 
@@ -227,7 +227,7 @@ class Profile extends React.Component {
         <View style={promptStyle.promptContainer}>
           {prompts}
         </View>
-        <View style={{ marginLeft: 7, marginTop: 5, marginBottom: 5 }}>
+        <View style={{ margin: 5 }}>
           {rewards}
         </View>
 

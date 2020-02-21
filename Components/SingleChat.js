@@ -57,11 +57,11 @@ class SingleChat extends React.Component {
     }
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-    .then((response) => {
-        this.setState({numContacted: response.data})
-    }).catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        this.setState({ numContacted: response.data })
+      }).catch((error) => {
+        console.log(error);
+      });
 
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
@@ -70,6 +70,7 @@ class SingleChat extends React.Component {
     }).catch((error) => {
       console.log(error);
     });
+
 
   }
 
@@ -128,9 +129,9 @@ class SingleChat extends React.Component {
         if (response.data == 5 && this.state.numContacted == 4){
           this.setState({ numContacted: 5,  awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') })
         }
-    }).catch((error) => {
-      console.log(error);
-    });
+      }).catch((error) => {
+        console.log(error);
+      });
 
 
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
@@ -139,6 +140,7 @@ class SingleChat extends React.Component {
         this.setState({ chatText: '', prompt: '' })
         if(this.state.numChats == 99){
           this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/hundredMessages.png') });
+
         }
       }).catch((error) => {
         console.log(error);
