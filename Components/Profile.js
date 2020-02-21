@@ -69,6 +69,17 @@ class Profile extends React.Component {
   makeModalPopMessageFive = () =>  {
       this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!!!', awardImage: require('./../assets/icons/messageFive.png') });
   }
+  makeModalPopHundredMessages = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for sending 100 messages!!!', awardImage: require('./../assets/icons/chattyCathy.png') });
+  }
+
+  makeModalPopFirstEvent = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for creating your first event!!!', awardImage: require('./../assets/icons/socialbutterfly.png') });
+  }
+
+  makeModalPopFounders = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for being one of our first users!!!', awardImage: require('./../assets/icons/founders.png') });
+  }
 
   threeRSVPS = () => {
     if (this.props.allYours[1]) {
@@ -105,15 +116,23 @@ class Profile extends React.Component {
 
   hundredMessages = () => {
     if (this.props.allYours[7]) {
-      return <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
-    }
+      return (
+      <TouchableOpacity onPress={this.makeModalPopHundredMessages}>
+        <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
+      </TouchableOpacity>
+
+    )}
     return null;
   }
 
   firstEvent = () => {
     if (this.props.allYours[9]) {
-      return <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
-    }
+      return (
+      <TouchableOpacity onPress={this.makeModalPopFirstEvent}>
+        <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
+      </TouchableOpacity>
+
+    )}
     return null;
   }
 
@@ -126,7 +145,10 @@ class Profile extends React.Component {
         {this.firstMatch()}
         {this.firstEvent()}
         {this.hundredMessages()}
-        {<Image style={profile.award} source={require('./../assets/icons/founders.png')} />}
+        { <TouchableOpacity onPress={this.makeModalPopFounders}>
+          <Image style={profile.award} source={require('./../assets/icons/founders.png')} />
+          </TouchableOpacity>
+        }
       </View>
     )
   }
