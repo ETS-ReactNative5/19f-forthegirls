@@ -48,9 +48,6 @@ const chatList = StyleSheet.create({
 });
 
 const singleChat = StyleSheet.create({
-  chatFont: {
-    fontSize: 18
-  },
   sender: {
     padding: 3,
     marginTop: 5,
@@ -60,8 +57,7 @@ const singleChat = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: colors.turquoise.color,
     height: 'auto',
-    // width: 'auto',
-    //maxWidth: 225,
+    width: 225,
     paddingLeft: 10,
   },
   reciever: {
@@ -73,8 +69,7 @@ const singleChat = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: colors.lightGrey.color,
     height: 'auto',
-    //width: 'auto',
-    //maxWidth: 225,
+    width: 225,
     paddingLeft: 10,
   },
   loadmore: {
@@ -109,8 +104,7 @@ const singleChat = StyleSheet.create({
     alignItems: 'center'
   },
   chatInputView: {
-    marginTop: 250,
-    marginBottom: 50,
+    marginBottom: 120,
     margin: 5,
     flexDirection: 'row',
     borderWidth: 2,
@@ -123,7 +117,7 @@ const singleChat = StyleSheet.create({
     marginLeft: 7,
     marginRight: 10,
     height: 30,
-    width: '95%'
+    width: 300
   }
 })
 

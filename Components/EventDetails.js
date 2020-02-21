@@ -162,51 +162,51 @@ class EventDetails extends Component {
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     return (
-      //<View style={{ flex: 1 }}>
-      <ScrollView>
-        <View style={eventPage.eventDetail}>
-          {this.renderAwardModal()}
-          <Image source={image} style={eventPage.eventDetailImage} />
-          <View style={eventPage.eventDetailTitleBox} >
-            <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
-              {this.props.event.title}
-            </Text>
-          </View>
-          <View style={eventPage.eventDetailLogistics}>
-            <View style={eventPage.eventDetailDayTime}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <View style={eventPage.eventDetail}>
+            {this.renderAwardModal()}
+            <Image source={image} style={eventPage.eventDetailImage} />
+            <View style={eventPage.eventDetailTitleBox} >
+              <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
+                {this.props.event.title}
+              </Text>
             </View>
-            <View style={eventPage.eventDetailLocation}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+            <View style={eventPage.eventDetailLogistics}>
+              <View style={eventPage.eventDetailDayTime}>
+                <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+              </View>
+              <View style={eventPage.eventDetailLocation}>
+                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+              </View>
             </View>
-          </View>
-          {this.renderMap()}
+            {this.renderMap()}
 
-          <View style={eventPage.eventDetailDescription}>
-            <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
-              {this.props.event.description}
-            </Text>
-          </View>
-          <View style={eventPage.eventDetailRSVPContainer} >
-            {this.renderConnectionsModal()}
-            <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-              <TouchableOpacity onPress={this.changeConnectionsModal}>
-                <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+            <View style={eventPage.eventDetailDescription}>
+              <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
+                {this.props.event.description}
+              </Text>
+            </View>
+            <View style={eventPage.eventDetailRSVPContainer} >
+              {this.renderConnectionsModal()}
+              <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
+                <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
+                <TouchableOpacity onPress={this.changeConnectionsModal}>
+                  <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
+                <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
+                  {this.state.rsvp
+                    ? 'You have RSVPd!'
+                    : 'RSVP'}
+                </Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
-              <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
-                {this.state.rsvp
-                  ? 'You have RSVPd!'
-                  : 'RSVP'}
-              </Text>
-            </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
-      ///</View>
+        </ScrollView>
+      </View>
     );
   }
 }

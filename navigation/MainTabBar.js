@@ -21,13 +21,36 @@ const MainTabBar = createBottomTabNavigator(
     },
     Chat: {
       screen: ChatStack,
-      navigationOptions: ({ navigation }) => ({
-        tabBarIcon: ({ focused }) => (
-          <Image
-            source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
-          />
-        ),
-      }),
+      navigationOptions: ({ navigation }) => {
+        // let tabBarVisible;
+        // if (navigation.state.routes.length > 1) {
+        //   navigation.state.routes.map(route => {
+        //     if (route.routeName === 'CustomHide') {
+        //       tabBarVisible = false;
+        //     } else {
+        //       tabBarVisible = true;
+        //     }
+        //   });
+        //   // return tabBarVisible;
+        // }
+        return {
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
+            />
+          )
+        }
+      }
+
+      // navigationOptions: ({ navigation }) => ({
+
+      //   tabBarIcon: ({ focused }) => (
+      //     <Image
+      //       source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
+      //     />
+      //   ),
+
+      // })
     },
     Profile: {
       screen: ProfileStack,
@@ -57,5 +80,6 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
 );
+
 
 export default createAppContainer(MainTabBar);
