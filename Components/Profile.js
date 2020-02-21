@@ -6,6 +6,7 @@ import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/sty
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 import { withNavigation } from 'react-navigation';
+import AwardModal from './AwardModal'
 
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
@@ -19,6 +20,9 @@ class Profile extends React.Component {
       width: 0,
       height: 0,
       progress: 0,
+      showModal: false,
+      awardMessage: '',
+      awardImage: null,
     };
 
   }
@@ -54,10 +58,22 @@ class Profile extends React.Component {
     this.props.navigation.navigate('EditProfile', {})
   }
 
+  makeModalPopFirstMatch = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for having your first match!!', awardImage: require('./../assets/icons/firstMatch.png') });
+  }
+
+  makeModalPopThreeRSVPS = () =>  {
+      this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!!!', awardImage: require('./../assets/icons/globetrotter.png') });
+  }
+
   threeRSVPS = () => {
     if (this.props.allYours[1]) {
-      return <Image style={profile.award} source={require('./../assets/icons/globetrotter.png')} />
-    }
+      return (
+        <TouchableOpacity onPress={this.makeModalPopThreeRSVPS}>
+          <Image style={profile.award} source={require('./../assets/icons/globetrotter.png')} />
+       </TouchableOpacity>
+
+    )}
     return null;
   }
 
@@ -70,7 +86,12 @@ class Profile extends React.Component {
 
   firstMatch = () => {
     if (this.props.allYours[5]) {
-      return <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
+      return (
+      <TouchableOpacity onPress={this.makeModalPopFirstMatch}>
+        <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
+      </TouchableOpacity>
+
+      )
     }
     return null;
   }
@@ -101,6 +122,18 @@ class Profile extends React.Component {
         {<Image style={profile.award} source={require('./../assets/icons/founders.png')} />}
       </View>
     )
+  }
+
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <AwardModal awardMessage={this.state.awardMessage} awardImage={this.state.awardImage} reset={this.resetModal} />
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
 
 
@@ -139,6 +172,7 @@ class Profile extends React.Component {
         <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
           {image}
         </View>
+        {this.renderModal()}
         <View style={profile.basicInfo}>
           <View style={profile.basicInfoLeft}>
             <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
