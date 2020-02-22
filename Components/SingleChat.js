@@ -174,15 +174,15 @@ class SingleChat extends React.Component {
     this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
 
-  loadMore = () => {
-    if (this.state.chats.length > 10) {
-      return (
-        <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
-          <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
-        </TouchableOpacity>
-      )
-    }
-  }
+  // loadMore = () => {
+  //   if (this.state.chats.length > 10) {
+  //     return (
+  //       <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
+  //         <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
+  //       </TouchableOpacity>
+  //     )
+  //   }
+  // }
 
   render() {
     console.log(this.state.numChats)
@@ -203,34 +203,36 @@ class SingleChat extends React.Component {
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
-        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={170}>
+        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={120}>
           <ScrollView
+            style={{ flex: 0 }}
             ref={ref => this.scrollView = ref}
             onContentSizeChange={() => { this.scrollView.scrollToEnd({ animated: true }) }}>
-            {this.loadMore()}
+            {/* {this.loadMore()} */}
             <View>
-              <View>
+              <View >
                 {this.showChats()}
               </View>
-              {/* {this.renderInput()} */}
-              <View style={singleChat.chatInputView}>
-                <TextInput
-                  multiline={true}
-                  clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
-                  style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
-                  defaultValue={this.props.navigation.getParam('prompt')}
-                  value={this.state.chatText}
-                  onChangeText={this.addChat}
-                  onEndEditing={this.sendChat}
-                  onKeyPress={this.handleKeyDown}
-                />
-                <TouchableOpacity
-                  style={{ paddingTop: 2, paddingLeft: 5 }}
-                  onPress={this.sendChat}>
-                  <Image
-                    source={require('./../assets/icons/arrowup.png')}
+              <View style={singleChat.chatInputContainer}>
+                <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
+                  <TextInput
+                    multiline={true}
+                    clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
+                    style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
+                    defaultValue={this.props.navigation.getParam('prompt')}
+                    value={this.state.chatText}
+                    onChangeText={this.addChat}
+                    onEndEditing={this.sendChat}
+                    onKeyPress={this.handleKeyDown}
                   />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ paddingTop: 2, paddingLeft: 5 }}
+                    onPress={this.sendChat}>
+                    <Image
+                      source={require('./../assets/icons/arrowup.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
 

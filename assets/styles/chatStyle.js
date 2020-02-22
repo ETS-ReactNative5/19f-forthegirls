@@ -103,9 +103,19 @@ const singleChat = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  chatInputContainer: {
+    flex: 1,
+    marginTop: 'auto',
+    justifyContent: 'flex-end',
+    bottom: 0
+  },
+  chatInputMargin: {
+    // figure this out!!
+  },
   chatInputView: {
-    marginBottom: 120,
+    flex: 1,
     margin: 5,
+    marginBottom: 120,
     flexDirection: 'row',
     borderWidth: 2,
     borderColor: colors.deepPurple.color,
