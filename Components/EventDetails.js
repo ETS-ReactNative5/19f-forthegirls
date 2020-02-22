@@ -222,8 +222,8 @@ class EventDetails extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }

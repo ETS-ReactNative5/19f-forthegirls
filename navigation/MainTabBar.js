@@ -78,8 +78,4 @@ const MainTabBar = createBottomTabNavigator(
 );
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8d2e614195274e4b23846e723afd1676aacc0e05
 export default createAppContainer(MainTabBar);

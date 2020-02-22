@@ -6,7 +6,6 @@ import Matches from '../Components/Matches';
 const ChatStack = createStackNavigator(
   {
     Home: Chats,
-    //CustomHide: CustomHide,
     SingleChat: {
       screen: SingleChat,
     },
