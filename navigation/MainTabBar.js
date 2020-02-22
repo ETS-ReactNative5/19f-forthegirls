@@ -24,12 +24,26 @@ const MainTabBar = createBottomTabNavigator(
       navigationOptions: ({navigation, screenProps }) => ({
         tabBarIcon: ({ focused }) => (
           <View>
-            <Text style={{ color: 'black', fontSize: 10, fontWeight: 'bold' }}>
-              {screenProps.unreadMessagesCount}
-            </Text>
             <Image
               source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
             />
+            <View
+              style={{
+              position: 'absolute',
+              right: -6,
+              top: -3,
+              backgroundColor: 'red',
+              borderRadius: 6,
+              width: 13,
+              height: 13,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            >
+              <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                {screenProps.unreadMessagesCount}
+              </Text>
+            </View>
           </View>
         ),
       }),
