@@ -30,7 +30,6 @@ class Main extends Component {
     this.props.checkUnreadMessages({
       id: this.props.auth.id,
     });
-    console.log(this.props.chats.unreadCount);
   }
 
   render() {

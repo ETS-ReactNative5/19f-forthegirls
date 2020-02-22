@@ -24,7 +24,14 @@ class Chats extends React.Component {
     return this.props.matches.map((n) => {
       i++;
       return (
-        <Match key={n} userId={n} i={i} deleteMatch={this.deleteMatch} matchID={n} nav={this.props.navigation}/>
+        <Match
+          key={n}
+          userId={n}
+          i={i}
+          deleteMatch={this.deleteMatch}
+          matchID={n}
+          nav={this.props.navigation}
+        />
       )
     })
   }
