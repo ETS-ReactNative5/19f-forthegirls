@@ -7,7 +7,8 @@ import {
   Image,
   ScrollView,
   Keyboard,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  DatePickerIOS
 } from 'react-native';
 import { StackActions } from 'react-navigation'
 import { connect } from 'react-redux';
@@ -19,6 +20,7 @@ import ErrorModal from './ErrorModal';
 import { uploadImage } from '../s3';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+
 
 class AddEvent extends Component {
   constructor(props) {
@@ -32,7 +34,7 @@ class AddEvent extends Component {
       latitude: 0,
       longitude: 0,
       eventPhotoURL: '',
-
+      chosenDate: new Date(),
       image: this.props.image,
       imagefull: null,
 
@@ -157,7 +159,39 @@ class AddEvent extends Component {
     this.setState({ showModal: false, modalMessage: "" });
   }
 
+  setDate = (newDate) => {
+    this.setState({chosenDate: newDate, date: String(newDate).substring(0,15), time: String(newDate).substring(16, 21)});
+    // console.log(String(newDate));
+    // console.log(this.state.date)
+    // console.log(String(newDate).substring(16, 21))
+  }
+
   render() {
+
+
+    // var oldStuff = (
+    //   <View>
+    //   <View style={surveyStyle.textFieldContainer}>
+    //     <TextInput
+    //       style={textFieldStyle}
+    //       placeholder="Event Date (MM/DD/YY)"
+    //       keyboardType='default'
+    //       onChangeText={this.dateInput}
+    //       autoCapitalize='none'
+    //       clearButtonMode='while-editing' />
+    //   </View>
+    //   <View style={surveyStyle.textFieldContainer}>
+    //     <TextInput
+    //       style={textFieldStyle}
+    //       placeholder="Event Time (24:00)"
+    //       keyboardType='default'
+    //       onChangeText={this.timeInput}
+    //       autoCapitalize='none'
+    //       clearButtonMode='while-editing' />
+    //   </View>
+    //   </View>
+    // )
+
     var imageNoImage = <Image source={require('../img/EventBackground.jpg')} />
     var imageImage = <Image source={{ uri: this.state.eventPhotoURL }} />
 
@@ -174,6 +208,7 @@ class AddEvent extends Component {
     }
 
     var textFieldStyle = [fonts.bodyText]
+
     return (
       <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView contentContainerStyle={{ backgroundColor: colors.white.color }}>
@@ -190,24 +225,6 @@ class AddEvent extends Component {
               keyboardType='default'
               placeholder="Event Title"
               onChangeText={this.titleInput}
-              autoCapitalize='none'
-              clearButtonMode='while-editing' />
-          </View>
-          <View style={surveyStyle.textFieldContainer}>
-            <TextInput
-              style={textFieldStyle}
-              placeholder="Event Date (MM/DD/YY)"
-              keyboardType='default'
-              onChangeText={this.dateInput}
-              autoCapitalize='none'
-              clearButtonMode='while-editing' />
-          </View>
-          <View style={surveyStyle.textFieldContainer}>
-            <TextInput
-              style={textFieldStyle}
-              placeholder="Event Time (24:00)"
-              keyboardType='default'
-              onChangeText={this.timeInput}
               autoCapitalize='none'
               clearButtonMode='while-editing' />
           </View>
@@ -231,6 +248,10 @@ class AddEvent extends Component {
               multiline={true}
               onSubmitEditing={() => { Keyboard.dismiss() }} />
           </View>
+          <DatePickerIOS
+            date={this.state.chosenDate}
+            onDateChange={this.setDate}
+          />
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity
               onPress={this.addEvent}>

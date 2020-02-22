@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View, Text } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
@@ -21,36 +21,32 @@ const MainTabBar = createBottomTabNavigator(
     },
     Chat: {
       screen: ChatStack,
-      navigationOptions: ({ navigation }) => {
-        // let tabBarVisible;
-        // if (navigation.state.routes.length > 1) {
-        //   navigation.state.routes.map(route => {
-        //     if (route.routeName === 'CustomHide') {
-        //       tabBarVisible = false;
-        //     } else {
-        //       tabBarVisible = true;
-        //     }
-        //   });
-        //   // return tabBarVisible;
-        // }
-        return {
-          tabBarIcon: ({ focused }) => (
+      navigationOptions: ({ navigation, screenProps }) => ({
+        tabBarIcon: ({ focused }) => (
+          <View>
             <Image
               source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
             />
-          )
-        }
-      }
-
-      // navigationOptions: ({ navigation }) => ({
-
-      //   tabBarIcon: ({ focused }) => (
-      //     <Image
-      //       source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
-      //     />
-      //   ),
-
-      // })
+            <View
+              style={{
+                position: 'absolute',
+                right: -6,
+                top: -3,
+                backgroundColor: 'red',
+                borderRadius: 6,
+                width: 13,
+                height: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
+                {screenProps.unreadMessagesCount}
+              </Text>
+            </View>
+          </View>
+        ),
+      }),
     },
     Profile: {
       screen: ProfileStack,
@@ -82,4 +78,8 @@ const MainTabBar = createBottomTabNavigator(
 );
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8d2e614195274e4b23846e723afd1676aacc0e05
 export default createAppContainer(MainTabBar);

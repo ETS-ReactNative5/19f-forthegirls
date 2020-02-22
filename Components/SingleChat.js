@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
-import { getUser, getMatches } from '../actions';
+import { getUser, getMatches, setToRead, checkUnreadMessages } from '../actions';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
@@ -28,15 +28,15 @@ class SingleChat extends React.Component {
 
     this.goBack = this.goBack.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
-
   }
 
   componentDidMount() {
-    console.log(this.props.navigation.getParam('prompt'));
     //https://stackoverflow.com/questions/39426083/update-react-component-every-second
-    this.interval = setInterval(() => this.getOnlyChats(), 500);
+    this.interval = setInterval(() => this.getAndUpdateRead(), 5000);
     this.getChats();
     this.setPrompt();
+    this.setToRead();
+    this.updateUnread();
   }
 
 
@@ -51,10 +51,15 @@ class SingleChat extends React.Component {
     clearInterval(this.interval);
   }
 
-  getChats() {
+  getAndUpdateRead = () => {
+    this.getOnlyChats();
+    this.setToRead();
+    this.updateUnread();
+  }
 
+  getChats() {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
-      this.setState({ showModal: true, awardMessage: 'first match badge!', awardImage: require('./../assets/icons/firstMatch.png') });
+      this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
@@ -71,7 +76,24 @@ class SingleChat extends React.Component {
       }).catch((error) => {
         console.log(error);
       });
+  }
 
+  setToRead = () => {
+    const myID = this.props.id;
+    const theirID = this.props.navigation.getParam('matchID');
+    this.props.setToRead(
+      {
+        receiverID: myID,
+        senderID: theirID,
+      }
+    );
+  }
+
+  updateUnread = () => {
+    const myID = this.props.id;
+    this.props.checkUnreadMessages({
+      id: myID,
+    });
   }
 
   getOnlyChats = () => {
@@ -128,7 +150,7 @@ class SingleChat extends React.Component {
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
       .then((response) => {
         if (response.data == 5 && this.state.numContacted == 4) {
-          this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: '5 contacted award!', awardImage: require('./../assets/icons/firstMatch.png') })
+          this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') })
         }
       }).catch((error) => {
         console.log(error);
@@ -140,7 +162,8 @@ class SingleChat extends React.Component {
         this.getChats();
         this.setState({ chatText: '', prompt: '' })
         if (this.state.numChats == 99) {
-          this.setState({ awardAward: true, showModal: true, awardMessage: '100 Matches Badge!!', awardImage: require('./../assets/icons/firstMatch.png') });
+          this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/hundredMessages.png') });
+
         }
       }).catch((error) => {
         console.log(error);
@@ -185,7 +208,6 @@ class SingleChat extends React.Component {
   // }
 
   render() {
-    console.log(this.state.numChats)
     return (
       <View>
         <View style={singleChat.header}>
@@ -251,4 +273,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getUser })(SingleChat);
+export default connect(mapStateToProps, { getUser, setToRead, checkUnreadMessages })(SingleChat);

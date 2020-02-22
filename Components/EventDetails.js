@@ -126,7 +126,7 @@ class EventDetails extends Component {
       this.setState({ rsvp: true });
       console.log(this.state.rsvpLength)
       if (this.state.rsvpLength == 2) {
-        this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
+        this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
       }
     }
     else {
@@ -155,6 +155,10 @@ class EventDetails extends Component {
     this.setState({ showAwardModal: false, awardMessage: "", awardImage: null });
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
@@ -162,15 +166,28 @@ class EventDetails extends Component {
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView>
-          <View style={eventPage.eventDetail}>
-            {this.renderAwardModal()}
-            <Image source={image} style={eventPage.eventDetailImage} />
-            <View style={eventPage.eventDetailTitleBox} >
-              <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
-                {this.props.event.title}
-              </Text>
+      //<View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={eventPage.eventDetail}>
+          {this.renderAwardModal()}
+          <View style={{ width: '100%', flex: 1, alignItems: 'left', marginLeft: 10, marginTop: 10 }}>
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <Image source={image} style={eventPage.eventDetailImage} />
+          <View style={eventPage.eventDetailTitleBox} >
+            <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
+              {this.props.event.title}
+            </Text>
+          </View>
+          <View style={eventPage.eventDetailLogistics}>
+            <View style={eventPage.eventDetailDayTime}>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
             </View>
             <View style={eventPage.eventDetailLogistics}>
               <View style={eventPage.eventDetailDayTime}>

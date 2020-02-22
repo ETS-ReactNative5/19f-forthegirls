@@ -5,6 +5,7 @@ import UserReducer from './user_reducer';
 import AuthReducer from './auth_reducer';
 import AwardsReducer from './awards_reducer';
 import EventReducer from './event_reducer';
+import ChatReducer from './chat_reducer';
 import CSReducer from './survey_reducers/cs_reducer';
 import DemographicReducer from './survey_reducers/demographic_reducer';
 import BasicReducer from './survey_reducers/basic_reducer';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   user: UserReducer,
   auth: AuthReducer,
   events: EventReducer,
+  chats: ChatReducer,
   cs: CSReducer,
   demographic: DemographicReducer,
   basic: BasicReducer,

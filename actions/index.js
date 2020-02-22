@@ -44,6 +44,10 @@ export const ActionTypes = {
   FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
   FETCH_AWARD: 'FETCH_AWARD',
 
+  //CHATS
+  CHECK_UNREAD_MESSAGES: 'CHECK_UNREAD_MESSAGES',
+  SET_TO_READ: 'SET_TO_READ',
+
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
 
@@ -404,6 +408,34 @@ export function unrsvpEvent(userID, eventID) {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
+  };
+}
+
+//--------------------------------------CHATS----------------------------------------
+//Gets user's unread chat count
+export function checkUnreadMessages(fields) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/chats/getMyUnreadCount/${fields.id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.CHECK_UNREAD_MESSAGES,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+}
+
+export function setToRead(fields) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/chats/setToRead`, fields).then((response) => {
+      dispatch({
+        type: ActionTypes.SET_TO_READ,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
   };
 }
 
