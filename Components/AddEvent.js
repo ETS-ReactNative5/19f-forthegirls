@@ -19,7 +19,7 @@ import ErrorModal from './ErrorModal';
 import { uploadImage } from '../s3';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import DatePicker from './DatePicker.js'
+import ChooseDate from './ChooseDate.js'
 
 class AddEvent extends Component {
   constructor(props) {
@@ -41,7 +41,9 @@ class AddEvent extends Component {
       modalMessage: '',
 
       showDate: false,
-      dateText: 'Event Date and Time',
+      dateText: 'Event Date',
+      showTime: false,
+      timeText: 'Event Time',
     };
 
     this.titleInput = this.titleInput.bind(this);
@@ -163,6 +165,7 @@ class AddEvent extends Component {
 
   setDate = () => {
     this.setState({ showDate: true, dateText: '' });
+    console.log(this.state.dateText);
   }
 
   saveDate = (dateChosen) => {
@@ -170,11 +173,25 @@ class AddEvent extends Component {
     this.setState({ showDate: false, date: dateChosen, dateText: dateChosen });
   }
 
-  showPicker = () => {
+  setTime = () => {
+    this.setState({ showTime: true, timeText: '' });
+  }
+
+  saveTime = (dateChosen) => {
+    console.log(dateChosen);
+    this.setState({ showDate: false, time: dateChosen, timeText: dateChosen });
+  }
+
+  showPicker = (mode) => {
     console.log("picker");
     if(this.state.showDate) {
       return (
-        <DatePicker saveDate={this.saveDate}/>
+        <ChooseDate saveDate={this.saveDate} mode={this.state.mode}/>
+      );
+    }
+    else if (this.state.showTime) {
+      return (
+        <ChooseDate saveDate={this.saveTime} mode={this.state.mode}/>
       );
     }
   }
@@ -215,21 +232,27 @@ class AddEvent extends Component {
               autoCapitalize='none'
               clearButtonMode='while-editing' />
           </View>
-          <View style={surveyStyle.textFieldContainer}>
+          {/* <View style={surveyStyle.textFieldContainer}>
           <TouchableOpacity onPress={this.setDate}>
-            {this.showPicker()}
-            <Text style={textFieldStyle}>Event Date and Time</Text>
+            {this.showPicker('date')}
+            <Text style={textFieldStyle}>{this.state.dateText}</Text>
           </TouchableOpacity>
-          </View>
-            {/* <TextInput
+          </View> */}
+           {/* <View style={surveyStyle.textFieldContainer}>
+          <TouchableOpacity onPress={this.setDate}>
+            {this.showPicker('time')}
+            <Text style={textFieldStyle}>{this.state.timeText}</Text>
+          </TouchableOpacity>
+          </View> */}
+            <TextInput
               style={textFieldStyle}
-              placeholder="Event Date and Time"
+              placeholder="Event Date"
               keyboardType='default'
               onChangeText={this.dateInput}
               autoCapitalize='none'
-              clearButtonMode='while-editing' /> */}
+              clearButtonMode='while-editing' />
           
-          {/* <View style={surveyStyle.textFieldContainer}>
+          <View style={surveyStyle.textFieldContainer}>
             <TextInput
               style={textFieldStyle}
               placeholder="Event Time (24:00)"
@@ -237,7 +260,7 @@ class AddEvent extends Component {
               onChangeText={this.timeInput}
               autoCapitalize='none'
               clearButtonMode='while-editing' />
-          </View> */}
+          </View>
           <View style={surveyStyle.textFieldContainer}>
             <TextInput
               style={textFieldStyle}
