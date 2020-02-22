@@ -155,6 +155,10 @@ class EventDetails extends Component {
     this.setState({ showAwardModal: false, awardMessage: "", awardImage: null });
   }
 
+  goBack = () => {
+    this.props.navigation.pop();
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
@@ -166,6 +170,14 @@ class EventDetails extends Component {
       <ScrollView>
         <View style={eventPage.eventDetail}>
           {this.renderAwardModal()}
+          <View style={{width:'100%', flex: 1, alignItems: 'left', marginLeft: 10, marginTop: 10}}> 
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+           </TouchableOpacity>
+         </View>
           <Image source={image} style={eventPage.eventDetailImage} />
           <View style={eventPage.eventDetailTitleBox} >
             <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
