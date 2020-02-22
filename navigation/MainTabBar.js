@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View, Text } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
@@ -21,11 +21,16 @@ const MainTabBar = createBottomTabNavigator(
     },
     Chat: {
       screen: ChatStack,
-      navigationOptions: ({ navigation }) => ({
+      navigationOptions: ({navigation, screenProps }) => ({
         tabBarIcon: ({ focused }) => (
-          <Image
-            source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
-          />
+          <View>
+            <Text style={{ color: 'black', fontSize: 10, fontWeight: 'bold' }}>
+              {screenProps.unreadMessagesCount}
+            </Text>
+            <Image
+              source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
+            />
+          </View>
         ),
       }),
     },
@@ -57,5 +62,7 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
 );
+
+
 
 export default createAppContainer(MainTabBar);
