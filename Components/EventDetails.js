@@ -22,8 +22,6 @@ import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } fro
 import EventMap from './EventMap.js'
 import SurveyHeaderComponent from './surveyHeaderComponent.js'
 export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
-
-
 class EventDetails extends Component {
   constructor(props) {
     super(props);
@@ -38,14 +36,12 @@ class EventDetails extends Component {
       awardMessage: '',
       awardImage: null
     };
-
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
     this.changeConnectionsModal = this.changeConnectionsModal.bind(this);
     this.renderConnectionsModal = this.renderConnectionsModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
     this.renderAwardModal = this.renderAwardModal.bind(this);
-
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
@@ -56,20 +52,15 @@ class EventDetails extends Component {
     }).catch((error) => {
       console.log(error);
     });
-
-
   }
-
   componentDidUpdate(prevProps, prevState) {
     if (this.state.rsvp === null) {
       this.checkRSVP();
     }
   }
-
   changeConnectionsModal() {
     this.setState({ showingConnectionsModal: !this.state.showingConnectionsModal });
   }
-
   renderConnections() {
     var connected = this.props.connections.map((connect) => {
       return (
@@ -83,7 +74,6 @@ class EventDetails extends Component {
     })
     return connected;
   }
-
   renderConnectionsModal() {
     if (this.state.showingConnectionsModal) {
       return (
@@ -107,7 +97,6 @@ class EventDetails extends Component {
       );
     }
   }
-
   checkRSVP() {
     if (this.props.event && this.props.event.rsvps) {
       var seen = false
@@ -119,14 +108,13 @@ class EventDetails extends Component {
       this.setState({ rsvp: seen });
     }
   }
-
   handleRSVP() {
     if (this.state.rsvp === false) {
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
       console.log(this.state.rsvpLength)
       if (this.state.rsvpLength == 2) {
-        this.setState({ showAwardModal: true, awardMessage: 'rsvp to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
+        this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
       }
     }
     else {
@@ -134,7 +122,6 @@ class EventDetails extends Component {
       this.setState({ rsvp: false });
     }
   }
-
   renderMap = () => {
     if (this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
       return (
@@ -142,7 +129,6 @@ class EventDetails extends Component {
       )
     }
   }
-
   renderAwardModal() {
     if (this.state.showAwardModal) {
       return (
@@ -150,22 +136,31 @@ class EventDetails extends Component {
       );
     }
   }
-
   resetAwardModal = () => {
     this.setState({ showAwardModal: false, awardMessage: "", awardImage: null });
+  }
+
+  goBack = () => {
+    this.props.navigation.pop();
   }
 
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
-
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
-
     return (
       //<View style={{ flex: 1 }}>
       <ScrollView>
         <View style={eventPage.eventDetail}>
           {this.renderAwardModal()}
+          <View style={{ width: '100%', flex: 1, alignItems: 'left', marginLeft: 10, marginTop: 10 }}>
+            <TouchableOpacity
+              onPress={this.goBack}>
+              <Image
+                source={require('./../assets/icons/arrowback.png')}
+              />
+            </TouchableOpacity>
+          </View>
           <Image source={image} style={eventPage.eventDetailImage} />
           <View style={eventPage.eventDetailTitleBox} >
             <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
@@ -182,7 +177,6 @@ class EventDetails extends Component {
             </View>
           </View>
           {this.renderMap()}
-
           <View style={eventPage.eventDetailDescription}>
             <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
               {this.props.event.description}
@@ -210,7 +204,6 @@ class EventDetails extends Component {
     );
   }
 }
-
 const mapStateToProps = reduxState => (
   {
     id: reduxState.auth.id,
@@ -218,5 +211,4 @@ const mapStateToProps = reduxState => (
     connections: reduxState.events.connections,
   }
 );
-
 export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections })(EventDetails);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View, Text } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import EventStack from './EventStack';
@@ -21,12 +21,40 @@ const MainTabBar = createBottomTabNavigator(
     },
     Chat: {
       screen: ChatStack,
-      navigationOptions: ({ navigation }) => ({
-        tabBarIcon: ({ focused }) => (
-          <Image
-            source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
-          />
-        ),
+      navigationOptions: ({ navigation, screenProps }) => ({
+        tabBarIcon: ({ focused }) => {
+          if(screenProps.unreadMessagesCount===0){
+            return(
+              <Image source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')} />
+            );
+          }
+          else{
+            return(
+              <View>
+                <Image
+                  source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -6,
+                    top: -3,
+                    backgroundColor: 'red',
+                    borderRadius: 15,
+                    width: 20,
+                    height: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 11, fontWeight: 'bold' }}>
+                    {screenProps.unreadMessagesCount}
+                  </Text>
+                </View>
+              </View>
+            );
+          }
+        },
       }),
     },
     Profile: {
@@ -57,5 +85,6 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
 );
+
 
 export default createAppContainer(MainTabBar);
