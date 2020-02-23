@@ -1,11 +1,15 @@
 import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
-//Got code from Dali help on how to scale on different phones
+// Source: https://github.com/nirsky/react-native-scaling-example/blob/master/README.md
+// Functinos to scale style so it works on any device
 
-const {width, height} = Dimensions.get('window');
+//Guideline sizes are based on standard iphone X screen mobile device
+const guidelineBaseWidth = 375;
+const guidelineBaseHeight = 812;
 
-const guidelineBaseWidth = 350;
+const scale = size => width / guidelineBaseWidth * size;
+const verticalScale = size => height / guidelineBaseHeight * size;
+const moderateScale = (size, factor = 0.5) => size + ( scale(size) - size ) * factor;
 
-const scale = size => (width/guidelineBaseWidth) * size;
-
-export {scale};
+export {scale, verticalScale, moderateScale};
