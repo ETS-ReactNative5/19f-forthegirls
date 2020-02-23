@@ -2420,17 +2420,17 @@ cosmiconfig@^5.0.5:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
+country-state-city@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/country-state-city/-/country-state-city-1.0.4.tgz#22a394ef20575a15524c8e7f059589130d7a5e67"
+  integrity sha512-tDnjTFMbTD+UuTS0wGQBedu4IWl8yVpm4yfvs2n8WsAmKAfSsy75EEdXwhCiRuI/hXstlu11GtN6nYe4ugM4SA==
+
 create-error-class@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/create-error-class/-/create-error-class-3.0.2.tgz#06be7abef947a3f14a30fd610671d401bca8b7b6"
   integrity sha1-Br56vvlHo/FKMP1hBnHUAbyot7Y=
   dependencies:
     capture-stack-trace "^1.0.0"
-
-country-state-city@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/country-state-city/-/country-state-city-1.0.4.tgz#22a394ef20575a15524c8e7f059589130d7a5e67"
-  integrity sha512-tDnjTFMbTD+UuTS0wGQBedu4IWl8yVpm4yfvs2n8WsAmKAfSsy75EEdXwhCiRuI/hXstlu11GtN6nYe4ugM4SA==
 
 create-react-class@^15.6.2, create-react-class@^15.6.3:
   version "15.6.3"
@@ -6951,6 +6951,11 @@ react-native-elements@^1.2.7:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
+react-native-expo-viewport-units@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-expo-viewport-units/-/react-native-expo-viewport-units-0.0.8.tgz#13d9bcb3e95abcc55f800cfa5f3e4b571860e726"
+  integrity sha512-duAEaoVF41puhXhpI1BuDFc2AMBqfWT2S74EJqaQ5dnuZVhsP++AExJwVo7/2/lHmb6+gYWGyBZOxxPCMWe+Ew==
+
 react-native-geocoding@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-native-geocoding/-/react-native-geocoding-0.4.0.tgz#e22c97500bfccc25273499ab3af87c27ac6ede8f"
@@ -7089,6 +7094,11 @@ react-native-view-shot@2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-2.6.0.tgz#3b23675826f67658366352c4b97b59a6aded2f43"
   integrity sha512-yO9vWi/11m2hEJl8FrW1SMeVzFfPtMKh20MUInGqlsL0H8Ya2JGGlFfrBzx1KiFR2hFb5OdsTLYNtcVZtJ6pLQ==
+
+react-native-viewport-units@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-viewport-units/-/react-native-viewport-units-0.0.5.tgz#c86448ca6497e49a9255a48589f1609d6b73f503"
+  integrity sha1-yGRIymSX5JqSVaSFifFgnWtz9QM=
 
 react-native-web@^0.11.7:
   version "0.11.7"
