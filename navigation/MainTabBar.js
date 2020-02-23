@@ -21,7 +21,7 @@ const MainTabBar = createBottomTabNavigator(
     },
     Chat: {
       screen: ChatStack,
-      navigationOptions: ({navigation, screenProps }) => ({
+      navigationOptions: ({ navigation, screenProps }) => ({
         tabBarIcon: ({ focused }) => (
           <View>
             <Image
@@ -29,16 +29,16 @@ const MainTabBar = createBottomTabNavigator(
             />
             <View
               style={{
-              position: 'absolute',
-              right: -6,
-              top: -3,
-              backgroundColor: 'red',
-              borderRadius: 6,
-              width: 13,
-              height: 13,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+                position: 'absolute',
+                right: -6,
+                top: -3,
+                backgroundColor: 'red',
+                borderRadius: 6,
+                width: 13,
+                height: 13,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
               <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
                 {screenProps.unreadMessagesCount}
@@ -76,7 +76,6 @@ const MainTabBar = createBottomTabNavigator(
     },
   },
 );
-
 
 
 export default createAppContainer(MainTabBar);
