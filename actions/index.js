@@ -158,9 +158,9 @@ export function signinUser({ username, password, navigate }) {
 //creates a new user and then signs them in and saves their information on the phone
 export function signUpUser(fields, navigate, otherAnswers) {
   return (dispatch) => {
-    const pushToken = AsyncStorage.getItem('pushToken');
-    fields.pushToken = pushToken;
-    console.log(fields);
+    // const pushToken = AsyncStorage.getItem('pushToken');
+    // fields.pushToken = pushToken;
+    // console.log(fields);
 
     // in here first check for pushtoken await AsyncStorage.getItem('pushToken');
 
