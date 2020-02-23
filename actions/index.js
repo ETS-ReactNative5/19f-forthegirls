@@ -103,6 +103,9 @@ export function editUserVisit(username, id, otherAnswers) {
 //signs the user in based on previously created credentials and saves their information on the phone
 export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
+    const pushToken = AsyncStorage.getItem('pushToken');
+     // in here first check for pushtoken await AsyncStorage.getItem('pushToken');
+
     axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
 
@@ -131,6 +134,12 @@ export function signinUser({ username, password, navigate }) {
 //creates a new user and then signs them in and saves their information on the phone
 export function signUpUser(fields, navigate, otherAnswers) {
   return (dispatch) => {
+    const pushToken = AsyncStorage.getItem('pushToken');
+    fields.pushToken = pushToken;
+    console.log(fields);
+
+    // in here first check for pushtoken await AsyncStorage.getItem('pushToken');
+
     axios.post(`${ROOT_URL}/signup`, fields)
       .then((response) => {
         return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
@@ -448,3 +457,5 @@ export function resetErrors() {
     });
   }
 }
+
+// add action to save push token
