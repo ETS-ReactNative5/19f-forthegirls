@@ -29,10 +29,8 @@ class BasicSignUpComponent extends React.Component {
       hs: false,
       college: true,
       pg: false,
-
       latitude: 0,
       longitude: 0,
-
       showModal: false,
       modalMessage: '',
     }
@@ -56,37 +54,41 @@ class BasicSignUpComponent extends React.Component {
         password: this.state.password,
       }
 
+      console.log("printing push token");
+      console.log(this.props.pushToken);
       Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
 
       Geocoder.from(this.state.location)
-        .then(json => {
-          var location = json.results[0].geometry.location;
-          // this.setState({latitude: location.lat, longitude: location.lng})
+          .then(json => {
+            var location = json.results[0].geometry.location;
+            // this.setState({latitude: location.lat, longitude: location.lng})
 
-          const otherAnswers = {
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            location: this.state.location,
-            highSchool: this.state.highSchool,
-            collegeName: this.state.collegeName,
-            gradYear: this.state.gradYear,
-            currentJob: this.state.currentJob,
-            age: this.state.age,
-            hs: this.state.hs,
-            college: this.state.college,
-            pg: this.state.pg,
-            latitude: location.lat,
-            longitude: location.lng,
-          }
+            const otherAnswers = {
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              location: this.state.location,
+              highSchool: this.state.highSchool,
+              collegeName: this.state.collegeName,
+              gradYear: this.state.gradYear,
+              currentJob: this.state.currentJob,
+              age: this.state.age,
+              hs: this.state.hs,
+              college: this.state.college,
+              pg: this.state.pg,
+              latitude: location.lat,
+              longitude: location.lng,
+              pushToken: this.state.pushToken,
 
-          this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+            }
 
-        })
-        .catch((error) => {
-          console.log(error);
-          this.setState({ showModal: true, modalMessage: 'Please input a valid location.' });
-        }
-        );
+            this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+
+          })
+          .catch((error) =>  {
+              console.log(error);
+              this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
+            }
+          );
 
     }
   }
@@ -321,6 +323,7 @@ const mapStateToProps = reduxState => (
   {
     error: reduxState.error,
     username: reduxState.auth.username,
+    pushToken: reduxState.auth.pushToken,
   }
 );
 

@@ -22,30 +22,39 @@ const MainTabBar = createBottomTabNavigator(
     Chat: {
       screen: ChatStack,
       navigationOptions: ({ navigation, screenProps }) => ({
-        tabBarIcon: ({ focused }) => (
-          <View>
-            <Image
-              source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
-            />
-            <View
-              style={{
-                position: 'absolute',
-                right: -6,
-                top: -3,
-                backgroundColor: 'red',
-                borderRadius: 6,
-                width: 13,
-                height: 13,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ color: 'white', fontSize: 10, fontWeight: 'bold' }}>
-                {screenProps.unreadMessagesCount}
-              </Text>
-            </View>
-          </View>
-        ),
+        tabBarIcon: ({ focused }) => {
+          if(screenProps.unreadMessagesCount===0){
+            return(
+              <Image source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')} />
+            );
+          }
+          else{
+            return(
+              <View>
+                <Image
+                  source={focused ? require('../assets/icons/chatSelected.png') : require('../assets/icons/chatUnselected.png')}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: -6,
+                    top: -3,
+                    backgroundColor: 'red',
+                    borderRadius: 15,
+                    width: 20,
+                    height: 20,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text style={{ color: 'white', fontSize: 11, fontWeight: 'bold' }}>
+                    {screenProps.unreadMessagesCount}
+                  </Text>
+                </View>
+              </View>
+            );
+          }
+        },
       }),
     },
     Profile: {
