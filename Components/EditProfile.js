@@ -74,6 +74,8 @@ class EditProfile extends React.Component {
       progressMessage: '',
       loading: false,
       query: '',
+      queryTown: '',
+      stateID: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -348,7 +350,6 @@ class EditProfile extends React.Component {
     if (query === '') {
       return [];
     }
-
     var states = csc.getStatesOfCountry("231");
     for (var i = 0; i < states.length; i++){
       if(this.state.query == states[i].name)
@@ -356,18 +357,40 @@ class EditProfile extends React.Component {
         return [];
       }
     }
-
     const regex = new RegExp(`${query.trim()}`, 'i');
-    console.log(regex);
-    console.log("regex")
     var filtered = states.filter(state => state.name.search(regex) >= 0);
-
     var result = []
     for (var i = 0; i < filtered.length; i++){
       result[i] = filtered[i].name
     }
     return result;
 }
+
+  findQueryTown = (query) => {
+    console.log("STATE ID")
+    console.log(this.state.stateID)
+    if (query === '' || this.state.stateID == '') {
+      return [];
+    }
+    console.log(stateID);
+
+    var cities = csc.getCitiesOfState(this.state.stateID);
+    console.log(cities);
+    for (var i = 0; i < states.length; i++){
+      if(this.state.query == states[i].name)
+      {
+        return [];
+      }
+    }
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    var filtered = states.filter(state => state.name.search(regex) >= 0);
+    var result = []
+    for (var i = 0; i < filtered.length; i++){
+      result[i] = filtered[i].name
+    }
+
+    return result;
+  }
 
   render() {
     let data = [{
@@ -424,7 +447,7 @@ class EditProfile extends React.Component {
     console.log("results");
 
     var queryDate= this.findQuery(this.state.query);
-
+    var queryDateTown = this.findQueryTown(this.state.queryTown);
 
     return (
       <View style={{ backgroundColor: colors.lightGrey.color }}>
@@ -477,11 +500,34 @@ class EditProfile extends React.Component {
               defaultValue={this.state.query}
               onChangeText={text => this.setState({ query: text })}
               renderItem={({ item, i }) => (
-                <TouchableOpacity onPress={() => this.setState({ query: item })}>
+                <TouchableOpacity onPress={() => {
+                  console.log("here"); 
+                  var stateID = '';
+                  var states =  csc.getStatesOfCountry("231")
+                  for (var i = 0; i<states.length; i++){
+                    if (item == states[i].name){
+                      stateID = states[i].id;
+                    }
+                  }
+                  console.log(stateID)
+                  this.setState({ query: item, stateID: stateID })
+                }}>
                   <Text>{item}</Text>
                 </TouchableOpacity>
               )}
               />
+              <View style={{marginTop: 35}}>
+              <Autocomplete
+                data={queryDateTown}
+                defaultValue={this.state.queryTown}
+                onChangeText={text => this.setState({ queryTown: text })}
+                renderItem={({ item, i }) => (
+                  <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
+                    <Text>{item}</Text>
+                  </TouchableOpacity>
+                )}
+             />
+             </View>
 
             <View style={surveyStyle.textFieldContainer}>
               <TextInput
