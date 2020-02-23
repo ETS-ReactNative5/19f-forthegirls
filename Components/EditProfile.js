@@ -18,6 +18,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import csc from 'country-state-city'
 import { ICountry, IState, ICity } from 'country-state-city'
+import Autocomplete from 'react-native-autocomplete-input';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -72,6 +73,7 @@ class EditProfile extends React.Component {
 
       progressMessage: '',
       loading: false,
+      query: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -86,6 +88,13 @@ class EditProfile extends React.Component {
   componentDidMount() {
     this.props.getUser(this.props.id);
     this.calcProgress();
+
+    var states = csc.getStatesOfCountry("231");
+    var statelist = [];
+    for (var i = 0; i< states.length; i++){
+      statelist[i] = states[i].name;
+    }
+    this.setState({statelist: statelist})
   }
 
   async componentWillMount() {
@@ -335,6 +344,31 @@ class EditProfile extends React.Component {
     this.props.navigation.pop();
   }
 
+  findQuery = (query) => {
+    if (query === '') {
+      return [];
+    }
+
+    var states = csc.getStatesOfCountry("231");
+    for (var i = 0; i < states.length; i++){
+      if(this.state.query == states[i].name)
+      {
+        return [];
+      }
+    }
+
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    console.log(regex);
+    console.log("regex")
+    var filtered = states.filter(state => state.name.search(regex) >= 0);
+
+    var result = []
+    for (var i = 0; i < filtered.length; i++){
+      result[i] = filtered[i].name
+    }
+    return result;
+}
+
   render() {
     let data = [{
       value: 'Woman in tech inspiration?',
@@ -376,7 +410,20 @@ class EditProfile extends React.Component {
       image = imageNoImage;
     }
 
-    console.log(csc.getStatesOfCountry("231"))
+    //console.log(csc.getStatesOfCountry("231"))
+    var statelist = [];
+    var states = csc.getStatesOfCountry("231");
+    for (var i = 0; i< states.length; i++){
+    //  console.log(states[i].name);
+      statelist[i] = states[i].name;
+    }
+    //console.log(statelist);
+    var stateData = statelist;
+
+    console.log(this.findQuery('w'))
+    console.log("results");
+
+    var queryDate= this.findQuery(this.state.query);
 
 
     return (
@@ -424,6 +471,18 @@ class EditProfile extends React.Component {
                 clearButtonMode='while-editing'
               />
             </View>
+
+            <Autocomplete
+              data={queryDate}
+              defaultValue={this.state.query}
+              onChangeText={text => this.setState({ query: text })}
+              renderItem={({ item, i }) => (
+                <TouchableOpacity onPress={() => this.setState({ query: item })}>
+                  <Text>{item}</Text>
+                </TouchableOpacity>
+              )}
+              />
+
             <View style={surveyStyle.textFieldContainer}>
               <TextInput
                 style={textFieldStyle}
