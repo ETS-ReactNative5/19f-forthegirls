@@ -107,32 +107,52 @@ export function editUserVisit(username, id, otherAnswers) {
 //signs the user in based on previously created credentials and saves their information on the phone
 export function signinUser({ username, password, navigate }) {
   return (dispatch) => {
-    const pushToken = AsyncStorage.getItem('pushToken');
+    let pushToken = ''
+      //https://facebook.github.io/react-native/docs/asyncstorage
+    _retrieveData = async () => {
+      try {
+        pushToken = await AsyncStorage.getItem('pushToken');
+        if (pushToken !== null) {
+          // We have data!!
+          console.log("PUSH TOKEN:");
+          console.log(pushToken);
+        }
+      } catch (error) {
+        console.log("IN ERROR");
+        // Error retrieving data
+      }
+    };
+    _retrieveData().then((result) => {
+      axios.post(`${ROOT_URL}/signin`, { username, password, pushToken: pushToken}).then((response) => {
+        dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
+  
+        //How to add tokens using react native
+        //https://facebook.github.io/react-native/docs/asyncstorage
+        _storeData = async () => {
+          try {
+            await AsyncStorage.setItem('token', response.data.token);
+            await AsyncStorage.setItem('username', username);
+            await AsyncStorage.setItem('id', response.data.id);
+          } catch (error) {
+            console.log("error");
+          }
+        };
+  
+        _storeData();
+        navigate.navigate("Main");
+  
+      }).catch((error) => {
+        console.log(error);
+        dispatch(authError(`Invalid username or password`));
+      });
+    });
+
+    };
+    // const pushToken = AsyncStorage.getItem('pushToken');
+    // console.log("PUSHTOKEN:");
+    // console.log(pushToken);
      // in here first check for pushtoken await AsyncStorage.getItem('pushToken');
 
-    axios.post(`${ROOT_URL}/signin`, { username, password }).then((response) => {
-      dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
-
-      //How to add tokens using react native
-      //https://facebook.github.io/react-native/docs/asyncstorage
-      _storeData = async () => {
-        try {
-          await AsyncStorage.setItem('token', response.data.token);
-          await AsyncStorage.setItem('username', username);
-          await AsyncStorage.setItem('id', response.data.id);
-        } catch (error) {
-          console.log("error");
-        }
-      };
-
-      _storeData();
-      navigate.navigate("Main");
-
-    }).catch((error) => {
-      console.log(error);
-      dispatch(authError(`Invalid username or password`));
-    });
-  };
 }
 
 //creates a new user and then signs them in and saves their information on the phone
