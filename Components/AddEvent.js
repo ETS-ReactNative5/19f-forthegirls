@@ -51,9 +51,6 @@ class AddEvent extends Component {
     this.addEvent = this.addEvent.bind(this);
   }
   // ---------- componentDidMount here! -----------//
-  componentDidMount() {
-  }
-
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
@@ -64,6 +61,9 @@ class AddEvent extends Component {
   titleInput(text) {
     this.setState({ title: text });
   }
+  descriptionInput(text) {
+    this.setState({ description: text });
+  }
   dateInput(text) {
     this.setState({ date: text });
   }
@@ -72,10 +72,6 @@ class AddEvent extends Component {
   }
   locationInput(text) {
     this.setState({ location: text });
-  }
-
-  descriptionInput(text) {
-    this.setState({ description: text });
   }
 
   photoUpload = async () => {
@@ -88,37 +84,50 @@ class AddEvent extends Component {
   };
 
   addEvent = () => {
-    if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.time === '' || this.state.location === '') {
+    if (this.state.title === '' || this.state.description === '' || this.state.date === '' || this.state.location === '') {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
-
-    Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
-    Geocoder.from(this.state.location)
-      .then(json => {
-        var location = json.results[0].geometry.location;
-        this.setState({ latitude: location.lat, longitude: location.lng })
-
-        const popAction = StackActions.pop({
-          n: 1,
-        });
-        this.props.navigation.dispatch(popAction);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({ showModal: true, modalMessage: 'Please input a valid location.' });
-      }
-      );
-
-    if (this.state.imagefull != null) {
-      let i = this.state.imagefull.uri.length;
-      while (this.state.imagefull.uri.charAt(i) !== '/') {
-        i--;
-      }
-      this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
-      uploadImage(this.state.imagefull).then((url) => {
-        this.setState({ eventPhotoURL: String(url) })
-        this.setState({ imagefull: null })
-
+    else {
+      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
+      Geocoder.from(this.state.location)
+        .then(json => {
+          var location = json.results[0].geometry.location;
+          this.setState({ latitude: location.lat, longitude: location.lng })
+  
+          const popAction = StackActions.pop({
+            n: 1,
+          });
+          this.props.navigation.dispatch(popAction);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({ showModal: true, modalMessage: 'Please input a valid location.' });
+        }
+        );
+  
+      if (this.state.imagefull != null) {
+        let i = this.state.imagefull.uri.length;
+        while (this.state.imagefull.uri.charAt(i) !== '/') {
+          i--;
+        }
+        this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
+        uploadImage(this.state.imagefull).then((url) => {
+          this.setState({ eventPhotoURL: String(url) })
+          this.setState({ imagefull: null })
+  
+          this.props.addEvent({
+            title: this.state.title,
+            date: this.state.date,
+            time: this.state.time,
+            location: this.state.location,
+            description: this.state.description,
+            latitude: this.state.latitude,
+            longitude: this.state.longitude,
+            eventPhotoURL: String(url),
+            authorID: this.props.id,
+          }, this.props.navigation, this.props.id);
+        })
+      } else {
         this.props.addEvent({
           title: this.state.title,
           date: this.state.date,
@@ -127,24 +136,13 @@ class AddEvent extends Component {
           description: this.state.description,
           latitude: this.state.latitude,
           longitude: this.state.longitude,
-          eventPhotoURL: String(url),
+          eventPhotoURL: this.state.photoURL,
           authorID: this.props.id,
         }, this.props.navigation, this.props.id);
-      })
-    } else {
-      this.props.addEvent({
-        title: this.state.title,
-        date: this.state.date,
-        time: this.state.time,
-        location: this.state.location,
-        description: this.state.description,
-        latitude: this.state.latitude,
-        longitude: this.state.longitude,
-        eventPhotoURL: this.state.photoURL,
-        authorID: this.props.id,
-      }, this.props.navigation, this.props.id);
+      }
+  
     }
-
+    
   }
 
   renderModal = () => {
@@ -161,36 +159,9 @@ class AddEvent extends Component {
 
   setDate = (newDate) => {
     this.setState({chosenDate: newDate, date: String(newDate).substring(0,15), time: String(newDate).substring(16, 21)});
-    // console.log(String(newDate));
-    // console.log(this.state.date)
-    // console.log(String(newDate).substring(16, 21))
   }
 
   render() {
-
-
-    // var oldStuff = (
-    //   <View>
-    //   <View style={surveyStyle.textFieldContainer}>
-    //     <TextInput
-    //       style={textFieldStyle}
-    //       placeholder="Event Date (MM/DD/YY)"
-    //       keyboardType='default'
-    //       onChangeText={this.dateInput}
-    //       autoCapitalize='none'
-    //       clearButtonMode='while-editing' />
-    //   </View>
-    //   <View style={surveyStyle.textFieldContainer}>
-    //     <TextInput
-    //       style={textFieldStyle}
-    //       placeholder="Event Time (24:00)"
-    //       keyboardType='default'
-    //       onChangeText={this.timeInput}
-    //       autoCapitalize='none'
-    //       clearButtonMode='while-editing' />
-    //   </View>
-    //   </View>
-    // )
 
     var imageNoImage = <Image source={require('../img/EventBackground.jpg')} />
     var imageImage = <Image source={{ uri: this.state.eventPhotoURL }} />
@@ -242,11 +213,15 @@ class AddEvent extends Component {
               style={textFieldStyle}
               placeholder="Event Description"
               keyboardType='default'
+              blurOnSubmit='true'
               onChangeText={this.descriptionInput}
               autoCapitalize='none'
               clearButtonMode='while-editing'
               multiline={true}
               onSubmitEditing={() => { Keyboard.dismiss() }} />
+          </View>
+          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+            <Text style={[colors.turquoise, fonts.minorHeading]}>Event Date and Time</Text>
           </View>
           <DatePickerIOS
             date={this.state.chosenDate}
@@ -255,7 +230,7 @@ class AddEvent extends Component {
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity
               onPress={this.addEvent}>
-              <View style={[buttons.logInOutButton, buttons.logInButton]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
+              <View style={[buttons.logInOutButton, buttons.logInButton, {marginBottom: 35}]}><Text style={[fonts.minorHeading, colors.white]}>Submit</Text></View>
             </TouchableOpacity>
           </View>
         </ScrollView>
