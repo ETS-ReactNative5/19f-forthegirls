@@ -48,7 +48,7 @@ const MainTabBar = createBottomTabNavigator(
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 11, fontWeight: 'bold' }}>
-                    {99}
+                    {screenProps.unreadMessagesCount}
                   </Text>
                 </View>
               </View>
