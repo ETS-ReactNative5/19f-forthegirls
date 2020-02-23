@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import ErrorModal from './ErrorModal'
 import Geocoder from 'react-native-geocoding';
 
+
+
 class BasicSignUpComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -175,6 +177,8 @@ class BasicSignUpComponent extends React.Component {
 
   //need to check unique from here
   render() {
+
+
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     var endFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText, surveyStyle.endField]
     var secondaryHeaderText = [fonts.minorHeading, colors.turquoise, surveyStyle.secondaryHeader]

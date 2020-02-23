@@ -16,6 +16,8 @@ import ErrorModal from './ErrorModal'
 import { uploadImage } from '../s3';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import csc from 'country-state-city'
+import { ICountry, IState, ICity } from 'country-state-city'
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -373,6 +375,9 @@ class EditProfile extends React.Component {
     else {
       image = imageNoImage;
     }
+
+    console.log(csc.getStatesOfCountry("231"))
+
 
     return (
       <View style={{ backgroundColor: colors.lightGrey.color }}>
