@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorModal from './ErrorModal'
 import AwardModal from './AwardModal'
+import ImageModal from './ImageModal.js'
 import {
   View,
   Text,
@@ -12,6 +13,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
@@ -34,7 +36,8 @@ class EventDetails extends Component {
       modalMessage: '',
       showAwardModal: false,
       awardMessage: '',
-      awardImage: null
+      awardImage: null,
+      fullScreenImage: false
     };
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
@@ -42,6 +45,8 @@ class EventDetails extends Component {
     this.renderConnectionsModal = this.renderConnectionsModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
     this.renderAwardModal = this.renderAwardModal.bind(this);
+    this.renderImageModal = this.renderImageModal.bind(this);
+    this.resetImageModal = this.resetImageModal.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
@@ -144,14 +149,33 @@ class EventDetails extends Component {
     this.props.navigation.pop();
   }
 
+  showImage = () => {
+    this.setState({ fullScreenImage: !this.state.fullScreenImage })
+  }
+
+  renderImageModal = () => {
+    imageNoImage = require('../img/EventBackground.jpg')
+    imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
+    image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
+
+    if (this.state.fullScreenImage) {
+      console.log(image);
+      //  return (<ImageModal image={image} reset={this.resetImageModal}></ImageModal>)
+    }
+    this.setState({ fullScreenImage: !this.state.fullScreenImage })
+  }
+
+  resetImageModal = () => {
+    this.setStateState({ fullScreenImage: false, image: '' })
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
     return (
-
-      <View style={eventPage.eventDetail}>
-        <ScrollView>
+      <ScrollView>
+        <View style={eventPage.eventDetail}>
           {this.renderAwardModal()}
           <View style={{ width: '100%', flex: 1, alignItems: 'left', marginLeft: 10, marginTop: 10 }}>
             <TouchableOpacity
@@ -161,11 +185,14 @@ class EventDetails extends Component {
               />
             </TouchableOpacity>
           </View>
-          <Image source={image} style={eventPage.eventDetailImage} />
-          <View style={eventPage.eventDetailTitleBox} >
-            <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
-              {this.props.event.title}
-            </Text>
+          <View style={eventPage.eventDetailImageContainer}>
+            {/* {this.renderImageModal()} */}
+            <TouchableOpacity onPress={this.showImage}>
+              <Image source={image} style={eventPage.eventDetailImage} />
+            </TouchableOpacity>
+            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
+              <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>{this.props.event.title}</Text>
+            </View>
           </View>
           <View style={eventPage.eventDetailLogistics}>
             <View style={eventPage.eventDetailDayTime}>
@@ -198,9 +225,8 @@ class EventDetails extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-
-        </ScrollView>
-      </View>
+        </View >
+      </ScrollView >
     );
   }
 }

@@ -93,26 +93,34 @@ const eventPage = StyleSheet.create({
     alignItems: 'center',
   },
 
-  eventDetailImage: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    height: "30%",
-    width: "90%",
-    overflow: 'hidden',
+  eventDetailImageContainer: {
+    margin: 10,
+    width: '95%',
+    height: 'auto'
+  },
+  fullScreenEventImage: {
+    width: '100%',
+    height: '100%',
+    opacity: 1,
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    flex: 1
   },
 
-  eventDetailTitleBox: {
+  eventDetailImage: {
+    opacity: 0.3,
+    marginRight: 10,
     borderRadius: 20,
-    width: '90%',
-    backgroundColor: 'rgb(40, 195, 169)',
+    width: '100%',
+    height: 100,
+    resizeMode: 'cover',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
+  opacity1: {
+    opacity: 1
+  },
+
   eventDetailTitle: {
     marginTop: 10,
     marginBottom: 10,
