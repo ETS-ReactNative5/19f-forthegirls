@@ -372,18 +372,17 @@ class EditProfile extends React.Component {
     if (query === '' || this.state.stateID == '') {
       return [];
     }
-    console.log(stateID);
-
     var cities = csc.getCitiesOfState(this.state.stateID);
     console.log(cities);
-    for (var i = 0; i < states.length; i++){
-      if(this.state.query == states[i].name)
+    console.log("^cities")
+    for (var i = 0; i < cities.length; i++){
+      if(this.state.queryTown == cities[i].name)
       {
         return [];
       }
     }
     const regex = new RegExp(`${query.trim()}`, 'i');
-    var filtered = states.filter(state => state.name.search(regex) >= 0);
+    var filtered = cities.filter(city => city.name.search(regex) >= 0);
     var result = []
     for (var i = 0; i < filtered.length; i++){
       result[i] = filtered[i].name
@@ -432,20 +431,7 @@ class EditProfile extends React.Component {
     else {
       image = imageNoImage;
     }
-
-    //console.log(csc.getStatesOfCountry("231"))
-    var statelist = [];
-    var states = csc.getStatesOfCountry("231");
-    for (var i = 0; i< states.length; i++){
-    //  console.log(states[i].name);
-      statelist[i] = states[i].name;
-    }
-    //console.log(statelist);
-    var stateData = statelist;
-
-    console.log(this.findQuery('w'))
-    console.log("results");
-
+    
     var queryDate= this.findQuery(this.state.query);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
 
@@ -494,39 +480,41 @@ class EditProfile extends React.Component {
                 clearButtonMode='while-editing'
               />
             </View>
-
-            <Autocomplete
-              data={queryDate}
-              defaultValue={this.state.query}
-              onChangeText={text => this.setState({ query: text })}
-              renderItem={({ item, i }) => (
-                <TouchableOpacity onPress={() => {
-                  console.log("here"); 
-                  var stateID = '';
-                  var states =  csc.getStatesOfCountry("231")
-                  for (var i = 0; i<states.length; i++){
-                    if (item == states[i].name){
-                      stateID = states[i].id;
-                    }
-                  }
-                  console.log(stateID)
-                  this.setState({ query: item, stateID: stateID })
-                }}>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              )}
-              />
-              <View style={{marginTop: 35}}>
+            <View style={surveyStyle.textFieldContainer}>
               <Autocomplete
-                data={queryDateTown}
-                defaultValue={this.state.queryTown}
-                onChangeText={text => this.setState({ queryTown: text })}
+                data={queryDate}
+                defaultValue={this.state.query}
+                onChangeText={text => this.setState({ query: text })}
+                style={textFieldStyle}
+
                 renderItem={({ item, i }) => (
-                  <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
+                  <TouchableOpacity onPress={() => {
+                    var stateID = '';
+                    var states =  csc.getStatesOfCountry("231")
+                    for (var i = 0; i<states.length; i++){
+                      if (item == states[i].name){
+                        stateID = states[i].id;
+                      }
+                    }
+                    this.setState({ query: item, stateID: stateID })
+                  }}>
                     <Text>{item}</Text>
                   </TouchableOpacity>
                 )}
-             />
+                />
+              </View>
+              <View style={surveyStyle.textFieldContainer}>
+                <Autocomplete
+                  data={queryDateTown}
+                  style={textFieldStyle}
+                  defaultValue={this.state.queryTown}
+                  onChangeText={text => this.setState({ queryTown: text })}
+                  renderItem={({ item, i }) => (
+                    <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
+                      <Text>{item}</Text>
+                    </TouchableOpacity>
+                  )}
+               />
              </View>
 
             <View style={surveyStyle.textFieldContainer}>
