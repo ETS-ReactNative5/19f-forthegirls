@@ -10,16 +10,19 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { AsyncStorage } from 'react-native';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions'
+
+const PUSH_REGISTRATION_ENDPOINT = 'http://e6a6945d.ngrok.io/token';
+
 
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),
 ));
-
+//https://levelup.gitconnected.com/react-native-adding-push-notifications-to-your-app-with-expo-8e4b659ddbfb
 //https://facebook.github.io/react-native/docs/asyncstorage
-
-
 
 class App extends React.Component {
   constructor(props) {
@@ -27,6 +30,11 @@ class App extends React.Component {
     this.state = {
       fontLoaded: false,
       signedIn: false,
+
+      username: '',
+
+      notification: null,
+      messageText: ''
     }
   }
 
@@ -41,12 +49,71 @@ class App extends React.Component {
       if (value.token !== null) {
       //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
-        this.setState({signedIn: true});
+        this.setState({signedIn: true, username: value.username});
       }
     } catch (error) {
       console.log("error getting token");
     }
   }
+
+  handleNotification = (notification) => {
+    this.setState({ notification });
+  }
+
+  registerForPushNotificationsAsync = async () => {
+    console.log("HERE IN ASK PERMISSION");
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      console.log("PERMISSION NOT GRANTED");
+      return;
+    }
+    try {
+      console.log("HERE IN TRY");
+      let pushToken = await Notifications.getExpoPushTokenAsync();
+      if(pushToken) {
+        await AsyncStorage.setItem('pushToken', pushToken);
+        console.log("PUSH TOKEN:");
+        console.log(pushToken);
+        console.log( await AsyncStorage.getItem('pushToken'));
+        // store.dispatch({ type: 'AUTH_TOKEN', payload: pushToken });
+
+              //once you have push token need to save it to your backend 
+              // need to add ^ action which then sends token to api
+              // just make api call here or in actions
+      }
+
+      //once you have push token need to save it to your backend 
+
+      // try {
+      //   return fetch(PUSH_REGISTRATION_ENDPOINT, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     token: {
+      //       value: token,
+      //     },
+      //     user: {
+      //       username: this.state.username,
+      //     },
+      //   }),
+      // });
+      // }
+      // catch (error) {
+      //   console.log("in here");
+      //   console.log(error);
+      // }
+    }
+    catch (error) {
+      console.log("in here");
+      console.log(error);
+    }
+
+    this.notificationSubscription = Notifications.addListener(this.handleNotification);
+  }
+
 
   async componentDidMount() {
     this._retrieveData();
@@ -64,6 +131,8 @@ class App extends React.Component {
     } catch (error) {
       console.log(error);
     }
+    this.registerForPushNotificationsAsync();
+
   }
 
   render() {
