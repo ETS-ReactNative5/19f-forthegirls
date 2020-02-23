@@ -51,9 +51,6 @@ class AddEvent extends Component {
     this.addEvent = this.addEvent.bind(this);
   }
   // ---------- componentDidMount here! -----------//
-  componentDidMount() {
-  }
-
   async componentWillMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
@@ -76,8 +73,6 @@ class AddEvent extends Component {
   locationInput(text) {
     this.setState({ location: text });
   }
-
-  
 
   photoUpload = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -147,7 +142,6 @@ class AddEvent extends Component {
       }
   
     }
-
     
   }
 
@@ -219,6 +213,7 @@ class AddEvent extends Component {
               style={textFieldStyle}
               placeholder="Event Description"
               keyboardType='default'
+              blurOnSubmit='true'
               onChangeText={this.descriptionInput}
               autoCapitalize='none'
               clearButtonMode='while-editing'
