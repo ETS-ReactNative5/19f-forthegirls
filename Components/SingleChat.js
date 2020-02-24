@@ -37,6 +37,8 @@ class SingleChat extends React.Component {
     this.setPrompt();
     this.setToRead();
     this.updateUnread();
+    this.props.totalContacted(this.props.id);
+    this.props.totalChatsSent(this.props.id);
   }
 
 
@@ -61,13 +63,10 @@ class SingleChat extends React.Component {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
-
-    // this.props.totalContacted(this.props.id);
-    // this.props.totalChatsSent(this.props.id);
-
-    // console.log("getting info");
-    // console.log(this.props.numContacted);
-    // console.log(this.props.numChats);
+    
+    console.log("getting info");
+    console.log(this.props.numContacted);
+    console.log(this.props.numChats);
 
     // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
     //   .then((response) => {
@@ -106,13 +105,10 @@ class SingleChat extends React.Component {
   getOnlyChats = () => {
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
-    console.log(firstID, secondID);
-    console.log("^ getting chat");
     this.props.getFullChat(firstID, secondID);
   }
 
   showChats() {
-    console.log(this.props.chats);
     if(this.props.chats !== undefined) {
       return this.props.chats.map((n, index) => {
         //if (this.state.chats.length - this.state.numberText < index + 1) {
@@ -153,10 +149,7 @@ class SingleChat extends React.Component {
     }
 
     // this.props.totalContacted(this.props.id);
-    if (response.data == 5) {
-      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') });
-    }
-
+  
     //numContacted
     // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
     //   .then((response) => {
@@ -165,11 +158,15 @@ class SingleChat extends React.Component {
     //   }).catch((error) => {
     //     console.log(error);
     //   });
-
-
-    this.props.sendChat(fields);
+    const firstID = this.props.id;
+    const secondID = this.props.navigation.getParam('matchID');
+    this.props.sendChat(fields, firstID, secondID);
     this.setState({ chatText: '', prompt: '' })
-    if (this.state.numChats == 99) {
+   
+    if (this.props.numContacted == 5) {
+      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') });
+    }
+    if (this.props.numChats == 99) {
       this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/hundredMessages.png') });
     }
   }
@@ -274,9 +271,9 @@ const mapStateToProps = reduxState => (
   {
     username: reduxState.user.username,
     id: reduxState.auth.id,
-    numContacted: reduxState.awards.numContacted,
-    numChats: reduxState.awards.numChats,
-    chats: reduxState.awards.chats,
+    numContacted: reduxState.chats.numContacted,
+    numChats: reduxState.chats.numChats,
+    chats: reduxState.chats.chats,
   }
 );
 

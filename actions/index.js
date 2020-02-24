@@ -472,26 +472,53 @@ export function setToRead(fields) {
   };
 }
 
-export function sendChat(fields) {
-  axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
-  .then((response) => {
-    
-  }).catch((error) => {
-    console.log(error);
-  });
+export function sendChat(fields, firstID, secondID) {
+  return (dispatch) => {
+    axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
+    .then((response) => {
+        axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+        .then((response) => {
+          dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
+        }).catch((error) => {
+          console.log(error);
+        });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 export function getFullChat(firstID, secondID) {
-  console.log(firstID, secondID)
-  axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
       .then((response) => {
-        dispatch({
-          type: ActionTypes.GET_CHATS,
-          payload: response.data,
-        });
+        dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
       }).catch((error) => {
         console.log(error);
       });
+  }
+}
+
+export function totalContacted(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
+    .then((response) => { //response.data
+      dispatch({type: ActionTypes.FETCH_NUM_CONTACTED, payload: response.data});
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
+export function totalChatsSent(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
+      .then((resp) => { //resp.data
+        dispatch({type: ActionTypes.FETCH_NUM_CHATS, payload: resp.data});
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 //--------------------------------------BADGES----------------------------------------
@@ -521,25 +548,6 @@ export function fetchAwardStatus(id, awardTitle) {
       console.log(error);
     });
   };
-}
-
-export function totalContacted(id) {
-  axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
-  .then((response) => { //response.data
-    dispatch({type: ActionTypes.FETCH_NUM_CONTACTED, payload: response.data});
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-export function totalChatsSent(id) {
-  //, numChats: resp.data
-  axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
-    .then((resp) => { //resp.data
-      dispatch({type: ActionTypes.FETCH_NUM_CHATS, payload: resp.data});
-    }).catch((error) => {
-      console.log(error);
-    });
 }
 
 ///------------------ERRORS----------------------------------
