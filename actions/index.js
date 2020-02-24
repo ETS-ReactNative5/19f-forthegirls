@@ -472,6 +472,7 @@ export function setToRead(fields) {
   };
 }
 
+//sends a chat and then re-fetches all the chats and sends that to the chat reducer
 export function sendChat(fields, firstID, secondID) {
   return (dispatch) => {
     axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
@@ -488,6 +489,7 @@ export function sendChat(fields, firstID, secondID) {
   }
 }
 
+//gets all the chats between two people
 export function getFullChat(firstID, secondID) {
   return (dispatch) => {
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
@@ -499,6 +501,7 @@ export function getFullChat(firstID, secondID) {
   }
 }
 
+//gets the user's total contacted number
 export function totalContacted(id) {
   return (dispatch) => {
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
@@ -510,6 +513,7 @@ export function totalContacted(id) {
   }
 }
 
+//gets the user's total chats sent
 export function totalChatsSent(id) {
   return (dispatch) => {
     axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
