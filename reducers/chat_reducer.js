@@ -4,12 +4,17 @@ import { ActionTypes } from '../actions';
 
 const ChatReducer = (state = {
   unreadCount: 0,
+  chats: [],
 }, action) => {
   switch (action.type) {
     case ActionTypes.CHECK_UNREAD_MESSAGES:
       return Object.assign({}, state, { unreadCount: action.payload });
+    case ActionTypes.GET_CHATS:
+      console.log("in here");
+      return Object.assign({}, state, { chats: action.payload });
     default:
       return state;
+
   }
 };
 

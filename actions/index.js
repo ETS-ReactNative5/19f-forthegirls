@@ -43,10 +43,13 @@ export const ActionTypes = {
   //AWARDS
   FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
   FETCH_AWARD: 'FETCH_AWARD',
+  FETCH_NUM_CONTACTED: 'FETCH_NUM_CONTACTED',
+  FETCH_NUM_CHATS: 'FETCH_NUM_CHATS',
 
   //CHATS
   CHECK_UNREAD_MESSAGES: 'CHECK_UNREAD_MESSAGES',
   SET_TO_READ: 'SET_TO_READ',
+  GET_CHATS: 'GET_CHATS',
 
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
@@ -449,6 +452,28 @@ export function setToRead(fields) {
   };
 }
 
+export function sendChat(fields) {
+  axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
+  .then((response) => {
+    
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+export function getFullChat(firstID, secondID) {
+  console.log(firstID, secondID)
+  axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+      .then((response) => {
+        dispatch({
+          type: ActionTypes.GET_CHATS,
+          payload: response.data,
+        });
+      }).catch((error) => {
+        console.log(error);
+      });
+}
+
 //--------------------------------------BADGES----------------------------------------
 //Gets all the user's badges (i.e. milestones they've achieved on the app)
 export function fetchYourAwards(id) {
@@ -476,6 +501,25 @@ export function fetchAwardStatus(id, awardTitle) {
       console.log(error);
     });
   };
+}
+
+export function totalContacted(id) {
+  axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
+  .then((response) => { //response.data
+    dispatch({type: ActionTypes.FETCH_NUM_CONTACTED, payload: response.data});
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+export function totalChatsSent(id) {
+  //, numChats: resp.data
+  axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
+    .then((resp) => { //resp.data
+      dispatch({type: ActionTypes.FETCH_NUM_CHATS, payload: resp.data});
+    }).catch((error) => {
+      console.log(error);
+    });
 }
 
 ///------------------ERRORS----------------------------------
