@@ -76,6 +76,8 @@ class EditProfile extends React.Component {
       query: '',
       queryTown: '',
       stateID: '',
+      statelist: [],
+      stateSelected: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -96,7 +98,7 @@ class EditProfile extends React.Component {
     for (var i = 0; i< states.length; i++){
       statelist[i] = states[i].name;
     }
-    this.setState({statelist: statelist})
+    this.setState({statelist: statelist, stateAbrv: this.createStateToAbbrvMap()});
   }
 
   async componentWillMount() {
@@ -108,6 +110,62 @@ class EditProfile extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
+  }
+
+  createStateToAbbrvMap = () => {
+    var startsToAbbrv = {};
+    startsToAbbrv["Alabama"] = "AL";
+    startsToAbbrv["Alaska"] = "AK";
+    startsToAbbrv["Arizona"] = "AZ";
+    startsToAbbrv["Arkansas"] = "AR";
+    startsToAbbrv["California"] = "CA";
+    startsToAbbrv["Colorado"] = "CO";
+    startsToAbbrv["Connecticut"] = "CT";
+    startsToAbbrv["Delaware"] = "DE";
+    startsToAbbrv["Florida"] = "FL";
+    startsToAbbrv["Georgia"] = "GA";
+    startsToAbbrv["Hawaii"] = "HI";
+    startsToAbbrv["Idaho"] = "ID";
+    startsToAbbrv["Illinois"] = "IL";
+    startsToAbbrv["Indiana"] = "IN";
+    startsToAbbrv["Iowa"] = "IA";
+    startsToAbbrv["Kansas"] = "KS";
+    startsToAbbrv["Kentucky"] = "KY";
+    startsToAbbrv["Louisiana"] = "LA";
+    startsToAbbrv["Maine"] = "ME";
+    startsToAbbrv["Maryland"] = "MD";
+    startsToAbbrv["Massachusetts"] = "MA";
+    startsToAbbrv["Michigan"] = "MI";
+    startsToAbbrv["Minnesota"] = "MN";
+    startsToAbbrv["Mississippi"] = "MS";
+    startsToAbbrv["Missouri"] = "MO";
+    startsToAbbrv["Montana"] = "MT";
+    startsToAbbrv["Nebraska"] = "NE";
+    startsToAbbrv["Nevada"] = "NV";
+    startsToAbbrv["New Hampshire"] = "NH";
+    startsToAbbrv["New Jersey"] = "NJ";
+    startsToAbbrv["New Mexico"] = "NM";
+    startsToAbbrv["New York"] = "NY";
+    startsToAbbrv["North Carolina"] = "NC";
+    startsToAbbrv["North Dakota"] = "ND";
+    startsToAbbrv["Ohio"] = "OH";
+    startsToAbbrv["Oklahoma"] = "OK";
+    startsToAbbrv["Oregon"] = "OR";
+    startsToAbbrv["Pennsylvania"] = "PA";
+    startsToAbbrv["Rhode Island"] = "RI";
+    startsToAbbrv["South Carolina"] = "SC";
+    startsToAbbrv["South Dakota"] = "SD";
+    startsToAbbrv["Tennessee"] = "TN";
+    startsToAbbrv["Texas"] = "TX";
+    startsToAbbrv["Utah"] = "UT";
+    startsToAbbrv["Vermont"] = "VT";
+    startsToAbbrv["Virginia"] = "VA";
+    startsToAbbrv["Washington"] = "WA";
+    startsToAbbrv["West Virginia"] = "WV";
+    startsToAbbrv["Wisconsin"] = "WI";
+    startsToAbbrv["Wyoming"] = "WY";
+
+    return startsToAbbrv;
   }
 
   photoUpload = async () => {
@@ -314,6 +372,10 @@ class EditProfile extends React.Component {
     this.setState({ promptOneQuestion: value });
   }
 
+  stateSelection = (value) => {
+    this.setState({ stateSelected: value });
+  }
+
   p1Answer = (text) => {
     this.setState({ promptOneAnswer: text });
   }
@@ -367,14 +429,10 @@ class EditProfile extends React.Component {
 }
 
   findQueryTown = (query) => {
-    console.log("STATE ID")
-    console.log(this.state.stateID)
     if (query === '' || this.state.stateID == '') {
       return [];
     }
     var cities = csc.getCitiesOfState(this.state.stateID);
-    console.log(cities);
-    console.log("^cities")
     for (var i = 0; i < cities.length; i++){
       if(this.state.queryTown == cities[i].name)
       {
@@ -408,6 +466,16 @@ class EditProfile extends React.Component {
       value: 'what could you give a ted talk on',
     }];
 
+    let stateDropdown = [];
+    for (var i = 0; i< this.state.statelist.length; i++){
+      var newVal = {};
+      newVal["value"] = this.state.statelist[i];
+      stateDropdown[i]= newVal;
+    }
+
+    console.log(stateDropdown);
+
+
 
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var itemTextStyle = [fonts.bodyText]
@@ -431,7 +499,7 @@ class EditProfile extends React.Component {
     else {
       image = imageNoImage;
     }
-    
+
     var queryDate= this.findQuery(this.state.query);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
 
@@ -527,6 +595,16 @@ class EditProfile extends React.Component {
                 clearButtonMode='while-editing'
               />
             </View>
+            <Dropdown
+              pickerStyle={dropdownPickerStyle}
+              itemTextStyle={itemTextStyle}
+              selectedItemColor={selectedItemColor}
+              label='Select your home state'
+              labelTextStyle={fonts.bodyText}
+              data={stateDropdown}
+              value='State'
+              onChangeText={this.stateSelection}
+            />
             <View style={surveyStyle.textFieldContainer}>
               <TextInput
                 style={textFieldStyle}
