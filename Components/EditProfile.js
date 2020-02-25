@@ -429,10 +429,20 @@ class EditProfile extends React.Component {
 }
 
   findQueryTown = (query) => {
-    if (query === '' || this.state.stateID == '') {
+    if (query === '' || this.state.stateSelected == '') {
       return [];
     }
-    var cities = csc.getCitiesOfState(this.state.stateID);
+    var state = csc.getStatesOfCountry("231");
+    var id = "";
+    for(var i = 0; i< state.length; i++){
+      if (state[i].name == this.state.stateSelected){
+        id = state[i].id;
+      }
+    }
+    if(id == ""){
+      return [];
+    }
+    var cities = csc.getCitiesOfState(id);
     for (var i = 0; i < cities.length; i++){
       if(this.state.queryTown == cities[i].name)
       {
@@ -472,8 +482,6 @@ class EditProfile extends React.Component {
       newVal["value"] = this.state.statelist[i];
       stateDropdown[i]= newVal;
     }
-
-    console.log(stateDropdown);
 
 
 
@@ -605,6 +613,21 @@ class EditProfile extends React.Component {
               value='State'
               onChangeText={this.stateSelection}
             />
+
+            <View style={surveyStyle.textFieldContainer}>
+              <Autocomplete
+                data={queryDateTown}
+                style={textFieldStyle}
+                defaultValue={this.state.queryTown}
+                onChangeText={text => this.setState({ queryTown: text })}
+                renderItem={({ item, i }) => (
+                  <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
+                    <Text>{item}</Text>
+                  </TouchableOpacity>
+                )}
+             />
+           </View>
+
             <View style={surveyStyle.textFieldContainer}>
               <TextInput
                 style={textFieldStyle}
