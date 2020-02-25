@@ -276,7 +276,6 @@ const mapStateToProps = reduxState => (
     promptThreeAnswer: reduxState.user.promptThreeAnswer,
     profileURL: reduxState.user.profileURL,
     allYours: reduxState.awards.allYours,
-
   }
 );
 
