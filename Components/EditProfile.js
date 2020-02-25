@@ -96,7 +96,26 @@ class EditProfile extends React.Component {
     for (var i = 0; i< states.length; i++){
       statelist[i] = states[i].name;
     }
-    this.setState({statelist: statelist, stateAbrv: this.createStateToAbbrvMap()});
+
+    var stateAbrv = this.createStateToAbbrvMap();
+    console.log(stateAbrv);
+    this.setState({statelist: statelist, stateAbrv: stateAbrv});
+
+    var locationLength = this.state.location.length;
+    if(this.state.location.charAt(locationLength - 4) == ","){
+      var stateAbbrv = this.state.location.substring(locationLength-2);
+      var town = this.state.location.substring(0, locationLength-4);
+      var stateLong = "";
+      for (var i = 0; i< states.length; i++){
+        var abbrv = stateAbrv[states[i].name];
+        if (abbrv == stateAbbrv){
+          stateLong = states[i].name
+        }
+
+      }
+    console.log(stateLong)
+    this.setState({queryTown: town, stateSelected: stateLong})
+    }
   }
 
   async componentWillMount() {
@@ -437,12 +456,10 @@ class EditProfile extends React.Component {
     return result;
   }
 
-  autocompleteSelection = () => {
+  autocompleteSelection = (item) => {
     if(this.state.stateSelected != "" && this.state.queryTown != ""){
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
-      var location = this.state.queryTown + ", " + stateAbbrv;
-      console.log(location);
-      this.setState({location: this.state.queryTown + ", " + stateAbbrv});
+      this.setState({location: item + ", " + stateAbbrv});
       console.log(this.state.location)
     }
   }
@@ -560,7 +577,7 @@ class EditProfile extends React.Component {
               label='Select your home state'
               labelTextStyle={fonts.bodyText}
               data={stateDropdown}
-              value='State'
+              value={this.state.stateSelected != "" ? this.state.stateSelected : "State"}
               onChangeText={this.stateSelection}
             />
 
@@ -573,7 +590,7 @@ class EditProfile extends React.Component {
                 renderItem={({ item, i }) => (
                   <TouchableOpacity onPress={() => {
                     this.setState({ queryTown: item })
-                    this.autocompleteSelection();
+                    this.autocompleteSelection(item);
                     }
                   }>
                     <Text>{item}</Text>
