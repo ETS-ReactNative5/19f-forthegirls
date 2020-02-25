@@ -599,16 +599,6 @@ class EditProfile extends React.Component {
              />
            </View>
 
-            <View style={surveyStyle.textFieldContainer}>
-              <TextInput
-                style={textFieldStyle}
-                placeholder="Location (City, State)"
-                maxLength={30}
-                defaultValue={this.props.location || ''}
-                onChangeText={this.locationChange}
-                clearButtonMode='while-editing'
-              />
-            </View>
           </View>
           <View style={{ alignItems: 'center', width: '100%' }}>
             <SurveyHeaderComponent header="Answer 3 Prompts!" />
