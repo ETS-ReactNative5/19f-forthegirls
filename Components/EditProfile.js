@@ -73,9 +73,9 @@ class EditProfile extends React.Component {
 
       progressMessage: '',
       loading: false,
-      query: '',
       queryTown: '',
-      stateID: '',
+      statelist: [],
+      stateSelected: '',
     };
     this.handleSliderChange = this.handleSliderChange.bind(this);
     this.handleFieldChange = this.handleFieldChange.bind(this);
@@ -96,7 +96,26 @@ class EditProfile extends React.Component {
     for (var i = 0; i< states.length; i++){
       statelist[i] = states[i].name;
     }
-    this.setState({statelist: statelist})
+
+    var stateAbrv = this.createStateToAbbrvMap();
+    console.log(stateAbrv);
+    this.setState({statelist: statelist, stateAbrv: stateAbrv});
+
+    var locationLength = this.state.location.length;
+    if(this.state.location.charAt(locationLength - 4) == ","){
+      var stateAbbrv = this.state.location.substring(locationLength-2);
+      var town = this.state.location.substring(0, locationLength-4);
+      var stateLong = "";
+      for (var i = 0; i< states.length; i++){
+        var abbrv = stateAbrv[states[i].name];
+        if (abbrv == stateAbbrv){
+          stateLong = states[i].name
+        }
+
+      }
+    console.log(stateLong)
+    this.setState({queryTown: town, stateSelected: stateLong})
+    }
   }
 
   async componentWillMount() {
@@ -108,6 +127,62 @@ class EditProfile extends React.Component {
 
   handleFieldChange(fieldId, value) {
     this.setState({ [fieldId]: value });
+  }
+
+  createStateToAbbrvMap = () => {
+    var startsToAbbrv = {};
+    startsToAbbrv["Alabama"] = "AL";
+    startsToAbbrv["Alaska"] = "AK";
+    startsToAbbrv["Arizona"] = "AZ";
+    startsToAbbrv["Arkansas"] = "AR";
+    startsToAbbrv["California"] = "CA";
+    startsToAbbrv["Colorado"] = "CO";
+    startsToAbbrv["Connecticut"] = "CT";
+    startsToAbbrv["Delaware"] = "DE";
+    startsToAbbrv["Florida"] = "FL";
+    startsToAbbrv["Georgia"] = "GA";
+    startsToAbbrv["Hawaii"] = "HI";
+    startsToAbbrv["Idaho"] = "ID";
+    startsToAbbrv["Illinois"] = "IL";
+    startsToAbbrv["Indiana"] = "IN";
+    startsToAbbrv["Iowa"] = "IA";
+    startsToAbbrv["Kansas"] = "KS";
+    startsToAbbrv["Kentucky"] = "KY";
+    startsToAbbrv["Louisiana"] = "LA";
+    startsToAbbrv["Maine"] = "ME";
+    startsToAbbrv["Maryland"] = "MD";
+    startsToAbbrv["Massachusetts"] = "MA";
+    startsToAbbrv["Michigan"] = "MI";
+    startsToAbbrv["Minnesota"] = "MN";
+    startsToAbbrv["Mississippi"] = "MS";
+    startsToAbbrv["Missouri"] = "MO";
+    startsToAbbrv["Montana"] = "MT";
+    startsToAbbrv["Nebraska"] = "NE";
+    startsToAbbrv["Nevada"] = "NV";
+    startsToAbbrv["New Hampshire"] = "NH";
+    startsToAbbrv["New Jersey"] = "NJ";
+    startsToAbbrv["New Mexico"] = "NM";
+    startsToAbbrv["New York"] = "NY";
+    startsToAbbrv["North Carolina"] = "NC";
+    startsToAbbrv["North Dakota"] = "ND";
+    startsToAbbrv["Ohio"] = "OH";
+    startsToAbbrv["Oklahoma"] = "OK";
+    startsToAbbrv["Oregon"] = "OR";
+    startsToAbbrv["Pennsylvania"] = "PA";
+    startsToAbbrv["Rhode Island"] = "RI";
+    startsToAbbrv["South Carolina"] = "SC";
+    startsToAbbrv["South Dakota"] = "SD";
+    startsToAbbrv["Tennessee"] = "TN";
+    startsToAbbrv["Texas"] = "TX";
+    startsToAbbrv["Utah"] = "UT";
+    startsToAbbrv["Vermont"] = "VT";
+    startsToAbbrv["Virginia"] = "VA";
+    startsToAbbrv["Washington"] = "WA";
+    startsToAbbrv["West Virginia"] = "WV";
+    startsToAbbrv["Wisconsin"] = "WI";
+    startsToAbbrv["Wyoming"] = "WY";
+
+    return startsToAbbrv;
   }
 
   photoUpload = async () => {
@@ -314,6 +389,10 @@ class EditProfile extends React.Component {
     this.setState({ promptOneQuestion: value });
   }
 
+  stateSelection = (value) => {
+    this.setState({ stateSelected: value });
+  }
+
   p1Answer = (text) => {
     this.setState({ promptOneAnswer: text });
   }
@@ -346,35 +425,21 @@ class EditProfile extends React.Component {
     this.props.navigation.pop();
   }
 
-  findQuery = (query) => {
-    if (query === '') {
+  findQueryTown = (query) => {
+    if (query === '' || this.state.stateSelected == '') {
       return [];
     }
-    var states = csc.getStatesOfCountry("231");
-    for (var i = 0; i < states.length; i++){
-      if(this.state.query == states[i].name)
-      {
-        return [];
+    var state = csc.getStatesOfCountry("231");
+    var id = "";
+    for(var i = 0; i< state.length; i++){
+      if (state[i].name == this.state.stateSelected){
+        id = state[i].id;
       }
     }
-    const regex = new RegExp(`${query.trim()}`, 'i');
-    var filtered = states.filter(state => state.name.search(regex) >= 0);
-    var result = []
-    for (var i = 0; i < filtered.length; i++){
-      result[i] = filtered[i].name
-    }
-    return result;
-}
-
-  findQueryTown = (query) => {
-    console.log("STATE ID")
-    console.log(this.state.stateID)
-    if (query === '' || this.state.stateID == '') {
+    if(id == ""){
       return [];
     }
-    var cities = csc.getCitiesOfState(this.state.stateID);
-    console.log(cities);
-    console.log("^cities")
+    var cities = csc.getCitiesOfState(id);
     for (var i = 0; i < cities.length; i++){
       if(this.state.queryTown == cities[i].name)
       {
@@ -389,6 +454,14 @@ class EditProfile extends React.Component {
     }
 
     return result;
+  }
+
+  autocompleteSelection = (item) => {
+    if(this.state.stateSelected != "" && this.state.queryTown != ""){
+      var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
+      this.setState({location: item + ", " + stateAbbrv});
+      console.log(this.state.location)
+    }
   }
 
   render() {
@@ -407,6 +480,14 @@ class EditProfile extends React.Component {
     }, {
       value: 'what could you give a ted talk on',
     }];
+
+    let stateDropdown = [];
+    for (var i = 0; i< this.state.statelist.length; i++){
+      var newVal = {};
+      newVal["value"] = this.state.statelist[i];
+      stateDropdown[i]= newVal;
+    }
+
 
 
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
@@ -431,8 +512,7 @@ class EditProfile extends React.Component {
     else {
       image = imageNoImage;
     }
-    
-    var queryDate= this.findQuery(this.state.query);
+
     var queryDateTown = this.findQueryTown(this.state.queryTown);
 
     return (
@@ -481,43 +561,6 @@ class EditProfile extends React.Component {
               />
             </View>
             <View style={surveyStyle.textFieldContainer}>
-              <Autocomplete
-                data={queryDate}
-                defaultValue={this.state.query}
-                onChangeText={text => this.setState({ query: text })}
-                style={textFieldStyle}
-
-                renderItem={({ item, i }) => (
-                  <TouchableOpacity onPress={() => {
-                    var stateID = '';
-                    var states =  csc.getStatesOfCountry("231")
-                    for (var i = 0; i<states.length; i++){
-                      if (item == states[i].name){
-                        stateID = states[i].id;
-                      }
-                    }
-                    this.setState({ query: item, stateID: stateID })
-                  }}>
-                    <Text>{item}</Text>
-                  </TouchableOpacity>
-                )}
-                />
-              </View>
-              <View style={surveyStyle.textFieldContainer}>
-                <Autocomplete
-                  data={queryDateTown}
-                  style={textFieldStyle}
-                  defaultValue={this.state.queryTown}
-                  onChangeText={text => this.setState({ queryTown: text })}
-                  renderItem={({ item, i }) => (
-                    <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
-                      <Text>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-               />
-             </View>
-
-            <View style={surveyStyle.textFieldContainer}>
               <TextInput
                 style={textFieldStyle}
                 placeholder="Last Name"
@@ -527,16 +570,35 @@ class EditProfile extends React.Component {
                 clearButtonMode='while-editing'
               />
             </View>
+            <Dropdown
+              pickerStyle={dropdownPickerStyle}
+              itemTextStyle={itemTextStyle}
+              selectedItemColor={selectedItemColor}
+              label='Select your home state'
+              labelTextStyle={fonts.bodyText}
+              data={stateDropdown}
+              value={this.state.stateSelected != "" ? this.state.stateSelected : "State"}
+              onChangeText={this.stateSelection}
+            />
+
             <View style={surveyStyle.textFieldContainer}>
-              <TextInput
+              <Autocomplete
+                data={queryDateTown}
                 style={textFieldStyle}
-                placeholder="Location (City, State)"
-                maxLength={30}
-                defaultValue={this.props.location || ''}
-                onChangeText={this.locationChange}
-                clearButtonMode='while-editing'
-              />
-            </View>
+                defaultValue={this.state.queryTown}
+                onChangeText={text => this.setState({ queryTown: text })}
+                renderItem={({ item, i }) => (
+                  <TouchableOpacity onPress={() => {
+                    this.setState({ queryTown: item })
+                    this.autocompleteSelection(item);
+                    }
+                  }>
+                    <Text>{item}</Text>
+                  </TouchableOpacity>
+                )}
+             />
+           </View>
+
           </View>
           <View style={{ alignItems: 'center', width: '100%' }}>
             <SurveyHeaderComponent header="Answer 3 Prompts!" />
