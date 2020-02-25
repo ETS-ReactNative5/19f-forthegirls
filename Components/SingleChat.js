@@ -65,7 +65,7 @@ class SingleChat extends React.Component {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
-    
+
     console.log("getting info");
     console.log(this.props.numContacted);
     console.log(this.props.numChats);
@@ -111,7 +111,7 @@ class SingleChat extends React.Component {
   }
 
   showChats() {
-    if(this.props.chats !== undefined) {
+    if (this.props.chats !== undefined) {
       return this.props.chats.map((n, index) => {
         //if (this.state.chats.length - this.state.numberText < index + 1) {
         if (n.sender === this.props.id) {
@@ -151,7 +151,7 @@ class SingleChat extends React.Component {
     }
 
     // this.props.totalContacted(this.props.id);
-  
+
     //numContacted
     // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
     //   .then((response) => {
@@ -164,7 +164,7 @@ class SingleChat extends React.Component {
     const secondID = this.props.navigation.getParam('matchID');
     this.props.sendChat(fields, firstID, secondID);
     this.setState({ chatText: '', prompt: '' })
-   
+
     if (this.props.numContacted == 5) {
       this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') });
     }
@@ -198,7 +198,7 @@ class SingleChat extends React.Component {
   }
 
   renderLoading = () => {
-    if(this.props.chats === undefined) {
+    if (this.props.chats === undefined) {
       return (
         <AnimatedEllipsis />
       )
@@ -206,29 +206,29 @@ class SingleChat extends React.Component {
   }
 
   renderTextInput = () => {
-    if(this.props.chats !== undefined) {
+    if (this.props.chats !== undefined) {
       return (
         <View style={singleChat.chatInputContainer}>
-                  <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
-                    <TextInput
-                      multiline={true}
-                      clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
-                      style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
-                      defaultValue={this.props.navigation.getParam('prompt')}
-                      value={this.state.chatText}
-                      onChangeText={this.addChat}
-                      onEndEditing={this.sendChat}
-                      onKeyPress={this.handleKeyDown}
-                    />
-                    <TouchableOpacity
-                      style={{ paddingTop: 2, paddingLeft: 5 }}
-                      onPress={this.sendChat}>
-                      <Image
-                        source={require('./../assets/icons/arrowup.png')}
-                      />
-              </TouchableOpacity>
-            </View>
+          <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
+            <TextInput
+              multiline={true}
+              clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
+              style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
+              defaultValue={this.props.navigation.getParam('prompt')}
+              value={this.state.chatText}
+              onChangeText={this.addChat}
+              onEndEditing={this.sendChat}
+              onKeyPress={this.handleKeyDown}
+            />
+            <TouchableOpacity
+              style={{ paddingTop: 2, paddingLeft: 5 }}
+              onPress={this.sendChat}>
+              <Image
+                source={require('./../assets/icons/arrowup.png')}
+              />
+            </TouchableOpacity>
           </View>
+        </View>
       )
     }
   }
@@ -272,7 +272,7 @@ class SingleChat extends React.Component {
             onContentSizeChange={() => { this.scrollView.scrollToEnd({ animated: true }) }}>
             {/* {this.loadMore()} */}
             <View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 {this.renderLoading()}
                 {this.showChats()}
               </View>

@@ -42,35 +42,25 @@ const eventPage = StyleSheet.create({
   },
 
   title: {
+    padding: 5,
+    paddingLeft: 10,
     borderRadius: 10,
-    width: '80%',
-    backgroundColor: 'rgba(40, 195, 169, 0.6)',
-    marginTop: 10,
-    marginLeft: 10,
-  },
-
-  titleMargin: {
-    marginLeft: 10,
-  },
-
-  date: {
-    borderRadius: 10,
-    width: '40%',
-    backgroundColor: 'rgba(70, 81, 135, 0.6)',
-    marginTop: 10,
-    marginLeft: 10,
-    flexDirection: 'row',
     justifyContent: 'center',
+    width: '80%',
+    backgroundColor: colors.deepPurple.color,
+    marginTop: 10,
+    marginLeft: 15,
   },
 
   rsvpCounts: {
+    padding: 5,
+    paddingLeft: 10,
     borderRadius: 10,
     width: '40%',
     backgroundColor: 'rgba(70, 81, 135, 0.6)',
     marginTop: 10,
-    marginLeft: 10,
+    marginLeft: 15,
     flexDirection: 'row',
-    justifyContent: 'center',
   },
 
   button: {
@@ -177,7 +167,7 @@ const eventPage = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
 
   eventDetailRSVPText: {
@@ -199,7 +189,7 @@ const eventPage = StyleSheet.create({
 
   pressed: {
     borderRadius: 20,
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
   notPressed: {
     borderRadius: 20,
@@ -220,7 +210,7 @@ const eventPage = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
 
   addEventText: {

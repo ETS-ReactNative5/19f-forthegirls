@@ -38,18 +38,17 @@ class SingleEvent extends Component {
         <View style={eventPage.singleEventView}>
           <ImageBackground source={image} style={eventPage.backgroundImage}>
             <View style={eventPage.title}>
-              <Text style={[eventPage.titleMargin, colors.white, fonts.majorHeading]}>
+              <Text style={[colors.white, fonts.majorHeading]}>
                 {this.props.name}
               </Text>
-              <Text style={[eventPage.titleMargin, colors.white, fonts.minorHeading]}>
+              <Text style={[colors.white, fonts.minorHeading]}>
                 {this.props.location}
               </Text>
-            </View>
-            <View style={eventPage.date}>
-              <Text style={[colors.white, fonts.majorHeading, fontEffects.italic]}>
+              <Text style={[colors.white, fonts.minorHeading, fontEffects.italic]}>
                 {this.props.date}
               </Text>
             </View>
+
             <View style={eventPage.rsvpCounts}>
               <Text style={[colors.white, fonts.majorHeading, fontEffects.italic]}>
                 {this.props.rsvps ? this.props.rsvps.length : null} RSVPs

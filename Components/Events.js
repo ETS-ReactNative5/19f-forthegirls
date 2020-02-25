@@ -7,7 +7,7 @@ import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
 import ErrorModal from './ErrorModal'
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
 import AwardModal from './AwardModal'
 
 class Events extends React.Component {
@@ -131,8 +131,8 @@ class Events extends React.Component {
     if (this.props.all !== undefined) {
       return (
         <View style={eventPage.wholeContainer}>
-        <NavigationEvents onDidFocus={this.refetchOnBackPress}>
-        </NavigationEvents>
+          <NavigationEvents onDidFocus={this.refetchOnBackPress}>
+          </NavigationEvents>
           <View style={eventPage.viewOptionsContainer}>
             {this.renderModal()}
             <View style={this.state.viewAll
@@ -141,7 +141,7 @@ class Events extends React.Component {
               <TouchableOpacity onPress={this.doViewAll}>
                 <Text style={[eventPage.addEventText, this.state.viewAll
                   ? colors.white
-                  : colors.deepPurple, fonts.minorHeading]}>
+                  : colors.turquoise, fonts.minorHeading]}>
                   See All
               </Text>
               </TouchableOpacity>
@@ -151,7 +151,7 @@ class Events extends React.Component {
               : eventPage.addEventOpacity}>
               <TouchableOpacity onPress={this.dontViewAll}>
                 <Text style={[eventPage.addEventText, this.state.viewAll
-                  ? colors.deepPurple
+                  ? colors.turquoise
                   : colors.white, fonts.minorHeading]}>
                   See RSVP'd
               </Text>
