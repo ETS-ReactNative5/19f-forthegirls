@@ -157,13 +157,14 @@ const eventPage = StyleSheet.create({
 
   eventDetailMap: {
     marginTop: 10,
-    width: 300,
+    width: 350,
     height: 120,
     borderRadius: 10
   },
 
   eventDetailRSVPContainer: {
     marginTop: 10,
+    marginBottom: 30,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
