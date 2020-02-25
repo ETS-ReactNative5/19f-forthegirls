@@ -209,7 +209,7 @@ class EventDetails extends Component {
               {this.props.event.description}
             </Text>
           </View>
-
+          {this.renderMap()}
           <View style={eventPage.eventDetailRSVPContainer} >
             {this.renderConnectionsModal()}
             <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
@@ -226,7 +226,6 @@ class EventDetails extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-          {this.renderMap()}
         </View >
       </ScrollView >
     );
