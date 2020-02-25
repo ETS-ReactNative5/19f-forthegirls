@@ -18,7 +18,7 @@ import eventPage from '../assets/styles/eventPage';
 import modalStyle from '../assets/styles/modalStyle';
 import colors, { fonts, fontEffects, modal, buttons, profileImage } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
-import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
+import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections, getEventCount } from '../actions';
 import EventMap from './EventMap.js'
 import SurveyHeaderComponent from './surveyHeaderComponent.js'
 export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
@@ -47,11 +47,7 @@ class EventDetails extends Component {
   componentDidMount() {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
     this.props.fetchRsvpConnections(this.props.id, this.props.navigation.getParam("eventID", null))
-    axios.get(`${ROOT_URL}/events/rsvp/your/${this.props.id}`).then((response) => {
-      this.setState({ rsvpLength: response.data.length })
-    }).catch((error) => {
-      console.log(error);
-    });
+    this.props.getEventCount(this.props.id);
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.rsvp === null) {
@@ -110,12 +106,11 @@ class EventDetails extends Component {
   }
   handleRSVP() {
     if (this.state.rsvp === false) {
-      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
-      this.setState({ rsvp: true });
-      console.log(this.state.rsvpLength)
-      if (this.state.rsvpLength == 2) {
+      if (this.props.eventCount == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
       }
+      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+      this.setState({ rsvp: true });
     }
     else {
       this.props.unrsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
@@ -209,6 +204,7 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     event: reduxState.events.event,
     connections: reduxState.events.connections,
+    eventCount: reduxState.events.eventCount,
   }
 );
-export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections })(EventDetails);
+export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections, getEventCount })(EventDetails);

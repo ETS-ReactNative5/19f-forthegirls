@@ -24,6 +24,7 @@ export const ActionTypes = {
   FETCH_EVENTS: 'FETCH_EVENTS',
   FETCH_YOUR_EVENTS: 'FETCH_YOUR_EVENTS',
   FETCH_RSVP_CONNECTIONS: 'FETCH_RSVP_CONNECTIONS',
+  SET_EVENT_COUNT: 'SET_EVENT_COUNT',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -347,6 +348,16 @@ export function addEvent(fields, navigation, id) {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   };
+}
+
+export function getEventCount(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
+      dispatch({ type: ActionTypes.SET_EVENT_COUNT, payload: response.data.length });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 //gets all previously created events by any user
