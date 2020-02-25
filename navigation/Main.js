@@ -19,7 +19,7 @@ class Main extends Component {
         timestamp: Date.now(),
       });
     }
-    this.interval = setInterval(() => this.checkUnreadMessages(), 10000);
+    this.interval = setInterval(() => this.checkUnreadMessages(), 5000);
   }
 
   componentWillUnmount() {

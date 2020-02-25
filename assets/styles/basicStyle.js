@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import {scale, verticalScale, moderateScale} from './Style.js';
 
 const colors = StyleSheet.create({
   turquoise: {
@@ -35,23 +36,23 @@ const fonts = StyleSheet.create({
     fontFamily: 'lato-regular',
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: moderateScale(16),
+    lineHeight: verticalScale(22),
   },
   minorHeading: {
     fontFamily: 'montserrat-semibold',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: 17,
-    lineHeight: 22,
-    letterSpacing: -0.05
+    fontSize: moderateScale(17),
+    lineHeight: verticalScale(22),
+    letterSpacing: moderateScale(-0.1),
   },
   majorHeading: {
     fontFamily: 'montserrat-medium',
     fontStyle: 'normal',
     fontWeight: '600',
-    fontSize: 25,
-    lineHeight: 30
+    fontSize: moderateScale(25),
+    lineHeight: verticalScale(30),
   }
 })
 
@@ -108,7 +109,7 @@ const buttons = StyleSheet.create({
     marginBottom: 10,
     borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
-    borderRadius: 20
+    borderRadius: 20,
   },
   logInButton: {
     marginLeft: 125
