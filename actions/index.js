@@ -55,6 +55,10 @@ export const ActionTypes = {
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
 
+  //BLACKLIST
+  REPORT_USER: 'REPORT_USER',
+  BLOCK_USER: 'BLOCK_USER',
+
 };
 
 //----------------- ACTIVITY ------------------//
@@ -106,6 +110,36 @@ export function editUserVisit(username, id, otherAnswers) {
   }
 }
 
+//----------------- BLACKLIST ------------------//
+
+// retrieves the specified user object from the database
+export function blockUser(reporterID, reportedID, username) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/blacklist/block/${reporterID}/${reportedID}`)
+      .then((res) => {
+          return axios.get(`${ROOT_URL}/matches/${username}`)
+          .then((resp) => {
+              dispatch({ type: ActionTypes.BLOCK_USER, payload: resp.data });
+          })
+      })
+      .catch((error) => {
+          dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
+export function reportUser(reporterID, reportedID) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/blacklist/report/${reporterID}/${reportedID}`)
+      .then((response) => {
+        dispatch({ type: ActionTypes.REPORT_USER, payload: response.data });
+      }).catch((error) => {
+        console.log(error);
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
 //---------------------------- AUTH --------------------------------//
 
 //signs the user in based on previously created credentials and saves their information on the phone
@@ -129,7 +163,7 @@ export function signinUser({ username, password, navigate }) {
     _retrieveData().then((result) => {
       axios.post(`${ROOT_URL}/signin`, { username, password, pushToken: pushToken}).then((response) => {
         dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
-  
+
         //How to add tokens using react native
         //https://facebook.github.io/react-native/docs/asyncstorage
         _storeData = async () => {
@@ -141,10 +175,10 @@ export function signinUser({ username, password, navigate }) {
             console.log("error");
           }
         };
-  
+
         _storeData();
         navigate.navigate("Main");
-  
+
       }).catch((error) => {
         console.log(error);
         dispatch(authError(`Invalid username or password`));

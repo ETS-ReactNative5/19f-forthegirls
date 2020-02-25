@@ -44,7 +44,21 @@ const chatList = StyleSheet.create({
     position: 'absolute',
     marginLeft: 325,
     justifyContent: 'center'
-  }
+  },
+  blacklist: {
+    marginTop: 10,
+    borderWidth: 2,
+    height: 45,
+    width: 45,
+    padding: 5,
+    borderColor: colors.red.color,
+    borderRadius: 15,
+    marginRight: 10,
+    flexDirection: 'row',
+    position: 'absolute',
+    marginLeft: 265,
+    justifyContent: 'center'
+  },
 });
 
 const singleChat = StyleSheet.create({

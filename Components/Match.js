@@ -6,13 +6,16 @@ import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
 import axios from 'axios';
 import chatList from '../assets/styles/chatStyle';
 import { Linking } from 'react-native'
+import BlacklistModal from './BlacklistModal'
+
 
 class Match extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       match: {},
-      mounted: false
+      mounted: false,
+      showModal: false
     }
   }
 
@@ -36,14 +39,47 @@ class Match extends React.Component {
     this.props.deleteMatch(this.props.matchID);
   }
 
+  blockMatch = () => {
+    console.log('here');
+    this.props.blockMatch(this.props.matchID);
+  }
+
+  reportMatch = () => {
+    this.props.reportMatch(this.props.matchID);
+  }
+
+  blacklistMatch = () => {
+    this.setState({ showModal: true});
+  }
+
+  renderModal = () => {
+    if (this.state.showModal) {
+      return (
+        <BlacklistModal reset={this.resetModal} block={this.blockMatch} report={this.reportMatch}/>
+      );
+    }
+  }
+
+  resetModal = () => {
+    this.setState({ showModal: false });
+  }
+
   render() {
     return (
       <TouchableOpacity
         key={this.props.i}
         onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username, profilePic: this.state.match.profileURL })}>
+        {this.renderModal()}
         <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
           <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
           <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
+        </View>
+        <View style={chatList.blacklist}>
+          <TouchableOpacity
+            key={this.props.i + 1}
+            onPress={() => this.blacklistMatch()}>
+            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>!</Text>
+          </TouchableOpacity>
         </View>
         <View style={chatList.delete}>
           <TouchableOpacity
