@@ -272,8 +272,10 @@ class SingleChat extends React.Component {
             onContentSizeChange={() => { this.scrollView.scrollToEnd({ animated: true }) }}>
             {/* {this.loadMore()} */}
             <View>
-              <View style={{justifyContent: 'center', alignItems: 'center'}}>
+              <View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 {this.renderLoading()}
+                </View>
                 {this.showChats()}
               </View>
               {this.renderTextInput()}
