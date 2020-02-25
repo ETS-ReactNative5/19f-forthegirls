@@ -35,6 +35,16 @@ const modalStyle = StyleSheet.create({
     color: colors.deepPurple.color,
     height: 40,
   },
+
+  imgModalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    //  backgroundColor: colors.black.color,
+    marginTop: 50,
+    marginBottom: 50,
+    borderRadius: 20
+  }
 })
 
 export default modalStyle;

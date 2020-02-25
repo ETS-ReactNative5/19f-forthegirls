@@ -6795,6 +6795,15 @@ query-string@^5.0.1:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
+query-string@^6.1.0:
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.11.0.tgz#dc27a05733d1be66f16d0f83dfa957270f45f66d"
+  integrity sha512-jS+me8X3OEGFTsF6kF+vUUMFG/d3WUCvD7bHhfZP5784nOq1pjj8yau/u86nfOncmcN6ZkSWKWkKAvv/MGxzLA==
+  dependencies:
+    decode-uri-component "^0.2.0"
+    split-on-first "^1.0.0"
+    strict-uri-encode "^2.0.0"
+
 query-string@^6.4.2:
   version "6.8.3"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.8.3.tgz#fd9fb7ffb068b79062b43383685611ee47777d4b"
@@ -7028,6 +7037,13 @@ react-native-modal-datetime-picker@^8.3.0:
   integrity sha512-iVhp2Hzr7ZFSPwyFfgfyE+TyIiZOATSzgEehUh10ybOatjLdSTpVBShefuQKYuOv4n/HX13unj8EjbQbBeCRqg==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-open-maps@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/react-native-open-maps/-/react-native-open-maps-0.3.5.tgz#719a002db50b2f5fb4e4d043c174c0827b87f2ee"
+  integrity sha512-JPRZVj8gYJDHqJZV90BQIemIvTmoxCE8T3CVD3w25ZNXjf822xAespJ+JRRCB8gZ58TnmcrzcRG8cst/tJeIhQ==
+  dependencies:
+    query-string "^6.1.0"
 
 react-native-paper@^3.0.0:
   version "3.0.0"

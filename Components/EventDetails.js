@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
 import EventMap from './EventMap.js'
 import SurveyHeaderComponent from './surveyHeaderComponent.js'
+
 export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 class EventDetails extends Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class EventDetails extends Component {
     this.renderAwardModal = this.renderAwardModal.bind(this);
     this.renderImageModal = this.renderImageModal.bind(this);
     this.resetImageModal = this.resetImageModal.bind(this);
+    this.showImage = this.showImage.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
@@ -127,6 +129,7 @@ class EventDetails extends Component {
       this.setState({ rsvp: false });
     }
   }
+
   renderMap = () => {
     if (this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
       return (
@@ -159,14 +162,12 @@ class EventDetails extends Component {
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
 
     if (this.state.fullScreenImage) {
-      console.log(image);
-      //  return (<ImageModal image={image} reset={this.resetImageModal}></ImageModal>)
+      return (<ImageModal image={image} reset={this.resetImageModal}></ImageModal>)
     }
-    this.setState({ fullScreenImage: !this.state.fullScreenImage })
   }
 
   resetImageModal = () => {
-    this.setStateState({ fullScreenImage: false, image: '' })
+    this.setState({ fullScreenImage: false, image: '' })
   }
 
   render() {
@@ -185,30 +186,30 @@ class EventDetails extends Component {
               />
             </TouchableOpacity>
           </View>
+          {this.renderImageModal()}
           <View style={eventPage.eventDetailImageContainer}>
-            {/* {this.renderImageModal()} */}
             <TouchableOpacity onPress={this.showImage}>
               <Image source={image} style={eventPage.eventDetailImage} />
             </TouchableOpacity>
-            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={[eventPage.eventDetailTitle, colors.black, fonts.majorHeading]}>{this.props.event.title}</Text>
-            </View>
+          </View>
+          <View style={eventPage.eventDetailTitle}>
+            <Text style={[colors.deepPurple, fonts.majorHeading]}>{this.props.event.title}</Text>
           </View>
           <View style={eventPage.eventDetailLogistics}>
             <View style={eventPage.eventDetailDayTime}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.event.date}, </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.event.time}</Text>
             </View>
             <View style={eventPage.eventDetailLocation}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.event.location}</Text>
             </View>
           </View>
-          {this.renderMap()}
           <View style={eventPage.eventDetailDescription}>
             <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
               {this.props.event.description}
             </Text>
           </View>
+
           <View style={eventPage.eventDetailRSVPContainer} >
             {this.renderConnectionsModal()}
             <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
@@ -225,6 +226,7 @@ class EventDetails extends Component {
               </Text>
             </TouchableOpacity>
           </View>
+          {this.renderMap()}
         </View >
       </ScrollView >
     );
