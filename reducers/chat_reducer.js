@@ -4,7 +4,7 @@ import { ActionTypes } from '../actions';
 
 const ChatReducer = (state = {
   unreadCount: 0,
-  chats: [],
+  chats: undefined,
   numContacted: 0,
   numChats: 0,
 }, action) => {
@@ -17,6 +17,8 @@ const ChatReducer = (state = {
       return Object.assign({}, state, { numContacted: action.payload }); 
     case ActionTypes.FETCH_NUM_CHATS:
       return Object.assign({}, state, { numChats: action.payload }); 
+    case ActionTypes.CLEAR_CHATS:
+      return Object.assign({}, state, { chats: undefined }); 
     default:
       return state;
 

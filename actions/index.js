@@ -50,6 +50,7 @@ export const ActionTypes = {
   CHECK_UNREAD_MESSAGES: 'CHECK_UNREAD_MESSAGES',
   SET_TO_READ: 'SET_TO_READ',
   GET_CHATS: 'GET_CHATS',
+  CLEAR_CHATS: 'CLEAR_CHATS',
 
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
@@ -274,6 +275,7 @@ export function getPotentialMatches(username) {
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
+        console.log("ERROR HERE");
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -498,6 +500,15 @@ export function getFullChat(firstID, secondID) {
       }).catch((error) => {
         console.log(error);
       });
+  }
+}
+
+export function clearChat() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_CHATS,
+      payload: null,
+    });
   }
 }
 
