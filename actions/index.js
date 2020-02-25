@@ -43,10 +43,14 @@ export const ActionTypes = {
   //AWARDS
   FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
   FETCH_AWARD: 'FETCH_AWARD',
+  FETCH_NUM_CONTACTED: 'FETCH_NUM_CONTACTED',
+  FETCH_NUM_CHATS: 'FETCH_NUM_CHATS',
 
   //CHATS
   CHECK_UNREAD_MESSAGES: 'CHECK_UNREAD_MESSAGES',
   SET_TO_READ: 'SET_TO_READ',
+  GET_CHATS: 'GET_CHATS',
+  CLEAR_CHATS: 'CLEAR_CHATS',
 
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
@@ -271,6 +275,7 @@ export function getPotentialMatches(username) {
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);
+        console.log("ERROR HERE");
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -467,6 +472,68 @@ export function setToRead(fields) {
       console.log(error);
     });
   };
+}
+
+//sends a chat and then re-fetches all the chats and sends that to the chat reducer
+export function sendChat(fields, firstID, secondID) {
+  return (dispatch) => {
+    axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
+    .then((response) => {
+        axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+        .then((response) => {
+          dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
+        }).catch((error) => {
+          console.log(error);
+        });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
+//gets all the chats between two people
+export function getFullChat(firstID, secondID) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+      .then((response) => {
+        dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+}
+
+export function clearChat() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_CHATS,
+      payload: null,
+    });
+  }
+}
+
+//gets the user's total contacted number
+export function totalContacted(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
+    .then((response) => { //response.data
+      dispatch({type: ActionTypes.FETCH_NUM_CONTACTED, payload: response.data});
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
+//gets the user's total chats sent
+export function totalChatsSent(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
+      .then((resp) => { //resp.data
+        dispatch({type: ActionTypes.FETCH_NUM_CHATS, payload: resp.data});
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 //--------------------------------------BADGES----------------------------------------
