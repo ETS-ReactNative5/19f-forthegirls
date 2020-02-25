@@ -73,7 +73,6 @@ class EditProfile extends React.Component {
 
       progressMessage: '',
       loading: false,
-      query: '',
       queryTown: '',
       statelist: [],
       stateSelected: '',
@@ -438,6 +437,16 @@ class EditProfile extends React.Component {
     return result;
   }
 
+  autocompleteSelection = () => {
+    if(this.state.stateSelected != "" && this.state.queryTown != ""){
+      var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
+      var location = this.state.queryTown + ", " + stateAbbrv;
+      console.log(location);
+      this.setState({location: this.state.queryTown + ", " + stateAbbrv});
+      console.log(this.state.location)
+    }
+  }
+
   render() {
     let data = [{
       value: 'Woman in tech inspiration?',
@@ -562,7 +571,11 @@ class EditProfile extends React.Component {
                 defaultValue={this.state.queryTown}
                 onChangeText={text => this.setState({ queryTown: text })}
                 renderItem={({ item, i }) => (
-                  <TouchableOpacity onPress={() => this.setState({ queryTown: item })}>
+                  <TouchableOpacity onPress={() => {
+                    this.setState({ queryTown: item })
+                    this.autocompleteSelection();
+                    }
+                  }>
                     <Text>{item}</Text>
                   </TouchableOpacity>
                 )}
