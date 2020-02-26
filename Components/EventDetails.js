@@ -52,6 +52,7 @@ class EventDetails extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.rsvp === null) {
       this.checkRSVP();
+      this.props.getEventCount(this.props.id);
     }
   }
   changeConnectionsModal() {
@@ -105,6 +106,7 @@ class EventDetails extends Component {
     }
   }
   handleRSVP() {
+    console.log(this.props.eventCount);
     if (this.state.rsvp === false) {
       if (this.props.eventCount == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
