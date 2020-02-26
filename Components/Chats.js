@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { getUser, getMatches, deleteMatch } from '../actions';
+import { getUser, getMatches, deleteMatch, blockUser, reportUser } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
 
 
-/* animation: 
+/* animation:
  // https://facebook.github.io/react-native/docs/animated#timing
  // https://stackoverflow.com/questions/37445090/react-native-how-do-you-animate-the-rotation-of-an-image
 */
@@ -30,6 +30,16 @@ class Chats extends React.Component {
 
   deleteMatch = (matchID) => {
     this.props.deleteMatch(this.props.id, matchID, this.props.username);
+  }
+
+  reportMatch = (matchID) => {
+    console.log('reporting in chats');
+    this.props.reportUser(this.props.id, matchID);
+  }
+
+  blockMatch = (matchID) => {
+    console.log('blocking in chats');
+    this.props.blockUser(this.props.id, matchID, this.props.username);
   }
 
   spin() {
@@ -60,6 +70,8 @@ class Chats extends React.Component {
           userId={n}
           i={i}
           deleteMatch={this.deleteMatch}
+          blockMatch={this.blockMatch}
+          reportMatch={this.reportMatch}
           matchID={n}
           nav={this.props.navigation}
         />
@@ -125,4 +137,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser, deleteMatch})(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser})(Chats);
