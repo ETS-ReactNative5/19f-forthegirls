@@ -213,7 +213,7 @@ class AddEvent extends Component {
               style={textFieldStyle}
               placeholder="Event Description"
               keyboardType='default'
-              blurOnSubmit='true'
+              blurOnSubmit={true}
               onChangeText={this.descriptionInput}
               autoCapitalize='none'
               clearButtonMode='while-editing'

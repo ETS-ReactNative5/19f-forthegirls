@@ -166,10 +166,10 @@ class SingleChat extends React.Component {
     this.setState({ chatText: '', prompt: '' })
 
     if (this.props.numContacted == 5) {
-      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/chattyCathy.png') });
+      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/messageFive.png') });
     }
     if (this.props.numChats == 99) {
-      this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/hundredMessages.png') });
+      this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/chattyCathy.png') });
     }
   }
 
@@ -272,8 +272,10 @@ class SingleChat extends React.Component {
             onContentSizeChange={() => { this.scrollView.scrollToEnd({ animated: true }) }}>
             {/* {this.loadMore()} */}
             <View>
-              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+              <View>
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 {this.renderLoading()}
+                </View>
                 {this.showChats()}
               </View>
               {this.renderTextInput()}
