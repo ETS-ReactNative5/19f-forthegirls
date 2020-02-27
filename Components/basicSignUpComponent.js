@@ -8,6 +8,10 @@ import { signUpUser, resetErrors } from '../actions/index'
 import { connect } from 'react-redux';
 import ErrorModal from './ErrorModal'
 import Geocoder from 'react-native-geocoding';
+import { Dropdown } from 'react-native-material-dropdown';
+import { ICountry, IState, ICity } from 'country-state-city'
+import Autocomplete from 'react-native-autocomplete-input';
+import csc from 'country-state-city'
 
 
 
@@ -33,12 +37,87 @@ class BasicSignUpComponent extends React.Component {
       longitude: 0,
       showModal: false,
       modalMessage: '',
+      queryTown: '',
+      statelist: [],
+      stateSelected: '',
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
   componentWillUnmount() {
     this.props.resetErrors();
+  }
+
+  stateSelection = (value) => {
+    this.setState({ stateSelected: value });
+  }
+
+  componentDidMount() {
+    var states = csc.getStatesOfCountry("231");
+    var statelist = [];
+    for (var i = 0; i< states.length; i++){
+      statelist[i] = states[i].name;
+    }
+
+    var stateAbrv = this.createStateToAbbrvMap();
+    console.log(stateAbrv);
+    this.setState({statelist: statelist, stateAbrv: stateAbrv});
+  }
+
+  createStateToAbbrvMap = () => {
+    var startsToAbbrv = {};
+    startsToAbbrv["Alabama"] = "AL";
+    startsToAbbrv["Alaska"] = "AK";
+    startsToAbbrv["Arizona"] = "AZ";
+    startsToAbbrv["Arkansas"] = "AR";
+    startsToAbbrv["California"] = "CA";
+    startsToAbbrv["Colorado"] = "CO";
+    startsToAbbrv["Connecticut"] = "CT";
+    startsToAbbrv["Delaware"] = "DE";
+    startsToAbbrv["Florida"] = "FL";
+    startsToAbbrv["Georgia"] = "GA";
+    startsToAbbrv["Hawaii"] = "HI";
+    startsToAbbrv["Idaho"] = "ID";
+    startsToAbbrv["Illinois"] = "IL";
+    startsToAbbrv["Indiana"] = "IN";
+    startsToAbbrv["Iowa"] = "IA";
+    startsToAbbrv["Kansas"] = "KS";
+    startsToAbbrv["Kentucky"] = "KY";
+    startsToAbbrv["Louisiana"] = "LA";
+    startsToAbbrv["Maine"] = "ME";
+    startsToAbbrv["Maryland"] = "MD";
+    startsToAbbrv["Massachusetts"] = "MA";
+    startsToAbbrv["Michigan"] = "MI";
+    startsToAbbrv["Minnesota"] = "MN";
+    startsToAbbrv["Mississippi"] = "MS";
+    startsToAbbrv["Missouri"] = "MO";
+    startsToAbbrv["Montana"] = "MT";
+    startsToAbbrv["Nebraska"] = "NE";
+    startsToAbbrv["Nevada"] = "NV";
+    startsToAbbrv["New Hampshire"] = "NH";
+    startsToAbbrv["New Jersey"] = "NJ";
+    startsToAbbrv["New Mexico"] = "NM";
+    startsToAbbrv["New York"] = "NY";
+    startsToAbbrv["North Carolina"] = "NC";
+    startsToAbbrv["North Dakota"] = "ND";
+    startsToAbbrv["Ohio"] = "OH";
+    startsToAbbrv["Oklahoma"] = "OK";
+    startsToAbbrv["Oregon"] = "OR";
+    startsToAbbrv["Pennsylvania"] = "PA";
+    startsToAbbrv["Rhode Island"] = "RI";
+    startsToAbbrv["South Carolina"] = "SC";
+    startsToAbbrv["South Dakota"] = "SD";
+    startsToAbbrv["Tennessee"] = "TN";
+    startsToAbbrv["Texas"] = "TX";
+    startsToAbbrv["Utah"] = "UT";
+    startsToAbbrv["Vermont"] = "VT";
+    startsToAbbrv["Virginia"] = "VA";
+    startsToAbbrv["Washington"] = "WA";
+    startsToAbbrv["West Virginia"] = "WV";
+    startsToAbbrv["Wisconsin"] = "WI";
+    startsToAbbrv["Wyoming"] = "WY";
+
+    return startsToAbbrv;
   }
 
 
@@ -53,6 +132,8 @@ class BasicSignUpComponent extends React.Component {
         username: this.state.username,
         password: this.state.password,
       }
+
+
 
       console.log("printing push token");
       console.log(this.props.pushToken);
@@ -177,9 +258,66 @@ class BasicSignUpComponent extends React.Component {
     this.props.navigation.pop();
   }
 
+  autocompleteSelection = (item) => {
+    if(this.state.stateSelected != "" && this.state.queryTown != ""){
+      var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
+      var newLocation = item + ", " + stateAbbrv;
+      this.setState({location: newLocation});
+      return newLocation;
+    }
+  }
+
+  findQueryTown = (query) => {
+    console.log("This state seelected: " + this.state.stateSelected);
+
+    if (query === '' || this.state.stateSelected == '') {
+      return [];
+    }
+    var state = csc.getStatesOfCountry("231");
+    var id = "";
+    for(var i = 0; i< state.length; i++){
+      if (state[i].name == this.state.stateSelected){
+        id = state[i].id;
+      }
+    }
+    if(id == ""){
+      return [];
+    }
+    var cities = csc.getCitiesOfState(id);
+    for (var i = 0; i < cities.length; i++){
+      if(this.state.queryTown == cities[i].name)
+      {
+        return [];
+      }
+    }
+    const regex = new RegExp(`${query.trim()}`, 'i');
+    var filtered = cities.filter(city => city.name.search(regex) >= 0);
+    var result = []
+    for (var i = 0; i < filtered.length; i++){
+      result[i] = filtered[i].name
+    }
+
+    return result;
+  }
+
   //need to check unique from here
   render() {
+//    console.log(this.state.queryTown);
+    var queryDateTown = this.findQueryTown(this.state.queryTown);
+    //console.log(queryDateTown)
+    console.log("Location!!! " + this.state.location)
 
+    let stateDropdown = [];
+    for (var i = 0; i< this.state.statelist.length; i++){
+      var newVal = {};
+      newVal["value"] = this.state.statelist[i];
+      stateDropdown[i]= newVal;
+    }
+
+    var dropdownPickerStyle = { borderRadius: 20 }
+    var itemTextStyle = [fonts.bodyText]
+    var selectedItemColor = colors.turquoise.color
+    var itemColor = colors.black.color
 
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText]
     var endFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText, surveyStyle.endField]
@@ -241,13 +379,35 @@ class BasicSignUpComponent extends React.Component {
           />
           <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
           <Text style={secondaryHeaderText}>Next, a few specifics:</Text>
-          <TextInput
-            style={endFieldStyle}
-            invalidTextFieldStyle={{ borderColor: colors.red.color }}
-            placeholder="Location (City, State)"
-            onChangeText={this.locationInput}
-            clearButtonMode='while-editing'
+          <Dropdown
+            pickerStyle={dropdownPickerStyle}
+            itemTextStyle={itemTextStyle}
+            selectedItemColor={selectedItemColor}
+            label='Select your home state'
+            labelTextStyle={fonts.bodyText}
+            data={stateDropdown}
+            value={this.state.stateSelected != "" ? this.state.stateSelected : "State"}
+            onChangeText={this.stateSelection}
           />
+
+          <View style={surveyStyle.textFieldContainer}>
+            <Autocomplete
+              data={queryDateTown}
+              style={textFieldStyle}
+              defaultValue={this.state.queryTown}
+              onChangeText={text => this.setState({ queryTown: text })}
+              renderItem={({ item, i }) => (
+                <TouchableOpacity onPress={() => {
+                  this.setState({ queryTown: item })
+                  var newLocation = this.autocompleteSelection(item);
+                  this.setState({location: newLocation});
+                  }
+                }>
+                  <Text>{item}</Text>
+                </TouchableOpacity>
+              )}
+           />
+         </View>
           <TextInput
             style={endFieldStyle}
             placeholder="High School Name"
