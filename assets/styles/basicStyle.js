@@ -128,6 +128,19 @@ const buttons = StyleSheet.create({
     borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
     borderRadius: 20
+  },
+  matchDeleteButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    borderWidth: 2,
+    height: 40,
+    width: 120,
+    padding: 5,
+    borderColor: colors.turquoise.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20,
   }
 
 })

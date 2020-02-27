@@ -51,22 +51,26 @@ class BlacklistModal extends Component {
       >
         <View style={modal.container}>
           <Text style={[modal.errorText, fonts.minorHeading]}>What would you like to do?</Text>
-          <TouchableOpacity
-            onPress={() => this.handleDelete()}>
-            <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Delete</Text></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.handleBlock()}>
-            <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Block</Text></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.handleReport()}>
-            <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Report</Text></View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.handleCancel()}>
-            <View style={[buttons.logInOutButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Cancel</Text></View>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={() => this.handleDelete()}>
+              <View style={[buttons.matchDeleteButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Delete</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.handleBlock()}>
+              <View style={[buttons.matchDeleteButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Block</Text></View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              onPress={() => this.handleReport()}>
+              <View style={[buttons.matchDeleteButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Report</Text></View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.handleCancel()}>
+              <View style={[buttons.matchDeleteButton, modal.closeButton]}><Text style={[fonts.minorHeading, colors.white]}>Cancel</Text></View>
+            </TouchableOpacity>
+          </View>
         </View>
       </Modal>
     );
