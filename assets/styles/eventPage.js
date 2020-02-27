@@ -175,6 +175,8 @@ const eventPage = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 25
   },
 
