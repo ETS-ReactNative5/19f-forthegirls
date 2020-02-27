@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {scale, verticalScale, moderateScale} from './Style.js';
+import { scale, verticalScale, moderateScale } from './Style.js';
 
 const colors = StyleSheet.create({
   turquoise: {
@@ -181,8 +181,8 @@ const modal = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.white.color,
     padding: 10,
-    marginTop: 300,
-    marginBottom: 300,
+    marginTop: 250,
+    marginBottom: 250,
     marginLeft: 50,
     marginRight: 50,
     borderRadius: 20,
