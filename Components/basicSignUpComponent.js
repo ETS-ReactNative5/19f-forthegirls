@@ -33,6 +33,7 @@ class BasicSignUpComponent extends React.Component {
       longitude: 0,
       showModal: false,
       modalMessage: '',
+      signedUp: false,
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
@@ -53,6 +54,8 @@ class BasicSignUpComponent extends React.Component {
         username: this.state.username,
         password: this.state.password,
       }
+      
+      this.setState({signedUp: true});
 
       console.log("printing push token");
       console.log(this.props.pushToken);
@@ -177,6 +180,12 @@ class BasicSignUpComponent extends React.Component {
     this.props.navigation.pop();
   }
 
+  renderSigningUp = () => {
+    if(this.state.signedUp) {
+      <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
+    }
+  }
+
   //need to check unique from here
   render() {
 
@@ -187,7 +196,7 @@ class BasicSignUpComponent extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView style={surveyStyle.surveyBackground}>
-          <View style={[singleChat.arrowBack]}>
+          <View style={[singleChat.arrowBack, {margin: 10}]}>
             <TouchableOpacity
               onPress={this.goBack}>
               <Image
@@ -199,6 +208,7 @@ class BasicSignUpComponent extends React.Component {
             <SurveyHeaderComponent header="Sign up!" goBack={this.goBack} />
             {this.renderModal()}
             {this.renderError()}
+            {this.renderSigningUp()}
           </View>
           <Text style={secondaryHeaderText}>First, the basics:</Text>
           <View style={{ flexDirection: 'row', width: '100%' }}>

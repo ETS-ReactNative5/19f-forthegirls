@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
-import { pairMatchToUser } from '../actions';
+import { pairMatchToUser, rejectAMatch } from '../actions';
 import { Linking } from 'react-native'
 import axios from 'axios';
 
@@ -46,6 +46,11 @@ class PotentialMentor extends React.Component {
       prompt = this.state.userMatch.promptThreeAnswer;
     }
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
+    // this.props.refresh(this.props.username);
+  }
+
+  rejectMatch = () => {
+    this.props.rejectAMatch(this.props.username, this.state.userMatch.username)
   }
 
   getPrompt = (num) => {
@@ -148,4 +153,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { pairMatchToUser })(PotentialMentor);
+export default connect(mapStateToProps, { pairMatchToUser, rejectAMatch })(PotentialMentor);

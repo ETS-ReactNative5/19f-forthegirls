@@ -289,8 +289,9 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
             if (res.data.length === 1) {
               award = true;
             }
-            dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
-            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2, firstMatchAward: award })
+            console.log(res.data);
+            dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: res.data });
+            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2, firstMatchAward: award });
           }).catch((error) => {
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
@@ -301,12 +302,41 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   }
 }
 
+//    axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
+
+export function rejectAMatch(user1, user2) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
+      .then((response) => {
+        return axios.get(`${ROOT_URL}/matches/${user1}`)
+          .then((res) => {
+            console.log("getting again");
+            console.log(res);
+            var award = false;
+            if (res.data.length === 1) {
+              award = true;
+            }
+          dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: res.data });
+          }).catch((error) => {
+            console.log(error);
+            dispatch({ type: ActionTypes.SET_ERROR, error });
+          });
+      }).catch((error) => {
+        console.log(error);
+      })
+  }
+}
+
+
 //gets all the potential matches for a user based on our algorithm's suggestions
 export function getPotentialMatches(username) {
   //matches/potential/:username
+  console.log("getting potential");
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/potential/${username}`)
       .then((response) => {
+        console.log("in here");
+        console.log(response.data);
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
         console.log(error);

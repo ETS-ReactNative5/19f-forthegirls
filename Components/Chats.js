@@ -64,6 +64,7 @@ class Chats extends React.Component {
     var i = -1;
     return this.props.matches.map((n) => {
       i++;
+      //
       return (
         <Match
           key={n}
@@ -74,6 +75,7 @@ class Chats extends React.Component {
           reportMatch={this.reportMatch}
           matchID={n}
           nav={this.props.navigation}
+          // bold={isBold}
         />
       )
     })
