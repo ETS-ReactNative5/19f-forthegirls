@@ -261,7 +261,7 @@ class SingleChat extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={singleChat.headerTextContainer}>
-            <Image source={this.props.navigation.getParam('profilePic') !== undefined ? { uri: this.props.navigation.getParam('profilePic') } : require('./../assets/icons/tim.jpg')} style={profileImage.singleChat} />
+            <Image source={this.props.navigation.getParam('profilePic') !== undefined ? { uri: this.props.navigation.getParam('profilePic') } : require('./../assets/icons/propic.jpg')} style={profileImage.singleChat} />
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
