@@ -63,29 +63,29 @@ class Chats extends React.Component {
 
   showMatches() {
     var i = -1;
-    return this.props.matches.map((n) => {
-      i++;
-      var isBold = false;
-      for(u=0; u < this.props.unreadPeople.length(); i++) {
-        if(unreadPeople[u] === n) {
-          isBold = true;
-          break;
+      return this.props.matches.map((n) => {
+        i++;
+        var isBold = false;
+        for(u=0; u < this.props.unreadPeople.length(); i++) {
+          if(unreadPeople[u] === n) {
+            isBold = true;
+            break;
+          }
         }
-      }
-      return (
-        <Match
-          key={n}
-          userId={n}
-          i={i}
-          deleteMatch={this.deleteMatch}
-          blockMatch={this.blockMatch}
-          reportMatch={this.reportMatch}
-          matchID={n}
-          nav={this.props.navigation}
-          bold={isBold}
-        />
-      )
-    })
+        return (
+          <Match
+            key={n}
+            userId={n}
+            i={i}
+            deleteMatch={this.deleteMatch}
+            blockMatch={this.blockMatch}
+            reportMatch={this.reportMatch}
+            matchID={n}
+            nav={this.props.navigation}
+            bold={isBold}
+          />
+        )
+      })
   }
 
   render() {
@@ -111,7 +111,7 @@ class Chats extends React.Component {
         <Text style={[fonts.majorHeading, colors.deepPurple]}>Loading Your Chats!</Text>
       </View>);
 
-    if (this.props.matches !== undefined && this.props.matches.legnth !== 0) {
+    if (this.props.matches !== undefined && this.props.matches.legnth !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <ScrollView>
           <View>
@@ -121,7 +121,7 @@ class Chats extends React.Component {
         </ScrollView>
       )
     }
-    else if (this.props.matches !== undefined && this.props.matches.length !== 0) {
+    else if (this.props.matches !== undefined && this.props.matches.length !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <View>
           <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>

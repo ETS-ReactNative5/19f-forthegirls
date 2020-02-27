@@ -52,6 +52,7 @@ export const ActionTypes = {
   SET_TO_READ: 'SET_TO_READ',
   GET_CHATS: 'GET_CHATS',
   CLEAR_CHATS: 'CLEAR_CHATS',
+  FETCH_UNREAD_USERS: 'FETCH_UNREAD_USERS',
 
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
@@ -539,8 +540,13 @@ export function checkUnreadMessages(fields) {
 export function checkUnreadUsers(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/chats/getMyUnreadWithIds/${id}`).then((response) => {
-        
-    }
+      dispatch({
+        type: ActionTypes.FETCH_UNREAD_USERS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }
 
