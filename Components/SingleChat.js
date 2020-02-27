@@ -273,8 +273,8 @@ class SingleChat extends React.Component {
             {/* {this.loadMore()} */}
             <View>
               <View>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                {this.renderLoading()}
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  {this.renderLoading()}
                 </View>
                 {this.showChats()}
               </View>
