@@ -7,6 +7,7 @@ const ChatReducer = (state = {
   chats: undefined,
   numContacted: 0,
   numChats: 0,
+  unreadPeople: [],
 }, action) => {
   switch (action.type) {
     case ActionTypes.CHECK_UNREAD_MESSAGES:
@@ -19,6 +20,8 @@ const ChatReducer = (state = {
       return Object.assign({}, state, { numChats: action.payload }); 
     case ActionTypes.CLEAR_CHATS:
       return Object.assign({}, state, { chats: undefined }); 
+    case ActionTypes.FETCH_UNREAD_USERS:
+    return Object.assign({}, state, { unreadPeople: action.payload }); 
     default:
       return state;
 

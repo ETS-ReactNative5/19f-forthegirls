@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { getUser, getMatches, deleteMatch, blockUser, reportUser } from '../actions';
+import { getUser, getMatches, deleteMatch, blockUser, reportUser, checkUnreadUsers } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
@@ -25,6 +25,7 @@ class Chats extends React.Component {
   componentDidMount() {
     this.props.getUser(this.props.id);
     this.spin();
+    this.props.checkUnreadUsers(this.props.id);
     this.setState({ animation: true });
   }
 
@@ -64,7 +65,13 @@ class Chats extends React.Component {
     var i = -1;
     return this.props.matches.map((n) => {
       i++;
-      //
+      var isBold = false;
+      for(u=0; u < this.props.unreadPeople.length(); i++) {
+        if(unreadPeople[u] === n) {
+          isBold = true;
+          break;
+        }
+      }
       return (
         <Match
           key={n}
@@ -75,7 +82,7 @@ class Chats extends React.Component {
           reportMatch={this.reportMatch}
           matchID={n}
           nav={this.props.navigation}
-          // bold={isBold}
+          bold={isBold}
         />
       )
     })
@@ -136,7 +143,8 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    unreadPeople: reduxState.chats.unreadPeople,
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser})(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser, checkUnreadUsers})(Chats);

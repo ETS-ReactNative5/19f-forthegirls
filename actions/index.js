@@ -536,6 +536,14 @@ export function checkUnreadMessages(fields) {
   };
 }
 
+export function checkUnreadUsers(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/chats/getMyUnreadWithIds/${id}`).then((response) => {
+        
+    }
+  }
+}
+
 export function setToRead(fields) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/chats/setToRead`, fields).then((response) => {
