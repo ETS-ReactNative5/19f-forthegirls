@@ -205,6 +205,20 @@ const eventPage = StyleSheet.create({
     marginTop: 7,
   },
 
+  eventButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginTop: 10,
+    borderWidth: 2,
+    height: 40,
+    width: 120,
+    padding: 5,
+    marginBottom: 10,
+    borderColor: colors.turquoise.color,
+    borderRadius: 20,
+  },
+
   addEventOpacity: {
     borderRadius: 20,
     display: 'flex',
@@ -214,10 +228,9 @@ const eventPage = StyleSheet.create({
   },
 
   addEventText: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 25
   },
 })
