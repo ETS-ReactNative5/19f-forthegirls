@@ -49,13 +49,13 @@ class Match extends React.Component {
   }
 
   blacklistMatch = () => {
-    this.setState({ showModal: true});
+    this.setState({ showModal: true });
   }
 
   renderModal = () => {
     if (this.state.showModal) {
       return (
-        <BlacklistModal reset={this.resetModal} block={this.blockMatch} report={this.reportMatch}/>
+        <BlacklistModal reset={this.resetModal} block={this.blockMatch} report={this.reportMatch} delete={this.deleteMatch} />
       );
     }
   }
@@ -74,17 +74,10 @@ class Match extends React.Component {
           <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
           <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
         </View>
-        <View style={chatList.blacklist}>
-          <TouchableOpacity
-            key={this.props.i + 1}
-            onPress={() => this.blacklistMatch()}>
-            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>!</Text>
-          </TouchableOpacity>
-        </View>
         <View style={chatList.delete}>
           <TouchableOpacity
             key={this.props.i + 1}
-            onPress={() => this.deleteMatch()}>
+            onPress={() => this.blacklistMatch()}>
             <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
           </TouchableOpacity>
         </View>
