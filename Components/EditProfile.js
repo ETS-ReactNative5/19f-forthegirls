@@ -93,28 +93,28 @@ class EditProfile extends React.Component {
 
     var states = csc.getStatesOfCountry("231");
     var statelist = [];
-    for (var i = 0; i< states.length; i++){
+    for (var i = 0; i < states.length; i++) {
       statelist[i] = states[i].name;
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
     console.log(stateAbrv);
-    this.setState({statelist: statelist, stateAbrv: stateAbrv});
+    this.setState({ statelist: statelist, stateAbrv: stateAbrv });
 
     var locationLength = this.state.location.length;
-    if(this.state.location.charAt(locationLength - 4) == ","){
-      var stateAbbrv = this.state.location.substring(locationLength-2);
-      var town = this.state.location.substring(0, locationLength-4);
+    if (this.state.location.charAt(locationLength - 4) == ",") {
+      var stateAbbrv = this.state.location.substring(locationLength - 2);
+      var town = this.state.location.substring(0, locationLength - 4);
       var stateLong = "";
-      for (var i = 0; i< states.length; i++){
+      for (var i = 0; i < states.length; i++) {
         var abbrv = stateAbrv[states[i].name];
-        if (abbrv == stateAbbrv){
+        if (abbrv == stateAbbrv) {
           stateLong = states[i].name
         }
 
       }
-    console.log(stateLong)
-    this.setState({queryTown: town, stateSelected: stateLong})
+      console.log(stateLong)
+      this.setState({ queryTown: town, stateSelected: stateLong })
     }
   }
 
@@ -431,25 +431,24 @@ class EditProfile extends React.Component {
     }
     var state = csc.getStatesOfCountry("231");
     var id = "";
-    for(var i = 0; i< state.length; i++){
-      if (state[i].name == this.state.stateSelected){
+    for (var i = 0; i < state.length; i++) {
+      if (state[i].name == this.state.stateSelected) {
         id = state[i].id;
       }
     }
-    if(id == ""){
+    if (id == "") {
       return [];
     }
     var cities = csc.getCitiesOfState(id);
-    for (var i = 0; i < cities.length; i++){
-      if(this.state.queryTown == cities[i].name)
-      {
+    for (var i = 0; i < cities.length; i++) {
+      if (this.state.queryTown == cities[i].name) {
         return [];
       }
     }
     const regex = new RegExp(`${query.trim()}`, 'i');
     var filtered = cities.filter(city => city.name.search(regex) >= 0);
     var result = []
-    for (var i = 0; i < filtered.length; i++){
+    for (var i = 0; i < filtered.length; i++) {
       result[i] = filtered[i].name
     }
 
@@ -457,9 +456,9 @@ class EditProfile extends React.Component {
   }
 
   autocompleteSelection = (item) => {
-    if(this.state.stateSelected != "" && this.state.queryTown != ""){
+    if (this.state.stateSelected != "" && this.state.queryTown != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
-      this.setState({location: item + ", " + stateAbbrv});
+      this.setState({ location: item + ", " + stateAbbrv });
       console.log(this.state.location)
     }
   }
@@ -482,10 +481,10 @@ class EditProfile extends React.Component {
     }];
 
     let stateDropdown = [];
-    for (var i = 0; i< this.state.statelist.length; i++){
+    for (var i = 0; i < this.state.statelist.length; i++) {
       var newVal = {};
       newVal["value"] = this.state.statelist[i];
-      stateDropdown[i]= newVal;
+      stateDropdown[i] = newVal;
     }
 
 
@@ -499,7 +498,7 @@ class EditProfile extends React.Component {
     var dropdownPickerStyle = { borderRadius: 20 }
 
 
-    var imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.edit} />
+    var imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.edit} />
     var imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.edit} />
 
     var image;
@@ -591,13 +590,13 @@ class EditProfile extends React.Component {
                   <TouchableOpacity onPress={() => {
                     this.setState({ queryTown: item })
                     this.autocompleteSelection(item);
-                    }
+                  }
                   }>
                     <Text>{item}</Text>
                   </TouchableOpacity>
                 )}
-             />
-           </View>
+              />
+            </View>
 
           </View>
           <View style={{ alignItems: 'center', width: '100%' }}>

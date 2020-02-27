@@ -128,6 +128,19 @@ const buttons = StyleSheet.create({
     borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
     borderRadius: 20
+  },
+  matchDeleteButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    borderWidth: 2,
+    height: 40,
+    width: 120,
+    padding: 5,
+    borderColor: colors.turquoise.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20,
   }
 
 })
@@ -181,8 +194,8 @@ const modal = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.white.color,
     padding: 10,
-    marginTop: 250,
-    marginBottom: 250,
+    marginTop: 225,
+    marginBottom: 225,
     marginLeft: 50,
     marginRight: 50,
     borderRadius: 20,

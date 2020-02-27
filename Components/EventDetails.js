@@ -69,7 +69,7 @@ class EventDetails extends Component {
     var connected = this.props.connections.map((connect) => {
       return (
         <View key={connect._id} style={{ margin: 7 }}>
-          <Image source={connect.profileURL !== undefined ? { uri: connect.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.eventConnection} />
+          <Image source={connect.profileURL !== undefined ? { uri: connect.profileURL } : require('./../assets/icons/propic.jpg')} style={profileImage.eventConnection} />
           <Text style={[fonts.minorHeading, colors.deepPurple]}>
             {connect.firstName}
           </Text>
