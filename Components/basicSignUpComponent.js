@@ -183,7 +183,14 @@ class BasicSignUpComponent extends React.Component {
   }
 
   locationInput = (text) => {
-    this.setState({ location: text });
+    if(this.stateSelected!=""){
+      var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
+      var newLoc = text + ", " + stateAbbrv;
+      this.setState({ location: newLoc });
+    }
+    else {
+      this.setState({location: text});
+    }
   }
 
   emailInput = (text) => {
@@ -300,12 +307,34 @@ class BasicSignUpComponent extends React.Component {
     return result;
   }
 
+
   //need to check unique from here
   render() {
+
+    // var autocomplete =(
+    //   <View style={surveyStyle.textFieldContainer}>
+    //     <Autocomplete
+    //       data={queryDateTown}
+    //       style={textFieldStyle}
+    //       defaultValue={this.state.queryTown}
+    //       onChangeText={text => this.setState({ queryTown: text })}
+    //       renderItem={({ item, i }) => (
+    //         <TouchableOpacity onPress={() => {
+    //           this.setState({ queryTown: item })
+    //           var newLocation = this.autocompleteSelection(item);
+    //           this.setState({location: newLocation});
+    //           }
+    //         }>
+    //           <Text>{item}</Text>
+    //         </TouchableOpacity>
+    //       )}
+    //    />
+    //  </View>
+    // )
 //    console.log(this.state.queryTown);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
     //console.log(queryDateTown)
- 
+
     let stateDropdown = [];
     for (var i = 0; i< this.state.statelist.length; i++){
       var newVal = {};
@@ -389,24 +418,14 @@ class BasicSignUpComponent extends React.Component {
             onChangeText={this.stateSelection}
           />
 
-          <View style={surveyStyle.textFieldContainer}>
-            <Autocomplete
-              data={queryDateTown}
-              style={textFieldStyle}
-              defaultValue={this.state.queryTown}
-              onChangeText={text => this.setState({ queryTown: text })}
-              renderItem={({ item, i }) => (
-                <TouchableOpacity onPress={() => {
-                  this.setState({ queryTown: item })
-                  var newLocation = this.autocompleteSelection(item);
-                  this.setState({location: newLocation});
-                  }
-                }>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              )}
-           />
-         </View>
+          <TextInput
+            style={endFieldStyle}
+            placeholder="City"
+            onChangeText={this.locationInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+
           <TextInput
             style={endFieldStyle}
             placeholder="High School Name"
