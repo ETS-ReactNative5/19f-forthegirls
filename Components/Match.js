@@ -60,6 +60,17 @@ class Match extends React.Component {
     }
   }
 
+  returnName = () => {
+    if(this.props.bold) {
+      <Text style={[fonts.minorHeading, chatList.username, colors.deepPurple]} key={this.state.match.username}>{this.state.match.username}</Text>
+    }
+    else {
+      return (
+        <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
+      )
+    }
+  }
+
   resetModal = () => {
     this.setState({ showModal: false });
   }
@@ -71,8 +82,8 @@ class Match extends React.Component {
         onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username, profilePic: this.state.match.profileURL })}>
         {this.renderModal()}
         <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
-          <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/propic.jpg')} style={profileImage.allChatsPage} />
-          <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
+          <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
+          {this.returnName()}
         </View>
         <View style={chatList.delete}>
           <TouchableOpacity

@@ -37,6 +37,7 @@ class BasicSignUpComponent extends React.Component {
       longitude: 0,
       showModal: false,
       modalMessage: '',
+      signedUp: false,
       queryTown: '',
       statelist: [],
       stateSelected: '',
@@ -60,7 +61,7 @@ class BasicSignUpComponent extends React.Component {
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
-    console.log(stateAbrv);
+    // console.log(stateAbrv);
     this.setState({statelist: statelist, stateAbrv: stateAbrv});
   }
 
@@ -132,6 +133,8 @@ class BasicSignUpComponent extends React.Component {
         username: this.state.username,
         password: this.state.password,
       }
+      
+      this.setState({signedUp: true});
 
 
 
@@ -265,6 +268,12 @@ class BasicSignUpComponent extends React.Component {
     this.props.navigation.pop();
   }
 
+  renderSigningUp = () => {
+    if(this.state.signedUp) {
+      <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
+    }
+  }
+
   autocompleteSelection = (item) => {
     if(this.state.stateSelected != "" && this.state.queryTown != ""){
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
@@ -275,7 +284,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   findQueryTown = (query) => {
-    console.log("This state seelected: " + this.state.stateSelected);
+    // console.log("This state seelected: " + this.state.stateSelected);
 
     if (query === '' || this.state.stateSelected == '') {
       return [];
@@ -306,7 +315,6 @@ class BasicSignUpComponent extends React.Component {
 
     return result;
   }
-
 
   //need to check unique from here
   render() {
@@ -353,7 +361,7 @@ class BasicSignUpComponent extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView style={surveyStyle.surveyBackground}>
-          <View style={[singleChat.arrowBack]}>
+          <View style={[singleChat.arrowBack, {margin: 10}]}>
             <TouchableOpacity
               onPress={this.goBack}>
               <Image
@@ -365,6 +373,7 @@ class BasicSignUpComponent extends React.Component {
             <SurveyHeaderComponent header="Sign up!" goBack={this.goBack} />
             {this.renderModal()}
             {this.renderError()}
+            {this.renderSigningUp()}
           </View>
           <Text style={secondaryHeaderText}>First, the basics:</Text>
           <View style={{ flexDirection: 'row', width: '100%' }}>

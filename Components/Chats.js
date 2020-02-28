@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { getUser, getMatches, deleteMatch, blockUser, reportUser } from '../actions';
+import { getUser, getMatches, deleteMatch, blockUser, reportUser, checkUnreadUsers } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
@@ -25,6 +25,7 @@ class Chats extends React.Component {
   componentDidMount() {
     this.props.getUser(this.props.id);
     this.spin();
+    this.props.checkUnreadUsers(this.props.id);
     this.setState({ animation: true });
   }
 
@@ -61,21 +62,29 @@ class Chats extends React.Component {
 
   showMatches() {
     var i = -1;
-    return this.props.matches.map((n) => {
-      i++;
-      return (
-        <Match
-          key={n}
-          userId={n}
-          i={i}
-          deleteMatch={this.deleteMatch}
-          blockMatch={this.blockMatch}
-          reportMatch={this.reportMatch}
-          matchID={n}
-          nav={this.props.navigation}
-        />
-      )
-    })
+      return this.props.matches.map((n) => {
+        i++;
+        var isBold = false;
+        for(u=0; u < this.props.unreadPeople.length; i++) {
+          if(unreadPeople[u] === n) {
+            isBold = true;
+            break;
+          }
+        }
+        return (
+          <Match
+            key={n}
+            userId={n}
+            i={i}
+            deleteMatch={this.deleteMatch}
+            blockMatch={this.blockMatch}
+            reportMatch={this.reportMatch}
+            matchID={n}
+            nav={this.props.navigation}
+            bold={isBold}
+          />
+        )
+      })
   }
 
   render() {
@@ -101,7 +110,7 @@ class Chats extends React.Component {
         <Text style={[fonts.majorHeading, colors.deepPurple]}>Loading Your Chats!</Text>
       </View>);
 
-    if (this.props.matches !== undefined && this.props.matches.legnth !== 0) {
+    if (this.props.matches !== undefined && this.props.matches.legnth !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <ScrollView>
           <View>
@@ -111,7 +120,7 @@ class Chats extends React.Component {
         </ScrollView>
       )
     }
-    else if (this.props.matches !== undefined && this.props.matches.length !== 0) {
+    else if (this.props.matches !== undefined && this.props.matches.length !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <View>
           <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
@@ -133,7 +142,8 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    unreadPeople: reduxState.chats.unreadPeople,
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser})(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser, checkUnreadUsers})(Chats);

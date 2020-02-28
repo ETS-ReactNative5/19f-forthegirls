@@ -166,6 +166,19 @@ class EventDetails extends Component {
     this.setState({ fullScreenImage: false, image: '' })
   }
 
+  renderConnectionsAttending = () => {
+    if(this.props.connections.length !== 0 && this.props.connections !== undefined && this.props.connections !== n) {
+      return (
+        <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
+          <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
+            <TouchableOpacity onPress={this.changeConnectionsModal}>
+            <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
@@ -208,12 +221,7 @@ class EventDetails extends Component {
           {this.renderMap()}
           <View style={eventPage.eventDetailRSVPContainer} >
             {this.renderConnectionsModal()}
-            <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-              <TouchableOpacity onPress={this.changeConnectionsModal}>
-                <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
-              </TouchableOpacity>
-            </View>
+            {this.renderConnectionsAttending()}
             <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
               <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
                 {this.state.rsvp
