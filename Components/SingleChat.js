@@ -16,12 +16,14 @@ class SingleChat extends React.Component {
 
     this.state = {
       showModal: false,
+      gotNumContacted: false,
       awardMessage: '',
       awardImage: null,
       awardAward: true,
       numChats: 0,
       chats: [],
       numContacted: 0,
+      prevNumContacted: 0,
       chatText: '',
       numberText: 10,
       prompt: 'click'//this.props.navigation.getParam('prompt') || '',
@@ -38,9 +40,10 @@ class SingleChat extends React.Component {
     this.setPrompt();
     this.setToRead();
     this.updateUnread();
+    const numContactedPreviously = this.props.numContacted;
+    this.setState({prevNumContacted: numContactedPreviously});
     this.props.totalContacted(this.props.id);
     this.props.totalChatsSent(this.props.id);
-    console.log("in mounting");
   }
 
 
@@ -66,9 +69,6 @@ class SingleChat extends React.Component {
       this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
 
-    console.log("getting info");
-    console.log(this.props.numContacted);
-    console.log(this.props.numChats);
 
     // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
     //   .then((response) => {
@@ -164,8 +164,10 @@ class SingleChat extends React.Component {
     const secondID = this.props.navigation.getParam('matchID');
     this.props.sendChat(fields, firstID, secondID);
     this.setState({ chatText: '', prompt: '' })
+    this.props.totalContacted(this.props.id)
 
-    if (this.props.numContacted == 5) {
+
+    if (this.props.numContacted == 4 && this.props.chats.length == 0) {
       this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/messageFive.png') });
     }
     if (this.props.numChats == 99) {
@@ -207,6 +209,7 @@ class SingleChat extends React.Component {
 
   renderTextInput = () => {
     if (this.props.chats !== undefined) {
+
       return (
         <View style={singleChat.chatInputContainer}>
           <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
