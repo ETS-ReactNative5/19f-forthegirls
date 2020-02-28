@@ -320,8 +320,7 @@ class BasicSignUpComponent extends React.Component {
 //    console.log(this.state.queryTown);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
     //console.log(queryDateTown)
-    console.log("Location!!! " + this.state.location)
-
+ 
     let stateDropdown = [];
     for (var i = 0; i< this.state.statelist.length; i++){
       var newVal = {};
