@@ -182,6 +182,7 @@ class SingleChat extends React.Component {
 
   goBack = () => {
     this.props.clearChat();
+    this.props.getMatches(this.props.username);
     this.props.navigation.pop();
   }
 
@@ -301,4 +302,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getUser, setToRead, checkUnreadMessages, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat })(SingleChat);
+export default connect(mapStateToProps, { getUser, setToRead, checkUnreadMessages, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat, getMatches })(SingleChat);

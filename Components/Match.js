@@ -62,7 +62,7 @@ class Match extends React.Component {
 
   returnName = () => {
     if(this.props.bold) {
-      <Text style={[fonts.minorHeading, chatList.username, {fontWeight: 'bold'}]} key={this.state.match.username}>{this.state.match.username}</Text>
+      <Text style={[fonts.minorHeading, chatList.username, colors.deepPurple]} key={this.state.match.username}>{this.state.match.username}</Text>
     }
     else {
       return (
@@ -82,13 +82,8 @@ class Match extends React.Component {
         onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username, profilePic: this.state.match.profileURL })}>
         {this.renderModal()}
         <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
-<<<<<<< HEAD
           <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
           {this.returnName()}
-=======
-          <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/propic.jpg')} style={profileImage.allChatsPage} />
-          <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
->>>>>>> 98049f665c957ca4ac071b6dc53f2e15bfc3886c
         </View>
         <View style={chatList.delete}>
           <TouchableOpacity

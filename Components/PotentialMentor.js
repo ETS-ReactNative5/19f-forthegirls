@@ -27,10 +27,9 @@ class PotentialMentor extends React.Component {
         console.log(error);
       });
   }
-  noMatchCallback = () => {
-    // api call to remove person from matches
-    this.setState({ matched: false, noAction: false })
-  }
+  // noMatchCallback = () => {
+  //   // api call to remove person from matches
+  // }
 
   yesMatchCallback = (prompt) => {
     if (prompt === '0') {
@@ -50,6 +49,7 @@ class PotentialMentor extends React.Component {
   }
 
   rejectMatch = () => {
+    this.setState({ matched: false, noAction: false })
     this.props.rejectAMatch(this.props.username, this.state.userMatch.username)
   }
 
@@ -123,7 +123,7 @@ class PotentialMentor extends React.Component {
             </View>
           </View>
           <View style={buttons.yesNoContainer}>
-            <TouchableOpacity onPress={this.noMatchCallback}>
+            <TouchableOpacity onPress={() => this.rejectMatch()}>
               <Image
                 source={noMatch}
               />

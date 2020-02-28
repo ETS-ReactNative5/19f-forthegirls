@@ -37,13 +37,10 @@ class BasicSignUpComponent extends React.Component {
       longitude: 0,
       showModal: false,
       modalMessage: '',
-<<<<<<< HEAD
       signedUp: false,
-=======
       queryTown: '',
       statelist: [],
       stateSelected: '',
->>>>>>> 98049f665c957ca4ac071b6dc53f2e15bfc3886c
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
@@ -64,7 +61,7 @@ class BasicSignUpComponent extends React.Component {
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
-    console.log(stateAbrv);
+    // console.log(stateAbrv);
     this.setState({statelist: statelist, stateAbrv: stateAbrv});
   }
 
@@ -189,7 +186,14 @@ class BasicSignUpComponent extends React.Component {
   }
 
   locationInput = (text) => {
-    this.setState({ location: text });
+    if(this.stateSelected!=""){
+      var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
+      var newLoc = text + ", " + stateAbbrv;
+      this.setState({ location: newLoc });
+    }
+    else {
+      this.setState({location: text});
+    }
   }
 
   emailInput = (text) => {
@@ -264,14 +268,12 @@ class BasicSignUpComponent extends React.Component {
     this.props.navigation.pop();
   }
 
-<<<<<<< HEAD
   renderSigningUp = () => {
     if(this.state.signedUp) {
       <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
     }
   }
 
-=======
   autocompleteSelection = (item) => {
     if(this.state.stateSelected != "" && this.state.queryTown != ""){
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
@@ -282,7 +284,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   findQueryTown = (query) => {
-    console.log("This state seelected: " + this.state.stateSelected);
+    // console.log("This state seelected: " + this.state.stateSelected);
 
     if (query === '' || this.state.stateSelected == '') {
       return [];
@@ -314,13 +316,33 @@ class BasicSignUpComponent extends React.Component {
     return result;
   }
 
->>>>>>> 98049f665c957ca4ac071b6dc53f2e15bfc3886c
   //need to check unique from here
   render() {
+
+    // var autocomplete =(
+    //   <View style={surveyStyle.textFieldContainer}>
+    //     <Autocomplete
+    //       data={queryDateTown}
+    //       style={textFieldStyle}
+    //       defaultValue={this.state.queryTown}
+    //       onChangeText={text => this.setState({ queryTown: text })}
+    //       renderItem={({ item, i }) => (
+    //         <TouchableOpacity onPress={() => {
+    //           this.setState({ queryTown: item })
+    //           var newLocation = this.autocompleteSelection(item);
+    //           this.setState({location: newLocation});
+    //           }
+    //         }>
+    //           <Text>{item}</Text>
+    //         </TouchableOpacity>
+    //       )}
+    //    />
+    //  </View>
+    // )
 //    console.log(this.state.queryTown);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
     //console.log(queryDateTown)
- 
+
     let stateDropdown = [];
     for (var i = 0; i< this.state.statelist.length; i++){
       var newVal = {};
@@ -405,24 +427,14 @@ class BasicSignUpComponent extends React.Component {
             onChangeText={this.stateSelection}
           />
 
-          <View style={surveyStyle.textFieldContainer}>
-            <Autocomplete
-              data={queryDateTown}
-              style={textFieldStyle}
-              defaultValue={this.state.queryTown}
-              onChangeText={text => this.setState({ queryTown: text })}
-              renderItem={({ item, i }) => (
-                <TouchableOpacity onPress={() => {
-                  this.setState({ queryTown: item })
-                  var newLocation = this.autocompleteSelection(item);
-                  this.setState({location: newLocation});
-                  }
-                }>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              )}
-           />
-         </View>
+          <TextInput
+            style={endFieldStyle}
+            placeholder="City"
+            onChangeText={this.locationInput}
+            clearButtonMode='while-editing'
+            keyboardType='default'
+          />
+
           <TextInput
             style={endFieldStyle}
             placeholder="High School Name"
