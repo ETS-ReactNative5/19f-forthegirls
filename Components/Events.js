@@ -135,22 +135,22 @@ class Events extends React.Component {
           </NavigationEvents>
           <View style={eventPage.viewOptionsContainer}>
             {this.renderModal()}
-            <View style={this.state.viewAll
-              ? eventPage.addEventOpacity
-              : eventPage.notPressed}>
+            <View style={[this.state.viewAll
+              ? eventPage.pressed
+              : eventPage.notPressed, eventPage.eventButton]}>
               <TouchableOpacity onPress={this.doViewAll}>
-                <Text style={[eventPage.addEventText, this.state.viewAll
+                <Text style={[this.state.viewAll
                   ? colors.white
                   : colors.turquoise, fonts.minorHeading]}>
                   See All
               </Text>
               </TouchableOpacity>
             </View>
-            <View style={this.state.viewAll
+            <View style={[this.state.viewAll
               ? eventPage.notPressed
-              : eventPage.addEventOpacity}>
+              : eventPage.pressed, eventPage.eventButton]}>
               <TouchableOpacity onPress={this.dontViewAll}>
-                <Text style={[eventPage.addEventText, this.state.viewAll
+                <Text style={[this.state.viewAll
                   ? colors.turquoise
                   : colors.white, fonts.minorHeading]}>
                   See RSVP'd
@@ -162,8 +162,8 @@ class Events extends React.Component {
             {this.displayEvents()}
           </ScrollView>
           <View style={eventPage.addEventContainer}>
-            <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
-              <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
+            <TouchableOpacity style={[eventPage.eventButton, eventPage.pressed]} onPress={this.navToAdd}>
+              <Text style={[colors.white, fonts.minorHeading]}>
                 Add Event
               </Text>
             </TouchableOpacity>

@@ -60,27 +60,27 @@ class Profile extends React.Component {
     this.props.navigation.navigate('EditProfile', {})
   }
 
-  makeModalPopFirstMatch = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for having your first match!!', awardImage: require('./../assets/icons/firstMatch.png') });
+  makeModalPopFirstMatch = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for having your first match!!', awardImage: require('./../assets/icons/firstMatch.png') });
   }
 
-  makeModalPopThreeRSVPS = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!!!', awardImage: require('./../assets/icons/globetrotter.png') });
+  makeModalPopThreeRSVPS = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!!!', awardImage: require('./../assets/icons/globetrotter.png') });
   }
 
-  makeModalPopMessageFive = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!!!', awardImage: require('./../assets/icons/messageFive.png') });
+  makeModalPopMessageFive = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!!!', awardImage: require('./../assets/icons/messageFive.png') });
   }
-  makeModalPopHundredMessages = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for sending 100 messages!!!', awardImage: require('./../assets/icons/chattyCathy.png') });
-  }
-
-  makeModalPopFirstEvent = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for creating your first event!!!', awardImage: require('./../assets/icons/socialbutterfly.png') });
+  makeModalPopHundredMessages = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for sending 100 messages!!!', awardImage: require('./../assets/icons/chattyCathy.png') });
   }
 
-  makeModalPopFounders = () =>  {
-      this.setState({ showModal: true, awardMessage: 'This badge is for being one of our first users!!!', awardImage: require('./../assets/icons/founders.png') });
+  makeModalPopFirstEvent = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for creating your first event!!!', awardImage: require('./../assets/icons/socialbutterfly.png') });
+  }
+
+  makeModalPopFounders = () => {
+    this.setState({ showModal: true, awardMessage: 'This badge is for being one of our first users!!!', awardImage: require('./../assets/icons/founders.png') });
   }
 
   threeRSVPS = () => {
@@ -88,9 +88,10 @@ class Profile extends React.Component {
       return (
         <TouchableOpacity onPress={this.makeModalPopThreeRSVPS}>
           <Image style={profile.award} source={require('./../assets/icons/globetrotter.png')} />
-       </TouchableOpacity>
+        </TouchableOpacity>
 
-    )}
+      )
+    }
     return null;
   }
 
@@ -116,16 +117,17 @@ class Profile extends React.Component {
         <TouchableOpacity onPress={this.makeModalPopMessageFive}>
           <Image style={profile.award} source={require('./../assets/icons/messageFive.png')} />
         </TouchableOpacity>
-    )}
+      )
+    }
     return null;
   }
 
   firstMatch = () => {
     if (this.props.allYours[5]) {
       return (
-      <TouchableOpacity onPress={this.makeModalPopFirstMatch}>
-        <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={this.makeModalPopFirstMatch}>
+          <Image style={profile.award} source={require('./../assets/icons/firstMatch.png')} />
+        </TouchableOpacity>
 
       )
     }
@@ -135,22 +137,24 @@ class Profile extends React.Component {
   hundredMessages = () => {
     if (this.props.allYours[7]) {
       return (
-      <TouchableOpacity onPress={this.makeModalPopHundredMessages}>
-        <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={this.makeModalPopHundredMessages}>
+          <Image style={profile.award} source={require('./../assets/icons/chattyCathy.png')} />
+        </TouchableOpacity>
 
-    )}
+      )
+    }
     return null;
   }
 
   firstEvent = () => {
     if (this.props.allYours[9]) {
       return (
-      <TouchableOpacity onPress={this.makeModalPopFirstEvent}>
-        <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={this.makeModalPopFirstEvent}>
+          <Image style={profile.award} source={require('./../assets/icons/socialbutterfly.png')} />
+        </TouchableOpacity>
 
-    )}
+      )
+    }
     return null;
   }
 
@@ -163,9 +167,9 @@ class Profile extends React.Component {
         {this.firstMatch()}
         {this.firstEvent()}
         {this.hundredMessages()}
-        { <TouchableOpacity onPress={this.makeModalPopFounders}>
+        {<TouchableOpacity onPress={this.makeModalPopFounders}>
           <Image style={profile.award} source={require('./../assets/icons/founders.png')} />
-          </TouchableOpacity>
+        </TouchableOpacity>
         }
       </ScrollView>
     )
@@ -204,7 +208,7 @@ class Profile extends React.Component {
       )
     }
 
-    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.basic} />
     imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
 
     image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;

@@ -49,13 +49,13 @@ class Match extends React.Component {
   }
 
   blacklistMatch = () => {
-    this.setState({ showModal: true});
+    this.setState({ showModal: true });
   }
 
   renderModal = () => {
     if (this.state.showModal) {
       return (
-        <BlacklistModal reset={this.resetModal} block={this.blockMatch} report={this.reportMatch}/>
+        <BlacklistModal reset={this.resetModal} block={this.blockMatch} report={this.reportMatch} delete={this.deleteMatch} />
       );
     }
   }
@@ -82,20 +82,18 @@ class Match extends React.Component {
         onPress={() => this.props.nav.navigate('SingleChat', { matchID: this.state.match._id, prompt: '', username: this.state.match.username, profilePic: this.state.match.profileURL })}>
         {this.renderModal()}
         <View key={this.state.match._id} style={[this.props.i % 2 === 0 ? chatList.listItemPurple : chatList.listItemWhite, chatList.listItem]}>
+<<<<<<< HEAD
           <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.allChatsPage} />
           {this.returnName()}
-        </View>
-        <View style={chatList.blacklist}>
-          <TouchableOpacity
-            key={this.props.i + 1}
-            onPress={() => this.blacklistMatch()}>
-            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>!</Text>
-          </TouchableOpacity>
+=======
+          <Image source={this.state.match.profileURL !== undefined ? { uri: this.state.match.profileURL } : require('./../assets/icons/propic.jpg')} style={profileImage.allChatsPage} />
+          <Text style={[fonts.minorHeading, chatList.username]} key={this.state.match.username}>{this.state.match.username}</Text>
+>>>>>>> 98049f665c957ca4ac071b6dc53f2e15bfc3886c
         </View>
         <View style={chatList.delete}>
           <TouchableOpacity
             key={this.props.i + 1}
-            onPress={() => this.deleteMatch()}>
+            onPress={() => this.blacklistMatch()}>
             <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
           </TouchableOpacity>
         </View>

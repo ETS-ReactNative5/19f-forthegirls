@@ -34,13 +34,12 @@ class Chats extends React.Component {
   }
 
   reportMatch = (matchID) => {
-    console.log('reporting in chats');
     this.props.reportUser(this.props.id, matchID);
   }
 
   blockMatch = (matchID) => {
-    console.log('blocking in chats');
-    this.props.blockUser(this.props.id, matchID, this.props.username);
+    this.props.blockUser(this.props.id, matchID, this.props.username)
+    this.props.getMatches(this.props.username);
   }
 
   spin() {

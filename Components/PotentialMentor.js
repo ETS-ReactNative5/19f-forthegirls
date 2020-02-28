@@ -83,7 +83,7 @@ class PotentialMentor extends React.Component {
     var yesMatch = require('../assets/icons/yesMatch.png');
     var noMatch = require('../assets/icons/dontMatch.png');
 
-    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.basic} />
     imageImage = <Image source={{ uri: this.state.userMatch.profileURL }} style={profileImage.basic} />
 
     image = this.state.userMatch.profileURL != "" && this.state.userMatch.profileURL != null ? imageImage : imageNoImage;
