@@ -532,10 +532,8 @@ export function checkUnreadMessages(fields) {
 }
 
 export function checkUnreadUsers(id) {
-  console.log("checking here");
   return (dispatch) => {
     axios.get(`${ROOT_URL}/chats/getMyUnreadWithIds/${id}`).then((response) => {
-      console.log(response.data);
       dispatch({
         type: ActionTypes.FETCH_UNREAD_USERS,
         payload: response.data,
