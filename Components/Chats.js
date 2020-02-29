@@ -5,7 +5,7 @@ import { getUser, getMatches, deleteMatch, blockUser, reportUser, checkUnreadUse
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
-
+import { NavigationEvents } from 'react-navigation';
 
 /* animation:
  // https://facebook.github.io/react-native/docs/animated#timing
@@ -27,10 +27,18 @@ class Chats extends React.Component {
     this.spin();
     this.props.checkUnreadUsers(this.props.id);
     this.setState({ animation: true });
+    this.interval = setInterval(() => this.refreshUnreadUsers(), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  refreshUnreadUsers = () => {
+    this.props.checkUnreadUsers(this.props.id);
   }
 
   deleteMatch = (matchID) => {
-    console.log("in here");
     this.props.deleteMatch(this.props.id, matchID, this.props.username);
   }
 
@@ -66,10 +74,6 @@ class Chats extends React.Component {
       return this.props.matches.map((n) => {
         i++;
         var isBold = false;
-        // console.log("START");
-        // console.log(this.props.unreadPeople[0]);
-        // console.log(n);
-        // console.log("END");
         for(u=0; u < this.props.unreadPeople.length; u++) {
           if(this.props.unreadPeople[u] === n) {
             isBold = true;
@@ -118,6 +122,8 @@ class Chats extends React.Component {
     if (this.props.matches !== undefined && this.props.matches.legnth !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <ScrollView>
+          <NavigationEvents onDidFocus={this.refreshUnreadUsers}>
+          </NavigationEvents>
           <View>
             <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
             {this.showMatches()}
