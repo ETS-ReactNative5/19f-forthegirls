@@ -422,6 +422,14 @@ export function getEventCount(id) {
 export function fetchEvents() {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events`).then((response) => {
+      console.log('ALL');
+      console.log(response.data.length);
+      if(response.data.length>0){
+        console.log(response.data[0].title);
+      }
+      if(response.data.length>1){
+        console.log(response.data[1].title);
+      }
       dispatch({
         type: ActionTypes.FETCH_EVENTS,
         payload: response.data,
@@ -434,8 +442,18 @@ export function fetchEvents() {
 
 //gets all the events the user has RSVP'd to (i.e. is attending)
 export function fetchYourEvents(id) {
+  console.log('ID');
+  console.log(id);
   return (dispatch) => {
     axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
+      console.log('YOURS');
+      console.log(response.data.length);
+      if(response.data.length>0){
+        console.log(response.data[0].title);
+      }
+      if(response.data.length>1){
+        console.log(response.data[1].title);
+      }
       dispatch({
         type: ActionTypes.FETCH_YOUR_EVENTS,
         payload: response.data,
