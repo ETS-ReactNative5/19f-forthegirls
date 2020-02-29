@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
-import { getUser, getMatches, setToRead, checkUnreadMessages, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat } from '../actions';
+import { getUser, getMatches, setToRead, checkUnreadMessages, checkUnreadUsers, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat } from '../actions';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
 import surveyStyle from '../assets/styles/surveyStyle';
@@ -39,6 +39,7 @@ class SingleChat extends React.Component {
     this.getChats();
     this.setPrompt();
     this.setToRead();
+    this.props.checkUnreadUsers(this.props.id);
     this.updateUnread();
     const numContactedPreviously = this.props.numContacted;
     this.setState({prevNumContacted: numContactedPreviously});
@@ -93,7 +94,8 @@ class SingleChat extends React.Component {
       {
         receiverID: myID,
         senderID: theirID,
-      }
+      },
+      this.props.id
     );
   }
 
@@ -302,4 +304,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { getUser, setToRead, checkUnreadMessages, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat, getMatches })(SingleChat);
+export default connect(mapStateToProps, { getUser, setToRead, checkUnreadMessages, totalContacted, totalChatsSent, checkUnreadUsers, getFullChat, sendChat, clearChat, getMatches })(SingleChat);

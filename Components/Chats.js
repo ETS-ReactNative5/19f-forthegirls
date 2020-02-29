@@ -66,13 +66,12 @@ class Chats extends React.Component {
       return this.props.matches.map((n) => {
         i++;
         var isBold = false;
-        console.log("START");
-        console.log(this.props.unreadPeople[0]);
-        console.log(n);
-        console.log("END");
+        // console.log("START");
+        // console.log(this.props.unreadPeople[0]);
+        // console.log(n);
+        // console.log("END");
         for(u=0; u < this.props.unreadPeople.length; u++) {
           if(this.props.unreadPeople[u] === n) {
-            console.log("found a true");
             isBold = true;
             break;
           }
