@@ -355,6 +355,7 @@ export function getMatches(username) {
 
 //removes a match between two people by finding their match object and removing it
 export function deleteMatch(userID, matchID, username) {
+  console.log("in here");
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {

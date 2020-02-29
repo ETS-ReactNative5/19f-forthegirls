@@ -30,6 +30,7 @@ class Chats extends React.Component {
   }
 
   deleteMatch = (matchID) => {
+    console.log("in here");
     this.props.deleteMatch(this.props.id, matchID, this.props.username);
   }
 
@@ -65,8 +66,13 @@ class Chats extends React.Component {
       return this.props.matches.map((n) => {
         i++;
         var isBold = false;
-        for(u=0; u < this.props.unreadPeople.length; i++) {
-          if(unreadPeople[u] === n) {
+        console.log("START");
+        console.log(this.props.unreadPeople[0]);
+        console.log(n);
+        console.log("END");
+        for(u=0; u < this.props.unreadPeople.length; u++) {
+          if(this.props.unreadPeople[u] === n) {
+            console.log("found a true");
             isBold = true;
             break;
           }

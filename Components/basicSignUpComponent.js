@@ -170,7 +170,7 @@ class BasicSignUpComponent extends React.Component {
           })
           .catch((error) =>  {
               console.log(error);
-              this.setState({showModal: true, modalMessage: 'Please input a valid location.'});
+              this.setState({showModal: true, modalMessage: 'Please input a valid location.', signedUp: false});
             }
           );
 
