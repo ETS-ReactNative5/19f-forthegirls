@@ -41,6 +41,8 @@ class BasicSignUpComponent extends React.Component {
       queryTown: '',
       statelist: [],
       stateSelected: '',
+
+      pressedSubmit: false,
     }
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
@@ -124,10 +126,12 @@ class BasicSignUpComponent extends React.Component {
 
   sumbitUser = () => {
 
+
     if (this.state.firstName === '' || this.state.lastName === '' || this.state.email === '' || this.state.username === '' || this.state.password === '') {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
     else {
+      this.setState({pressedSubmit: true});
       const fields = {
         email: this.state.email,
         username: this.state.username,
@@ -257,7 +261,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderError = () => {
-    if (this.props.error !== null) {
+    if (this.props.error !== null && this.state.pressedSubmit) {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
@@ -266,10 +270,11 @@ class BasicSignUpComponent extends React.Component {
 
   goBack = () => {
     this.props.navigation.pop();
+    this.props.resetErrors();
   }
 
   renderSigningUp = () => {
-    if(this.state.signedUp) {
+    if(this.state.signedUp && this.props.error === null) {
       <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
     }
   }
@@ -372,7 +377,6 @@ class BasicSignUpComponent extends React.Component {
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="Sign up!" goBack={this.goBack} />
             {this.renderModal()}
-            {this.renderError()}
             {this.renderSigningUp()}
           </View>
           <Text style={secondaryHeaderText}>First, the basics:</Text>
@@ -463,6 +467,7 @@ class BasicSignUpComponent extends React.Component {
             </View>
           </View>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
+          {this.renderError()}
           <Text style={secondaryHeaderText}>And finally, your log-in information:</Text>
           <View style={{ flexDirection: 'row', width: '100%' }}>
             <View style={{ flex: 1 }}>
@@ -470,6 +475,7 @@ class BasicSignUpComponent extends React.Component {
                 style={textFieldStyle}
                 invalidTextFieldStyle={{ borderColor: colors.red.color }}
                 placeholder="Username"
+                autoCapitalize='none'
                 onChangeText={this.usernameInput}
                 clearButtonMode='while-editing'
               /></View>
@@ -478,6 +484,7 @@ class BasicSignUpComponent extends React.Component {
                 style={endFieldStyle}
                 invalidTextFieldStyle={{ borderColor: colors.red.color }}
                 placeholder="Password"
+                autoCapitalize='none'
                 secureTextEntry={true}
                 onChangeText={this.passwordInput}
                 clearButtonMode='while-editing'

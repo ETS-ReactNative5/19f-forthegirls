@@ -98,7 +98,7 @@ class EditProfile extends React.Component {
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
-    console.log(stateAbrv);
+    // console.log(stateAbrv);
     this.setState({ statelist: statelist, stateAbrv: stateAbrv });
 
     var locationLength = this.state.location.length;
@@ -113,7 +113,7 @@ class EditProfile extends React.Component {
         }
 
       }
-      console.log(stateLong)
+      // console.log(stateLong)
       this.setState({ queryTown: town, stateSelected: stateLong })
     }
   }
@@ -196,9 +196,9 @@ class EditProfile extends React.Component {
 
   submitPage = () => {
     if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined)) {
-      console.log(this.state.promptOneQuestion);
-      console.log(this.state.promptTwoQuestion);
-      console.log(this.state.promptThreeQuestion);
+      // console.log(this.state.promptOneQuestion);
+      // console.log(this.state.promptTwoQuestion);
+      // console.log(this.state.promptThreeQuestion);
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -459,7 +459,7 @@ class EditProfile extends React.Component {
     if (this.state.stateSelected != "" && this.state.queryTown != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       this.setState({ location: item + ", " + stateAbbrv });
-      console.log(this.state.location)
+      // console.log(this.state.location)
     }
   }
 
