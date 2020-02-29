@@ -61,28 +61,24 @@ class App extends React.Component {
   }
 
   registerForPushNotificationsAsync = async () => {
-    console.log("HERE IN ASK PERMISSION");
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
-      console.log("PERMISSION NOT GRANTED");
       return;
     }
     try {
-      console.log("HERE IN TRY");
       let pushToken = await Notifications.getExpoPushTokenAsync();
       if(pushToken) {
         await AsyncStorage.setItem('pushToken', pushToken);
-        console.log("PUSH TOKEN:");
         console.log(pushToken);
         console.log( await AsyncStorage.getItem('pushToken'));
         // store.dispatch({ type: 'AUTH_TOKEN', payload: pushToken });
 
-              //once you have push token need to save it to your backend 
+              //once you have push token need to save it to your backend
               // need to add ^ action which then sends token to api
               // just make api call here or in actions
       }
 
-      //once you have push token need to save it to your backend 
+      //once you have push token need to save it to your backend
 
       // try {
       //   return fetch(PUSH_REGISTRATION_ENDPOINT, {

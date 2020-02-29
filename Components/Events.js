@@ -38,7 +38,7 @@ class Events extends React.Component {
 
   componentDidMount() {
     this.props.fetchEvents();
-    this.props.fetchYourEvents();
+    this.props.fetchYourEvents(this.props.id);
 
     if (this.props.navigation.getParam('firstEventAward')) {
       this.setState({ showModal: true, awardMessage: 'You got the First Event Created Badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
@@ -108,7 +108,7 @@ class Events extends React.Component {
 
   refetchOnBackPress = () => {
     this.props.fetchEvents();
-    this.props.fetchYourEvents();
+    this.props.fetchYourEvents(this.props.id);
   }
 
 
