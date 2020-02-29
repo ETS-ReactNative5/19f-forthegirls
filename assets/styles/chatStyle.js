@@ -19,6 +19,11 @@ const chatList = StyleSheet.create({
     marginTop: 10,
     padding: 10
   },
+  unreadUsername: {
+    marginTop: 10,
+    padding: 10,
+    color: '#00FF00',
+  },
   chatButton: {
     justifyContent: 'center',
     marginTop: 10,
