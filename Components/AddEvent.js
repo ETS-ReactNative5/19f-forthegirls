@@ -93,7 +93,43 @@ class AddEvent extends Component {
         .then(json => {
           var location = json.results[0].geometry.location;
           this.setState({ latitude: location.lat, longitude: location.lng })
-  
+
+          if (this.state.imagefull != null) {
+            let i = this.state.imagefull.uri.length;
+            while (this.state.imagefull.uri.charAt(i) !== '/') {
+              i--;
+            }
+            this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
+            uploadImage(this.state.imagefull).then((url) => {
+              this.setState({ eventPhotoURL: String(url) })
+              this.setState({ imagefull: null })
+      
+              this.props.addEvent({
+                title: this.state.title,
+                date: this.state.date,
+                time: this.state.time,
+                location: this.state.location,
+                description: this.state.description,
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                eventPhotoURL: String(url),
+                authorID: this.props.id,
+              }, this.props.navigation, this.props.id);
+            })
+          } else {
+            this.props.addEvent({
+              title: this.state.title,
+              date: this.state.date,
+              time: this.state.time,
+              location: this.state.location,
+              description: this.state.description,
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              eventPhotoURL: this.state.photoURL,
+              authorID: this.props.id,
+            }, this.props.navigation, this.props.id);
+          }
+
           const popAction = StackActions.pop({
             n: 1,
           });
@@ -104,45 +140,7 @@ class AddEvent extends Component {
           this.setState({ showModal: true, modalMessage: 'Please input a valid location.' });
         }
         );
-  
-      if (this.state.imagefull != null) {
-        let i = this.state.imagefull.uri.length;
-        while (this.state.imagefull.uri.charAt(i) !== '/') {
-          i--;
-        }
-        this.state.imagefull.name = this.state.imagefull.uri.substring(i + 1);
-        uploadImage(this.state.imagefull).then((url) => {
-          this.setState({ eventPhotoURL: String(url) })
-          this.setState({ imagefull: null })
-  
-          this.props.addEvent({
-            title: this.state.title,
-            date: this.state.date,
-            time: this.state.time,
-            location: this.state.location,
-            description: this.state.description,
-            latitude: this.state.latitude,
-            longitude: this.state.longitude,
-            eventPhotoURL: String(url),
-            authorID: this.props.id,
-          }, this.props.navigation, this.props.id);
-        })
-      } else {
-        this.props.addEvent({
-          title: this.state.title,
-          date: this.state.date,
-          time: this.state.time,
-          location: this.state.location,
-          description: this.state.description,
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
-          eventPhotoURL: this.state.photoURL,
-          authorID: this.props.id,
-        }, this.props.navigation, this.props.id);
-      }
-  
     }
-    
   }
 
   renderModal = () => {
