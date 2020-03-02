@@ -261,7 +261,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderError = () => {
-    if (this.props.error !== null && this.state.pressedSubmit) {
+    if (this.props.error !== null && this.state.pressedSubmit && this.state.error !== 'Request failed with status code 503') {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
