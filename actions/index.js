@@ -286,13 +286,13 @@ export function authError(error) {
 //given two users, it creates a match between the users and redirects the matcher to chat
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   return (dispatch) => {
-    console.log("in pairing");
+    // console.log("in pairing");
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
-        console.log("paired");
+        // console.log("paired");
         return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
           .then((res) => {
-            console.log("Fetching potentials again");
+            // console.log("Fetching potentials again");
             var award = false;
             if (res.data.length === 1) {
               award = true;
@@ -305,7 +305,7 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
-        console.log("error pairing");
+        // console.log("error pairing");
         console.log(error);
       })
   }
@@ -317,10 +317,10 @@ export function rejectAMatch(user1, user2) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
       .then((response) => {
-        console.log("rejected the match");
+        // console.log("rejected the match");
         return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
           .then((res) => {
-            console.log("getting potentials again");
+            // console.log("getting potentials again");
             var award = false;
             if (res.data.length === 1) {
               award = true;
@@ -332,7 +332,7 @@ export function rejectAMatch(user1, user2) {
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
-        console.log("error in rejecting");
+        // console.log("error in rejecting");
         console.log(error);
       })
   }
@@ -369,14 +369,14 @@ export function getMatches(username) {
 
 //removes a match between two people by finding their match object and removing it
 export function deleteMatch(userID, matchID, username) {
-  console.log("in here");
+  // console.log("in here");
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
-            console.log("deleted match");
+            // console.log("deleted match");
             return axios.get(`${ROOT_URL}/matches/${username}`)
               .then((resp) => {
                 console.log(resp);
@@ -387,11 +387,11 @@ export function deleteMatch(userID, matchID, username) {
                 dispatch({ type: ActionTypes.SET_ERROR, error });
               });
           }).catch((error) => {
-            console.log("Error deleting");
+            // console.log("Error deleting");
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
-        console.log("Error finding match id");
+        // console.log("Error finding match id");
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }

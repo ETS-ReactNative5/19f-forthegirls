@@ -40,7 +40,6 @@ class Match extends React.Component {
   }
 
   blockMatch = () => {
-    console.log('here');
     this.props.blockMatch(this.props.matchID);
   }
 
