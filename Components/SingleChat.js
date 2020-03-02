@@ -184,8 +184,12 @@ class SingleChat extends React.Component {
 
   goBack = () => {
     this.props.clearChat();
+
     this.props.getMatches(this.props.username);
+    // this.props.checkUnreadUsers(this.props.id);
+    // this.props.checkUnreadMessages(this.props.id);
     this.props.navigation.pop();
+    
   }
 
   handleKeyDown = (e) => {

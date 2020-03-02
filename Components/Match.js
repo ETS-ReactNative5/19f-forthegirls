@@ -40,7 +40,6 @@ class Match extends React.Component {
   }
 
   blockMatch = () => {
-    console.log('here');
     this.props.blockMatch(this.props.matchID);
   }
 
@@ -63,7 +62,7 @@ class Match extends React.Component {
   returnName = () => {
     if(this.props.bold) {
       return (
-        <Text style={[fonts.minorHeading, chatList.unreadUsername]} key={this.state.match.username}>{this.state.match.username}</Text>
+        <Text style={[fonts.minorHeading, chatList.unreadUsername]} key={this.state.match.username}>• {this.state.match.username}</Text>
       )
     }
     else {

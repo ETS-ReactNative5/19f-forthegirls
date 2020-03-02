@@ -88,7 +88,7 @@ class AddEvent extends Component {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
     else {
-      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
+      Geocoder.init(this.props.API); // use a valid API key
       Geocoder.from(this.state.location)
         .then(json => {
           var location = json.results[0].geometry.location;
@@ -243,6 +243,7 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    API: reduxState.events.eventAPI,
   }
 );
 

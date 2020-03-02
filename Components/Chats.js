@@ -43,7 +43,7 @@ class Chats extends React.Component {
   }
 
   reportMatch = (matchID) => {
-    this.props.reportUser(this.props.id, matchID);
+    this.props.reportUser(this.props.id, matchID, this.props.username);
   }
 
   blockMatch = (matchID) => {

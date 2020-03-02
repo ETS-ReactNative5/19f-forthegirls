@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
-import Axios from 'axios';
+import axios from 'axios';
 import StartScreen from './Components/StartScreen'
 import LogoBar from './Components/LogoBar';
 import Main from './navigation/Main';
@@ -14,8 +14,7 @@ import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions'
 
 const PUSH_REGISTRATION_ENDPOINT = 'http://e6a6945d.ngrok.io/token';
-
-
+export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
@@ -128,6 +127,14 @@ class App extends React.Component {
       console.log(error);
     }
     this.registerForPushNotificationsAsync();
+
+    axios.get(`${ROOT_URL}/getAPI`).then((response) => {
+        console.log(response.data);
+        store.dispatch({ type: 'GET_EVENT_API', payload: response.data });
+      }).catch((error) => {
+        console.log(error);
+      });
+    
 
   }
 
