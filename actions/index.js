@@ -121,7 +121,7 @@ export function blockUser(reporterID, reportedID, username) {
       .then((res) => {
           return axios.get(`${ROOT_URL}/matches/${username}`)
           .then((resp) => {
-              dispatch({ type: ActionTypes.BLOCK_USER, payload: resp.data });
+              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
           })
       })
       .catch((error) => {
@@ -130,11 +130,14 @@ export function blockUser(reporterID, reportedID, username) {
   }
 }
 
-export function reportUser(reporterID, reportedID) {
+export function reportUser(reporterID, reportedID, username) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/blacklist/report/${reporterID}/${reportedID}`)
       .then((response) => {
-        dispatch({ type: ActionTypes.REPORT_USER, payload: response.data });
+        return axios.get(`${ROOT_URL}/matches/${username}`)
+          .then((resp) => {
+              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+          })        
       }).catch((error) => {
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
