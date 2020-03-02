@@ -286,10 +286,13 @@ export function authError(error) {
 //given two users, it creates a match between the users and redirects the matcher to chat
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   return (dispatch) => {
+    console.log("in pairing");
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
+        console.log("paired");
         return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
           .then((res) => {
+            console.log("Fetching potentials again");
             var award = false;
             if (res.data.length === 1) {
               award = true;
@@ -298,9 +301,11 @@ export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
             navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2, firstMatchAward: award });
           }).catch((error) => {
             console.log(error);
+            console.log("error fetching potentials");
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
+        console.log("error pairing");
         console.log(error);
       })
   }
@@ -312,18 +317,22 @@ export function rejectAMatch(user1, user2) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
       .then((response) => {
+        console.log("rejected the match");
         return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
           .then((res) => {
+            console.log("getting potentials again");
             var award = false;
             if (res.data.length === 1) {
               award = true;
             }
           dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: res.data });
           }).catch((error) => {
+            console.log("error in getting potentials")
             console.log(error);
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
+        console.log("error in rejecting");
         console.log(error);
       })
   }
@@ -338,6 +347,7 @@ export function getPotentialMatches(username) {
       .then((response) => {
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
+        console.log("error in getting potential matches");
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -366,17 +376,22 @@ export function deleteMatch(userID, matchID, username) {
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
+            console.log("deleted match");
             return axios.get(`${ROOT_URL}/matches/${username}`)
               .then((resp) => {
+                console.log(resp);
                 dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
               }).catch((error) => {
                 console.log(error);
+                console.log("Error getting matches again");
                 dispatch({ type: ActionTypes.SET_ERROR, error });
               });
           }).catch((error) => {
+            console.log("Error deleting");
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
+        console.log("Error finding match id");
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -384,17 +399,6 @@ export function deleteMatch(userID, matchID, username) {
 
 //----------------- EVENTS ------------------//
 //creates a new event
-
-export function getAPI() {
-  axios.get(`${ROOT_URL}/getAPI`).then((response) => {
-    console.log(response.data);
-    dispatch({ type: ActionTypes.GET_EVENT_API, payload: response.data });
-  }).catch((error) => {
-    console.log(error);
-  });
-}
-
-
 export function addEvent(fields, navigation, id) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/add`, fields)

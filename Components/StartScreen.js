@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { getAPI } from '../actions';
 import colors, { fonts, buttons } from '../assets/styles/basicStyle';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -30,10 +28,6 @@ class StartScreen extends React.Component {
   }
 }
 
-const mapStateToProps = reduxState => (
-  {
-    API: reduxState.events.eventAPI,
-  }
-);
 
-export default connect(mapStateToProps, { getAPI })(StartScreen);
+
+export default StartScreen;

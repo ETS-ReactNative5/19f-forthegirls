@@ -17,12 +17,14 @@ const chatList = StyleSheet.create({
   },
   username: {
     marginTop: 10,
-    padding: 10
+    padding: 10,
+    fontWeight: 'normal', 
+    fontFamily: 'montserrat-medium',
   },
   unreadUsername: {
     marginTop: 10,
     padding: 10,
-    color: '#00FF00',
+    color: colors.turquoise.color,
   },
   chatButton: {
     justifyContent: 'center',
