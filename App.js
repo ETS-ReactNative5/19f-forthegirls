@@ -16,7 +16,6 @@ import * as Permissions from 'expo-permissions'
 const PUSH_REGISTRATION_ENDPOINT = 'http://e6a6945d.ngrok.io/token';
 
 
-
 const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
   applyMiddleware(thunk),

@@ -144,7 +144,7 @@ class BasicSignUpComponent extends React.Component {
 
       console.log("printing push token");
       console.log(this.props.pushToken);
-      Geocoder.init("AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY"); // use a valid API key
+      Geocoder.init(this.props.API); // use a valid API key
 
       Geocoder.from(this.state.location)
           .then(json => {
@@ -518,6 +518,7 @@ const mapStateToProps = reduxState => (
     error: reduxState.error,
     username: reduxState.auth.username,
     pushToken: reduxState.auth.pushToken,
+    API: reduxState.events.eventAPI,
   }
 );
 

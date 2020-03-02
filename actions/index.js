@@ -25,6 +25,7 @@ export const ActionTypes = {
   FETCH_YOUR_EVENTS: 'FETCH_YOUR_EVENTS',
   FETCH_RSVP_CONNECTIONS: 'FETCH_RSVP_CONNECTIONS',
   SET_EVENT_COUNT: 'SET_EVENT_COUNT',
+  GET_EVENT_API: 'GET_EVENT_API',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -383,6 +384,17 @@ export function deleteMatch(userID, matchID, username) {
 
 //----------------- EVENTS ------------------//
 //creates a new event
+
+export function getAPI() {
+  axios.get(`${ROOT_URL}/getAPI`).then((response) => {
+    console.log(response.data);
+    dispatch({ type: ActionTypes.GET_EVENT_API, payload: response.data });
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+
 export function addEvent(fields, navigation, id) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/events/add`, fields)
