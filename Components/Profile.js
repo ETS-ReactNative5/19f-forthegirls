@@ -220,41 +220,41 @@ class Profile extends React.Component {
 
     return (
       <ScrollView>
-      <View style={profile.profileContainer}>
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-          {image}
-        </View>
-        {this.renderModal()}
-        <View style={[profile.basicInfo, {alignItems: 'center', justifyContent: 'space-between'}]}>
-          <View style={[profile.basicInfoLeft, {alignItems: 'flex-start', flexWrap: 'wrap', flexShrink: 1, justifyContent: 'flex-start', width: 200}]}>
-            <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.location}</Text>
+        <View style={profile.profileContainer}>
+          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+            {image}
           </View>
-          <View style={[profile.jobStuff, {flexWrap: 'wrap', flexShrink: 1, alignItems: 'flex-end', justifyContent: 'flex-end', width: 200}]}>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
-            <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
+          {this.renderModal()}
+          <View style={[profile.basicInfo, { alignItems: 'center', justifyContent: 'space-between' }]}>
+            <View style={[profile.basicInfoLeft, { alignItems: 'flex-start', flexWrap: 'wrap', flexShrink: 1, justifyContent: 'flex-start', width: 200 }]}>
+              <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.location}</Text>
+            </View>
+            <View style={[profile.jobStuff, { flexWrap: 'wrap', flexShrink: 1, alignItems: 'flex-end', justifyContent: 'flex-end', width: 200 }]}>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
+            </View>
           </View>
-        </View>
-        <View style={{ justifyContent: 'flex-end' }}>
-          <View style={buttons.container}>
-            <TouchableOpacity
-              onPress={this.opacityOnPress}>
-              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.logout}>
-              <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
-            </TouchableOpacity>
+          <View style={{ justifyContent: 'flex-end' }}>
+            <View style={buttons.container}>
+              <TouchableOpacity
+                onPress={this.opacityOnPress}>
+                <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.logout}>
+                <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-        <View style={promptStyle.promptContainer}>
-          {prompts}
-        </View>
-        <View style={{ margin: 5 }}>
-          {rewards}
-        </View>
+          <View style={promptStyle.promptContainer}>
+            {prompts}
+          </View>
+          <View style={{ margin: 5 }}>
+            {rewards}
+          </View>
 
-      </View>
+        </View>
       </ScrollView>
     )
   }

@@ -94,7 +94,7 @@ const buttons = StyleSheet.create({
   arrowView: {
     width: '100%',
     flexDirection: 'row-reverse',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     marginLeft: 80
   },
   logInOutButton: {
