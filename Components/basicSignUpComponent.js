@@ -58,13 +58,13 @@ class BasicSignUpComponent extends React.Component {
   componentDidMount() {
     var states = csc.getStatesOfCountry("231");
     var statelist = [];
-    for (var i = 0; i< states.length; i++){
+    for (var i = 0; i < states.length; i++) {
       statelist[i] = states[i].name;
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
     // console.log(stateAbrv);
-    this.setState({statelist: statelist, stateAbrv: stateAbrv});
+    this.setState({ statelist: statelist, stateAbrv: stateAbrv });
   }
 
   createStateToAbbrvMap = () => {
@@ -131,14 +131,14 @@ class BasicSignUpComponent extends React.Component {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
     else {
-      this.setState({pressedSubmit: true});
+      this.setState({ pressedSubmit: true });
       const fields = {
         email: this.state.email,
         username: this.state.username,
         password: this.state.password,
       }
-      
-      this.setState({signedUp: true});
+
+      this.setState({ signedUp: true });
 
 
 
@@ -147,36 +147,36 @@ class BasicSignUpComponent extends React.Component {
       Geocoder.init(this.props.API); // use a valid API key
 
       Geocoder.from(this.state.location)
-          .then(json => {
-            var location = json.results[0].geometry.location;
-            // this.setState({latitude: location.lat, longitude: location.lng})
+        .then(json => {
+          var location = json.results[0].geometry.location;
+          // this.setState({latitude: location.lat, longitude: location.lng})
 
-            const otherAnswers = {
-              firstName: this.state.firstName,
-              lastName: this.state.lastName,
-              location: this.state.location,
-              highSchool: this.state.highSchool,
-              collegeName: this.state.collegeName,
-              gradYear: this.state.gradYear,
-              currentJob: this.state.currentJob,
-              age: this.state.age,
-              hs: this.state.hs,
-              college: this.state.college,
-              pg: this.state.pg,
-              latitude: location.lat,
-              longitude: location.lng,
-              pushToken: this.state.pushToken,
+          const otherAnswers = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            location: this.state.location,
+            highSchool: this.state.highSchool,
+            collegeName: this.state.collegeName,
+            gradYear: this.state.gradYear,
+            currentJob: this.state.currentJob,
+            age: this.state.age,
+            hs: this.state.hs,
+            college: this.state.college,
+            pg: this.state.pg,
+            latitude: location.lat,
+            longitude: location.lng,
+            pushToken: this.state.pushToken,
 
-            }
+          }
 
-            this.props.signUpUser(fields, this.props.navigation, otherAnswers);
+          this.props.signUpUser(fields, this.props.navigation, otherAnswers);
 
-          })
-          .catch((error) =>  {
-              console.log(error);
-              this.setState({showModal: true, modalMessage: 'Please input a valid location.', signedUp: false});
-            }
-          );
+        })
+        .catch((error) => {
+          console.log(error);
+          this.setState({ showModal: true, modalMessage: 'Please input a valid location.', signedUp: false });
+        }
+        );
 
     }
   }
@@ -190,13 +190,13 @@ class BasicSignUpComponent extends React.Component {
   }
 
   locationInput = (text) => {
-    if(this.stateSelected!=""){
+    if (this.stateSelected != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       var newLoc = text + ", " + stateAbbrv;
       this.setState({ location: newLoc });
     }
     else {
-      this.setState({location: text});
+      this.setState({ location: text });
     }
   }
 
@@ -274,16 +274,16 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderSigningUp = () => {
-    if(this.state.signedUp && this.props.error === null) {
+    if (this.state.signedUp && this.props.error === null) {
       <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
     }
   }
 
   autocompleteSelection = (item) => {
-    if(this.state.stateSelected != "" && this.state.queryTown != ""){
+    if (this.state.stateSelected != "" && this.state.queryTown != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       var newLocation = item + ", " + stateAbbrv;
-      this.setState({location: newLocation});
+      this.setState({ location: newLocation });
       return newLocation;
     }
   }
@@ -296,25 +296,24 @@ class BasicSignUpComponent extends React.Component {
     }
     var state = csc.getStatesOfCountry("231");
     var id = "";
-    for(var i = 0; i< state.length; i++){
-      if (state[i].name == this.state.stateSelected){
+    for (var i = 0; i < state.length; i++) {
+      if (state[i].name == this.state.stateSelected) {
         id = state[i].id;
       }
     }
-    if(id == ""){
+    if (id == "") {
       return [];
     }
     var cities = csc.getCitiesOfState(id);
-    for (var i = 0; i < cities.length; i++){
-      if(this.state.queryTown == cities[i].name)
-      {
+    for (var i = 0; i < cities.length; i++) {
+      if (this.state.queryTown == cities[i].name) {
         return [];
       }
     }
     const regex = new RegExp(`${query.trim()}`, 'i');
     var filtered = cities.filter(city => city.name.search(regex) >= 0);
     var result = []
-    for (var i = 0; i < filtered.length; i++){
+    for (var i = 0; i < filtered.length; i++) {
       result[i] = filtered[i].name
     }
 
@@ -344,15 +343,15 @@ class BasicSignUpComponent extends React.Component {
     //    />
     //  </View>
     // )
-//    console.log(this.state.queryTown);
+    //    console.log(this.state.queryTown);
     var queryDateTown = this.findQueryTown(this.state.queryTown);
     //console.log(queryDateTown)
 
     let stateDropdown = [];
-    for (var i = 0; i< this.state.statelist.length; i++){
+    for (var i = 0; i < this.state.statelist.length; i++) {
       var newVal = {};
       newVal["value"] = this.state.statelist[i];
-      stateDropdown[i]= newVal;
+      stateDropdown[i] = newVal;
     }
 
     var dropdownPickerStyle = { borderRadius: 20 }
@@ -366,7 +365,7 @@ class BasicSignUpComponent extends React.Component {
     return (
       <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={100}>
         <ScrollView style={surveyStyle.surveyBackground}>
-          <View style={[singleChat.arrowBack, {margin: 10}]}>
+          <View style={[singleChat.arrowBack, { margin: 10 }]}>
             <TouchableOpacity
               onPress={this.goBack}>
               <Image
@@ -420,17 +419,18 @@ class BasicSignUpComponent extends React.Component {
           />
           <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
           <Text style={secondaryHeaderText}>Next, a few specifics:</Text>
-          <Dropdown
-            pickerStyle={dropdownPickerStyle}
-            itemTextStyle={itemTextStyle}
-            selectedItemColor={selectedItemColor}
-            label='Select your home state'
-            labelTextStyle={fonts.bodyText}
-            data={stateDropdown}
-            value={this.state.stateSelected != "" ? this.state.stateSelected : "State"}
-            onChangeText={this.stateSelection}
-          />
-
+          <View style={{ marginLeft: 10, marginRight: 10 }}>
+            <Dropdown
+              pickerStyle={dropdownPickerStyle}
+              itemTextStyle={itemTextStyle}
+              selectedItemColor={selectedItemColor}
+              label='Select your home state'
+              labelTextStyle={fonts.bodyText}
+              data={stateDropdown}
+              value={this.state.stateSelected != "" ? this.state.stateSelected : "State"}
+              onChangeText={this.stateSelection}
+            />
+          </View>
           <TextInput
             style={endFieldStyle}
             placeholder="City"
