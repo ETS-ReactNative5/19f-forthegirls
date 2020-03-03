@@ -39,8 +39,9 @@ const chatList = StyleSheet.create({
     marginRight: 10
   },
   delete: {
-    marginTop: 10,
-    borderWidth: 2,
+    marginTop: 13,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 45,
     width: 45,
     padding: 5,
@@ -50,7 +51,8 @@ const chatList = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     marginLeft: 325,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 2
   }
 });
 

@@ -60,7 +60,7 @@ class Match extends React.Component {
   }
 
   returnName = () => {
-    if(this.props.bold) {
+    if (this.props.bold) {
       return (
         <Text style={[fonts.minorHeading, chatList.unreadUsername]} key={this.state.match.username}>• {this.state.match.username}</Text>
       )
@@ -90,7 +90,7 @@ class Match extends React.Component {
           <TouchableOpacity
             key={this.props.i + 1}
             onPress={() => this.blacklistMatch()}>
-            <Text style={[fonts.majorHeading, colors.red, fontEffects.center]}>X</Text>
+            <Image source={require('./../assets/icons/report.png')} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
