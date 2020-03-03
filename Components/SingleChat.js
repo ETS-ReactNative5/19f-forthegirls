@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, KeyboardAvoidingView, TextInput, Image, Keyboard } from 'react-native';
 import { getUser, getMatches, setToRead, checkUnreadMessages, checkUnreadUsers, totalContacted, totalChatsSent, getFullChat, sendChat, clearChat } from '../actions';
 import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
 import { singleChat } from '../assets/styles/chatStyle';
@@ -170,6 +170,8 @@ class SingleChat extends React.Component {
     if (this.props.numChats == 99) {
       this.setState({ awardAward: true, showModal: true, awardMessage: 'You have sent/recieved 100 chats!', awardImage: require('./../assets/icons/chattyCathy.png') });
     }
+
+    Keyboard.dismiss();
   }
 
   loadMore = () => {
@@ -222,8 +224,8 @@ class SingleChat extends React.Component {
               defaultValue={this.props.navigation.getParam('prompt')}
               value={this.state.chatText}
               onChangeText={this.addChat}
-              onBlur={this.sendChat}
-              // onEndEditing={this.sendChat}
+              //onBlur={this.sendChat}
+              //onEndEditing={this.sendChat}
               onKeyPress={this.handleKeyDown}
             />
             <TouchableOpacity
