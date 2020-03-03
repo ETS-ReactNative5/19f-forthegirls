@@ -106,8 +106,6 @@ class PotentialMentor extends React.Component {
               <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
                 <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
                 <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.location}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
                   <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.state.userMatch.gradYear}</Text>

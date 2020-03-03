@@ -61,26 +61,26 @@ class Profile extends React.Component {
   }
 
   makeModalPopFirstMatch = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for having your first match!!', awardImage: require('./../assets/icons/firstMatch.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for having your first match!', awardImage: require('./../assets/icons/firstMatch.png') });
   }
 
   makeModalPopThreeRSVPS = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!!!', awardImage: require('./../assets/icons/globetrotter.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for RSVPing three events!', awardImage: require('./../assets/icons/globetrotter.png') });
   }
 
   makeModalPopMessageFive = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!!!', awardImage: require('./../assets/icons/messageFive.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for messaging five people!', awardImage: require('./../assets/icons/messageFive.png') });
   }
   makeModalPopHundredMessages = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for sending 100 messages!!!', awardImage: require('./../assets/icons/chattyCathy.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for sending 100 messages!', awardImage: require('./../assets/icons/chattyCathy.png') });
   }
 
   makeModalPopFirstEvent = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for creating your first event!!!', awardImage: require('./../assets/icons/socialbutterfly.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for creating your first event!', awardImage: require('./../assets/icons/socialbutterfly.png') });
   }
 
   makeModalPopFounders = () => {
-    this.setState({ showModal: true, awardMessage: 'This badge is for being one of our first users!!!', awardImage: require('./../assets/icons/founders.png') });
+    this.setState({ showModal: true, awardMessage: 'This badge is for being one of our first users!', awardImage: require('./../assets/icons/founders.png') });
   }
 
   threeRSVPS = () => {
