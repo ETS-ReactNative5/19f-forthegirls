@@ -35,7 +35,9 @@ class SingleChat extends React.Component {
 
   componentDidMount() {
     //https://stackoverflow.com/questions/39426083/update-react-component-every-second
-    this.interval = setInterval(() => this.getAndUpdateRead(), 5000);
+    this.getOnlyChats();
+    this.setToRead();
+    this.updateUnread();
     this.getChats();
     this.setPrompt();
     this.setToRead();
@@ -45,6 +47,8 @@ class SingleChat extends React.Component {
     this.setState({ prevNumContacted: numContactedPreviously });
     this.props.totalContacted(this.props.id);
     this.props.totalChatsSent(this.props.id);
+    this.interval = setInterval(() => this.getAndUpdateRead(), 5000);
+
   }
 
 
