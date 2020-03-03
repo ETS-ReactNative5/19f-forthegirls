@@ -36,14 +36,16 @@ class PotentialMentor extends React.Component {
       prompt = "Hi " + this.state.userMatch.firstName + '!';
     }
     if (prompt === '1') {
-      prompt = this.state.userMatch.promptOneAnswer;
+      prompt = "Hi " + this.state.userMatch.firstName + "!" + " Why do you like " + this.state.userMatch.promptOneAnswer + "?";
     }
     if (prompt === '2') {
-      prompt = this.state.userMatch.promptTwoAnswer;
+      prompt = "Hi " + this.state.userMatch.firstName + "!" + " Why do you like " + this.state.userMatch.promptTwoAnswer + "?";
     }
     if (prompt === '3') {
-      prompt = this.state.userMatch.promptThreeAnswer;
+      prompt = "Hi " + this.state.userMatch.firstName + "!" + " Why do you like " + this.state.userMatch.promptThreeAnswer + "?";
     }
+
+
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
     // this.props.refresh(this.props.username);
   }
