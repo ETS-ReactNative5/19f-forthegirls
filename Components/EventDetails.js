@@ -115,7 +115,7 @@ class EventDetails extends Component {
   handleRSVP() {
     if (this.state.rsvp === false) {
       if (this.props.eventCount == 2) {
-        this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
+        this.setState({ showAwardModal: true, awardMessage: 'You RSVPd to 3 events!', awardImage: require('./../assets/icons/globetrotter.png') });
       }
       this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: true });
@@ -168,11 +168,11 @@ class EventDetails extends Component {
 
   renderConnectionsAttending = () => {
     //&& this.props.connections !== n
-    if(this.props.connections.length !== 0 && this.props.connections !== undefined ) {
+    if (this.props.connections.length !== 0 && this.props.connections !== undefined) {
       return (
         <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
           <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-            <TouchableOpacity onPress={this.changeConnectionsModal}>
+          <TouchableOpacity onPress={this.changeConnectionsModal}>
             <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
           </TouchableOpacity>
         </View>

@@ -42,7 +42,7 @@ class SingleChat extends React.Component {
     this.props.checkUnreadUsers(this.props.id);
     this.updateUnread();
     const numContactedPreviously = this.props.numContacted;
-    this.setState({prevNumContacted: numContactedPreviously});
+    this.setState({ prevNumContacted: numContactedPreviously });
     this.props.totalContacted(this.props.id);
     this.props.totalChatsSent(this.props.id);
   }
@@ -152,28 +152,23 @@ class SingleChat extends React.Component {
       text: this.state.chatText
     }
 
-    // this.props.totalContacted(this.props.id);
-
-    //numContacted
-    // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-    //   .then((response) => {
-    //     if (response.data == 5 && this.props.numContacted == 4) {
-    //     }
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
     const firstID = this.props.id;
     const secondID = this.props.navigation.getParam('matchID');
     this.props.sendChat(fields, firstID, secondID);
     this.setState({ chatText: '', prompt: '' })
     this.props.totalContacted(this.props.id)
 
+    console.log('-------\nin send chat')
+    console.log('chat text state:')
+    console.log(this.state.chatText);
+    console.log('prompot state:')
+    console.log(this.state.prompt);
 
     if (this.props.numContacted == 4 && this.props.chats.length == 0) {
-      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You got the 5 Contacted Award!', awardImage: require('./../assets/icons/messageFive.png') });
+      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You contacted 5 different people!', awardImage: require('./../assets/icons/messageFive.png') });
     }
     if (this.props.numChats == 99) {
-      this.setState({ awardAward: true, showModal: true, awardMessage: 'You got the 100 Matches Badge!!', awardImage: require('./../assets/icons/chattyCathy.png') });
+      this.setState({ awardAward: true, showModal: true, awardMessage: 'You have sent/recieved 100 chats!', awardImage: require('./../assets/icons/chattyCathy.png') });
     }
   }
 
@@ -189,7 +184,7 @@ class SingleChat extends React.Component {
     // this.props.checkUnreadUsers(this.props.id);
     // this.props.checkUnreadMessages(this.props.id);
     this.props.navigation.pop();
-    
+
   }
 
   handleKeyDown = (e) => {
@@ -216,18 +211,19 @@ class SingleChat extends React.Component {
 
   renderTextInput = () => {
     if (this.props.chats !== undefined) {
-
       return (
         <View style={singleChat.chatInputContainer}>
           <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
             <TextInput
               multiline={true}
-              clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
+              clearTextOnFocus={true}
+              // clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
               style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
               defaultValue={this.props.navigation.getParam('prompt')}
               value={this.state.chatText}
               onChangeText={this.addChat}
-              onEndEditing={this.sendChat}
+              onBlur={this.sendChat}
+              // onEndEditing={this.sendChat}
               onKeyPress={this.handleKeyDown}
             />
             <TouchableOpacity
@@ -275,7 +271,7 @@ class SingleChat extends React.Component {
             <Text style={fonts.minorHeading}>{this.props.navigation.getParam('username')}</Text>
           </View>
         </View>
-        <KeyboardAvoidingView behavior="padding" enabled keyboardVerticalOffset={120}>
+        <KeyboardAvoidingView behavior="position" enabled keyboardVerticalOffset={-40}>
           <ScrollView
             style={{ flex: 0 }}
             ref={ref => this.scrollView = ref}
@@ -286,7 +282,9 @@ class SingleChat extends React.Component {
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                   {this.renderLoading()}
                 </View>
+
                 {this.showChats()}
+
               </View>
               {this.renderTextInput()}
             </View>

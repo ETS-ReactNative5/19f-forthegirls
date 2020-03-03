@@ -18,7 +18,7 @@ const chatList = StyleSheet.create({
   username: {
     marginTop: 10,
     padding: 10,
-    fontWeight: 'normal', 
+    fontWeight: 'normal',
     fontFamily: 'montserrat-medium',
   },
   unreadUsername: {
@@ -79,21 +79,6 @@ const singleChat = StyleSheet.create({
     width: 225,
     paddingLeft: 10,
   },
-  loadmore: {
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 125,
-    marginRight: 10,
-    borderWidth: 2,
-    borderColor: colors.lessOpaquePurple.color,
-    borderRadius: 20,
-    backgroundColor: colors.white.color,
-    height: 30,
-    width: 150,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 10,
-  },
   arrowBack: {
     alignItems: 'flex-start',
     marginTop: 5,
@@ -102,6 +87,7 @@ const singleChat = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    zIndex: 2,
     backgroundColor: colors.lightGrey.color,
   },
   headerTextContainer: {
