@@ -218,8 +218,7 @@ class SingleChat extends React.Component {
           <View style={(this.state.chats.length > 15) ? singleChat.chatInputView : [singleChat.chatInputView, singleChat.chatInputMargin]}>
             <TextInput
               multiline={true}
-              clearTextOnFocus={true}
-              // clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
+              clearTextOnFocus={this.props.navigation.getParam('prompt') !== '' && this.state.prompt !== '' ? false : true}
               style={[singleChat.chatInput, fonts.bodyText, colors.deepPurple]}
               defaultValue={this.props.navigation.getParam('prompt')}
               value={this.state.chatText}
