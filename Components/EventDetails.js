@@ -167,7 +167,8 @@ class EventDetails extends Component {
   }
 
   renderConnectionsAttending = () => {
-    if(this.props.connections.length !== 0 && this.props.connections !== undefined && this.props.connections !== n) {
+    //&& this.props.connections !== n
+    if(this.props.connections.length !== 0 && this.props.connections !== undefined ) {
       return (
         <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
           <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>

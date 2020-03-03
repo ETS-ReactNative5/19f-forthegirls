@@ -261,7 +261,8 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderError = () => {
-    if (this.props.error !== null && this.state.pressedSubmit && this.state.error !== 'Request failed with status code 503') {
+    console.log(this.props.error);
+    if (this.props.error !== null && this.state.pressedSubmit && this.props.error !== 'Request failed with status code 503') {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
@@ -274,7 +275,7 @@ class BasicSignUpComponent extends React.Component {
   }
 
   renderSigningUp = () => {
-    if (this.state.signedUp && this.props.error === null) {
+    if (this.state.signedUp && (this.props.error === null || this.props.error === 'Request failed with status code 503')) {
       <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You Up!</Text>
     }
   }
@@ -376,7 +377,6 @@ class BasicSignUpComponent extends React.Component {
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="Sign up!" goBack={this.goBack} />
             {this.renderModal()}
-            {this.renderSigningUp()}
           </View>
           <Text style={secondaryHeaderText}>First, the basics:</Text>
           <View style={{ flexDirection: 'row', width: '100%' }}>
@@ -468,6 +468,7 @@ class BasicSignUpComponent extends React.Component {
           </View>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}><Text style={{ fontSize: 50, color: colors.turquoise.color }}>• • •</Text></View>
           {this.renderError()}
+          {this.renderSigningUp()}
           <Text style={secondaryHeaderText}>And finally, your log-in information:</Text>
           <View style={{ flexDirection: 'row', width: '100%' }}>
             <View style={{ flex: 1 }}>
