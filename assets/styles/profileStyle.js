@@ -39,7 +39,7 @@ const profile = StyleSheet.create({
     padding: 5
   },
   basicInfoLeft: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   nameHeading: {
     flexDirection: 'row',

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {scale, verticalScale, moderateScale} from './Style.js';
+import { scale, verticalScale, moderateScale } from './Style.js';
 
 const colors = StyleSheet.create({
   turquoise: {
@@ -94,7 +94,7 @@ const buttons = StyleSheet.create({
   arrowView: {
     width: '100%',
     flexDirection: 'row-reverse',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     marginLeft: 80
   },
   logInOutButton: {
@@ -128,6 +128,19 @@ const buttons = StyleSheet.create({
     borderColor: colors.turquoise.color,
     backgroundColor: colors.turquoise.color,
     borderRadius: 20
+  },
+  matchDeleteButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 5,
+    borderWidth: 2,
+    height: 40,
+    width: 120,
+    padding: 5,
+    borderColor: colors.turquoise.color,
+    backgroundColor: colors.turquoise.color,
+    borderRadius: 20,
   }
 
 })
@@ -181,8 +194,8 @@ const modal = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: colors.white.color,
     padding: 10,
-    marginTop: 300,
-    marginBottom: 300,
+    marginTop: 225,
+    marginBottom: 225,
     marginLeft: 50,
     marginRight: 50,
     borderRadius: 20,

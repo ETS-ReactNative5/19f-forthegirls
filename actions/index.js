@@ -24,6 +24,8 @@ export const ActionTypes = {
   FETCH_EVENTS: 'FETCH_EVENTS',
   FETCH_YOUR_EVENTS: 'FETCH_YOUR_EVENTS',
   FETCH_RSVP_CONNECTIONS: 'FETCH_RSVP_CONNECTIONS',
+  SET_EVENT_COUNT: 'SET_EVENT_COUNT',
+  GET_EVENT_API: 'GET_EVENT_API',
 
   //MATCHES
   PAIR_MATCH_TO_USER: 'PAIR_MATCH_TO_USER',
@@ -43,13 +45,22 @@ export const ActionTypes = {
   //AWARDS
   FETCH_YOUR_AWARDS: 'FETCH_YOUR_AWARDS',
   FETCH_AWARD: 'FETCH_AWARD',
+  FETCH_NUM_CONTACTED: 'FETCH_NUM_CONTACTED',
+  FETCH_NUM_CHATS: 'FETCH_NUM_CHATS',
 
   //CHATS
   CHECK_UNREAD_MESSAGES: 'CHECK_UNREAD_MESSAGES',
   SET_TO_READ: 'SET_TO_READ',
+  GET_CHATS: 'GET_CHATS',
+  CLEAR_CHATS: 'CLEAR_CHATS',
+  FETCH_UNREAD_USERS: 'FETCH_UNREAD_USERS',
 
   //ACTIVITY
   ADD_ACTIVITY: 'ADD_ACTIVITY',
+
+  //BLACKLIST
+  REPORT_USER: 'REPORT_USER',
+  BLOCK_USER: 'BLOCK_USER',
 
 };
 
@@ -102,6 +113,39 @@ export function editUserVisit(username, id, otherAnswers) {
   }
 }
 
+//----------------- BLACKLIST ------------------//
+
+// retrieves the specified user object from the database
+export function blockUser(reporterID, reportedID, username) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/blacklist/block/${reporterID}/${reportedID}`)
+      .then((res) => {
+          return axios.get(`${ROOT_URL}/matches/${username}`)
+          .then((resp) => {
+              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+          })
+      })
+      .catch((error) => {
+          dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
+export function reportUser(reporterID, reportedID, username) {
+  return (dispatch) => {
+    axios.put(`${ROOT_URL}/blacklist/report/${reporterID}/${reportedID}`)
+      .then((response) => {
+        return axios.get(`${ROOT_URL}/matches/${username}`)
+          .then((resp) => {
+              dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
+          })        
+      }).catch((error) => {
+        console.log(error);
+        dispatch({ type: ActionTypes.SET_ERROR, error });
+      });
+  }
+}
+
 //---------------------------- AUTH --------------------------------//
 
 //signs the user in based on previously created credentials and saves their information on the phone
@@ -125,7 +169,7 @@ export function signinUser({ username, password, navigate }) {
     _retrieveData().then((result) => {
       axios.post(`${ROOT_URL}/signin`, { username, password, pushToken: pushToken}).then((response) => {
         dispatch({ type: ActionTypes.AUTH_USER, payload: { username, id: response.data.id } });
-  
+
         //How to add tokens using react native
         //https://facebook.github.io/react-native/docs/asyncstorage
         _storeData = async () => {
@@ -137,10 +181,10 @@ export function signinUser({ username, password, navigate }) {
             console.log("error");
           }
         };
-  
+
         _storeData();
         navigate.navigate("Main");
-  
+
       }).catch((error) => {
         console.log(error);
         dispatch(authError(`Invalid username or password`));
@@ -260,25 +304,58 @@ export function authError(error) {
 //given two users, it creates a match between the users and redirects the matcher to chat
 export function pairMatchToUser(user1, user2, prompt, navigation, matchID) {
   return (dispatch) => {
+    // console.log("in pairing");
     axios.post(`${ROOT_URL}/matches/pair`, { user1, user2 })
       .then((response) => {
-        return axios.get(`${ROOT_URL}/matches/${user1}`)
+        // console.log("paired");
+        return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
           .then((res) => {
+            // console.log("Fetching potentials again");
             var award = false;
             if (res.data.length === 1) {
               award = true;
             }
-            dispatch({ type: ActionTypes.GET_MATCHES, payload: res.data });
-            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2, firstMatchAward: award })
+            dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: res.data });
+            navigation.navigate('SingleChat', { matchID: matchID, prompt: prompt, username: user2, firstMatchAward: award });
           }).catch((error) => {
             console.log(error);
+            console.log("error fetching potentials");
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
+        // console.log("error pairing");
         console.log(error);
       })
   }
 }
+
+//    axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
+
+export function rejectAMatch(user1, user2) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/matches/reject`, { user1, user2 })
+      .then((response) => {
+        // console.log("rejected the match");
+        return axios.get(`${ROOT_URL}/matches/potential/${user1}`)
+          .then((res) => {
+            // console.log("getting potentials again");
+            var award = false;
+            if (res.data.length === 1) {
+              award = true;
+            }
+          dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: res.data });
+          }).catch((error) => {
+            console.log("error in getting potentials")
+            console.log(error);
+            dispatch({ type: ActionTypes.SET_ERROR, error });
+          });
+      }).catch((error) => {
+        // console.log("error in rejecting");
+        console.log(error);
+      })
+  }
+}
+
 
 //gets all the potential matches for a user based on our algorithm's suggestions
 export function getPotentialMatches(username) {
@@ -288,6 +365,7 @@ export function getPotentialMatches(username) {
       .then((response) => {
         dispatch({ type: ActionTypes.USER_GET_POT_MATCHES, payload: response.data });
       }).catch((error) => {
+        console.log("error in getting potential matches");
         console.log(error);
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
@@ -309,23 +387,29 @@ export function getMatches(username) {
 
 //removes a match between two people by finding their match object and removing it
 export function deleteMatch(userID, matchID, username) {
+  // console.log("in here");
   return (dispatch) => {
     axios.get(`${ROOT_URL}/matches/getid/${userID}/${matchID}`)
       .then((response) => {
         const matchID = response.data;
         return axios.delete(`${ROOT_URL}/matches/delete/${matchID}`)
           .then((res) => {
+            // console.log("deleted match");
             return axios.get(`${ROOT_URL}/matches/${username}`)
               .then((resp) => {
+                console.log(resp);
                 dispatch({ type: ActionTypes.GET_MATCHES, payload: resp.data });
               }).catch((error) => {
                 console.log(error);
+                console.log("Error getting matches again");
                 dispatch({ type: ActionTypes.SET_ERROR, error });
               });
           }).catch((error) => {
+            // console.log("Error deleting");
             dispatch({ type: ActionTypes.SET_ERROR, error });
           });
       }).catch((error) => {
+        // console.log("Error finding match id");
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   }
@@ -360,6 +444,16 @@ export function addEvent(fields, navigation, id) {
         dispatch({ type: ActionTypes.SET_ERROR, error });
       });
   };
+}
+
+export function getEventCount(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/events/rsvp/your/${id}`).then((response) => {
+      dispatch({ type: ActionTypes.SET_EVENT_COUNT, payload: response.data.length });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 }
 
 //gets all previously created events by any user
@@ -474,6 +568,19 @@ export function checkUnreadMessages(fields) {
   };
 }
 
+export function checkUnreadUsers(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/chats/getMyUnreadWithIds/${id}`).then((response) => {
+      dispatch({
+        type: ActionTypes.FETCH_UNREAD_USERS,
+        payload: response.data,
+      });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
 export function setToRead(fields) {
   return (dispatch) => {
     axios.put(`${ROOT_URL}/chats/setToRead`, fields).then((response) => {
@@ -485,6 +592,68 @@ export function setToRead(fields) {
       console.log(error);
     });
   };
+}
+
+//sends a chat and then re-fetches all the chats and sends that to the chat reducer
+export function sendChat(fields, firstID, secondID) {
+  return (dispatch) => {
+    axios.post(`https://for-the-girls.herokuapp.com/api/chats/add/`, fields)
+    .then((response) => {
+        axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+        .then((response) => {
+          dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
+        }).catch((error) => {
+          console.log(error);
+        });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
+//gets all the chats between two people
+export function getFullChat(firstID, secondID) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/getBetween/${firstID}/${secondID}`)
+      .then((response) => {
+        dispatch({type: ActionTypes.GET_CHATS, payload: response.data,});
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+}
+
+export function clearChat() {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.CLEAR_CHATS,
+      payload: null,
+    });
+  }
+}
+
+//gets the user's total contacted number
+export function totalContacted(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${id}`)
+    .then((response) => { //response.data
+      dispatch({type: ActionTypes.FETCH_NUM_CONTACTED, payload: response.data});
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+}
+
+//gets the user's total chats sent
+export function totalChatsSent(id) {
+  return (dispatch) => {
+    axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${id}`)
+      .then((resp) => { //resp.data
+        dispatch({type: ActionTypes.FETCH_NUM_CHATS, payload: resp.data});
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 }
 
 //--------------------------------------BADGES----------------------------------------

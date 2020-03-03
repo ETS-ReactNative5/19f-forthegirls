@@ -42,35 +42,25 @@ const eventPage = StyleSheet.create({
   },
 
   title: {
+    padding: 5,
+    paddingLeft: 10,
     borderRadius: 10,
-    width: '80%',
-    backgroundColor: 'rgba(40, 195, 169, 0.6)',
-    marginTop: 10,
-    marginLeft: 10,
-  },
-
-  titleMargin: {
-    marginLeft: 10,
-  },
-
-  date: {
-    borderRadius: 10,
-    width: '40%',
-    backgroundColor: 'rgba(70, 81, 135, 0.6)',
-    marginTop: 10,
-    marginLeft: 10,
-    flexDirection: 'row',
     justifyContent: 'center',
+    width: '80%',
+    backgroundColor: colors.deepPurple.color,
+    marginTop: 10,
+    marginLeft: 15,
   },
 
   rsvpCounts: {
+    padding: 5,
+    paddingLeft: 10,
     borderRadius: 10,
     width: '40%',
     backgroundColor: 'rgba(70, 81, 135, 0.6)',
     marginTop: 10,
-    marginLeft: 10,
+    marginLeft: 15,
     flexDirection: 'row',
-    justifyContent: 'center',
   },
 
   button: {
@@ -85,7 +75,7 @@ const eventPage = StyleSheet.create({
 
   eventDetail: {
     width: '100%',
-    //height: '80%',
+    height: '100%',
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
@@ -93,43 +83,52 @@ const eventPage = StyleSheet.create({
     alignItems: 'center',
   },
 
-  eventDetailImage: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 20,
-    height: "30%",
-    width: "90%",
-    overflow: 'hidden',
+  eventDetailImageContainer: {
+    margin: 10,
+    width: '95%',
+    height: 'auto'
+  },
+  fullScreenEventImage: {
+    width: '100%',
+    height: '100%',
+    opacity: 1,
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    flex: 1
   },
 
-  eventDetailTitleBox: {
+  eventDetailImage: {
+    marginRight: 10,
     borderRadius: 20,
-    width: '90%',
-    backgroundColor: 'rgb(40, 195, 169)',
+    width: '100%',
+    height: 100,
+    resizeMode: 'cover',
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center'
   },
+  opacity1: {
+    opacity: 1
+  },
+
   eventDetailTitle: {
     marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     marginBottom: 10,
   },
   eventDetailLogistics: {
     width: '100%',
-    marginTop: 10,
-    flexDirection: 'row',
+    marginTop: 5,
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   eventDetailDayTime: {
-    marginLeft: 35,
-    flexDirection: 'column',
+    marginLeft: 15,
+    flexDirection: 'row',
     justifyContent: 'flex-start',
   },
   eventDetailLocation: {
-    marginRight: 35,
+    marginLeft: 15,
   },
 
   eventDetailDescription: {
@@ -137,15 +136,25 @@ const eventPage = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    marginTop: 30,
+    marginTop: 5,
+    marginLeft: 15,
   },
 
   eventDetailDescriptionText: {
-    marginLeft: 40,
+    marginLeft: 5,
+    marginRight: 15
+  },
+
+  eventDetailMap: {
+    marginTop: 10,
+    width: 350,
+    height: 120,
+    borderRadius: 10
   },
 
   eventDetailRSVPContainer: {
     marginTop: 10,
+    marginBottom: 30,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -158,7 +167,7 @@ const eventPage = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
 
   eventDetailRSVPText: {
@@ -166,6 +175,8 @@ const eventPage = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 25
   },
 
@@ -180,7 +191,7 @@ const eventPage = StyleSheet.create({
 
   pressed: {
     borderRadius: 20,
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
   notPressed: {
     borderRadius: 20,
@@ -196,19 +207,32 @@ const eventPage = StyleSheet.create({
     marginTop: 7,
   },
 
+  eventButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    // marginTop: 10,
+    borderWidth: 2,
+    height: 40,
+    width: 120,
+    padding: 5,
+    marginBottom: 10,
+    borderColor: colors.turquoise.color,
+    borderRadius: 20,
+  },
+
   addEventOpacity: {
     borderRadius: 20,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: colors.deepPurple.color,
+    backgroundColor: colors.turquoise.color,
   },
 
   addEventText: {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 25
   },
 })

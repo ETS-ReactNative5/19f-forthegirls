@@ -9,7 +9,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,7 +25,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.forthegirls.forthegirls"
+      "bundleIdentifier": "com.forthegirls.forthegirls",
+      "config": {
+        "googleMapsApiKey":  "AIzaSyBNKSL1ZVMGeaV41ObQ92nsfPbdszR2zTY",
+      },
     },
     "description": ""
   }

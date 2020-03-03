@@ -7,7 +7,7 @@ import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
 import ErrorModal from './ErrorModal'
-import {NavigationEvents} from 'react-navigation';
+import { NavigationEvents } from 'react-navigation';
 import AwardModal from './AwardModal'
 
 class Events extends React.Component {
@@ -38,7 +38,7 @@ class Events extends React.Component {
 
   componentDidMount() {
     this.props.fetchEvents();
-    this.props.fetchYourEvents();
+    this.props.fetchYourEvents(this.props.id);
 
     if (this.props.navigation.getParam('firstEventAward')) {
       this.setState({ showModal: true, awardMessage: 'You got the First Event Created Badge!', awardImage: require('./../assets/icons/socialbutterfly.png') });
@@ -108,7 +108,7 @@ class Events extends React.Component {
 
   refetchOnBackPress = () => {
     this.props.fetchEvents();
-    this.props.fetchYourEvents();
+    this.props.fetchYourEvents(this.props.id);
   }
 
 
@@ -131,27 +131,27 @@ class Events extends React.Component {
     if (this.props.all !== undefined) {
       return (
         <View style={eventPage.wholeContainer}>
-        <NavigationEvents onDidFocus={this.refetchOnBackPress}>
-        </NavigationEvents>
+          <NavigationEvents onDidFocus={this.refetchOnBackPress}>
+          </NavigationEvents>
           <View style={eventPage.viewOptionsContainer}>
             {this.renderModal()}
-            <View style={this.state.viewAll
-              ? eventPage.addEventOpacity
-              : eventPage.notPressed}>
+            <View style={[this.state.viewAll
+              ? eventPage.pressed
+              : eventPage.notPressed, eventPage.eventButton]}>
               <TouchableOpacity onPress={this.doViewAll}>
-                <Text style={[eventPage.addEventText, this.state.viewAll
+                <Text style={[this.state.viewAll
                   ? colors.white
-                  : colors.deepPurple, fonts.minorHeading]}>
+                  : colors.turquoise, fonts.minorHeading]}>
                   See All
               </Text>
               </TouchableOpacity>
             </View>
-            <View style={this.state.viewAll
+            <View style={[this.state.viewAll
               ? eventPage.notPressed
-              : eventPage.addEventOpacity}>
+              : eventPage.pressed, eventPage.eventButton]}>
               <TouchableOpacity onPress={this.dontViewAll}>
-                <Text style={[eventPage.addEventText, this.state.viewAll
-                  ? colors.deepPurple
+                <Text style={[this.state.viewAll
+                  ? colors.turquoise
                   : colors.white, fonts.minorHeading]}>
                   See RSVP'd
               </Text>
@@ -162,8 +162,8 @@ class Events extends React.Component {
             {this.displayEvents()}
           </ScrollView>
           <View style={eventPage.addEventContainer}>
-            <TouchableOpacity style={eventPage.addEventOpacity} onPress={this.navToAdd}>
-              <Text style={[eventPage.addEventText, colors.white, fonts.minorHeading]}>
+            <TouchableOpacity style={[eventPage.eventButton, eventPage.pressed]} onPress={this.navToAdd}>
+              <Text style={[colors.white, fonts.minorHeading]}>
                 Add Event
               </Text>
             </TouchableOpacity>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorModal from './ErrorModal'
 import AwardModal from './AwardModal'
+import ImageModal from './ImageModal.js'
 import {
   View,
   Text,
@@ -12,15 +13,17 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   ScrollView,
+  ImageBackground,
 } from 'react-native';
 import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import modalStyle from '../assets/styles/modalStyle';
 import colors, { fonts, fontEffects, modal, buttons, profileImage } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
-import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections } from '../actions';
+import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections, getEventCount } from '../actions';
 import EventMap from './EventMap.js'
 import SurveyHeaderComponent from './surveyHeaderComponent.js'
+
 export const ROOT_URL = 'https://for-the-girls.herokuapp.com/api';
 class EventDetails extends Component {
   constructor(props) {
@@ -34,7 +37,8 @@ class EventDetails extends Component {
       modalMessage: '',
       showAwardModal: false,
       awardMessage: '',
-      awardImage: null
+      awardImage: null,
+      fullScreenImage: false
     };
     this.handleRSVP = this.handleRSVP.bind(this);
     this.checkRSVP = this.checkRSVP.bind(this);
@@ -42,20 +46,20 @@ class EventDetails extends Component {
     this.renderConnectionsModal = this.renderConnectionsModal.bind(this);
     this.renderConnections = this.renderConnections.bind(this);
     this.renderAwardModal = this.renderAwardModal.bind(this);
+    this.renderImageModal = this.renderImageModal.bind(this);
+    this.resetImageModal = this.resetImageModal.bind(this);
+    this.showImage = this.showImage.bind(this);
   }
   // ---------- componentDidMount here! -----------//
   componentDidMount() {
     this.props.fetchEvent(this.props.navigation.getParam("eventID", null))
     this.props.fetchRsvpConnections(this.props.id, this.props.navigation.getParam("eventID", null))
-    axios.get(`${ROOT_URL}/events/rsvp/your/${this.props.id}`).then((response) => {
-      this.setState({ rsvpLength: response.data.length })
-    }).catch((error) => {
-      console.log(error);
-    });
+    this.props.getEventCount(this.props.id);
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.rsvp === null) {
       this.checkRSVP();
+      this.props.getEventCount(this.props.id);
     }
   }
   changeConnectionsModal() {
@@ -65,7 +69,7 @@ class EventDetails extends Component {
     var connected = this.props.connections.map((connect) => {
       return (
         <View key={connect._id} style={{ margin: 7 }}>
-          <Image source={connect.profileURL !== undefined ? { uri: connect.profileURL } : require('./../assets/icons/tim.jpg')} style={profileImage.eventConnection} />
+          <Image source={connect.profileURL !== undefined ? { uri: connect.profileURL } : require('./../assets/icons/propic.jpg')} style={profileImage.eventConnection} />
           <Text style={[fonts.minorHeading, colors.deepPurple]}>
             {connect.firstName}
           </Text>
@@ -110,18 +114,18 @@ class EventDetails extends Component {
   }
   handleRSVP() {
     if (this.state.rsvp === false) {
-      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
-      this.setState({ rsvp: true });
-      console.log(this.state.rsvpLength)
-      if (this.state.rsvpLength == 2) {
+      if (this.props.eventCount == 2) {
         this.setState({ showAwardModal: true, awardMessage: 'You got the RSVP to 3 events badge!', awardImage: require('./../assets/icons/globetrotter.png') });
       }
+      this.props.rsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
+      this.setState({ rsvp: true });
     }
     else {
       this.props.unrsvpEvent(this.props.id, this.props.navigation.getParam("eventID", null));
       this.setState({ rsvp: false });
     }
   }
+
   renderMap = () => {
     if (this.props.event.latitude !== undefined && this.props.event.longitude !== undefined) {
       return (
@@ -144,12 +148,43 @@ class EventDetails extends Component {
     this.props.navigation.pop();
   }
 
+  showImage = () => {
+    this.setState({ fullScreenImage: !this.state.fullScreenImage })
+  }
+
+  renderImageModal = () => {
+    imageNoImage = require('../img/EventBackground.jpg')
+    imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
+    image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
+
+    if (this.state.fullScreenImage) {
+      return (<ImageModal image={image} reset={this.resetImageModal}></ImageModal>)
+    }
+  }
+
+  resetImageModal = () => {
+    this.setState({ fullScreenImage: false, image: '' })
+  }
+
+  renderConnectionsAttending = () => {
+    //&& this.props.connections !== n
+    if(this.props.connections.length !== 0 && this.props.connections !== undefined ) {
+      return (
+        <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
+          <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
+            <TouchableOpacity onPress={this.changeConnectionsModal}>
+            <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
   render() {
     imageNoImage = require('../img/EventBackground.jpg')
     imageImage = { uri: this.props.navigation.getParam("eventPhotoURL") }
     image = this.props.navigation.getParam("eventPhotoURL") != "" && this.props.navigation.getParam("eventPhotoURL") != null ? imageImage : imageNoImage;
     return (
-      //<View style={{ flex: 1 }}>
       <ScrollView>
         <View style={eventPage.eventDetail}>
           {this.renderAwardModal()}
@@ -161,35 +196,33 @@ class EventDetails extends Component {
               />
             </TouchableOpacity>
           </View>
-          <Image source={image} style={eventPage.eventDetailImage} />
-          <View style={eventPage.eventDetailTitleBox} >
-            <Text style={[eventPage.eventDetailTitle, colors.white, fonts.majorHeading]}>
-              {this.props.event.title}
-            </Text>
+          {this.renderImageModal()}
+          <View style={eventPage.eventDetailImageContainer}>
+            <TouchableOpacity onPress={this.showImage}>
+              <Image source={image} style={eventPage.eventDetailImage} />
+            </TouchableOpacity>
+          </View>
+          <View style={eventPage.eventDetailTitle}>
+            <Text style={[colors.deepPurple, fonts.majorHeading]}>{this.props.event.title}</Text>
           </View>
           <View style={eventPage.eventDetailLogistics}>
             <View style={eventPage.eventDetailDayTime}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}> {this.props.event.date} </Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.time} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.event.date}, </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.event.time}</Text>
             </View>
             <View style={eventPage.eventDetailLocation}>
-              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.props.event.location} </Text>
+              <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.props.event.location}</Text>
             </View>
           </View>
-          {this.renderMap()}
           <View style={eventPage.eventDetailDescription}>
             <Text style={[eventPage.eventDetailDescriptionText, colors.black, fonts.bodyText]}>
               {this.props.event.description}
             </Text>
           </View>
+          {this.renderMap()}
           <View style={eventPage.eventDetailRSVPContainer} >
             {this.renderConnectionsModal()}
-            <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.connections ? this.props.connections.length : null} connections are attending</Text>
-              <TouchableOpacity onPress={this.changeConnectionsModal}>
-                <Text style={[colors.turquoise, fonts.minorHeading]}>Click to see who!</Text>
-              </TouchableOpacity>
-            </View>
+            {this.renderConnectionsAttending()}
             <TouchableOpacity style={eventPage.eventDetailRSVP} onPress={this.handleRSVP}>
               <Text style={[eventPage.eventDetailRSVPText, colors.white, fonts.minorHeading]}>
                 {this.state.rsvp
@@ -198,9 +231,8 @@ class EventDetails extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </ScrollView>
-      ///</View>
+        </View >
+      </ScrollView >
     );
   }
 }
@@ -209,6 +241,7 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     event: reduxState.events.event,
     connections: reduxState.events.connections,
+    eventCount: reduxState.events.eventCount,
   }
 );
-export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections })(EventDetails);
+export default connect(mapStateToProps, { unrsvpEvent, rsvpEvent, getUser, fetchEvent, fetchRsvpConnections, getEventCount })(EventDetails);

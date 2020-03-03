@@ -18,11 +18,14 @@ class SignIn extends React.Component {
       showModal: false,
       modalMessage: '',
       loading: false,
+
+      pressedSubmit: false,
     }
   }
 
   componentWillUnmount() {
     this.props.resetErrors();
+    // console.log("in here");
   }
 
   checkSignIn = () => {
@@ -30,7 +33,7 @@ class SignIn extends React.Component {
       this.setState({ showModal: true, modalMessage: 'Please fill out the entire form.' });
     }
     else {
-      this.setState({ loading: true });
+      this.setState({ loading: true, pressedSubmit: true });
       this.props.signinUser({ username: this.state.username, password: this.state.password, navigate: this.props.navigation });
     }
 
@@ -53,7 +56,7 @@ class SignIn extends React.Component {
   }
 
   renderLoading = () => {
-    if (this.state.loading === true && !this.state.showModal && this.props.error === null) {
+    if (this.state.loading === true && !this.state.showModal && (this.props.error === null || this.props.error === 'Request failed with status code 503')) {
       return (
         <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Signing You In!</Text>
       )
@@ -61,7 +64,8 @@ class SignIn extends React.Component {
   }
 
   renderError = () => {
-    if (this.props.error !== null) {
+    console.log(this.props.error);
+    if (this.props.error !== null && this.state.pressedSubmit && this.props.error !== 'Request failed with status code 503') {
       return (
         <Text style={[fonts.bodyText, colors.red, fontEffects.center]}>{this.props.error}</Text>
       )
@@ -73,10 +77,13 @@ class SignIn extends React.Component {
   }
 
   goBack = () => {
+    this.props.resetErrors();
     this.props.navigation.pop();
   }
 
   render() {
+    // console.log("in render");
+    // console.log(this.props.error);
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText, surveyStyle.endField]
     return (
       <View style={surveyStyle.surveyBackground}>

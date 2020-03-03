@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Animated, Easing } from 'react-native';
-import { getUser, getMatches, deleteMatch } from '../actions';
+import { getUser, getMatches, deleteMatch, blockUser, reportUser, checkUnreadUsers } from '../actions';
 import colors, { fonts, fontEffects, buttons } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import Match from './Match';
+import { NavigationEvents } from 'react-navigation';
 
-
-/* animation: 
+/* animation:
  // https://facebook.github.io/react-native/docs/animated#timing
  // https://stackoverflow.com/questions/37445090/react-native-how-do-you-animate-the-rotation-of-an-image
 */
@@ -25,11 +25,30 @@ class Chats extends React.Component {
   componentDidMount() {
     this.props.getUser(this.props.id);
     this.spin();
+    this.props.checkUnreadUsers(this.props.id);
     this.setState({ animation: true });
+    this.interval = setInterval(() => this.refreshUnreadUsers(), 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  refreshUnreadUsers = () => {
+    this.props.checkUnreadUsers(this.props.id);
   }
 
   deleteMatch = (matchID) => {
     this.props.deleteMatch(this.props.id, matchID, this.props.username);
+  }
+
+  reportMatch = (matchID) => {
+    this.props.reportUser(this.props.id, matchID, this.props.username);
+  }
+
+  blockMatch = (matchID) => {
+    this.props.blockUser(this.props.id, matchID, this.props.username)
+    this.props.getMatches(this.props.username);
   }
 
   spin() {
@@ -52,19 +71,29 @@ class Chats extends React.Component {
 
   showMatches() {
     var i = -1;
-    return this.props.matches.map((n) => {
-      i++;
-      return (
-        <Match
-          key={n}
-          userId={n}
-          i={i}
-          deleteMatch={this.deleteMatch}
-          matchID={n}
-          nav={this.props.navigation}
-        />
-      )
-    })
+      return this.props.matches.map((n) => {
+        i++;
+        var isBold = false;
+        for(u=0; u < this.props.unreadPeople.length; u++) {
+          if(this.props.unreadPeople[u] === n) {
+            isBold = true;
+            break;
+          }
+        }
+        return (
+          <Match
+            key={n}
+            userId={n}
+            i={i}
+            deleteMatch={this.deleteMatch}
+            blockMatch={this.blockMatch}
+            reportMatch={this.reportMatch}
+            matchID={n}
+            nav={this.props.navigation}
+            bold={isBold}
+          />
+        )
+      })
   }
 
   render() {
@@ -90,9 +119,11 @@ class Chats extends React.Component {
         <Text style={[fonts.majorHeading, colors.deepPurple]}>Loading Your Chats!</Text>
       </View>);
 
-    if (this.props.matches !== undefined && this.props.matches.legnth !== 0) {
+    if (this.props.matches !== undefined && this.props.matches.legnth !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <ScrollView>
+          <NavigationEvents onDidFocus={this.refreshUnreadUsers}>
+          </NavigationEvents>
           <View>
             <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
             {this.showMatches()}
@@ -100,7 +131,7 @@ class Chats extends React.Component {
         </ScrollView>
       )
     }
-    else if (this.props.matches !== undefined && this.props.matches.length !== 0) {
+    else if (this.props.matches !== undefined && this.props.matches.length !== 0 && this.props.unreadPeople !== undefined ) {
       return (
         <View>
           <Text style={[colors.deepPurple, fonts.majorHeading, fontEffects.center]}>Matches</Text>
@@ -122,7 +153,8 @@ const mapStateToProps = reduxState => (
     id: reduxState.auth.id,
     email: reduxState.user.email,
     matches: reduxState.user.matches,
+    unreadPeople: reduxState.chats.unreadPeople,
   }
 );
 
-export default connect(mapStateToProps, { getMatches, getUser, deleteMatch})(Chats);
+export default connect(mapStateToProps, { getMatches, getUser, deleteMatch, blockUser, reportUser, checkUnreadUsers})(Chats);

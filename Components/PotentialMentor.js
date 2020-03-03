@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Prompt from './Prompt.js';
 import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
 import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
-import { pairMatchToUser } from '../actions';
+import { pairMatchToUser, rejectAMatch } from '../actions';
 import { Linking } from 'react-native'
 import axios from 'axios';
 
@@ -27,10 +27,9 @@ class PotentialMentor extends React.Component {
         console.log(error);
       });
   }
-  noMatchCallback = () => {
-    // api call to remove person from matches
-    this.setState({ matched: false, noAction: false })
-  }
+  // noMatchCallback = () => {
+  //   // api call to remove person from matches
+  // }
 
   yesMatchCallback = (prompt) => {
     if (prompt === '0') {
@@ -46,6 +45,12 @@ class PotentialMentor extends React.Component {
       prompt = this.state.userMatch.promptThreeAnswer;
     }
     this.props.pairMatchToUser(this.props.username, this.state.userMatch.username, prompt, this.props.navigation, this.state.userMatch.id);
+    // this.props.refresh(this.props.username);
+  }
+
+  rejectMatch = () => {
+    this.setState({ matched: false, noAction: false })
+    this.props.rejectAMatch(this.props.username, this.state.userMatch.username)
   }
 
   getPrompt = (num) => {
@@ -78,7 +83,7 @@ class PotentialMentor extends React.Component {
     var yesMatch = require('../assets/icons/yesMatch.png');
     var noMatch = require('../assets/icons/dontMatch.png');
 
-    imageNoImage = <Image source={require('./../assets/icons/tim.jpg')} style={profileImage.basic} />
+    imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.basic} />
     imageImage = <Image source={{ uri: this.state.userMatch.profileURL }} style={profileImage.basic} />
 
     image = this.state.userMatch.profileURL != "" && this.state.userMatch.profileURL != null ? imageImage : imageNoImage;
@@ -102,11 +107,11 @@ class PotentialMentor extends React.Component {
                 <Text style={[colors.black, fonts.majorHeading]}>{`${this.state.userMatch.firstName}, ${this.state.userMatch.age}`}</Text>
                 <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.location}</Text>
               </TouchableOpacity>
-            </View>
-            <View style={profile.jobStuff}>
               <TouchableOpacity onPress={() => this.yesMatchCallback('0')}>
-                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
-                <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.gradYear}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}>{this.state.userMatch.collegeName === '' ? this.state.userMatch.highSchool : this.state.userMatch.collegeName}</Text>
+                  <Text style={[colors.deepPurple, fonts.minorHeading, fontEffects.italic]}> {this.state.userMatch.gradYear}</Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -118,7 +123,7 @@ class PotentialMentor extends React.Component {
             </View>
           </View>
           <View style={buttons.yesNoContainer}>
-            <TouchableOpacity onPress={this.noMatchCallback}>
+            <TouchableOpacity onPress={() => this.rejectMatch()}>
               <Image
                 source={noMatch}
               />
@@ -148,4 +153,4 @@ const mapStateToProps = reduxState => (
   }
 );
 
-export default connect(mapStateToProps, { pairMatchToUser })(PotentialMentor);
+export default connect(mapStateToProps, { pairMatchToUser, rejectAMatch })(PotentialMentor);

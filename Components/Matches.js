@@ -37,6 +37,7 @@ class Matches extends React.Component {
     this.props.getPotentialMatches(this.props.username);
     this.spin();
     this.setState({ animation: true, firstTime: this.props.firstTime});
+    console.log("mounting matches");
   }
 
   refresh = () => {
