@@ -202,39 +202,57 @@ export function signinUser({ username, password, navigate }) {
 //creates a new user and then signs them in and saves their information on the phone
 export function signUpUser(fields, navigate, otherAnswers) {
   return (dispatch) => {
+    let pushToken = ''
+    //https://facebook.github.io/react-native/docs/asyncstorage
+  _retrieveData = async () => {
+    try {
+      pushToken = await AsyncStorage.getItem('pushToken');
+      if (pushToken !== null) {
+        // We have data!!
+        console.log("PUSH TOKEN:");
+        console.log(pushToken);
+      }
+    } catch (error) {
+      console.log("IN ERROR");
+      // Error retrieving data
+    }
+  };
+  _retrieveData().then((result) => {
+    fields.pushToken = pushToken;
+    
+        axios.post(`${ROOT_URL}/signup`, fields)
+          .then((response) => {
+            return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
+              .then((res) => {
+                dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
+    
+                _storeData = async () => {
+                  try {
+                    await AsyncStorage.setItem('token', response.data.token);
+                    await AsyncStorage.setItem('username', fields.username);
+                    await AsyncStorage.setItem('id', response.data.id);
+                  } catch (error) {
+                    console.log("token error setting async");
+                  }
+                };
+    
+                _storeData();
+    
+                navigate.navigate("Main");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }).catch((error) => {
+            console.log(error);
+            dispatch(authError(`Sign Up Failed: User Exists with this Information`));
+          });
+  });
     // const pushToken = AsyncStorage.getItem('pushToken');
     // fields.pushToken = pushToken;
     // console.log(fields);
 
     // in here first check for pushtoken await AsyncStorage.getItem('pushToken');
-
-    axios.post(`${ROOT_URL}/signup`, fields)
-      .then((response) => {
-        return axios.put(`${ROOT_URL}/users/survey/${fields.username}`, otherAnswers)
-          .then((res) => {
-            dispatch({ type: ActionTypes.AUTH_USER, payload: { username: fields.username, id: response.data.id } });
-
-            _storeData = async () => {
-              try {
-                await AsyncStorage.setItem('token', response.data.token);
-                await AsyncStorage.setItem('username', fields.username);
-                await AsyncStorage.setItem('id', response.data.id);
-              } catch (error) {
-                console.log("token error setting async");
-              }
-            };
-
-            _storeData();
-
-            navigate.navigate("Main");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }).catch((error) => {
-        console.log(error);
-        dispatch(authError(`Sign Up Failed: User Exists with this Information`));
-      });
   }
 }
 
