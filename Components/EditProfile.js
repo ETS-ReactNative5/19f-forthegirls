@@ -192,6 +192,7 @@ class EditProfile extends React.Component {
     if (!result.cancelled) {
       this.setState({ image: result.uri, imagefull: result });
     }
+    this.calcProgress();
   };
 
   submitPage = () => {
@@ -262,13 +263,14 @@ class EditProfile extends React.Component {
         message = "Fill out the third prompt to fill up the progress bar!";
       }
     }
-    if (this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) {
+    if ((this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) && (this.state.imagefull === null || this.state.imagefull === undefined)) {
       sum -= .2;
       if (message === '') {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
-    if (this.state.extraversion === 50 || this.state.listening === 50) {
+    console.log(this.state.extraversion, this.state.listening);
+    if (this.state.extraversion === 50 && this.state.listening === 50) {
       sum -= .2;
       if (message === '') {
         message = "Adjust the personality sliders to fill up the progress bar!";
@@ -403,6 +405,7 @@ class EditProfile extends React.Component {
 
   p1Answer = (text) => {
     this.setState({ promptOneAnswer: text });
+    this.calcProgress();
   }
 
   p2Question = (value) => {
@@ -411,6 +414,7 @@ class EditProfile extends React.Component {
 
   p2Answer = (text) => {
     this.setState({ promptTwoAnswer: text });
+    this.calcProgress();
   }
 
   p3Question = (value) => {
@@ -419,10 +423,12 @@ class EditProfile extends React.Component {
 
   p3Answer = (text) => {
     this.setState({ promptThreeAnswer: text });
+    this.calcProgress();
   }
 
   handleSliderChange(sliderId, value) {
     this.setState({ [sliderId]: value });
+    this.calcProgress();
   }
 
   opacityOnPress = () => {
