@@ -8,7 +8,8 @@ import {
   ScrollView,
   Animated,
   Image,
-  Easing
+  Easing,
+  TouchableOpacity
 } from 'react-native';
 import colors, { fonts } from '../assets/styles/basicStyle';
 import PotentialMentor from './PotentialMentor';
@@ -27,6 +28,7 @@ class Matches extends React.Component {
       showModal: false,
       modalMessage: '',
       firstTime: false,
+      walkThrough: false,
     }
     this.spinValue = new Animated.Value(0);
 
@@ -63,15 +65,19 @@ class Matches extends React.Component {
   }
 
   firstTime = () => {
-    if(this.state.firstTime) {
+    if(this.state.firstTime || this.state.walkThrough) {
       return (
         <Walkthrough reset={this.resetModal}></Walkthrough>
       )
     }
   }
 
+  startWalkthrough = () => {
+   this.setState({walkThrough: true});
+  }
+
   resetModal = () => {
-    this.setState({ showModal: false, modalMessage: "", firstTime: false });
+    this.setState({ showModal: false, modalMessage: "", firstTime: false, walkThrough: false });
     this.props.editUserVisit(this.props.username, this.props.id, {firstTime: false});
   }
 
@@ -110,10 +116,19 @@ class Matches extends React.Component {
     }
     else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) {
       return (
+        <View>
+          <View style={{alignItems: 'flex-end'}} >
+           <TouchableOpacity
+            onPress={() => this.startWalkthrough()}>
+            <Image style={{width: 40, height: 40, marginTop: 7, marginRight: 7}}source={require('./../assets/icons/question.png')} />
+          </TouchableOpacity>
+          </View>
+
         <ScrollView>
           {this.firstTime()}
           {this.returnMatches()}
         </ScrollView>
+        </View>
       )
     }
     else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth === 0) {
