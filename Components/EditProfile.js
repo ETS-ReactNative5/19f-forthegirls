@@ -113,7 +113,7 @@ class EditProfile extends React.Component {
         }
 
       }
-      console.log(stateLong)
+      // console.log(stateLong)
       this.setState({ queryTown: town, stateSelected: stateLong })
     }
   }
@@ -218,6 +218,8 @@ class EditProfile extends React.Component {
           this.props.addToSurvey(this.state, this.props.username, this.props.navigation, 'Home');
 
         })
+        this.setState({ loading: true });
+
       }
       else {
 
@@ -230,6 +232,7 @@ class EditProfile extends React.Component {
 
   renderLoadingModal = () => {
     if (this.state.loading) {
+      console.log('in here');
       return (
         <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Saving your info!</Text>
       );
@@ -269,7 +272,6 @@ class EditProfile extends React.Component {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
-    console.log(this.state.extraversion, this.state.listening);
     if (this.state.extraversion === 50 && this.state.listening === 50) {
       sum -= .2;
       if (message === '') {
@@ -309,7 +311,7 @@ class EditProfile extends React.Component {
   }
 
   locationChange = (text) => {
-    console.log(this.state.stateSelected)
+    // console.log(this.state.stateSelected)
     if (this.stateSelected != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       var newLoc = text + ", " + stateAbbrv;
