@@ -263,13 +263,14 @@ class EditProfile extends React.Component {
         message = "Fill out the third prompt to fill up the progress bar!";
       }
     }
-    if (this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined || this.state.imagefull === null) {
+    if ((this.props.profileURL === "" || this.props.profileURL === null || this.props.profileURL === undefined) && (this.state.imagefull === null || this.state.imagefull === undefined)) {
       sum -= .2;
       if (message === '') {
         message = "Add a profile picture to fill up the progress bar!";
       }
     }
-    if (this.state.extraversion === 50 || this.state.listening === 50) {
+    console.log(this.state.extraversion, this.state.listening);
+    if (this.state.extraversion === 50 && this.state.listening === 50) {
       sum -= .2;
       if (message === '') {
         message = "Adjust the personality sliders to fill up the progress bar!";
