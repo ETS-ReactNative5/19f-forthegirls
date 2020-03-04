@@ -113,7 +113,7 @@ class EditProfile extends React.Component {
         }
 
       }
-       console.log(stateLong)
+      console.log(stateLong)
       this.setState({ queryTown: town, stateSelected: stateLong })
     }
   }
@@ -308,13 +308,13 @@ class EditProfile extends React.Component {
 
   locationChange = (text) => {
     console.log(this.state.stateSelected)
-    if(this.stateSelected!=""){
+    if (this.stateSelected != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       var newLoc = text + ", " + stateAbbrv;
       this.setState({ location: newLoc });
     }
     else {
-      this.setState({location: text});
+      this.setState({ location: text });
     }
   }
 
@@ -537,7 +537,7 @@ class EditProfile extends React.Component {
       image = imageNoImage;
     }
 
-  //  var queryDateTown = this.findQueryTown(this.state.queryTown);
+    //  var queryDateTown = this.findQueryTown(this.state.queryTown);
 
     return (
       <View style={{ backgroundColor: colors.lightGrey.color }}>
@@ -683,7 +683,7 @@ class EditProfile extends React.Component {
             <SurveyHeaderComponent header="Tell Us About You!" />
           </View>
           <SliderComponent id='extraversion' onChange={this.handleSliderChange} value={this.state.extraversion} min='introvert' max='extrovert' />
-          <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='listener' max='leader' />
+          <SliderComponent id='listening' onChange={this.handleSliderChange} value={this.state.listening} min='planner' max='spontaneous' />
           <View style={{ alignItems: 'center', width: '100%', marginTop: 10, marginBottom: 10 }}>
             <SurveyHeaderComponent header="CS Skills and Preferences" />
           </View>
