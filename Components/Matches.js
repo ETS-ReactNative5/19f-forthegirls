@@ -38,7 +38,7 @@ class Matches extends React.Component {
   componentDidMount() {
     this.props.getPotentialMatches(this.props.username);
     this.spin();
-    this.setState({ animation: true, firstTime: this.props.firstTime});
+    this.setState({ animation: true, firstTime: this.props.firstTime });
     console.log("mounting matches");
   }
 
@@ -65,7 +65,7 @@ class Matches extends React.Component {
   }
 
   firstTime = () => {
-    if(this.state.firstTime || this.state.walkThrough) {
+    if (this.state.firstTime || this.state.walkThrough) {
       return (
         <Walkthrough reset={this.resetModal}></Walkthrough>
       )
@@ -73,12 +73,12 @@ class Matches extends React.Component {
   }
 
   startWalkthrough = () => {
-   this.setState({walkThrough: true});
+    this.setState({ walkThrough: true });
   }
 
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "", firstTime: false, walkThrough: false });
-    this.props.editUserVisit(this.props.username, this.props.id, {firstTime: false});
+    this.props.editUserVisit(this.props.username, this.props.id, { firstTime: false });
   }
 
   returnMatches = () => {
@@ -117,17 +117,18 @@ class Matches extends React.Component {
     else if (this.props.potentialMatches !== undefined && this.props.potentialMatches.legnth !== 0) {
       return (
         <View>
-          <View style={{alignItems: 'flex-end'}} >
-           <TouchableOpacity
-            onPress={() => this.startWalkthrough()}>
-            <Image style={{width: 40, height: 40, marginTop: 7, marginRight: 7}}source={require('./../assets/icons/question.png')} />
-          </TouchableOpacity>
-          </View>
 
-        <ScrollView>
-          {this.firstTime()}
-          {this.returnMatches()}
-        </ScrollView>
+
+          <ScrollView>
+            <View style={{ alignItems: 'flex-end' }} >
+              <TouchableOpacity
+                onPress={() => this.startWalkthrough()}>
+                <Image style={{ width: 40, height: 40, marginTop: 7, marginRight: 7 }} source={require('./../assets/icons/question.png')} />
+              </TouchableOpacity>
+            </View>
+            {this.firstTime()}
+            {this.returnMatches()}
+          </ScrollView>
         </View>
       )
     }

@@ -162,12 +162,6 @@ class SingleChat extends React.Component {
     this.setState({ chatText: '', prompt: '' })
     this.props.totalContacted(this.props.id)
 
-    console.log('-------\nin send chat')
-    console.log('chat text state:')
-    console.log(this.state.chatText);
-    console.log('prompot state:')
-    console.log(this.state.prompt);
-
     if (this.props.numContacted == 4 && this.props.chats.length == 0) {
       this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You contacted 5 different people!', awardImage: require('./../assets/icons/messageFive.png') });
     }
