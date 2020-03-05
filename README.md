@@ -4,6 +4,7 @@ For the Girls is a mobile application that connects women in technology based on
 
 ![hi-fi](./img/homepage_v1.png)
 ![sketch](./img/sketch_v1.png)
+![selfie](./img/t2sprint7.jpeg)
 
 ## Architecture
 
