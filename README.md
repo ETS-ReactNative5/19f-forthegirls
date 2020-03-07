@@ -18,9 +18,10 @@ The other stack navigator we have created is the event stack which determines if
 
 We also are using reducers and actions to work with our backend. We have  an auth reducer to keep track of the users, and then we also have event, error and user reducer to keep profile info, events info and error information. These are all  in the reducers folder and the corresponding actions are in action.js.
 
-Our styling is all in assets.js and it corresponds to the style from the Figma such as the image bellow.
+Our styling is all in assets.js and we have made slight changes from our original figma. We made sure to keep our colors and fonts consistent.
+These are our basic four screens with the current styling:
 
-![sketch](./img/style.jpeg)
+![sketch](./img/finalstyle.png)
 
 To style, we are using some helpful components from NPM such as `react-native-text-field` which lets the user input text and `react-native-material-dropdown` which allows the user to choose from a dropdown menu.
 

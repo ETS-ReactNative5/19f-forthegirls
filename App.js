@@ -46,9 +46,9 @@ class App extends React.Component {
         id: await AsyncStorage.getItem('id'),
       }
       if (value.token !== null) {
-      //  this.setState({ signedIn: true });
+        //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
-        this.setState({signedIn: true, username: value.username});
+        this.setState({ signedIn: true, username: value.username });
       }
     } catch (error) {
       console.log("error getting token");
@@ -62,19 +62,21 @@ class App extends React.Component {
   registerForPushNotificationsAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
+      console.log("PERMISSION GRANTED")
       return;
     }
+    console.log("PERMISSION NOT GRANTED")
     try {
       let pushToken = await Notifications.getExpoPushTokenAsync();
-      if(pushToken) {
+      if (pushToken) {
         await AsyncStorage.setItem('pushToken', pushToken);
         console.log(pushToken);
-        console.log( await AsyncStorage.getItem('pushToken'));
+        console.log(await AsyncStorage.getItem('pushToken'));
         // store.dispatch({ type: 'AUTH_TOKEN', payload: pushToken });
 
-              //once you have push token need to save it to your backend
-              // need to add ^ action which then sends token to api
-              // just make api call here or in actions
+        //once you have push token need to save it to your backend
+        // need to add ^ action which then sends token to api
+        // just make api call here or in actions
       }
 
       //once you have push token need to save it to your backend
@@ -129,12 +131,12 @@ class App extends React.Component {
     this.registerForPushNotificationsAsync();
 
     axios.get(`${ROOT_URL}/getAPI`).then((response) => {
-        console.log(response.data);
-        store.dispatch({ type: 'GET_EVENT_API', payload: response.data });
-      }).catch((error) => {
-        console.log(error);
-      });
-    
+      console.log(response.data);
+      store.dispatch({ type: 'GET_EVENT_API', payload: response.data });
+    }).catch((error) => {
+      console.log(error);
+    });
+
 
   }
 
@@ -143,7 +145,7 @@ class App extends React.Component {
       return (
         <Provider store={store}>
           <LogoBar />
-          <Main signedIn={this.state.signedIn}/>
+          <Main signedIn={this.state.signedIn} />
         </Provider>
       );
     } else {
