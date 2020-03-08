@@ -18,14 +18,10 @@ class SkillsDropdown extends React.Component {
 
   showSkills(data, label) {
     if (this.state.showSkills()) {
-      /// come back to this!
       for (i = 0; i < data.length; i++) {
         return (
           <TouchableComponent name={data[i]}
             onChange={this.handleFieldChange} />)
-        // stateField='meritocratic' 
-        // stateFieldStatus={this.state.meritocratic} 
-        // onChange={this.handleFieldChange} />)
       }
     }
   }
@@ -34,7 +30,6 @@ class SkillsDropdown extends React.Component {
   render() {
     return (
       <View>
-        // button to show
         <Text>Show</Text>
         {this.showSkills(this.props.data, this.props.label)}
       </View>
@@ -43,24 +38,3 @@ class SkillsDropdown extends React.Component {
     );
   };
 };
-
-// need to loop through things in the data set 
-// render each as 
-/* <TouchableComponent
-  name='Meritocratic'
-  stateField='meritocratic'
-  stateFieldStatus={this.state.meritocratic}
-  onChange={this.handleFieldChange} />
-*/
-
-
-  // var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
-  // var itemTextStyle = [fonts.bodyText]
-  // var selectedItemColor = colors.turquoise.color
-
-//   return (
-//     if (this.state.showSkills) {
-//       for 
-//     }
-//   );
-// }

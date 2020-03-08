@@ -46,7 +46,6 @@ class App extends React.Component {
         id: await AsyncStorage.getItem('id'),
       }
       if (value.token !== null) {
-        //  this.setState({ signedIn: true });
         store.dispatch({ type: 'AUTH_USER', payload: { username: value.username, id: value.id } });
         this.setState({ signedIn: true, username: value.username });
       }
@@ -78,30 +77,6 @@ class App extends React.Component {
         // need to add ^ action which then sends token to api
         // just make api call here or in actions
       }
-
-      //once you have push token need to save it to your backend
-
-      // try {
-      //   return fetch(PUSH_REGISTRATION_ENDPOINT, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     token: {
-      //       value: token,
-      //     },
-      //     user: {
-      //       username: this.state.username,
-      //     },
-      //   }),
-      // });
-      // }
-      // catch (error) {
-      //   console.log("in here");
-      //   console.log(error);
-      // }
     }
     catch (error) {
       console.log("in here");
@@ -131,7 +106,6 @@ class App extends React.Component {
     this.registerForPushNotificationsAsync();
 
     axios.get(`${ROOT_URL}/getAPI`).then((response) => {
-      console.log(response.data);
       store.dispatch({ type: 'GET_EVENT_API', payload: response.data });
     }).catch((error) => {
       console.log(error);

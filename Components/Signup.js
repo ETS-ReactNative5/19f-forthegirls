@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { singleChat } from '../assets/styles/chatStyle';
-import {fonts } from '../assets/styles/basicStyle';
-
-
-//this.props.navigation.navigate(name of page you want to go to)
+import { fonts } from '../assets/styles/basicStyle';
 
 
 class SignUp extends React.Component {
@@ -27,8 +24,8 @@ class SignUp extends React.Component {
             <Image
               source={require('./../assets/icons/arrowback.png')}
             />
-         </TouchableOpacity>
-      </View>
+          </TouchableOpacity>
+        </View>
         <View style={{ backgroundColor: '#FFFFFF', alignItems: 'center' }}>
           <Text style={[fonts.majorHeading, { alignItems: 'center' }]}>Hi! Welcome to <Text style={{ color: '#28C3A9' }}> For the Girls </Text> </Text>
         </View>

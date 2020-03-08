@@ -15,9 +15,7 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
-import Style from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
-import modalStyle from '../assets/styles/modalStyle';
 import colors, { fonts, fontEffects, modal, buttons, profileImage } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { rsvpEvent, unrsvpEvent, getUser, fetchEvent, fetchRsvpConnections, getEventCount } from '../actions';
@@ -167,7 +165,6 @@ class EventDetails extends Component {
   }
 
   renderConnectionsAttending = () => {
-    //&& this.props.connections !== n
     if (this.props.connections.length !== 0 && this.props.connections !== undefined) {
       return (
         <View style={{ alignItems: 'center', backgroundColor: colors.lightGrey.color, padding: 10, borderRadius: 20 }}>

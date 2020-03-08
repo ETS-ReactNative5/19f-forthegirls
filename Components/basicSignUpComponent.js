@@ -323,30 +323,6 @@ class BasicSignUpComponent extends React.Component {
   //need to check unique from here
   render() {
 
-    // var autocomplete =(
-    //   <View style={surveyStyle.textFieldContainer}>
-    //     <Autocomplete
-    //       data={queryDateTown}
-    //       style={textFieldStyle}
-    //       defaultValue={this.state.queryTown}
-    //       onChangeText={text => this.setState({ queryTown: text })}
-    //       renderItem={({ item, i }) => (
-    //         <TouchableOpacity onPress={() => {
-    //           this.setState({ queryTown: item })
-    //           var newLocation = this.autocompleteSelection(item);
-    //           this.setState({location: newLocation});
-    //           }
-    //         }>
-    //           <Text>{item}</Text>
-    //         </TouchableOpacity>
-    //       )}
-    //    />
-    //  </View>
-    // )
-    //    console.log(this.state.queryTown);
-    var queryDateTown = this.findQueryTown(this.state.queryTown);
-    //console.log(queryDateTown)
-
     let stateDropdown = [];
     for (var i = 0; i < this.state.statelist.length; i++) {
       var newVal = {};

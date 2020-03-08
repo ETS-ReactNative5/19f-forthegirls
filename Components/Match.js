@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import colors, { fonts, fontEffects, profileImage } from '../assets/styles/basicStyle';
-import profile, { promptStyle, buttons } from '../assets/styles/profileStyle';
+import { fonts, profileImage } from '../assets/styles/basicStyle';
 import axios from 'axios';
 import chatList from '../assets/styles/chatStyle';
-import { Linking } from 'react-native'
 import BlacklistModal from './BlacklistModal'
 
 

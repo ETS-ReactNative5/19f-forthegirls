@@ -73,22 +73,6 @@ class SingleChat extends React.Component {
     if (this.props.navigation.getParam('firstMatchAward') && this.state.awardAward) {
       this.setState({ showModal: true, awardMessage: 'You got the First Match Badge!', awardImage: require('./../assets/icons/firstMatch.png') });
     }
-
-
-    // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalContacted/${this.props.id}`)
-    //   .then((response) => {
-    //     this.setState({ numContacted: response.data })
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
-
-
-    // axios.get(`https://for-the-girls.herokuapp.com/api/chats/totalSent/${this.props.id}`)
-    //   .then((response) => {
-    //     this.setState({ numChats: response.data })
-    //   }).catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
   setToRead = () => {
@@ -140,12 +124,7 @@ class SingleChat extends React.Component {
   }
 
   addChat = (text) => {
-    // if (this.props.navigation.getParam('prompt') !== '') {
-    //   this.setState({ chatText: this.props.navigation.getParam('prompt') })
-    // } else {
     this.setState({ chatText: text });
-    // }
-
   }
 
   sendChat = () => {
@@ -179,12 +158,8 @@ class SingleChat extends React.Component {
 
   goBack = () => {
     this.props.clearChat();
-
     this.props.getMatches(this.props.username);
-    // this.props.checkUnreadUsers(this.props.id);
-    // this.props.checkUnreadMessages(this.props.id);
     this.props.navigation.pop();
-
   }
 
   handleKeyDown = (e) => {
@@ -221,8 +196,6 @@ class SingleChat extends React.Component {
               defaultValue={this.props.navigation.getParam('prompt')}
               value={this.state.chatText}
               onChangeText={this.addChat}
-              //onBlur={this.sendChat}
-              //onEndEditing={this.sendChat}
               onKeyPress={this.handleKeyDown}
             />
             <TouchableOpacity
@@ -241,16 +214,6 @@ class SingleChat extends React.Component {
   resetModal = () => {
     this.setState({ showModal: false, modalMessage: "", awardAward: false });
   }
-
-  // loadMore = () => {
-  //   if (this.state.chats.length > 10) {
-  //     return (
-  //       <TouchableOpacity style={singleChat.loadmore} onPress={this.loadMore}>
-  //         <Text style={[fonts.minorHeading, colors.deepPurple, fontEffects.center]}>Load More!</Text>
-  //       </TouchableOpacity>
-  //     )
-  //   }
-  // }
 
   render() {
     return (
@@ -275,7 +238,6 @@ class SingleChat extends React.Component {
             style={{ flex: 0 }}
             ref={ref => this.scrollView = ref}
             onContentSizeChange={() => { this.scrollView.scrollToEnd({ animated: true }) }}>
-            {/* {this.loadMore()} */}
             <View>
               <View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>

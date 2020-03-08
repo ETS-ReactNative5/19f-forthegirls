@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import SingleEvent from './SingleEvent.js'
-import mainScreenStyle from '../assets/styles/mainStyle';
 import eventPage from '../assets/styles/eventPage';
 import colors, { fonts, fontEffects } from '../assets/styles/basicStyle';
 import { connect } from 'react-redux';
 import { fetchEvents, fetchYourEvents, getUser } from '../actions';
-import ErrorModal from './ErrorModal'
 import { NavigationEvents } from 'react-navigation';
 import AwardModal from './AwardModal'
 
