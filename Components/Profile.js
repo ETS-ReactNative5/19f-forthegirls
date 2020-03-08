@@ -6,10 +6,7 @@ import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/sty
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 import { withNavigation } from 'react-navigation';
-import AwardModal from './AwardModal'
-
-import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
+import AwardModal from './AwardModal';
 
 class Profile extends React.Component {
   constructor(props) {

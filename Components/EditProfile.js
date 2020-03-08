@@ -16,9 +16,7 @@ import ErrorModal from './ErrorModal'
 import { uploadImage } from '../s3';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import csc from 'country-state-city'
-import { ICountry, IState, ICity } from 'country-state-city'
-import Autocomplete from 'react-native-autocomplete-input';
+import csc from 'country-state-city';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -98,7 +96,6 @@ class EditProfile extends React.Component {
     }
 
     var stateAbrv = this.createStateToAbbrvMap();
-    // console.log(stateAbrv);
     this.setState({ statelist: statelist, stateAbrv: stateAbrv });
 
     var locationLength = this.state.location.length;
@@ -113,7 +110,6 @@ class EditProfile extends React.Component {
         }
 
       }
-      // console.log(stateLong)
       this.setState({ queryTown: town, stateSelected: stateLong })
     }
   }
@@ -197,9 +193,6 @@ class EditProfile extends React.Component {
 
   submitPage = () => {
     if ((this.state.promptOneQuestion === this.state.promptTwoQuestion || this.state.promptTwoQuestion === this.state.promptThreeQuestion || this.state.promptOneQuestion === this.state.promptThreeQuestion) && (this.state.promptOneQuestion !== undefined && this.state.promptTwoQuestion !== undefined && this.state.promptThreeQuestion !== undefined)) {
-      // console.log(this.state.promptOneQuestion);
-      // console.log(this.state.promptTwoQuestion);
-      // console.log(this.state.promptThreeQuestion);
       this.setState({ showModal: !this.state.showModal, modalMessage: "Please fill out different prompts!" });
     }
     else if (this.state.firstName === '' || this.state.lastName === '' || this.state.location === '') {
@@ -311,7 +304,6 @@ class EditProfile extends React.Component {
   }
 
   locationChange = (text) => {
-    // console.log(this.state.stateSelected)
     if (this.stateSelected != "") {
       var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
       var newLoc = text + ", " + stateAbbrv;
@@ -441,43 +433,6 @@ class EditProfile extends React.Component {
     this.props.navigation.pop();
   }
 
-  // findQueryTown = (query) => {
-  //   if (query === '' || this.state.stateSelected == '') {
-  //     return [];
-  //   }
-  //   var state = csc.getStatesOfCountry("231");
-  //   var id = "";
-  //   for (var i = 0; i < state.length; i++) {
-  //     if (state[i].name == this.state.stateSelected) {
-  //       id = state[i].id;
-  //     }
-  //   }
-  //   if (id == "") {
-  //     return [];
-  //   }
-  //   var cities = csc.getCitiesOfState(id);
-  //   for (var i = 0; i < cities.length; i++) {
-  //     if (this.state.queryTown == cities[i].name) {
-  //       return [];
-  //     }
-  //   }
-  //   const regex = new RegExp(`${query.trim()}`, 'i');
-  //   var filtered = cities.filter(city => city.name.search(regex) >= 0);
-  //   var result = []
-  //   for (var i = 0; i < filtered.length; i++) {
-  //     result[i] = filtered[i].name
-  //   }
-  //
-  //   return result;
-  // }
-  //
-  // autocompleteSelection = (item) => {
-  //   if (this.state.stateSelected != "" && this.state.queryTown != "") {
-  //     var stateAbbrv = this.state.stateAbrv[this.state.stateSelected];
-  //     this.setState({ location: item + ", " + stateAbbrv });
-  //     // console.log(this.state.location)
-  //   }
-  // }
 
   render() {
     let data = [{
@@ -503,25 +458,6 @@ class EditProfile extends React.Component {
       stateDropdown[i] = newVal;
     }
 
-    //
-    // var autocomplete = {
-    //   <Autocomplete
-    //     data={queryDateTown}
-    //     style={textFieldStyle}
-    //     defaultValue={this.state.queryTown}
-    //     onChangeText={text => this.setState({ queryTown: text })}
-    //     renderItem={({ item, i }) => (
-    //       <TouchableOpacity onPress={() => {
-    //         this.setState({ queryTown: item })
-    //         this.autocompleteSelection(item);
-    //       }
-    //       }>
-    //         <Text>{item}</Text>
-    //       </TouchableOpacity>
-    //     )}
-    //   />
-    // }
-
     var textFieldStyle = [surveyStyle.textField, fonts.bodyText]
     var itemTextStyle = [fonts.bodyText]
     var selectedItemColor = colors.turquoise.color
@@ -544,8 +480,6 @@ class EditProfile extends React.Component {
     else {
       image = imageNoImage;
     }
-
-    //  var queryDateTown = this.findQueryTown(this.state.queryTown);
 
     return (
       <View style={{ backgroundColor: colors.lightGrey.color }}>

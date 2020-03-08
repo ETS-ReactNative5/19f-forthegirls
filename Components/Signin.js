@@ -81,8 +81,6 @@ class SignIn extends React.Component {
   }
 
   render() {
-    // console.log("in render");
-    // console.log(this.props.error);
     var textFieldStyle = [surveyStyle.signInUpTextField, fonts.bodyText, surveyStyle.endField]
     return (
       <View style={surveyStyle.surveyBackground}>
