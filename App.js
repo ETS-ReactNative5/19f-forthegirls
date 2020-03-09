@@ -61,16 +61,16 @@ class App extends React.Component {
   registerForPushNotificationsAsync = async () => {
     const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
     if (status !== 'granted') {
-      console.log("PERMISSION GRANTED")
+      // console.log("PERMISSION GRANTED")
       return;
     }
-    console.log("PERMISSION NOT GRANTED")
+    // console.log("PERMISSION NOT GRANTED")
     try {
       let pushToken = await Notifications.getExpoPushTokenAsync();
       if (pushToken) {
         await AsyncStorage.setItem('pushToken', pushToken);
-        console.log(pushToken);
-        console.log(await AsyncStorage.getItem('pushToken'));
+        // console.log(pushToken);
+        // console.log(await AsyncStorage.getItem('pushToken'));
         // store.dispatch({ type: 'AUTH_TOKEN', payload: pushToken });
 
         //once you have push token need to save it to your backend
@@ -123,7 +123,7 @@ class App extends React.Component {
         </Provider>
       );
     } else {
-      return (<Text>loading</Text>);
+      return (<Text>Loading...</Text>);
     }
 
   }

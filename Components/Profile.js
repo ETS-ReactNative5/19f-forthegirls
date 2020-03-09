@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image, ScrollView } from 'react-native';
 import Prompt from './Prompt.js';
-import colors, { fonts, fontEffects, buttons, profileImage } from '../assets/styles/basicStyle';
+import colors, { fonts, fontEffects, buttons, profileImage, logo } from '../assets/styles/basicStyle';
 import profile, { promptStyle } from '../assets/styles/profileStyle';
 import { getUser, signoutUser, addToSurvey, fetchAwardStatus, fetchYourAwards } from '../actions';
 import { withNavigation } from 'react-navigation';
@@ -186,74 +186,85 @@ class Profile extends React.Component {
 
 
   render() {
-    var prompts;
-    if (this.props.promptOneQuestion == null) {
-      prompts = (
-        <TouchableOpacity
-          onPress={this.opacityOnPress}>
-          <Text style={[colors.turquoise, fonts.minorHeading]}>click here to enhance your profile!</Text>
-        </TouchableOpacity>
-      )
-    }
+    if(this.props.email !== undefined && this.props.email !== null && this.props.email !== '' && this.props.id !== null && this.props.id !== undefined && this.props.id !== '') {
+      var prompts;
+      if (this.props.promptOneQuestion == null) {
+        prompts = (
+          <TouchableOpacity
+            onPress={this.opacityOnPress}>
+            <Text style={[colors.turquoise, fonts.minorHeading]}>click here to enhance your profile!</Text>
+          </TouchableOpacity>
+        )
+      }
+      else {
+        prompts = (
+          <View>
+            <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
+            <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
+            <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
+          </View>
+        )
+      }
+
+      imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.basic} />
+      imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
+
+      image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
+
+      rewards = null;
+      if (this.props.allYours != null) {
+        rewards = this.badge()
+      }
+
+      return ( 
+        <ScrollView>
+          <View style={profile.profileContainer}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+              {image}
+            </View>
+            {this.renderModal()}
+            <View style={[profile.basicInfo, { alignItems: 'center', justifyContent: 'space-between' }]}>
+              <View style={[profile.basicInfoLeft, { alignItems: 'flex-start', flexWrap: 'wrap', flexShrink: 1, justifyContent: 'flex-start', width: 200 }]}>
+                <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.location}</Text>
+              </View>
+              <View style={[profile.jobStuff, { flexWrap: 'wrap', flexShrink: 1, alignItems: 'flex-end', justifyContent: 'flex-end', width: 200 }]}>
+                <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
+                <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
+              </View>
+            </View>
+            <View style={{ justifyContent: 'flex-end' }}>
+              <View style={buttons.container}>
+                <TouchableOpacity
+                  onPress={this.opacityOnPress}>
+                  <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.logout}>
+                  <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={promptStyle.promptContainer}>
+              {prompts}
+            </View>
+            <View style={{ margin: 5 }}>
+              {rewards}
+            </View>
+
+          </View>
+        </ScrollView>
+        )
+      }
     else {
-      prompts = (
-        <View>
-          <Prompt prompt={this.props.promptOneQuestion} answer={this.props.promptOneAnswer} />
-          <Prompt prompt={this.props.promptTwoQuestion} answer={this.props.promptTwoAnswer} />
-          <Prompt prompt={this.props.promptThreeQuestion} answer={this.props.promptThreeAnswer} />
+      return (  
+        <View style={{justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+          <Text style={[fonts.majorHeading, colors.deepPurple, logo.logoText]}>Loading Your Profile!</Text>
         </View>
       )
     }
-
-    imageNoImage = <Image source={require('./../assets/icons/propic.jpg')} style={profileImage.basic} />
-    imageImage = <Image source={{ uri: this.props.profileURL }} style={profileImage.basic} />
-
-    image = this.props.profileURL != "" && this.props.profileURL != null ? imageImage : imageNoImage;
-
-    rewards = null;
-    if (this.props.allYours != null) {
-      rewards = this.badge()
-    }
-
-    return (
-      <ScrollView>
-        <View style={profile.profileContainer}>
-          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-            {image}
-          </View>
-          {this.renderModal()}
-          <View style={[profile.basicInfo, { alignItems: 'center', justifyContent: 'space-between' }]}>
-            <View style={[profile.basicInfoLeft, { alignItems: 'flex-start', flexWrap: 'wrap', flexShrink: 1, justifyContent: 'flex-start', width: 200 }]}>
-              <Text style={[colors.black, fonts.majorHeading]}>{`${this.props.firstName}, ${this.props.age}`}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.location}</Text>
-            </View>
-            <View style={[profile.jobStuff, { flexWrap: 'wrap', flexShrink: 1, alignItems: 'flex-end', justifyContent: 'flex-end', width: 200 }]}>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.collegeName === '' ? this.props.highSchool : this.props.collegeName}</Text>
-              <Text style={[colors.deepPurple, fonts.minorHeading]}>{this.props.gradYear === 0 ? '' : this.props.gradYear}</Text>
-            </View>
-          </View>
-          <View style={{ justifyContent: 'flex-end' }}>
-            <View style={buttons.container}>
-              <TouchableOpacity
-                onPress={this.opacityOnPress}>
-                <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Edit Profile</Text></View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.logout}>
-                <View style={buttons.logInOutButton}><Text style={[fonts.minorHeading, colors.white]}>Log Out</Text></View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={promptStyle.promptContainer}>
-            {prompts}
-          </View>
-          <View style={{ margin: 5 }}>
-            {rewards}
-          </View>
-
-        </View>
-      </ScrollView>
-    )
+    
+   
   }
 }
 
