@@ -129,26 +129,29 @@ class SingleChat extends React.Component {
 
   sendChat = () => {
 
-    fields = {
-      sender: this.props.id,
-      receiver: this.props.navigation.getParam('matchID'),
-      text: this.state.chatText
+    if(this.state.chatText !== '' && this.state.chatText !== "\n") {
+      fields = {
+        sender: this.props.id,
+        receiver: this.props.navigation.getParam('matchID'),
+        text: this.state.chatText
+      }
+  
+      const firstID = this.props.id;
+      const secondID = this.props.navigation.getParam('matchID');
+      this.props.sendChat(fields, firstID, secondID);
+      this.setState({ chatText: '', prompt: '' })
+      this.props.totalContacted(this.props.id)
+  
+      if (this.props.numContacted == 4 && this.props.chats.length == 0) {
+        this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You contacted 5 different people!', awardImage: require('./../assets/icons/messageFive.png') });
+      }
+      if (this.props.numChats == 99) {
+        this.setState({ awardAward: true, showModal: true, awardMessage: 'You have sent/recieved 100 chats!', awardImage: require('./../assets/icons/chattyCathy.png') });
+      }
+  
+      Keyboard.dismiss();
     }
-
-    const firstID = this.props.id;
-    const secondID = this.props.navigation.getParam('matchID');
-    this.props.sendChat(fields, firstID, secondID);
-    this.setState({ chatText: '', prompt: '' })
-    this.props.totalContacted(this.props.id)
-
-    if (this.props.numContacted == 4 && this.props.chats.length == 0) {
-      this.setState({ numContacted: 5, awardAward: true, showModal: true, awardMessage: 'You contacted 5 different people!', awardImage: require('./../assets/icons/messageFive.png') });
-    }
-    if (this.props.numChats == 99) {
-      this.setState({ awardAward: true, showModal: true, awardMessage: 'You have sent/recieved 100 chats!', awardImage: require('./../assets/icons/chattyCathy.png') });
-    }
-
-    Keyboard.dismiss();
+    
   }
 
   loadMore = () => {

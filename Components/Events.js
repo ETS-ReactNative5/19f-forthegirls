@@ -126,7 +126,7 @@ class Events extends React.Component {
     if (this.props.navigation.getParam('firstEventAward') && this.state.awardChange) {
       this.changeState();
     }
-    if (this.props.all !== undefined) {
+    if (this.props.all !== undefined && this.props.all !== null && this.props.all !== [{}]) {
       return (
         <View style={eventPage.wholeContainer}>
           <NavigationEvents onDidFocus={this.refetchOnBackPress}>
@@ -171,7 +171,9 @@ class Events extends React.Component {
     }
     else {
       return (
-        <Text style={[fonts.bodyText, colors.turquoise, fontEffects.center]}>Loading Your Events!</Text>
+        <View style={{justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+          <Text style={[fonts.majorHeading, colors.deepPurple, logo.logoText]}>Loading Your Events!</Text>
+        </View>
       );
     }
 
