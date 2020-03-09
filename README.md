@@ -42,7 +42,7 @@ Then you should run:
 To deploy the project, clone this repository. Then, do the setup above if you haven't already from the command line. Then, run `expo start` to deploy the project.
 
 Our application is also available on test flight from the following link:
-
+https://testflight.apple.com/join/NY8yuUJF
 
 ## Authors
 
